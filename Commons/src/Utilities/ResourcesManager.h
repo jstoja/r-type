@@ -1,7 +1,8 @@
 #ifndef _RESSOURCESMANAGER_H_
 # define _RESSOURCESMANAGER_H_
 
-#include <map>
+# include <map>
+# include <string>
 
 namespace Utilities {
 
@@ -25,6 +26,7 @@ namespace Utilities {
     Resource*	getResource(std::string const&);
     //! Get a resource by id
     Resource*	getResource(uint32) const;
+
   private:
     std::map<uint32, Resource*>		_resourcesId;
     std::map<std::string, Resource*>	_resourcesName;

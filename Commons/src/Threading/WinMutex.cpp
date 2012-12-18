@@ -1,5 +1,6 @@
-#if defined (_WIN32)
+#include "../OS.h"
 
+#if defined (OS_WINDOWS)
 # include "Mutex.h"
 
 Threading::Mutex::Mutex() : _mutex(CreateMutex(NULL, FALSE, NULL)) {

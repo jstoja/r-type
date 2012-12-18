@@ -1,7 +1,9 @@
 #ifndef _UNIX_THREAD_HPP_
 # define _UNIX_THREAD_HPP_
 
-# if (defined __unix || defined __APPLE__)
+# include "../OS.h"
+
+# if defined (OS_UNIX)
 
 #  include <pthread.h>
 

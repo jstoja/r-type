@@ -1,7 +1,9 @@
 #ifndef _WIN_THREAD_HPP_
 # define _WIN_THREAD_HPP_
 
-# if defined (_WIN32)
+# include "../OS.h"
+
+# if defined (OS_WINDOWS)
 
 #  include <windows.h>
 
