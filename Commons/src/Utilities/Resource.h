@@ -24,7 +24,7 @@ namespace Utilities {
     std::string const& getName() const;
     //! Name setter
     void	setName(std::string const&);
-    // ID getter
+    //! ID getter
     int	getId() const;
 
   private:
