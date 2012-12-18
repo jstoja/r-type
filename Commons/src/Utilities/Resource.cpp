@@ -1,38 +1,45 @@
-#include "Ressource.h"
+#include "UUIDGenerator.h"
+#include "Resource.h"
 
-
-Ressource::Ressource() {
+Utilities::Resource::Resource() {
 }
 
-Ressource::Ressource(std::string const& name) {
+Utilities::Resource::Resource(std::string const& name) {
   _name = name;
+  _id = Utilities::UUIDGenerator::getInstance().getUUID();
 }
 
-Ressource::~Ressource() {
+Utilities::Resource::~Resource() {
 }
 
-Ressource::Ressource(Ressource const& cpy)
+Utilities::Resource::Resource(Resource const& cpy)
 {
   setName(cpy.getName());
+  _id = cpy._id;
 }
 
-std::string const& Ressource::getName() const {
+std::string const& Utilities::Resource::getName() const {
   return _name;
 }
 
-void	Ressource::setName(std::string const& name) {
+void	Utilities::Resource::setName(std::string const& name) {
   _name = name;
 }
 
-Ressource&	Ressource::operator=(Ressource const& cpy)
+Utilities::Resource&	Utilities::Resource::operator=(Resource const& cpy)
 {
   setName(cpy.getName());
   return *this;
 }
 
-bool	Ressource::operator==(Ressource const& cmp)
+bool	Utilities::Resource::operator==(Resource const& cmp)
 {
   if (getName() == cmp.getName())
     return true;
   return false;
+}
+
+int	Utilities::Resource::getId() const
+{
+  return _id;
 }

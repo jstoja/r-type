@@ -3,29 +3,35 @@
 
 # include <iostream>
 
-class Ressource {
- public:
-  //! Constructor
-  Ressource();
-  //! Constructor with name
-  Ressource(std::string const&);	   
-  //! Copy constructor
-  Ressource(Ressource const&);
-  //! Destructor
-  ~Ressource();
-  
-  //! Assignation operator
-  Ressource&	operator=(Ressource const&);
-  //! Comparaison operator
-  bool		operator==(Ressource const&);
+namespace Utilities {
+  class Resource {
+  public:
+    //! Constructor
+    Resource();
+    //! Constructor with name
+    Resource(std::string const&);	   
+    //! Copy constructor
+    Resource(Resource const&);
+    //! Destructor
+    ~Resource();
+    
+    //! Assignation operator
+    Resource&	operator=(Resource const&);
+    //! Comparaison operator
+    bool		operator==(Resource const&);
+    
+    //! Name getter
+    std::string const& getName() const;
+    //! Name setter
+    void	setName(std::string const&);
+    // ID getter
+    int	getId() const;
 
-  //! Name getter
-  std::string const& getName() const;
-  //! Name setter
-  void	setName(std::string const&);
+  private:
+    int		_id;
+    std::string	_name;
+  };
 
- private:
-  std::string	_name;
-};
+}
 
 #endif

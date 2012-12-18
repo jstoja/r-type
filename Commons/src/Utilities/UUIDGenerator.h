@@ -9,9 +9,12 @@ namespace Utilities {
     friend class Singleton<UUIDGenerator>;
 
   public:
+    //! Construct the object
     UUIDGenerator();
+    //! Destruct the object
     ~UUIDGenerator();
 
+    //! Return and increment the UUID
     int getUUID();
 
   private:
