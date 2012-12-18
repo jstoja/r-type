@@ -2,13 +2,13 @@
 
 int UUIDGenerator::_id = 0;
 
-UUIDGenerator::UUIDGenerator() {
+Utilities::UUIDGenerator::UUIDGenerator() {
   _id = 0;
 }
 
-UUIDGenerator::~UUIDGenerator() {
+Utilities::UUIDGenerator::~UUIDGenerator() {
 }
 
-int UUIDGenerator::getUUID() {
+int Utilities::UUIDGenerator::getUUID() {
   return _id++;
 }
