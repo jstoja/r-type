@@ -23,7 +23,7 @@ void Threading::Mutex::unlock() {
 }
 
 bool Threading::Mutex::tryLock() {
-	pthread_mutex_trylock(_mutex);
+	return pthread_mutex_trylock(_mutex);
 }
 
 #endif
