@@ -1,8 +1,10 @@
-#if defined (__unix)
+#if (defined __unix || defined __APPLE__)
 
+# include <unistd.h>
 # include "Mutex.h"
 
-Threading::Mutex::Mutex() : _mutex(CreateMutex(NULL, FALSE, NULL)) {
+Threading::Mutex::Mutex() {
+	pthread_mutex_init(&_mutex, NULL);
 }
 
 Threading::Mutex::~Mutex(void) {

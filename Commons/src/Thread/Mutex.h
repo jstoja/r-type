@@ -3,7 +3,7 @@
 
 # if defined (_WIN32)
 #  include <windows.h>
-# elif defined (__unix)
+# elif (defined __unix || defined __APPLE__)
 
 # endif
 
@@ -52,8 +52,8 @@ namespace Threading {
 	private:
 # if defined (_WIN32)
 		HANDLE	_mutex;
-# elif defined (__unix)
-
+# elif (defined __unix || defined __APPLE__)
+		pthreat_mutex_t _mutex;
 # endif
 	};
 }

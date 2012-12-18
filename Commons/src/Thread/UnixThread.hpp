@@ -1,14 +1,14 @@
 #ifndef _UNIX_THREAD_HPP_
 # define _UNIX_THREAD_HPP_
 
-# if defined (__unix)
+# if (defined __unix || defined __APPLE__)
 
-#  include <windows.h>
+#  include <pthread.h>
 
 namespace Threading {
 
 	template<class T>
-	static DWORD WINAPI	_winThreadCallback(LPVOID obj)
+	static void	*_unixThreadCallback(void *obj)
 	{
 		T	*newObj = static_cast<T*>(obj);
 		if (newObj)
@@ -16,9 +16,9 @@ namespace Threading {
 		return (0);
 	}
 
-	//! Windows Thread Class Implementation
+	//! Unix Thread Class Implementation
 	/*!  
-		Provide an implementation of the AThread class for the Windows Operating System
+		Provide an implementation of the AThread class for the Unix Operating System
 	*/
 	template<class T>
 	class Thread
@@ -46,7 +46,7 @@ namespace Threading {
 		*/
 		void run(void) {
 			if (_thread == NULL)
-				_thread = CreateThread(NULL, 0, _winThreadCallback<T>, _obj, 0, &_threadId);
+				pthread_create(&_thread, NULL, _unixThreadCallback<T>, _obj);
 		}
 
 		//! Wait for the thread
@@ -54,13 +54,12 @@ namespace Threading {
 			Wait for the thread end
 		*/
 		void join(void) {
-			WaitForSingleObject(_thread, INFINITE);
+			pthread_join(_thread, NULL);
 		}
 
 	private:
-		T*		_obj;
-		HANDLE	_thread;
-		DWORD	_threadId;
+		T*			_obj;
+		pthread_t	_thread;
 	};
 };
 
