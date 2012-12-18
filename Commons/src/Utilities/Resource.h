@@ -2,6 +2,7 @@
 # define _RESSOURCE_H_
 
 # include <iostream>
+# include "Types.h"
 
 namespace Utilities {
   class Resource {
@@ -25,10 +26,10 @@ namespace Utilities {
     //! Name setter
     void	setName(std::string const&);
     //! ID getter
-    int	getId() const;
+    uint32 getId() const;
 
   private:
-    int		_id;
+    uint32		_id;
     std::string	_name;
   };
 

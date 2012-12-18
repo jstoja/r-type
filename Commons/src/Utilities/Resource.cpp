@@ -26,20 +26,17 @@ void	Utilities::Resource::setName(std::string const& name) {
   _name = name;
 }
 
-Utilities::Resource&	Utilities::Resource::operator=(Resource const& cpy)
-{
+Utilities::Resource&	Utilities::Resource::operator=(Resource const& cpy) {
   setName(cpy.getName());
   return *this;
 }
 
-bool	Utilities::Resource::operator==(Resource const& cmp)
-{
-  if (getName() == cmp.getName())
+bool	Utilities::Resource::operator==(Resource const& cmp) {
+  if (getId() == cmp.getId())
     return true;
   return false;
 }
 
-int	Utilities::Resource::getId() const
-{
+uint32 Utilities::Resource::getId() const {
   return _id;
 }
