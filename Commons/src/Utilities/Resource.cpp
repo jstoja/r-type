@@ -12,8 +12,7 @@ Utilities::Resource::Resource(std::string const& name) {
 Utilities::Resource::~Resource() {
 }
 
-Utilities::Resource::Resource(Resource const& cpy)
-{
+Utilities::Resource::Resource(Resource const& cpy) {
   setName(cpy.getName());
   _id = cpy._id;
 }
