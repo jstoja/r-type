@@ -1,7 +1,7 @@
 #ifndef _UUIDGENERATOR_H_
 # define __UUIDGENERATOR_H_
 
-# include "Singleton.hpp"
+# include "../Singleton.hpp"
 
 namespace Utilities {
 
@@ -9,9 +9,12 @@ namespace Utilities {
     friend class Singleton<UUIDGenerator>;
 
   public:
+    //! Construct the object
     UUIDGenerator();
+    //! Destruct the object
     ~UUIDGenerator();
 
+    //! Return and increment the UUID
     int getUUID();
 
   private:
