@@ -3,11 +3,10 @@
 
 # if defined(_WIN32)
 #  define OS_WINDOWS
-# elif defined (__unix__)
-#  define OS_UNIX
-# endif
-# if defined (__APPLE__)
+# elif defined (__APPLE__)
 #  define OS_MAC
 # endif
-
+# if (defined __unix__ || defined OS_MAC)
+#  define OS_UNIX
+# endif
 #endif

@@ -11,7 +11,7 @@ typedef __int32 int32_t;
 typedef unsigned __int32 uint32_t;
 typedef __int64 int64_t;
 typedef unsigned __int64 uint64_t;
-# elif defined(OS_UNIX) || defined(OS_APPLE)
+# elif defined(OS_UNIX)
 #  include <stdint.h>
 # endif
 
