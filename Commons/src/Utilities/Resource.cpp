@@ -37,6 +37,6 @@ bool	Utilities::Resource::operator==(Resource const& cmp) {
   return false;
 }
 
-uint32_t Utilities::Resource::getId() const {
+uint32 Utilities::Resource::getId() const {
   return _id;
 }

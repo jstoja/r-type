@@ -24,9 +24,9 @@ namespace Utilities {
     //! Get a resource by name
     Resource*	getResource(std::string const&);
     //! Get a resource by id
-    Resource*	getResource(uint32_t) const;
+    Resource*	getResource(uint32) const;
   private:
-    std::map<uint32_t, Resource*>		_resourcesId;
+    std::map<uint32, Resource*>		_resourcesId;
     std::map<std::string, Resource*>	_resourcesName;
   };
 

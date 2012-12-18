@@ -36,7 +36,7 @@ Utilities::Resource*	Utilities::ResourcesManager::getResource(std::string const&
 }
 
 Utilities::Resource*	Utilities::ResourcesManager::getResource(uint32_t id) const {
-  std::map<uint32_t, Resource*>::const_iterator it;  
+  std::map<uint32, Resource*>::const_iterator it;  
 
   if ((it = _resourcesId.find(id)) != _resourcesId.end())
     return it->second;
