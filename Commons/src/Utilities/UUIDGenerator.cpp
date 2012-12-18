@@ -1,6 +1,6 @@
 #include "UUIDGenerator.h"
 
-int Utilities::UUIDGenerator::_id = 0;
+uint32_t Utilities::UUIDGenerator::_id = 0;
 
 Utilities::UUIDGenerator::UUIDGenerator() {
   _id = 0;
@@ -9,6 +9,6 @@ Utilities::UUIDGenerator::UUIDGenerator() {
 Utilities::UUIDGenerator::~UUIDGenerator() {
 }
 
-int Utilities::UUIDGenerator::getUUID() {
+uint32_t Utilities::UUIDGenerator::getUUID() {
   return _id++;
 }

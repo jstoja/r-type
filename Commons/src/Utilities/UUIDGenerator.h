@@ -1,7 +1,8 @@
 #ifndef _UUIDGENERATOR_H_
 # define __UUIDGENERATOR_H_
 
-# include "../Singleton.hpp"
+# include "Types.h"
+# include "Singleton.hpp"
 
 namespace Utilities {
 
@@ -15,10 +16,10 @@ namespace Utilities {
     ~UUIDGenerator();
 
     //! Return and increment the UUID
-    int getUUID();
+    uint32_t getUUID();
 
   private:
-    static int _id;
+    static uint32_t _id;
   };
 
 }

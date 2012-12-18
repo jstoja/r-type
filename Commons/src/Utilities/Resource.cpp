@@ -34,12 +34,12 @@ Utilities::Resource&	Utilities::Resource::operator=(Resource const& cpy)
 
 bool	Utilities::Resource::operator==(Resource const& cmp)
 {
-  if (getName() == cmp.getName())
+  if (getId() == cmp.getId())
     return true;
   return false;
 }
 
-int	Utilities::Resource::getId() const
+uint32_t Utilities::Resource::getId() const
 {
   return _id;
 }

@@ -25,10 +25,10 @@ namespace Utilities {
     //! Name setter
     void	setName(std::string const&);
     //! ID getter
-    int	getId() const;
+    uint32_t getId() const;
 
   private:
-    int		_id;
+    uint32_t	_id;
     std::string	_name;
   };
 
