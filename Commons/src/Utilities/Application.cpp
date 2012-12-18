@@ -21,10 +21,3 @@ void	Utilities::Application::init(char **av, int32 ac) {
 std::string const&	Utilities::Application::getResourcesPath() const {
   return _resourcesPath;
 }
-
-int main(int argc, char **argv) {
-  Utilities::Application app = Utilities::Application::getInstance();
-  
-  app.init(argv, argc);
-  std::cout << app.getResourcesPath() << std::endl;
-}
