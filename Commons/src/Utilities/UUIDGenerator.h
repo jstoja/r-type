@@ -1,5 +1,5 @@
 #ifndef _UUIDGENERATOR_H_
-# define __UUIDGENERATOR_H_
+# define _UUIDGENERATOR_H_
 
 # include "Types.h"
 # include "Singleton.hpp"

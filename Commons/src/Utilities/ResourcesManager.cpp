@@ -19,7 +19,7 @@ void Utilities::ResourcesManager::removeResource(std::string const& name) {
       _resourcesName.erase(item->getName());
     }
 }
- 
+
 Utilities::Resource* Utilities::ResourcesManager::loadResource(std::string const& name) {
   Resource *res = new Resource(name);
   _resourcesName[name] = res;
