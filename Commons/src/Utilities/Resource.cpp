@@ -66,6 +66,5 @@ void	Utilities::Resource::readFile() {
   buffer = new char[fileSize];
   ifs.read(buffer, fileSize);
   ifs.close();
-  std::cout.write(buffer, fileSize);
   _file.setAll(buffer, fileSize);
 }
