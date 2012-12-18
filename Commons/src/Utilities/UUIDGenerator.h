@@ -16,10 +16,10 @@ namespace Utilities {
     ~UUIDGenerator();
 
     //! Return and increment the UUID
-    uint32_t getUUID();
+    uint32 getUUID();
 
   private:
-    static uint32_t _id;
+    static uint32 _id;
   };
 
 }

@@ -2,6 +2,7 @@
 # define _RESSOURCE_H_
 
 # include <iostream>
+# include "Types.h"
 
 namespace Utilities {
   class Resource {
