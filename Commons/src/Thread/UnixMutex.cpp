@@ -1,29 +1,29 @@
-#if (defined __unix || defined __APPLE__)
+#include "../OS.h"
 
-# include <unistd.h>
+#if defined (OS_UNIX)
+
 # include "Mutex.h"
+# include <unistd.h>
 
 Threading::Mutex::Mutex() {
-	pthread_mutex_init(&_mutex, NULL);
+	_mutex = new pthread_mutex_t;
+	pthread_mutex_init(_mutex, NULL);
 }
 
 Threading::Mutex::~Mutex(void) {
-	CloseHandle(_mutex);
+	pthread_mutex_destroy(_mutex);
 }
 
 void Threading::Mutex::lock() {
-	WaitForSingleObject(_mutex, INFINITE);
+	pthread_mutex_lock(_mutex);
 }
 
 void Threading::Mutex::unlock() {
-	ReleaseMutex(_mutex);
+	pthread_mutex_unlock(_mutex);
 }
 
 bool Threading::Mutex::tryLock() {
-	DWORD ret = WaitForSingleObject(_mutex, 0);
-	if (ret == WAIT_TIMEOUT)
-		return (false);
-	return (true);
+	pthread_mutex_trylock(_mutex);
 }
 
 #endif

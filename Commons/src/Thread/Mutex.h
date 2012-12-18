@@ -1,10 +1,12 @@
 #ifndef _MUTEX_H_
 # define _MUTEX_H_
 
-# if defined (_WIN32)
-#  include <windows.h>
-# elif (defined __unix || defined __APPLE__)
+# include "../OS.h"
 
+# if defined (OS_WINDOWS)
+#  include <windows.h>
+# elif defined (OS_UNIX)
+#  include <pthread.h>
 # endif
 
 namespace Threading {
@@ -50,10 +52,10 @@ namespace Threading {
 		bool tryLock();
 
 	private:
-# if defined (_WIN32)
+# if defined (OS_WINDOWS)
 		HANDLE	_mutex;
-# elif (defined __unix || defined __APPLE__)
-		pthreat_mutex_t _mutex;
+# elif defined (OS_UNIX)
+		pthread_mutex_t *_mutex;
 # endif
 	};
 }
