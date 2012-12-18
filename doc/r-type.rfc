@@ -1,0 +1,577 @@
+.nf
+Network Working Group                                             Loick Michard
+Request for Comments: 4242                                      Gael Du Plessix
+Category: Standards Track                                        Samuel Olivier
+                                                                 Franck Lavisse
+                                                              Julien Bordellier
+                                                               Melvin Laplanche
+                                                                  December 2012
+.ce
+R-TYPE PROTOCOL (RTP)
+
+.ti 0
+Status of this Memo
+
+.fi
+.in 3
+This memo is the official specification of the R-Type Protocol (RTP).
+Distribution of this memo is unlimited.
+
+.ti 0
+1.  INTRODUCTION
+
+.fi
+.in 3
+The objectives of RTP are 1), 2), 3).
+
+The attempt in this specificaion is to [...]
+
+.ti 0
+2.  OVERVIEW
+
+.fi
+.in 3
+In this section, the history, the terminology, and the RTP model are
+discussed.  The terms defined in this section are only those that
+have special significance in RTP.  Some of the terminology is very
+specific to the RTP model; some readers may wish to turn to the
+section on the RTP model while reviewing the terminology.
+
+.ti 3
+2.1  HISTORY
+
+.fi
+.in 6
+RTP is a brand new project, and the Request for Comments 4242 is
+the very first draft about it.
+
+.ti 3
+2.1  TERMINOLOGY
+
+.ti 6
+2.1  KEYWORD
+
+.fi
+.in 9
+Definition
+
+.ti 3
+2.2  THE RTP MODEL
+
+.ti 6
+2.2.1 The TPC part
+
+.in 9
+.nf
++------------------+-----------------+--------------------+
+|                  |                 |                    |
+|       Size       |       Name      |    Description     |
+|                  |                 |                    |
++------------------+-----------------+--------------------+
+|     1 byte       |      type       |     Packet type    |
++------------------+-----------------+--------------------+
+|     1 byte       |     request     |   Packet request   |
++------------------+-----------------+--------------------+
+|     1 byte       |     action      | Action to perform  |
++------------------+-----------------+--------------------+
+|     1 byte       |     error       |       Error        |
++------------------+-----------------+--------------------+
+|     4 byte       |      size       |     Data size      |
++------------------+-----------------+--------------------+
+|   byte[1] size   |      data       |    Packet data     |
++------------------+-----------------+--------------------+
+
+.ce
+Figure 1 - Structure of a packet
+
+
+.fi
+.in 6
+The following commands are used to communicate from a client
+to a server. The value of this type is 0.
+
+.in 9
+.nf
++------------------+-----------------+--------------------+
+|                  |                 |                    |
+|    Request       |     Action      |       Value        |
+|                  |                 |                    |
++------------------+-----------------+--------------------+
+|  Authentication  |                 |         0          |
++------------------+-----------------+--------------------+
+|                  |    Sign in      |         0          |
++------------------+-----------------+--------------------+
+|  Information     |                 |         1          |
++------------------+-----------------+--------------------+
+|                  |   Game list     |         0          |
++------------------+-----------------+--------------------+
+|       Game       |                 |         2          |
++------------------+-----------------+--------------------+
+|                  | Join Game       |         0          |
++------------------+-----------------+--------------------+
+|                  | Quit Game       |         2          |
++------------------+-----------------+--------------------+
+|                  | Create Game     |         0          |
++------------------+-----------------+--------------------+
+|                  | Ready to start  |         1          |
++------------------+-----------------+--------------------+
+|                  |                 |         2          |
++------------------+-----------------+--------------------+
+|                  |                 |         3          |
++------------------+-----------------+--------------------+
+
+.ce
+Figure 2 - Client to server command list
+
+
+.fi
+.in 6
+The following replies are used to communicate from a server
+to a client. The value of this type is 1.
+
+.in 9
+.nf
++------------------+-----------------+------------+-------+
+|                  |                 |            |       |
+|    Request       |     Action      |   Error    | Value |
+|                  |                 |            |       |
++------------------+-----------------+------------+-------+
+|  Authentication  |                 |            |   0   |
++------------------+-----------------+------------+-------+
+|                  |     Sign in     |            |   0   |
++------------------+-----------------+------------+-------+
+|                  |                 |Wrong login |   1   |
++------------------+-----------------+------------+-------+
+|    Informations  |                 |            |   1   |
++------------------+-----------------+------------+-------+
+|                  |  General        |            |   0   |
++------------------+-----------------+------------+-------+
+|                  |  Games list     |            |   1   |
++------------------+-----------------+------------+-------+
+|    Game          |                 |            |   2   |
++------------------+-----------------+------------+-------+
+|                  |  Game joined    |            |   0   |
++------------------+-----------------+------------+-------+
+|                  |                 |    full    |   1   |
++------------------+-----------------+------------+-------+
+|                  |                 |  invalid   |   2   |
++------------------+-----------------+------------+-------+
+|                  |    Start        |            |   1   |
++------------------+-----------------+------------+-------+
+|                  |    Ressources   |            |   2   |
++------------------+-----------------+------------+-------+
+|                  |  Game created   |            |   3   |
++------------------+-----------------+------------+-------+
+|                  |                 |  Bad name  |   1   |
++------------------+-----------------+------------+-------+
+|                  |  New player     |            |   4   |
++------------------+-----------------+------------+-------+
+|                  |  New player     |            |   5   |
++------------------+-----------------+------------+-------+
+|                  |  Player list    |            |   6   |
++------------------+-----------------+------------+-------+
+
+.ce
+Figure 3 - Server to client command list
+
+
+.nf
++------+-----------------+--------------------------------+
+|      |                 |                                |
+| Code |      Name       |       Format                   |
+|      |                 |                                |
++------+-----------------+--------------------------------+
+| 0000 | Sign in         | login : string                 |
++------+-----------------+--------------------------------+
+| 0100 | List games      |                                |
++------+-----------------+--------------------------------+
+| 0200 | Join games      | id : uinteger                  |
++------+-----------------+--------------------------------+
+| 0210 | Quit game       | id : uinteger                  |
++------+-----------------+--------------------------------+
+| 0220 | Create game     | name : string                  |
+|      |                 | nb slots : uinteger            |
++------+-----------------+--------------------------------+
+| 0230 | Ready to start  | id : uinteger                  |
++------+-----------------+--------------------------------+
+
+.ce
+Figure 4 Client - server data formating
+
+
+
+.nf
++------+-----------------+--------------------------------+
+|      |                 |                                |
+| Code |      Name       |       Format                   |
+|      |                 |                                |
++------+-----------------+--------------------------------+
+| 1000 | Sign in success | player id : uinteger           |
++------+-----------------+--------------------------------+
+| 1001 | Sign in failed  | message : string               |
++------+-----------------+--------------------------------+
+| 1100 | General info    | name : string                  |
+|      |                 | description : string           |
+|      |                 | game count : uinteger          |
+|      |                 | player count : uinteger        |
++------+-----------------+--------------------------------+
+| 1110 | Games List      | games : list<Game>             |
++------+-----------------+--------------------------------+
+| 1200 | Game Joined     | id : uinteger                  |
++------+-----------------+--------------------------------+
+| 1210 | Game Start      | id : uinteger                  |
++------+-----------------+--------------------------------+
+| 1220 | Ressources      | resources : List<Resource>     |
+|      |                 | sprites : List<Sprite>         |
+|      |                 | static graphic objects         |
+|      |                 |            List<GraphicElement>|
+|      |                 | static physic objects :        |
+|      |                 |            List<GraphicElement>|
+|      |                 | Sceneries : List<Scenery>      |
+|      |                 | Backgrounds : List<Background> |
+|      |                 | Sounnds : List<Sound>          |
++------+-----------------+--------------------------------+
+| 1230 | Game created    | game : Game                    |
++------+-----------------+--------------------------------+
+| 1240 | New Player      | player Player                  |
++------+-----------------+--------------------------------+
+| 1250 | Player Ready    | id : uinteger                  |
++------+-----------------+--------------------------------+
+| 1260 | Player List     | game id : uinteger             |
+|      |                 | players : List <Player>        |
++------+-----------------+--------------------------------+
+
+.ce
+Figure 5 - Server data formating
+
+
+.nf
++-----------------+--------------------------------+
+|                 |                                |
+|      Name       |       Format                   |
+|                 |                                |
++-----------------+--------------------------------+
+| List<T>         | player id : uinteger           |
+|                 | T[size]                        |
++-----------------+--------------------------------+
+| String          | message : string               |
+|                 | char[size]                     |
++-----------------+--------------------------------+
+| uinterger       | uint32                         |
++-----------------+--------------------------------+
+| Game            | id : uinteger                  |
+|                 | name : string                  |
+|                 | nb players : uinteger          |
+|                 | nb slots : uinteger            |
++-----------------+--------------------------------+
+| Resource        | id : uinteger                  |
+|                 | size : uinteger                |
+|                 | data : char[size]              |
++-----------------+--------------------------------+
+| Sprite          | id : uinteger                  |
+|                 | texture id : uinteger          |
+|                 | frames : list<Frame>           |
++-----------------+--------------------------------+
+| Frame           | Point 1 : vec2                 |
+|                 | point 2 : vec2                 |
++-----------------+--------------------------------+
+| GraphicElement  | game : Game                    |
+|                 | position : vec3                |
+|                 | rotation : float32             |
+|                 | size : vec2                    |
+|                 | sprite id : uinteger           |
+|                 | sprite frame : char            |
++-----------------+--------------------------------+
+| Player          | id : uinteger                  |
+|                 | name : string                  |
++-----------------+--------------------------------+
+| Scenery         | ressource id : uinteger        |
+|                 | speed : float32                |
++-----------------+--------------------------------+
+| Background      | ressource id : uinteger        |
+|                 | speed : float32                |
+|                 | repeat: float32                |
++-----------------+--------------------------------+
+| Sound           | id : uinteger                  |
+|                 | ressource id : uinteger        |
+|                 | repeat : float32               |
++-----------------+--------------------------------+
+
+.ce
+Figure 6 - Data formating
+
+.fi
+.in 6
+Here we present sequence diagrams for a basic RTP implementation.
+Only the last digits of the reply codes are used.
+
+.in 9
+.nf
+ /---------\\                    /---------\\                /---------\\
+ |  Client |                    |  Server |                | Client2 |
+ \\---------/                    \\---------/                \\---------/
+    | |                             | |                          |
+    | |  000 - Sign in              | |                          |
+    | |---------------------------->| |                          |
+    | |                             | |                          |
+    | |  100 - Sign in success      | |                          |
+    | |<----------------------------| |                          |
+    | |                             | |                          |
+    | |  101 - Sign in failed       | |                          |
+    | |<----------------------------| |                          |
+    | |                             | |                          |
+    | |  110 - General inforations  | |                          |
+    | |<----------------------------| |                          |
+    | |                             | |                          |
+    | |  111 - Games list           | |                          |
+    | |<----------------------------| |                          |
+    | |                             |_|                          |
+    | |                              |                           |
+    | |                              |                           |
+    | |                              |                           |
+    | |  010 - List games           |-|                          |
+    | |---------------------------->| |                          |
+    | |                             | |                          |
+    | |  111 - Game list            | |                          |
+    | |<----------------------------| |                          |
+    | |                             |_|                          |
+    | |                              |                           |
+    | |                              |                           |
+    | |                              |                           |
+    | |  022 - Create game          |-|                          |
+    | |---------------------------->| |                          |
+    | |                             | |                          |
+    | |  130 - Game created         | |                          |
+    | |<----------------------------| |                          |
+    | |                             | |                          |
+    | |  111 - Game list            | |                          |
+    | |<----------------------------|_|                          |
+    | |                              |                           |
+    | |                              |                           |
+    | |                              |                           |
+    | |                              |                           |
+    | |  020 - join game            |-|                          |
+    | |---------------------------->| |                          |
+    | |                             | |  020 - Join game        |-|
+    | |  102 - Game joined          | |<------------------------| |
+    | |<----------------------------| |                         | |
+    | |                             | |  102 - Game joined      | |
+    | |  122 - Resources            | |------------------------>| |
+    | |<----------------------------| |                         | |
+    | |                             | |  122 - Resources        | |
+    | |  126 Player List            | |------------------------>| |
+    | |<----------------------------| |                         | |
+    | |                             | |  126 - player list      | |
+    | |                             | |<------------------------| |
+    | |                             | |                         | |
+    | |  124 - New Player           | |                         | |
+    | |<----------------------------| |                         | |
+    | |                             | |  023 - Ready to start   | |
+    | |                             | |<----------------------- | |
+    | |  125 - Player Ready         | |                         | |
+    | |<----------------------------| |                         | |
+    | |                             | |                         | |
+    | |  023 - Ready to start       | |                         | |
+    | |---------------------------->| |                         | |
+    | |                             | |                         | |
+    | |                             | |                         | |
+    | |                             | |                         | |
+    | |                             | |  125 - Player Ready     | |
+    | |                             | |------------------------>| |
+    | |                             | |                         | |
+    | |                             | |                         | |
+    | |  121 - Game start           | |  121 - Game start       | |
+    | |<----------------------------| |------------------------>| |
+    |_|                             |_|                         |_|
+     |                               |                           |
+     |                               |                           |
+     |                               |                           |
+
+
+
+.ti 6
+2.2.1 The UDP part
+
+.in 9
+.nf
++------------------+-----------------+--------------------+
+|                  |                 |                    |
+|       Size       |       Name      |    Description     |
+|                  |                 |                    |
++------------------+-----------------+--------------------+
+|     1 byte       |      type       |     Packet type    |
++------------------+-----------------+--------------------+
+|     2 byte       |      size       |      Data size     |
++------------------+-----------------+--------------------+
+|   byte[1] size   |      data       |        Data        |
++------------------+-----------------+--------------------+
+
+.ce
+Figure 7 - Structure of a packet
+
+.nf
++------------------+-----------------+--------------------+
+|                  |                 |                    |
+|    Packet type   |     Critical    |     Format         |
+|                  |                 |                    |
++------------------+-----------------+--------------------+
+| GRAPHIC_ELEMENTS |  No             | Elements :         |
+|                  |                 |List<GraphicElement>|
++------------------+-----------------+--------------------+
+| PHYSIC_ELEMENTS  |  No             | Elements :         |
+|                  |                 |List<PhysicElement> |
++------------------+-----------------+--------------------+
+| TIME             |  No             | x pos : float32    |
++------------------+-----------------+--------------------+
+| UPDATE_LIFE      |  Yes            |Packet id : uinteger|
+|                  |                 |player id : uinteger|
+|                  |                 |new life : float32  |
++------------------+-----------------+--------------------+
+| UPDATE_SCORE     |  No             |player id : uinteger|
+|                  |                 |new score : uint32  |
++------------------+-----------------+--------------------+
+| GAME_FINISHED    |  Yes            |Packet id : uinteger|
+|                  |                 |final results :     |
+|                  |                 |  List<FinalResult> |
++------------------+-----------------+--------------------+
+
+.ce
+Figure 8 - Server to client communication
+
+
+.nf
++------------------+-----------------+--------------------+
+|                  |                 |                    |
+|    Packet type   |     Critical    |     Format         |
+|                  |                 |                    |
++------------------+-----------------+--------------------+
+| USER_DIRECTION   |  No             | direction : vec2   |
++------------------+-----------------+--------------------+
+| USER_SHOOT       |  yes            |Packet id : uinteger|
+|                  |                 |button : uinteger   |
+|                  |                 |power : float32     |
++------------------+-----------------+--------------------+
+| PHYSIC_COLLISION |  yes            |packet id : uinteger|
+|                  |                 |elem 1 id : uinteger|
+|                  |                 |elem 2 id : uinteger|
++------------------+-----------------+--------------------+
+
+.ce
+Figure 9 - Client to server communication
+
+
++------------------+-----------------+--------------------+
+|                  |                 |                    |
+|    Packet type   |     Critical    |     Format         |
+|                  |                 |                    |
++------------------+-----------------+--------------------+
+| PACKET_RECEIVED  |  No             |packed id : uinteger|
++------------------+-----------------+--------------------+
+
+.ce
+Figure 10 - Response to a critical packet
+
+
+.nf
++------------------+--------------------------------------+
+|                  |                                      |
+|    Name          |     Format                           |
+|                  |                                      |
++------------------+--------------------------------------+
+| GGraphicElement  |  id : uinteger                       |
+|                  |  position : vec3                     |
+|                  |  rotation : float32                  |
+|                  |  size : vec2                         |
+|                  |  sprite id : uinteger                |
+|                  |  sprite frame : char                 |
++------------------+--------------------------------------+
+| PhysicElement    |  id : uinteger                       |
+|                  |  position : vec3                     |
+|                  |  rotation : float32                  |
+|                  |  size : vec2                         |
++------------------+--------------------------------------+
+| frame            |  position : vec2                     |
+|                  |  size : vec2                         |
++------------------+--------------------------------------+
+| vec2/vec3        |  x : float32                         |
+|                  |  y : float32                         |
+|                  |  z : float32 (vec3 only)             |
++------------------+--------------------------------------+
+| FinalResult      |  player id : uinteger                |
+|                  |  score : float32                     |
++------------------+--------------------------------------+
+
+.ce
+Figure 8 - Data formating
+
+.fi
+.in 6
+Here we present sequence diagrams for a basic RTP implementation.
+
+.in 9
+.nf
+ /---------\\                    /---------\\                /---------\\
+ |  Client |                    |  Server |                | Client2 |
+ \\---------/                    \\---------/                \\---------/
+     |                               |                           |
+    |-|  USER_DIRECTION             |-|                          |
+    | |---------------------------->| |                          |
+    | |                             | |                          |
+    | |                             |_|                          |
+    | |                              |                          |-|
+    | |                              |                          | |
+    | |                             |-|<--      USER_SHOOT      | |
+    |_|                             | |   |__                   | |
+     |                              | |      |____              | |
+     |                              | |           |____         | |
+     |                              |_|                |        | |
+     |                               |                 |________| |
+     |                               |                          | |
+     |                               |                          |_|
+     |                               |                           |
+     |                               |                           |
+     |   TIME                        |  TIME                     |
+    |-|<----------------------------|-|------------------------>|-|
+    | |                             | |                         | |
+    |_|                             | |                         |_|
+     |                              | |                          |
+     |                              | |                          |
+    |-| GRAPHIC_ELEMENT             | | GRAPHIC_ELEMENT         |-|
+    | |<----------------------------| |------------------------>| |
+    |_|                             | |                         |_|
+     |                              | |                          |
+     |  PLAY_SOUND                  | | PLAY_SOUND               |
+    |-|<----------------------------| |------------------------>|-|
+    | |                             | |                         | |
+    |_|                             | |                         |_|
+     |                              | |                          |
+     |  SCENERIES_CHANGES           | | SCENERIES_CHANGES        |
+    |-|<----------------------------| |------------------------>|-|
+    | |                             | |                         | |
+    |_|                             | |                         |_|
+     |                              | |                          |
+     |  UPDATE_SCORE                | | UPDATE_SCORE             |
+    |-|<----------------------------| |------------------------>|-|
+    | |                             | |                         | |
+    |_|                             | |                         |_|
+     |                              | |                          |
+     |                              | |                          |
+     |                              |_|                          |
+     |                               |                           |
+     |                               |                           |
+     |                               |                           |
+     |                              |-|                          |
+     |                              | |                          |
+     |   GAME_FINISHED              | |  GAME_FINISHED           |
+    |-|<----------------------------| |------------------------>|-|
+    | |                             | |                         | |
+    | |                             | |                         | |
+    | |                             | |                         | |
+    | |  PACKET_RECEIVED            | |  PACKET_RECEIVED        | |
+    |_|---------------------------->| |<------------------------|_|
+     |                              | |                          |
+     |                              |_|                          |
+     |                               |                           |
+     |                               |                           |
+     |                               |                           |
+     |                               |                           |
