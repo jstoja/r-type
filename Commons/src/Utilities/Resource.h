@@ -3,6 +3,7 @@
 
 # include <iostream>
 # include "Types.h"
+# include "ByteArray.h"
 
 namespace Utilities {
   class Resource {
@@ -25,10 +26,18 @@ namespace Utilities {
     std::string const& getName() const;
     //! Name setter
     void	setName(std::string const&);
+    //! File getter
+    ByteArray const&	getFile() const;
     //! ID getter
     uint32 getId() const;
 
   private:
+    //! Read file and put in into a ByteArray
+    void	readFile();
+    //! Array setter
+    void	setArray(ByteArray const&);
+
+    ByteArray	_file;
     uint32		_id;
     std::string	_name;
   };
