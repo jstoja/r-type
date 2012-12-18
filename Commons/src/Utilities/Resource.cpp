@@ -49,13 +49,11 @@ Utilities::ByteArray const&	Utilities::Resource::getFile() const {
   return _file;
 }
 
-void	Utilities::Resource::setArray(ByteArray const& cpy)
-{
+void	Utilities::Resource::setArray(ByteArray const& cpy) {
   _file = cpy;
 }
 
 void	Utilities::Resource::readFile() {
-  //Utilities::Application	app = Utilities::Application::getInstance();  
   std::ifstream	ifs(_name.c_str(), std::ios::binary);
   char*		buffer;
   uint32		fileSize;
