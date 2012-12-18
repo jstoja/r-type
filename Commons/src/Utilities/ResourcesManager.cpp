@@ -14,8 +14,7 @@ void Utilities::ResourcesManager::addResource(Resource *resource) {
 
 void Utilities::ResourcesManager::removeResource(std::string const& name) {
   Resource *item = getResource(name);
-  if (item != NULL)
-    {
+  if (item != NULL) {
       _resourcesId.erase(item->getId());
       _resourcesName.erase(item->getName());
     }
