@@ -21,10 +21,13 @@ namespace Utilities {
     //! Remove resource from map
     void removeResource(std::string const&);
     
-    //! Get a resource (and load if necessary)
-    Resource*	getResource(std::string const& name);
+    //! Get a resource by name
+    Resource*	getResource(std::string const&);
+    //! Get a resource by id
+    Resource*	getResource(uint32_t) const;
   private:
-    std::map<std::string, Resource*>	_resources;
+    std::map<uint32_t, Resource*>		_resourcesId;
+    std::map<std::string, Resource*>	_resourcesName;
   };
 
 }
