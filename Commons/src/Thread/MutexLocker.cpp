@@ -1,7 +1,5 @@
 #include "MutexLocker.h"
 
-#include <unistd.h>
-
 Threading::MutexLocker::MutexLocker(Mutex *mutex) : _mutex(mutex) {
 	if (_mutex)
 		_mutex->lock();

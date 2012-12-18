@@ -7,7 +7,15 @@ PROJECT ("R-Type")
 # Variable
 #
 
-SET (EXECUTABLE_OUTPUT_PATH ..)
+SET (EXECUTABLE_OUTPUT_PATH CMAKE_CURRENT_LIST_FILE)
+
+#
+# Include Directories
+#
+
+INCLUDE_DIRECTORIES (
+	Commons/src
+)
 
 #
 # Sources
