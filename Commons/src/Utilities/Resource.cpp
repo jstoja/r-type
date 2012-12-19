@@ -64,5 +64,10 @@ void	Utilities::Resource::readFile() {
   buffer = new char[fileSize];
   ifs.read(buffer, fileSize);
   ifs.close();
-  _file.setAll(buffer, fileSize);
+  _file.bufcopy(buffer, fileSize);
+  _file.debug();
+
+  ByteArray	toto("loool", 5);
+  _file.append(toto);
+  _file.debug();
 }

@@ -7,7 +7,7 @@
 # include "Singleton.hpp"
 
 namespace Utilities {
-
+	
   class Application : public Singleton<Application> {
     friend class Singleton<Application>;
 
@@ -23,8 +23,11 @@ namespace Utilities {
     //! Get the resources path
     std::string const&	getResourcesPath() const;
 
+    //! Contact path for resources
+    void	concatPath();
+
   private:
-    char		**_av;
+    char**		_av;
     int32		_ac;
     std::string	_resourcesPath;
   };

@@ -3,6 +3,7 @@
 
 # include <iostream>
 # include <string>
+# include <vector>
 # include "Types.h"
 
 namespace Utilities {
@@ -28,26 +29,22 @@ namespace Utilities {
     ByteArray&	operator<<(ByteArray const&);
 
     //! Buffer getter
-    char*		getBuffer() const;
+    std::vector<char>	getBuffer() const;
     //! Size getter
     uint32		getSize() const;
-    //! Size setter
-    void		setSize(uint32);
-    //! Buffer and size setters
-    void		setAll(const char *, uint32);
     //! Append ByteArray
     void		append(ByteArray const&);
     //! Append char * / uint32
     void		append(char *, uint32);
+    //! Copy buffer with char * + size
+    void		bufcopy(const char *, uint32);
+    //! Copy vector
+    void		bufcopy(std::vector<char> const&);
+    void		debug() const;
   private:
-    char*		_buffer;
-    uint32		_size;
+    std::vector<char>	_buffer;
   };
 
 }
-
-//! Show
-std::ostream&	operator<<(std::ostream &os, Utilities::ByteArray const&);
-
 
 #endif
