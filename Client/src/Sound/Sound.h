@@ -1,3 +1,10 @@
+//
+//  Sound.h
+//  r-type
+//
+//  Created by Franck Lavisse on 19/12/12.
+//
+//
 #ifndef _SFML_SOUND_H_
 # define _SFML_SOUND_H_
 

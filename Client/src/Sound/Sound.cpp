@@ -1,4 +1,10 @@
-
+//
+//  Sound.cpp
+//  r-type
+//
+//  Created by Franck Lavisse on 19/12/12.
+//
+//
 # include <SFML/Audio.hpp>
 
 #include "Utilities/UUIDGenerator.h"

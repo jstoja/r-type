@@ -1,3 +1,10 @@
+//
+//  Channel.h
+//  r-type
+//
+//  Created by Franck Lavisse on 19/12/12.
+//
+//
 #ifndef _CHANNEL_H_
 # define _CHANNEL_H_
 
