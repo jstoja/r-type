@@ -49,8 +49,7 @@ bool		Utilities::ByteArray::operator!=(ByteArray const& cmp) {
   return false;
 }
 
-Utilities::ByteArray&	Utilities::ByteArray::operator<<(ByteArray const& cpy)
-{
+Utilities::ByteArray&	Utilities::ByteArray::operator<<(ByteArray const& cpy) {
   append(cpy);
   return *this;
 }
