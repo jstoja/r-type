@@ -95,6 +95,11 @@ TARGET_LINK_LIBRARIES (
     ${GLEW_LIBRARIES}
 )
 
+iF(UNIX)
+    TARGET_LINK_LIBRARIES (Client pthread)
+    TARGET_LINK_LIBRARIES (Server pthread)
+ENDIF(UNIX)
+
 #
 # Copy resources to bundle directory (post build)
 #
