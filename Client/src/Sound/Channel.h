@@ -3,6 +3,7 @@
 
 # include <iostream>
 # include <string>
+# include "Types.h"
 
 namespace Sound {
 

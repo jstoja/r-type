@@ -17,35 +17,47 @@ bool	Sound::ChannelGroup::load(Sound* sound) {
   return false;
 } 
 
-void	Sound::ChannelGroup::play(uint32 id) {
+bool	Sound::ChannelGroup::play(uint32 id) {
   Sound	*sound = getSound(id);
 
-  if (sound)
+  if (sound) {
     sound->play();
+    return true;
+  }
+  return false;
 }
 
-void	Sound::ChannelGroup::play(std::string const& name) {
+bool	Sound::ChannelGroup::play(std::string const& name) {
   Sound	*sound = getSound(name);
 
-  if (sound)
+  if (sound) {    
     sound->play();
+    return true;
+  }
+  return false;
 }
 
-void	Sound::ChannelGroup::stop(std::string const& name) {
+bool	Sound::ChannelGroup::stop(std::string const& name) {
   Sound	*sound = getSound(name);
 
-  if (sound)
+  if (sound) {
     sound->stop();
+    return true;
+  }
+  return false;
 }
 
-void	Sound::ChannelGroup::stop(uint32 id) {
+bool	Sound::ChannelGroup::stop(uint32 id) {
   Sound	*sound = getSound(id);
 
-  if (sound)
+  if (sound) {
     sound->stop();
+    return true;
+  }
+  return false;
 }
 
-void	Sound::ChannelGroup::remove(std::string const& name) {
+bool	Sound::ChannelGroup::remove(std::string const& name) {
   Sound	*sound = getSound(name);
 
   if (sound)
@@ -58,10 +70,12 @@ void	Sound::ChannelGroup::remove(std::string const& name) {
       }
       if (it != _channels.end())
 	_channels.erase(it);
+      return true;
     }
+  return false;
 }
 
-void	Sound::ChannelGroup::remove(uint32 id) {
+bool	Sound::ChannelGroup::remove(uint32 id) {
   Sound	*sound = getSound(id);
 
   if (sound)
@@ -74,7 +88,9 @@ void	Sound::ChannelGroup::remove(uint32 id) {
       }
       if (it != _channels.end())
 	_channels.erase(it);
+      return true;
     }
+  return false;
 }
 
 bool	Sound::ChannelGroup::isPlaying(uint32 id) {

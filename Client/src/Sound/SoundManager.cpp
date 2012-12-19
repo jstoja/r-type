@@ -1,5 +1,7 @@
-#include "SoundManager.h"
+#include "Channel.h"
+#include "ChannelGroup.h"
 #include "Sound.h"
+#include "SoundManager.h"
 
 Sound::SoundManager::SoundManager() {  
 }
@@ -8,34 +10,66 @@ Sound::SoundManager::~SoundManager() {
 }
 
 void	Sound::SoundManager::load(std::string const& name) {
+  std::list<ChannelGroup*>::iterator it;
   Sound		*snd = new Sound(name);
 
   _soundsName[name] = snd;
   _soundsId[snd->getId()] = snd;
+
+  for (it = _channelsGroups.begin(); it != _channelsGroups.end(); ++it)
+    if ((*it)->load(snd) == true)
+      break;
+  if (it == _channelsGroups.end()) {
+    _channelsGroups.push_back(new ChannelGroup());
+    _channelsGroups.back()->load(snd);
+  }
 }
 
 void	Sound::SoundManager::remove(std::string const& name) {
+  std::list<ChannelGroup*>::iterator it;
   Sound *item = getSound(name);
 
   if (item != NULL) {
       _soundsId.erase(item->getId());
       _soundsName.erase(item->getName());
+      for (it = _channelsGroups.begin(); it != _channelsGroups.end(); ++it)
+	if ((*it)->remove(name) == true)
+	  break;
   }
 }
 
-void	Sound::SoundManager::play(std::string const& name) {
+void	Sound::SoundManager::remove(uint32 id) {
+  std::list<ChannelGroup*>::iterator it;
+  Sound *item = getSound(id);
+
+  if (item != NULL) {
+      _soundsId.erase(item->getId());
+      _soundsName.erase(item->getName());
+      for (it = _channelsGroups.begin(); it != _channelsGroups.end(); ++it)
+	if ((*it)->remove(id) == true)
+	  break;
+  }
+}
+
+void	Sound::SoundManager::play(std::string const& name) {  
+  std::list<ChannelGroup*>::iterator it;
   Sound *item = getSound(name);
 
   if (item != NULL) {
-    item->play();
+    for (it = _channelsGroups.begin(); it != _channelsGroups.end(); ++it)
+      if ((*it)->play(name) == true)
+	break;
   }
 }
 
 void	Sound::SoundManager::play(uint32 id) {
+  std::list<ChannelGroup*>::iterator it;
   Sound *item = getSound(id);
 
   if (item != NULL) {
-    item->play();
+    for (it = _channelsGroups.begin(); it != _channelsGroups.end(); ++it)
+      if ((*it)->play(id) == true)
+	break;
   }
 }
 
@@ -73,14 +107,14 @@ bool	Sound::SoundManager::isPlaying(std::string const& name) {
   return false;
 }
 
-int	main() {
-  Sound::SoundManager	manager;
+// int	main() {
+//   Sound::SoundManager	manager;
 
-  manager.load("marseille.wav");
-  //  manager.load("highpass.wav");
-  manager.play("marseille.wav");
-  //  manager.play("highpass.wav");
-  sleep(2);
+//   manager.load("marseille.wav");
+//   manager.load("highpass.wav");
+//   manager.play("marseille.wav");
+//   manager.play("highpass.wav");
+//   sleep(2);
   // manager.load("marseille.wav");
   // manager.play("marseille.wav");
   // sleep(2);
@@ -91,5 +125,5 @@ int	main() {
   // Sound::I Sound *snd2 = manager.getSound("marseille.wav");
   // if (snd2 == NULL)
   //   std::cerr << "succes" << std::endl;
-  return (0);
-}
+//   return (0);
+// }

@@ -4,12 +4,14 @@
 # include <iostream>
 # include <string>
 # include <map>
+# include <list>
 # include "Types.h"
 
 namespace Sound {
   
   class	Sound;
-  
+  class	ChannelGroup;
+
   class	SoundManager {
   public:
     //! Constructor
@@ -21,6 +23,8 @@ namespace Sound {
     void	load(std::string const&);
     //! Remove a sound by name
     void	remove(std::string const&);
+    //! Remove a sound by id
+    void	remove(uint32);
 
     //! Play sound by name
     void	play(std::string const&);
@@ -37,9 +41,10 @@ namespace Sound {
 
     //! isPlaying by name
     bool	isPlaying(std::string const&);
-  private:    
-    std::map<uint32, Sound*>		_soundsId;
-    std::map<std::string, Sound*>	_soundsName;
+  private: 
+    std::list<ChannelGroup*>			_channelsGroups;
+    std::map<uint32, Sound*>			_soundsId;
+    std::map<std::string, Sound*>		_soundsName;
   };
 
 }
