@@ -8,7 +8,7 @@
 
 namespace Sound {
   
-  class	ISound;
+  class	Sound;
   
   class	SoundManager {
   public:
@@ -28,13 +28,18 @@ namespace Sound {
     void	play(uint32);
 
     //! Get sound by id
-    ISound	*getSound(uint32);
+    Sound	*getSound(uint32);
     //! Get sound by name
-    ISound *getSound(std::string const&);
+    Sound *getSound(std::string const&);
 
-  private:
-    std::map<uint32, ISound*>		_soundsId;
-    std::map<std::string, ISound*>	_soundsName;
+    //! isPlaying by id
+    bool	isPlaying(uint32);
+
+    //! isPlaying by name
+    bool	isPlaying(std::string const&);
+  private:    
+    std::map<uint32, Sound*>		_soundsId;
+    std::map<std::string, Sound*>	_soundsName;
   };
 
 }

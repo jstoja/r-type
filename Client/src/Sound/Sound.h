@@ -8,15 +8,13 @@
 
 namespace Sound {
 
-  class	ISound;
-
-  class	SFMLSound : public ISound {
+  class	Sound {
   public:
     //! Constructor
-    SFMLSound(std::string const&);
+    Sound(std::string const&);
 
     //! Destructor
-    ~SFMLSound();
+    ~Sound();
 
     //! Load a sound
     void	load(std::string const&);
@@ -32,6 +30,13 @@ namespace Sound {
 
     //! Name getter
     std::string const&	getName() const;
+
+    //! Return true if son is playing
+    bool	isPlaying() const;
+
+    //! Comparaison operator
+    bool	operator==(Sound const&);
+
   private:
     uint32			_id;
     std::string		_name;
