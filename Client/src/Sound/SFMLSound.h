@@ -4,24 +4,36 @@
 # include <SFML/audio.hpp>
 # include <iostream>
 # include <string>
-# include "ISound.h"
+# include "Types.h"
 
 namespace Sound {
+
+  class	ISound;
 
   class	SFMLSound : public ISound {
   public:
     //! Constructor
     SFMLSound(std::string const&);
+
     //! Destructor
     ~SFMLSound();
+
     //! Load a sound
     void	load(std::string const&);
+
     //! Play sound
     void	play();
+
     //! Stop playing sound
     void	stop();
+
+    //! Id getter
+    uint32	getId() const;
+
+    //! Name getter
+    std::string const&	getName() const;
   private:
-    int			_id;
+    uint32			_id;
     std::string		_name;
     sf::SoundBuffer	_buf;
     sf::Sound		_sound;

@@ -1,4 +1,5 @@
 #include "UUIDGenerator.h"
+#include "ISound.h"
 #include "SFMLSound.h"
 
 Sound::SFMLSound::SFMLSound(std::string const& name) {  
@@ -26,6 +27,14 @@ void	Sound::SFMLSound::load(std::string const& name) {
     _sound.SetBuffer(_buf);
   else
     std::cerr << "load from file fail" << std::endl;
+}
+
+uint32	Sound::SFMLSound::getId() const {
+  return _id;
+}
+
+std::string const&	Sound::SFMLSound::getName() const {
+  return _name;
 }
 
 int	main() {
