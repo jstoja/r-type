@@ -37,6 +37,8 @@ Graphic::Renderer::Renderer(Settings const& settings)
     
     Log("OpenGL Version " << contextSettings.majorVersion << "." << contextSettings.minorVersion
         << ", Antialiasing level: " << _antialiasingLevel);
+    
+    sleep(2);
 }
 
 Graphic::Renderer::~Renderer() {
