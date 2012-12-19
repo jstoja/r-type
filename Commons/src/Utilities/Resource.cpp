@@ -1,3 +1,12 @@
+//
+// Resource.cpp for R-Type in /home/olivie_a/R-Type
+//
+// Made by Samuel Olivier
+// Login   <olivie_a@epitech.net>
+// 
+// Started on  mer. déc. 19 12:18:37 2012 Samuel Olivier
+//
+
 #include <fstream>
 #include "UUIDGenerator.h"
 #include "Resource.h"
@@ -59,7 +68,7 @@ void	Utilities::Resource::readFile() {
   uint32		fileSize;
 
   ifs.seekg(0, std::ios::end);
-  fileSize = ifs.tellg();
+  fileSize = (uint32)ifs.tellg();
   ifs.seekg(0, std::ios::beg);
   buffer = new char[fileSize];
   ifs.read(buffer, fileSize);

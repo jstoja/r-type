@@ -1,3 +1,12 @@
+//
+// ByteArray.cpp for R-Type in /home/olivie_a/R-Type
+//
+// Made by Samuel Olivier
+// Login   <olivie_a@epitech.net>
+// 
+// Started on  mer. déc. 19 12:18:52 2012 Samuel Olivier
+//
+
 #include <cstring>
 #include <algorithm>
 #include "ByteArray.h"
@@ -26,12 +35,12 @@ Utilities::ByteArray&	Utilities::ByteArray::operator=(ByteArray const& cpy) {
 }
 
 bool		Utilities::ByteArray::operator==(ByteArray const& cmp) {
-  uint64	bufsize = cmp.getSize();
-  uint64	currentSize = getSize();
+  uint32	bufsize = cmp.getSize();
+  uint32	currentSize = getSize();
   if (bufsize != currentSize)
     return false;
   std::vector<char> buf = cmp.getBuffer();
-  for (uint64 i = 0; i < bufsize; ++i)
+  for (uint32 i = 0; i < bufsize; ++i)
     if (buf[i] != _buffer[i])
       return false;
   return true;
@@ -63,8 +72,8 @@ uint32	Utilities::ByteArray::getSize() const {
 }
 
 void	  Utilities::ByteArray::append(ByteArray const& cpy) {
-  uint64 bufsize = cpy.getSize();
-  uint64 pos = getSize();
+  uint32 bufsize = cpy.getSize();
+  uint32 pos = getSize();
   std::vector<char> buf = cpy.getBuffer();
   
   _buffer.resize(getSize() + bufsize);

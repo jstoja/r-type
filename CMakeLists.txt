@@ -2,12 +2,35 @@ CMAKE_MINIMUM_REQUIRED (VERSION 2.8)
 
 PROJECT ("R-Type")
 
+#
+# Variables
+#
+
+SET (RTYPE_BUNDLES_PATH ${CMAKE_SOURCE_DIR}/Bin)
+SET (RTYPE_CLIENT_BUNDLE_PATH ${RTYPE_BUNDLES_PATH}/Client)
+SET (RTYPE_SERVER_BUNDLE_PATH ${RTYPE_BUNDLES_PATH}/Server)
 
 #
-# Variable
+# Custom CMake modules
 #
 
-SET (EXECUTABLE_OUTPUT_PATH CMAKE_CURRENT_LIST_FILE)
+SET (
+    CMAKE_MODULE_PATH
+    ${CMAKE_SOURCE_DIR}/CMakeModules ${CMAKE_MODULE_PATH}
+)
+
+#
+# Dependencies
+#
+
+# Find SFML
+FIND_PACKAGE (SFML 2 REQUIRED window graphics)
+
+# Find OpenGL
+FIND_PACKAGE (OpenGL REQUIRED)
+
+# Find Glew
+FIND_PACKAGE (GLEW REQUIRED)
 
 #
 # Include Directories
@@ -15,6 +38,8 @@ SET (EXECUTABLE_OUTPUT_PATH CMAKE_CURRENT_LIST_FILE)
 
 INCLUDE_DIRECTORIES (
 	Commons/src
+    ${SFML_INCLUDE_DIR}
+    ${GLEW_INCLUDE_DIR}
 )
 
 #
@@ -42,6 +67,12 @@ FILE (
     Client/src/*
 )
 
+FILE (
+    GLOB_RECURSE
+    CLIENT_RESOURCES
+    Client/Resources/*
+)
+
 #
 # Exec
 #
@@ -49,8 +80,16 @@ FILE (
 # Client
 ADD_EXECUTABLE(
     Client
+    MACOSX_BUNDLE
     ${COMMONS_SOURCE}
     ${CLIENT_SOURCE}
+    ${CLIENT_RESOURCES}
+)
+
+SET_SOURCE_FILES_PROPERTIES (
+  ${CLIENT_RESOURCES}
+  PROPERTIES
+  MACOSX_PACKAGE_LOCATION Resources
 )
 
 # Server
@@ -58,4 +97,89 @@ ADD_EXECUTABLE(
     Server
     ${COMMONS_SOURCE}
     ${SERVER_SOURCE}
+)
+
+#
+# Library linking
+#
+
+TARGET_LINK_LIBRARIES (
+    Client
+    ${SFML_LIBRARIES}
+    ${OPENGL_LIBRARIES}
+    ${GLEW_LIBRARIES}
+)
+
+iF (UNIX)
+    TARGET_LINK_LIBRARIES (Client pthread)
+    TARGET_LINK_LIBRARIES (Server pthread)
+ENDIF(UNIX)
+
+#
+# Setup bundles
+#
+
+# Client bundle
+
+SET_PROPERTY (
+    TARGET Client
+    PROPERTY RUNTIME_OUTPUT_DIRECTORY ${RTYPE_CLIENT_BUNDLE_PATH}
+)
+
+SET_PROPERTY (
+    TARGET Client
+    PROPERTY RUNTIME_OUTPUT_DIRECTORY_DEBUG ${RTYPE_CLIENT_BUNDLE_PATH}
+)
+
+SET_PROPERTY (
+    TARGET Client
+    PROPERTY RUNTIME_OUTPUT_DIRECTORY_RELEASE ${RTYPE_CLIENT_BUNDLE_PATH}
+)
+
+IF (APPLE)
+# Mac Bundle (.app)
+
+SET_PROPERTY (
+    TARGET Client
+    PROPERTY MACOSX_BUNDLE_ICON_FILE icon.icns
+)
+
+ELSE ()
+
+# Copy resources to bundle directory
+
+ADD_CUSTOM_COMMAND (
+    TARGET Client POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${PROJECT_SOURCE_DIR}/Client/Resources"
+        ${RTYPE_CLIENT_BUNDLE_PATH}/Resources)
+        
+ENDIF ()
+
+# Server bundle
+
+SET_PROPERTY (
+    TARGET Server
+    PROPERTY RUNTIME_OUTPUT_DIRECTORY ${RTYPE_SERVER_BUNDLE_PATH}
+)
+
+SET_PROPERTY (
+    TARGET Server
+    PROPERTY RUNTIME_OUTPUT_DIRECTORY_DEBUG ${RTYPE_SERVER_BUNDLE_PATH}
+)
+
+SET_PROPERTY (
+    TARGET Server
+    PROPERTY RUNTIME_OUTPUT_DIRECTORY_RELEASE ${RTYPE_SERVER_BUNDLE_PATH}
+)
+
+# 
+# Copy resources to bundle directory
+# 
+
+ADD_CUSTOM_COMMAND (
+    TARGET Server POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${PROJECT_SOURCE_DIR}/Server/Resources"
+        ${RTYPE_SERVER_BUNDLE_PATH}/Resources
 )

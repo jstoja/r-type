@@ -1,3 +1,12 @@
+//
+// Mutex.h for R-Type in /home/olivie_a/R-Type
+//
+// Made by Samuel Olivier
+// Login   <olivie_a@epitech.net>
+// 
+// Started on  mer. déc. 19 12:20:32 2012 Samuel Olivier
+//
+
 #ifndef _MUTEX_H_
 # define _MUTEX_H_
 
