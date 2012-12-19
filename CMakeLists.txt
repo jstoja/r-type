@@ -67,6 +67,12 @@ FILE (
     Client/src/*
 )
 
+FILE (
+    GLOB_RECURSE
+    CLIENT_RESOURCES
+    Client/Resources/*
+)
+
 #
 # Exec
 #
@@ -74,8 +80,16 @@ FILE (
 # Client
 ADD_EXECUTABLE(
     Client
+    MACOSX_BUNDLE
     ${COMMONS_SOURCE}
     ${CLIENT_SOURCE}
+    ${CLIENT_RESOURCES}
+)
+
+SET_SOURCE_FILES_PROPERTIES (
+  ${CLIENT_RESOURCES}
+  PROPERTIES
+  MACOSX_PACKAGE_LOCATION Resources
 )
 
 # Server
@@ -96,7 +110,7 @@ TARGET_LINK_LIBRARIES (
     ${GLEW_LIBRARIES}
 )
 
-iF(UNIX)
+iF (UNIX)
     TARGET_LINK_LIBRARIES (Client pthread)
     TARGET_LINK_LIBRARIES (Server pthread)
 ENDIF(UNIX)
@@ -122,6 +136,16 @@ SET_PROPERTY (
     PROPERTY RUNTIME_OUTPUT_DIRECTORY_RELEASE ${RTYPE_CLIENT_BUNDLE_PATH}
 )
 
+IF (APPLE)
+# Mac Bundle (.app)
+
+SET_PROPERTY (
+    TARGET Client
+    PROPERTY MACOSX_BUNDLE_ICON_FILE icon.icns
+)
+
+ELSE ()
+
 # Copy resources to bundle directory
 
 ADD_CUSTOM_COMMAND (
@@ -129,6 +153,8 @@ ADD_CUSTOM_COMMAND (
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${PROJECT_SOURCE_DIR}/Client/Resources"
         ${RTYPE_CLIENT_BUNDLE_PATH}/Resources)
+        
+ENDIF ()
 
 # Server bundle
 
