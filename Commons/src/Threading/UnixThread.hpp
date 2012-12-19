@@ -6,7 +6,7 @@
 # if defined (OS_UNIX)
 
 #  include <pthread.h>
-
+#include <iostream>
 namespace Threading {
 
 	template<class T>
@@ -30,7 +30,7 @@ namespace Threading {
 		/*!  
 			Construct the thread and save the object that will be used to launch the thread
 		*/
-		Thread(T *obj) : _obj(obj), _thread(NULL) {
+		Thread(T *obj) : _obj(obj) {
 		}
 
 		//! Destructor
@@ -47,8 +47,7 @@ namespace Threading {
 			Launch the thread by calling the operator() of the object given in the constructor
 		*/
 		void run(void) {
-			if (_thread == NULL)
-				pthread_create(&_thread, NULL, _unixThreadCallback<T>, _obj);
+		  pthread_create(&_thread, NULL, &(_unixThreadCallback<T>), _obj);
 		}
 
 		//! Wait for the thread
@@ -56,12 +55,12 @@ namespace Threading {
 			Wait for the thread end
 		*/
 		void join(void) {
-			pthread_join(_thread, NULL);
+			pthread_join(&_thread, NULL);
 		}
 
 	private:
 		T*			_obj;
-		pthread_t	_thread;
+		pthread_t		_thread;
 	};
 };
 
