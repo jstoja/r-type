@@ -37,7 +37,9 @@ FIND_PACKAGE (GLEW REQUIRED)
 #
 
 INCLUDE_DIRECTORIES (
-	Commons/src
+	${CMAKE_SOURCE_DIR}/Commons/src
+    ${CMAKE_SOURCE_DIR}/Client/src
+    ${CMAKE_SOURCE_DIR}/Server/src
     ${SFML_INCLUDE_DIR}
     ${GLEW_INCLUDE_DIR}
 )
@@ -196,6 +198,13 @@ FILE (
 
 SET (RTYPE_TESTS_PATH ${RTYPE_BUNDLES_PATH}/Tests)
 
+# Get all project source files without mains
+SET (COMMON_TESTS_SOURCE ${CLIENT_SOURCE} ${SERVER_SOURCE} ${COMMONS_SOURCE})
+FILE (GLOB CLIENT_MAIN ${CMAKE_SOURCE_DIR}/Client/src/main.cpp)
+FILE (GLOB SERVER_MAIN ${CMAKE_SOURCE_DIR}/Server/src/main.cpp)
+LIST (REMOVE_ITEM COMMON_TESTS_SOURCE ${CLIENT_MAIN})
+LIST (REMOVE_ITEM COMMON_TESTS_SOURCE ${SERVER_MAIN})
+
 FOREACH (TEST_FILE ${TESTS_FILES})
     # Get test file name without extension
     GET_FILENAME_COMPONENT (
@@ -210,6 +219,7 @@ FOREACH (TEST_FILE ${TESTS_FILES})
     ADD_EXECUTABLE (
         ${TEST_NAME}
         ${TEST_FILE}
+        ${COMMON_TESTS_SOURCE}
     )
     
     # Add dependency to all used libraries
