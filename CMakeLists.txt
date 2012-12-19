@@ -183,3 +183,56 @@ ADD_CUSTOM_COMMAND (
         "${PROJECT_SOURCE_DIR}/Server/Resources"
         ${RTYPE_SERVER_BUNDLE_PATH}/Resources
 )
+
+#
+# Setup building of tests
+#
+
+FILE (
+    GLOB
+    TESTS_FILES
+    ${CMAKE_SOURCE_DIR}/Tests/*.cpp
+)
+
+SET (RTYPE_TESTS_PATH ${RTYPE_BUNDLES_PATH}/Tests)
+
+FOREACH (TEST_FILE ${TESTS_FILES})
+    # Get test file name without extension
+    GET_FILENAME_COMPONENT (
+        TEST_NAME
+        ${TEST_FILE}
+        NAME_WE
+    )
+
+    SET (TEST_NAME Test_${TEST_NAME})
+
+    # Create test binary
+    ADD_EXECUTABLE (
+        ${TEST_NAME}
+        ${TEST_FILE}
+    )
+    
+    # Add dependency to all used libraries
+    TARGET_LINK_LIBRARIES (
+        ${TEST_NAME}
+        ${SFML_LIBRARIES}
+        ${OPENGL_LIBRARIES}
+        ${GLEW_LIBRARIES}
+    )
+    
+    # Put binaries in a Tests directory
+    SET_PROPERTY (
+        TARGET ${TEST_NAME}
+        PROPERTY RUNTIME_OUTPUT_DIRECTORY RTYPE_TESTS_PATH
+    )
+
+    SET_PROPERTY (
+        TARGET ${TEST_NAME}
+        PROPERTY RUNTIME_OUTPUT_DIRECTORY_DEBUG ${RTYPE_TESTS_PATH}
+    )
+
+    SET_PROPERTY (
+        TARGET ${TEST_NAME}
+        PROPERTY RUNTIME_OUTPUT_DIRECTORY_RELEASE ${RTYPE_TESTS_PATH}
+    )
+ENDFOREACH ()
