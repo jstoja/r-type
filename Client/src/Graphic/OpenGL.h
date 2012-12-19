@@ -12,6 +12,9 @@
 # include <OS.h>
 
 # include <GL/glew.h>
+# if defined(OS_WINDOWS)
+#  include <GL/wglew.h>
+# endif
 
 namespace Graphic {
     
