@@ -9,6 +9,10 @@ Utilities::ByteArray::ByteArray(const char *buffer,  uint32 size) {
   bufcopy(buffer, size);
 }
 
+Utilities::ByteArray::ByteArray(uint32 size) {
+  _buffer.resize(size);
+}
+
 Utilities::ByteArray::ByteArray(ByteArray const& cpy) {
   bufcopy(cpy.getBuffer());
 }

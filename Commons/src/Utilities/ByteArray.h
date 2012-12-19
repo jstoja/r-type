@@ -12,6 +12,8 @@ namespace Utilities {
   public:
     //! Constructor
     ByteArray();
+    //! Construct with size only
+    ByteArray(uint32);
     //! Constructor with buffer and size
     ByteArray(const char *,  uint32);
     //! Copy constructor
