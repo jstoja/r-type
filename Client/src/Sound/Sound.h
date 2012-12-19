@@ -1,7 +1,7 @@
 #ifndef _SFML_SOUND_H_
 # define _SFML_SOUND_H_
 
-# include <SFML/audio.hpp>
+# include <SFML/Audio.hpp>
 # include <iostream>
 # include <string>
 # include "Types.h"
@@ -10,6 +10,7 @@ namespace Sound {
 
   class	Sound {
   public:
+      
     //! Constructor
     Sound(std::string const&);
 

@@ -24,7 +24,7 @@ SET (
 #
 
 # Find SFML
-FIND_PACKAGE (SFML 2 REQUIRED window graphics)
+FIND_PACKAGE (SFML 2 REQUIRED window graphics audio)
 
 # Find OpenGL
 FIND_PACKAGE (OpenGL REQUIRED)

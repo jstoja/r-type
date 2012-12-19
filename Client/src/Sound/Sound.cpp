@@ -1,11 +1,14 @@
-#include "UUIDGenerator.h"
+
+# include <SFML/Audio.hpp>
+
+#include "Utilities/UUIDGenerator.h"
 #include "Sound.h"
 
 Sound::Sound::Sound(std::string const& name) {  
   _id = Utilities::UUIDGenerator::getInstance().getUUID();
   _name = name;
-  if (_buf.LoadFromFile(name))
-    _sound.SetBuffer(_buf);
+  if (_buf.loadFromFile(name))
+    _sound.setBuffer(_buf);
   else
     std::cerr << "load fail" << std::endl;
 }
@@ -14,16 +17,16 @@ Sound::Sound::~Sound() {
 }
 
 void	Sound::Sound::play() {
-  _sound.Play();
+  _sound.play();
 }
 
 void	Sound::Sound::stop() {
-  _sound.Stop();
+  _sound.stop();
 }
 
 void	Sound::Sound::load(std::string const& name) {
-  if (_buf.LoadFromFile(name))
-    _sound.SetBuffer(_buf);
+  if (_buf.loadFromFile(name))
+    _sound.setBuffer(_buf);
   else
     std::cerr << "load fail" << std::endl;
 }
@@ -37,7 +40,7 @@ std::string const&	Sound::Sound::getName() const {
 }
 
 bool	Sound::Sound::isPlaying() const {
-  sf::Sound::Status st = _sound.GetStatus();
+  sf::Sound::Status st = _sound.getStatus();
   
   if (st == sf::Sound::Paused || st == sf::Sound::Stopped)
     return false;
