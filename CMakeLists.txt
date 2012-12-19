@@ -110,7 +110,7 @@ TARGET_LINK_LIBRARIES (
     ${GLEW_LIBRARIES}
 )
 
-iF(UNIX)
+iF (UNIX)
     TARGET_LINK_LIBRARIES (Client pthread)
     TARGET_LINK_LIBRARIES (Server pthread)
 ENDIF(UNIX)
@@ -138,6 +138,11 @@ SET_PROPERTY (
 
 IF (APPLE)
 # Mac Bundle (.app)
+
+SET_PROPERTY (
+    TARGET Client
+    PROPERTY MACOSX_BUNDLE_ICON_FILE icon.icns
+)
 
 ELSE ()
 
