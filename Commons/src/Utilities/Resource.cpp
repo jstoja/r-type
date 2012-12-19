@@ -65,9 +65,9 @@ void	Utilities::Resource::readFile() {
   ifs.read(buffer, fileSize);
   ifs.close();
   _file.bufcopy(buffer, fileSize);
-  _file.debug();
+  // _file.debug();
 
-  ByteArray	toto("loool", 5);
-  _file.append(toto);
-  _file.debug();
+  // ByteArray	toto("loool", 5);
+  // _file.append(toto);
+  // _file.debug();
 }

@@ -70,7 +70,7 @@ void	  Utilities::ByteArray::append(ByteArray const& cpy) {
 }
 
 void    Utilities::ByteArray::append(char *buffer, uint32 size) {
-  uint32 pos = size;
+  uint32 pos = getSize();
 
   _buffer.resize(getSize() + size);
   for (uint32 i = 0; i < size; ++i)
