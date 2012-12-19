@@ -9,12 +9,33 @@ PROJECT ("R-Type")
 
 SET (EXECUTABLE_OUTPUT_PATH CMAKE_CURRENT_LIST_FILE)
 
+# Custom CMake modules
+SET (
+    CMAKE_MODULE_PATH
+    ${CMAKE_SOURCE_DIR}/CMakeModules ${CMAKE_MODULE_PATH}
+)
+
+#
+# Dependencies
+#
+
+# Find SFML
+FIND_PACKAGE (SFML 2 REQUIRED window graphics)
+
+# Find OpenGL
+FIND_PACKAGE (OpenGL REQUIRED)
+
+# Find Glew
+FIND_PACKAGE (GLEW REQUIRED)
+
 #
 # Include Directories
 #
 
 INCLUDE_DIRECTORIES (
 	Commons/src
+    ${SFML_INCLUDE_DIR}
+    ${GLEW_INCLUDE_DIR}
 )
 
 #
@@ -58,4 +79,15 @@ ADD_EXECUTABLE(
     Server
     ${COMMONS_SOURCE}
     ${SERVER_SOURCE}
+)
+
+#
+# Library linking
+#
+
+TARGET_LINK_LIBRARIES (
+    Client
+    ${SFML_LIBRARIES}
+    ${OPENGL_LIBRARIES}
+    ${GLEW_LIBRARIES}
 )

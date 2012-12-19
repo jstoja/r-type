@@ -1,3 +1,3 @@
-int main(int ac, char **av) {
+int	main(int argc, char *argv[]) {
 	return (0);
 }
