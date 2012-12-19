@@ -6,17 +6,21 @@
 //
 //
 # include <SFML/Audio.hpp>
+# include <iostream>
+# include <stdexcept>
 
 #include "Utilities/UUIDGenerator.h"
 #include "Sound.h"
 
 Sound::Sound::Sound(std::string const& name) {  
-  _id = Utilities::UUIDGenerator::getInstance().getUUID();
-  _name = name;
-  if (_buf.loadFromFile(name))
-    _sound.setBuffer(_buf);
-  else
-    std::cerr << "load fail" << std::endl;
+    try {
+        _id = Utilities::UUIDGenerator::getInstance().getUUID();
+        _name = name;
+        if (_buf.loadFromFile(name))
+            _sound.setBuffer(_buf);
+    } catch (std::exception e) {
+        std::cerr << e.what() << std::endl;
+    }
 }
 
 Sound::Sound::~Sound() {
@@ -31,10 +35,12 @@ void	Sound::Sound::stop() {
 }
 
 void	Sound::Sound::load(std::string const& name) {
-  if (_buf.loadFromFile(name))
-    _sound.setBuffer(_buf);
-  else
-    std::cerr << "load fail" << std::endl;
+    try {
+        if (_buf.loadFromFile(name))
+            _sound.setBuffer(_buf);
+    } catch (std::exception e) {
+        std::cerr << e.what() << std::endl;
+    }
 }
 
 uint32	Sound::Sound::getId() const {

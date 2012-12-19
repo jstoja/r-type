@@ -113,24 +113,3 @@ bool	Sound::SoundManager::isPlaying(std::string const& name) {
   }
   return false;
 }
-
-// int	main() {
-//   Sound::SoundManager	manager;
-
-//   manager.load("marseille.wav");
-//   manager.load("highpass.wav");
-//   manager.play("marseille.wav");
-//   manager.play("highpass.wav");
-//   sleep(2);
-  // manager.load("marseille.wav");
-  // manager.play("marseille.wav");
-  // sleep(2);
-  // Sound::Sound *snd = manager.getSound("marseille.wav");
-  // snd->play();
-  // sleep(2);
-  // manager.remove("marseille.wav");
-  // Sound::I Sound *snd2 = manager.getSound("marseille.wav");
-  // if (snd2 == NULL)
-  //   std::cerr << "succes" << std::endl;
-//   return (0);
-// }
