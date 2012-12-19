@@ -11,12 +11,8 @@
 
 # include <OS.h>
 
-# if defined (OS_WINDOWS)
-#  define GLEW_STATIC
-#  include <Windows.h>
-# endif
 # include <GL/glew.h>
-# include <SFML/Graphics.hpp>
+
 namespace Graphic {
     
 }
