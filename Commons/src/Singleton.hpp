@@ -1,10 +1,10 @@
 //
-// Singleton.hpp for r-type in /home/michar_l//r-type
+// Singleton.hpp for R-Type in /home/olivie_a/R-Type
+//
+// Made by Samuel Olivier
+// Login   <olivie_a@epitech.net>
 // 
-// Made by loick michard
-// Login   <michar_l@epitech.net>
-// 
-// Started on  Mon Dec 17 21:35:01 2012 loick michard
+// Started on  mer. déc. 19 12:19:57 2012 Samuel Olivier
 //
 
 #ifndef _SINGLETON_HPP_

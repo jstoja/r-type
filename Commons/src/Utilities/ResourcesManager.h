@@ -1,3 +1,12 @@
+//
+// ResourcesManager.h for R-Type in /home/olivie_a/R-Type
+//
+// Made by Samuel Olivier
+// Login   <olivie_a@epitech.net>
+// 
+// Started on  mer. déc. 19 12:20:12 2012 Samuel Olivier
+//
+
 #ifndef _RESSOURCESMANAGER_H_
 # define _RESSOURCESMANAGER_H_
 

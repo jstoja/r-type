@@ -1,3 +1,12 @@
+//
+// ByteArray.h for R-Type in /home/olivie_a/R-Type
+//
+// Made by Samuel Olivier
+// Login   <olivie_a@epitech.net>
+// 
+// Started on  mer. déc. 19 12:20:38 2012 Samuel Olivier
+//
+
 #ifndef _BYTE_ARRAY_H_
 # define _BYTE_ARRAY_H_
 

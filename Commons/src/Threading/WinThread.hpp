@@ -1,3 +1,12 @@
+//
+// WinThread.hpp for R-Type in /home/olivie_a/R-Type
+//
+// Made by Samuel Olivier
+// Login   <olivie_a@epitech.net>
+// 
+// Started on  mer. déc. 19 12:20:50 2012 Samuel Olivier
+//
+
 #ifndef _WIN_THREAD_HPP_
 # define _WIN_THREAD_HPP_
 
