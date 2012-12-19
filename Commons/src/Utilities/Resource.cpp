@@ -68,7 +68,7 @@ void	Utilities::Resource::readFile() {
   uint32		fileSize;
 
   ifs.seekg(0, std::ios::end);
-  fileSize = ifs.tellg();
+  fileSize = (uint32)ifs.tellg();
   ifs.seekg(0, std::ios::beg);
   buffer = new char[fileSize];
   ifs.read(buffer, fileSize);

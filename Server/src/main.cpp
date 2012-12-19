@@ -7,6 +7,6 @@
 // Started on  mer. déc. 19 12:35:36 2012 Samuel Olivier
 //
 
-int main(int ac, char **av) {
+int	main(int argc, char *argv[]) {
 	return (0);
 }
