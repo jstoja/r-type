@@ -15,42 +15,42 @@
 
 namespace Sound {
 
-  class	Sound {
-  public:
-      
-    //! Constructor
-    Sound(std::string const&);
+	class	Sound {
+		public:
 
-    //! Destructor
-    ~Sound();
+			//! Constructor
+			Sound(std::string const&);
 
-    //! Load a sound
-    void	load(std::string const&);
+			//! Destructor
+			~Sound();
 
-    //! Play sound
-    void	play();
+			//! Load a sound
+			void				load(std::string const&);
 
-    //! Stop playing sound
-    void	stop();
+			//! Play sound
+			void				play();
 
-    //! Id getter
-    uint32	getId() const;
+			//! Stop playing sound
+			void				stop();
 
-    //! Name getter
-    std::string const&	getName() const;
+			//! Id getter
+			uint32				getId() const;
 
-    //! Return true if son is playing
-    bool	isPlaying() const;
+			//! Name getter
+			std::string const&	getName() const;
 
-    //! Comparaison operator
-    bool	operator==(Sound const&);
+			//! Return true if son is playing
+			bool				isPlaying() const;
 
-  private:
-    uint32			_id;
-    std::string		_name;
-    sf::SoundBuffer	_buf;
-    sf::Sound		_sound;
-  };
+			//! Comparaison operator
+			bool				operator==(Sound const&);
+
+		private:
+			uint32				_id;
+			std::string			_name;
+			sf::SoundBuffer		_buf;
+			sf::Sound			_sound;
+	};
 
 };
 
