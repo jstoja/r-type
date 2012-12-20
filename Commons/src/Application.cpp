@@ -9,13 +9,13 @@
 
 #include "Application.h"
 
-Utilities::Application::Application() {
+Application::Application() {
 }
 
-Utilities::Application::~Application() {
+Application::~Application() {
 }
 
-void	Utilities::Application::concatPath() {
+void Application::concatPath() {
   _resourcesPath = _av[0];
 # if defined OS_WINDOWS
   // ajouter la fonction pour gerer ca sous windaube
@@ -26,12 +26,12 @@ void	Utilities::Application::concatPath() {
 
 }
 
-void	Utilities::Application::init(char **av, int32 ac) {
+void Application::init(char **av, int32 ac) {
   _av = av;
   _ac = ac;  
   concatPath();
 }
 
-std::string const&	Utilities::Application::getResourcesPath() const {
+std::string const& Application::getResourcesPath() const {
   return _resourcesPath;
 }

@@ -14,8 +14,7 @@
 # include "Types.h"
 # include "ByteArray.h"
 
-namespace Utilities {
-  class Resource {
+class Resource {
   public:
     //! Constructor
     Resource();
@@ -49,8 +48,6 @@ namespace Utilities {
     ByteArray	_file;
     uint32		_id;
     std::string	_name;
-  };
-
-}
+};
 
 #endif

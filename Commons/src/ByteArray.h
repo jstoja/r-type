@@ -15,9 +15,7 @@
 # include <vector>
 # include "Types.h"
 
-namespace Utilities {
-
-  class	ByteArray {
+class	ByteArray {
   public:
     //! Constructor
     ByteArray();
@@ -54,8 +52,6 @@ namespace Utilities {
     void		debug() const;
   private:
     std::vector<char>	_buffer;
-  };
-
-}
+};
 
 #endif

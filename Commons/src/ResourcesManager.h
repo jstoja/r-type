@@ -13,9 +13,7 @@
 # include <map>
 # include <string>
 
-namespace Utilities {
-
-  class Resource;
+class Resource;
 
   class ResourcesManager {
   public:
@@ -39,8 +37,6 @@ namespace Utilities {
   private:
     std::map<uint32, Resource*>		_resourcesId;
     std::map<std::string, Resource*>	_resourcesName;
-  };
-
-}
+};
 
 #endif

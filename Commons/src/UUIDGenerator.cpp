@@ -9,15 +9,15 @@
 
 #include "UUIDGenerator.h"
 
-uint32 Utilities::UUIDGenerator::_id = 0;
+uint32 UUIDGenerator::_id = 0;
 
-Utilities::UUIDGenerator::UUIDGenerator() {
+UUIDGenerator::UUIDGenerator() {
   _id = 0;
 }
 
-Utilities::UUIDGenerator::~UUIDGenerator() {
+UUIDGenerator::~UUIDGenerator() {
 }
 
-uint32 Utilities::UUIDGenerator::getUUID() {
+uint32 UUIDGenerator::getUUID() {
   return _id++;
 }

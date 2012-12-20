@@ -9,12 +9,12 @@
 # include <iostream>
 # include <stdexcept>
 
-#include "Utilities/UUIDGenerator.h"
+#include "UUIDGenerator.h"
 #include "Sound.h"
 
 Sound::Sound::Sound(std::string const& name) {  
     try {
-        _id = Utilities::UUIDGenerator::getInstance().getUUID();
+        _id = UUIDGenerator::getInstance().getUUID();
         _name = name;
         if (_buf.loadFromFile(name))
             _sound.setBuffer(_buf);

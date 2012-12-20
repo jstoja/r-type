@@ -13,9 +13,7 @@
 # include "Types.h"
 # include "Singleton.hpp"
 
-namespace Utilities {
-
-  class UUIDGenerator : public Singleton<UUIDGenerator> {
+class UUIDGenerator : public Singleton<UUIDGenerator> {
     friend class Singleton<UUIDGenerator>;
 
   public:
@@ -29,8 +27,6 @@ namespace Utilities {
   ~UUIDGenerator();
 
     static uint32 _id;
-  };
-
-}
+};
 
 #endif
