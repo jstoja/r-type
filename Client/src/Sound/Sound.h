@@ -23,46 +23,43 @@
 # endif
 
 namespace Sound {
+	class	Sound {
+		public:
+			//! Constructor
+			Sound(std::string const&);
 
-class	Sound {
-  public:
-      
-    //! Constructor
-    Sound(std::string const&);
+			//! Destructor
+			~Sound();
 
-    //! Destructor
-    ~Sound();
+			//! Load a sound
+			void				load(std::string const&);
 
-    //! Load a sound
-    void	load(std::string const&);
+			//! Play sound
+			void				play();
 
-    //! Play sound
-    void	play();
+			//! Stop playing sound
+			void				stop();
 
-    //! Stop playing sound
-    void	stop();
+			//! Id getter
+			uint32				getId() const;
 
-    //! Id getter
-    uint32	getId() const;
+			//! Name getter
+			std::string const&	getName() const;
 
-    //! Name getter
-    std::string const&	getName() const;
+			//! Return true if son is playing
+			bool				isPlaying() const;
 
-    //! Return true if son is playing
-    bool	isPlaying() const;
+			//! Comparaison operator
+			bool				operator==(Sound const&);
 
-    //! Comparaison operator
-    bool	operator==(Sound const&);
-
-  private:
-    uint32			_id;
-    std::string		_name;
+		private:
+			uint32				_id;
+			std::string			_name;
 # ifdef AUDIO_SFML
-    sf::SoundBuffer	_buf;
-    sf::Sound		_sound;
+			sf::SoundBuffer		_buf;
+			sf::Sound			_sound;
 # endif
     };
-
 };
 
 #endif
