@@ -22,17 +22,20 @@
 # include <SFML/Audio.hpp>
 # endif
 
+class ByteArray;
+class Resource;
+
 namespace Sound {
 	class	Sound {
 		public:
 			//! Constructor
-			Sound(std::string const&);
+            Sound(Resource *);
 
 			//! Destructor
 			~Sound();
 
 			//! Load a sound
-			void				load(std::string const&);
+			void				load(Resource *);
 
 			//! Play sound
 			void				play();

@@ -100,6 +100,17 @@ void	ByteArray::bufcopy(std::vector<char> const& buffer) {
     copy(buffer.begin(), buffer.end(), _buffer.begin());
  }
 
+char* ByteArray::getCharBuffer() const {
+    char *buffer = new char[getSize()];
+    uint32 i = 0;
+    
+    for (std::vector<char>::const_iterator it = _buffer.begin();
+            it != _buffer.end(); ++it) {
+        buffer[i++] = *it;
+    }
+    return buffer;
+}
+
 void	ByteArray::debug() const {
     std::cout << "### DEBUG BYTE ARRAY ###" << std::endl;
     std::cout << "SIZE " << _buffer.size() << std::endl;

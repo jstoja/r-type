@@ -14,6 +14,8 @@
 # include <list>
 # include "Types.h"
 
+class Resource;
+
 namespace Sound {
 	class	Sound;
 	class	ChannelGroup;
@@ -25,28 +27,34 @@ namespace Sound {
 			//! Destructor
 			~SoundManager();
 
-			//! Load a sound
-			void							load(std::string const&);
-			//! Remove a sound by name
-			void							remove(std::string const&);
+            //! Load a sound by resource
+            void    load(Resource *);
+			//! Load a sound by name
+			void	load(std::string const&);
+            //! Load a sound by id
+            void    load(uint32);
+        
+        
+            //! Remove a sound by name
+			void	remove(std::string const&);
 			//! Remove a sound by id
-			void							remove(uint32);
+			void    remove(uint32);
 
 			//! Play sound by name
-			void							play(std::string const&);
+			void	play(std::string const&);
 			//! Play sound by id
-			void							play(uint32);
+			void	play(uint32);
 
 			//! Get sound by id
-			Sound							*getSound(uint32);
+			Sound	*getSound(uint32);
 			//! Get sound by name
-			Sound 							*getSound(std::string const&);
+			Sound 	*getSound(std::string const&);
 
 			//! isPlaying by id
-			bool							isPlaying(uint32);
+			bool	isPlaying(uint32);
 
 			//! isPlaying by name
-			bool							isPlaying(std::string const&);
+			bool	isPlaying(std::string const&);
 		private: 
 			std::list<ChannelGroup*>		_channelsGroups;
 			std::map<uint32, Sound*>		_soundsId;

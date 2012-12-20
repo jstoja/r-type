@@ -31,6 +31,7 @@ void ResourcesManager::removeResource(std::string const& name) {
 
 Resource* ResourcesManager::loadResource(std::string const& name) {
     Resource *res = new Resource(name);
+    
     _resourcesName[name] = res;
     _resourcesId[res->getId()] = res;
     return res;

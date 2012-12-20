@@ -5,20 +5,25 @@
 //  Created by Franck Lavisse on 19/12/12.
 //
 //
-# include <SFML/Audio.hpp>
-# include <iostream>
-# include <stdexcept>
+#include <SFML/Audio.hpp>
+#include <iostream>
+#include <stdexcept>
 
+#include "ByteArray.h"
 #include "UUIDGenerator.h"
+#include "Resource.h"
 #include "Sound.h"
 
-Sound::Sound::Sound(std::string const& name) {  
+Sound::Sound::Sound(Resource *resource) {
 	try {
 		_id = UUIDGenerator::getInstance().getUUID();
-		_name = name;
-		if (_buf.loadFromFile(name)) {
+		_name = resource->getName();
+        ByteArray arr = resource->getFile();
+        char *buffer = arr.getCharBuffer();
+		if (_buf.loadFromMemory(buffer, arr.getSize())) {
 			_sound.setBuffer(_buf);
 		}
+        delete buffer;
 	} catch (std::exception e) {
 		std::cerr << e.what() << std::endl;
 	}
@@ -35,11 +40,15 @@ void	Sound::Sound::stop() {
 	_sound.stop();
 }
 
-void	Sound::Sound::load(std::string const& name) {
-	try {
-		if (_buf.loadFromFile(name)) {
+void	Sound::Sound::load(Resource *resource) {
+    try {
+		_name = resource->getName();
+        ByteArray arr = resource->getFile();
+        char *buffer = arr.getCharBuffer();
+		if (_buf.loadFromMemory(buffer, arr.getSize())) {
 			_sound.setBuffer(_buf);
 		}
+        delete buffer;
 	} catch (std::exception e) {
 		std::cerr << e.what() << std::endl;
 	}

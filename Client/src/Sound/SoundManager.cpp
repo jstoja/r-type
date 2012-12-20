@@ -9,6 +9,8 @@
 #include "ChannelGroup.h"
 #include "Sound.h"
 #include "SoundManager.h"
+#include "ResourcesManager.h"
+#include "Resource.h"
 
 Sound::SoundManager::SoundManager() {  
 }
@@ -16,13 +18,53 @@ Sound::SoundManager::SoundManager() {
 Sound::SoundManager::~SoundManager() {
 }
 
+void    Sound::SoundManager::load(Resource* resource) {
+    std::list<ChannelGroup*>::iterator it;
+    Sound		*snd = new Sound(resource);
+    
+	_soundsName[snd->getName()] = snd;
+	_soundsId[snd->getId()] = snd;
+    
+	for (it = _channelsGroups.begin(); it != _channelsGroups.end(); ++it) {
+		if ((*it)->load(snd) == true) {
+			break;
+		}
+	}
+	if (it == _channelsGroups.end()) {
+		_channelsGroups.push_back(new ChannelGroup());
+		_channelsGroups.back()->load(snd);
+	}
+}
+
 void	Sound::SoundManager::load(std::string const& name) {
 	std::list<ChannelGroup*>::iterator it;
-	Sound		*snd = new Sound(name);
+    ResourcesManager& manager = ResourcesManager::getInstance();
+    Resource*  resource = manager.getResource(name);
+    Sound		*snd = new Sound(resource);
 
 	_soundsName[name] = snd;
 	_soundsId[snd->getId()] = snd;
 
+	for (it = _channelsGroups.begin(); it != _channelsGroups.end(); ++it) {
+		if ((*it)->load(snd) == true) {
+			break;
+		}
+	}
+	if (it == _channelsGroups.end()) {
+		_channelsGroups.push_back(new ChannelGroup());
+		_channelsGroups.back()->load(snd);
+	}
+}
+
+void	Sound::SoundManager::load(uint32 id) {
+	std::list<ChannelGroup*>::iterator it;
+    ResourcesManager manager = ResourcesManager::getInstance();
+    Resource*  resource = manager.getResource(id);    
+    Sound		*snd = new Sound(resource);
+    
+	_soundsName[snd->getName()] = snd;
+	_soundsId[snd->getId()] = snd;
+    
 	for (it = _channelsGroups.begin(); it != _channelsGroups.end(); ++it) {
 		if ((*it)->load(snd) == true) {
 			break;

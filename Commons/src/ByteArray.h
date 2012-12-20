@@ -63,6 +63,9 @@ class	ByteArray {
         //! Copy vector
         void		bufcopy(std::vector<char> const&);
 
+        //! Get char buffer
+        char*       getCharBuffer() const;
+    
         void		debug() const;
   private:
         std::vector<char>	_buffer;

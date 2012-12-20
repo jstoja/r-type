@@ -12,14 +12,14 @@
 
 # include <map>
 # include <string>
+# include "Singleton.hpp"
 
 class Resource;
 
-class ResourcesManager {
-    public:
-        //! Constructor
-        ResourcesManager();
+class ResourcesManager : public Singleton<ResourcesManager> {
+    friend class Singleton<ResourcesManager>;
     
+    public:
         //! Destructor
         ~ResourcesManager();
     
@@ -39,6 +39,9 @@ class ResourcesManager {
         Resource*	getResource(uint32) const;
 
     private:
+        //! Constructor
+        ResourcesManager();
+    
         std::map<uint32, Resource*>		_resourcesId;
         std::map<std::string, Resource*>	_resourcesName;
 };
