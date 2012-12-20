@@ -5,6 +5,7 @@ Category: Standards Track                                        Samuel Olivier
                                                                  Franck Lavisse
                                                               Julien Bordellier
                                                                Melvin Laplanche
+
                                                                   December 2012
 .ce
 R-TYPE PROTOCOL (RTP)
@@ -22,20 +23,18 @@ Distribution of this memo is unlimited.
 
 .fi
 .in 3
-The objectives of RTP are 1), 2), 3).
+The objectives of RTP are 1) to transmit ressources to a video game client in a simple way, 2) to allow an effective muliplaying games through a client/server communication, 3) to provide a cheat less game.
 
-The attempt in this specificaion is to [...]
+.fi
+.in 3
+This paper assumes knowledge of the Transmission Control Protocol (TCP)[1] and the User Datagram Protocol (UDP)[2].
 
 .ti 0
 2.  OVERVIEW
 
 .fi
 .in 3
-In this section, the history, the terminology, and the RTP model are
-discussed.  The terms defined in this section are only those that
-have special significance in RTP.  Some of the terminology is very
-specific to the RTP model; some readers may wish to turn to the
-section on the RTP model while reviewing the terminology.
+In this section, the history, the terminology, and the RTP model are discussed. The terms defined in this section are only those that have special significance in RTP. Some of the terminology is very specific to the RTP model; some readers may wish to turn to the section on the RTP model while reviewing the terminology.
 
 .ti 3
 2.1  HISTORY
@@ -49,19 +48,57 @@ the very first draft about it.
 2.1  TERMINOLOGY
 
 .ti 6
-2.1  KEYWORD
-
+server
 .fi
 .in 9
-Definition
+A process is set of processes which perform the function of data transfer in cooperation with a client. The functions consist of a protocol interpreter and a data transfer process.
+
+.ti 6
+client
+.fi
+.in 9
+ A set of functions including a protocol interpreter, and a user interface which together perform the function of gaming in cooperation with one or more BP server and, possibly, another client.
+
+.ti 6
+graphic
+.fi
+.in 9
+ A set of functions to transmit graphics to Client
+
+.ti 6
+sound
+.fi
+.in 9
+ A set of functions to transmit sounds to Client
 
 .ti 3
 2.2  THE RTP MODEL
 
 .ti 6
-2.2.1 The TPC part
+2.2.1 The TCP part
 
+.fi
 .in 9
+The aim of the TCP part is to provide a way to send packets that don't accept any losses.
+For exemple, you cannot lost a connection packet or a game creation packet.
+Usually, the answer is the same for a positive and negative answer. The only thing that changes is the error byte.
+The authentification allow one action to the Client : Sign in.
+The game management allow to create, join, quit and delete a game.
+A client must sign in before performing any actions on a game.
+All resources are sent via TCP.
+
+.fi
+.in 9
+The type indicate the type of communication :
+0 for Client to Server.
+1 for Server to Client.
+The request byte indicate the kind of the request: Authentification, information or game.
+The action byte indicate more precision on the kind of the request.
+The error byte is used to check if an action has failed or not.
+The data size indicates the size of the data.
+The data contains some informations about the action.
+The data containts differ for each action.
+
 .nf
 +------------------+-----------------+--------------------+
 |                  |                 |                    |
@@ -84,11 +121,25 @@ Definition
 .ce
 Figure 1 - Structure of a packet
 
+All packets use the same structure.
 
 .fi
 .in 6
 The following commands are used to communicate from a client
-to a server. The value of this type is 0.
+to a server. The value of this type is 0.
+They are divided in 3 parts.
+First the authentification, only one command to ask a connection to a server.
+Information, only one command again for get the game list.
+Game, 4 commands for manager the games.
+
+.fi
+.in 6
+The action sign in is used to connect a client to server.
+Game list is used to request the list games to a server.
+Join game is used to play a game.
+Create game allows a client to create a game.
+Quit game allows a client to quit a game.
+Ready start allows a client to indicate that he is ready to start the game.
 
 .in 9
 .nf
@@ -123,13 +174,20 @@ to a server. The value of this type is 0.
 .ce
 Figure 2 - Client to server command list
 
+.fi
+.in 6
+The following replies are used to communicate from a server to a client. The value of this type is 1.
+They are divided in 3 parts.
+The authentification for valide or not a connection of a client.
+The information for send the game list for a client.
+The game for manage games and players.
 
 .fi
 .in 6
-The following replies are used to communicate from a server
-to a client. The value of this type is 1.
+The action sign in may generate an error if the client uses a wrong login.
+Game joined may generate two error if the game is full or invalid (doesn't exist).
+Game created may genereate an error if the name is invalid.
 
-.in 9
 .nf
 +------------------+-----------------+------------+-------+
 |                  |                 |            |       |
@@ -174,6 +232,25 @@ to a client. The value of this type is 1.
 .ce
 Figure 3 - Server to client command list
 
+.fi
+.in 6
+Sign in command takes one argument :
+A string which contains the login of the client.
+
+List games doesn't takes argument.
+
+Join games takes one argument :
+An unsigned integer which contains the id of the game.
+
+Quit game takes one argument :
+An unsigned integer which contains the id of the game.
+
+Create  game takes one argument :
+A string who contains the name of the game.
+An unsigned integer which contains the number of slots of the game.
+
+Ready to start takes one argument :
+An unsigned integer which contains the id of the game.
 
 .nf
 +------+-----------------+--------------------------------+
@@ -198,7 +275,51 @@ Figure 3 - Server to client command list
 .ce
 Figure 4 Client - server data formating
 
+.fi
+.in 6
 
+Sign in success takes one argument:
+An unsigned integer which contains the id of the player.
+
+Sign in failed takes one argument:
+A string which contains an error message.
+
+General info takes 4 arguments:
+A string which contains the name of the server.
+A string which contains a description of the server.
+An unsigned integer which contains the number of games.
+An unsigned integer which contains the number of players.
+
+Games list takes one argument:
+A list of game which contains each Game.
+
+Game joined takes one argument:
+An unsigned integer which contains the id of the game.
+
+Game start takes one argument:
+An unsigned integer which contains the id of the game.
+
+Ressources takes 7 arguments:
+A list of resources.
+A list of sprites.
+A list of graphic elements.
+A list of physic objetcs.
+A list of sceneries.
+A list of backgrounds.
+A list of sounds.
+
+Game created takes one argument:
+A game who contains the game which is created.
+
+New player takes one argument:
+A player who is  created.
+
+Player ready takes one argument:
+The id of the player which is ready.
+
+Player list takes two arguments:
+An unsigned integer which contains the id of the game.
+A list of players.
 
 .nf
 +------+-----------------+--------------------------------+
@@ -229,7 +350,7 @@ Figure 4 Client - server data formating
 |      |                 |            List<GraphicElement>|
 |      |                 | Sceneries : List<Scenery>      |
 |      |                 | Backgrounds : List<Background> |
-|      |                 | Sounnds : List<Sound>          |
+|      |                 | Sounds : List<Sound>          |
 +------+-----------------+--------------------------------+
 | 1230 | Game created    | game : Game                    |
 +------+-----------------+--------------------------------+
@@ -244,6 +365,64 @@ Figure 4 Client - server data formating
 .ce
 Figure 5 - Server data formating
 
+.fi
+.ni 6
+
+List<T> is composed of two elements :
+An unsigned integer who contains the id of the player.
+An array of templated type.
+
+String is composed of two elements :
+A string who contains a message.
+An array of char.
+
+uinteger is composed of an uint32.
+
+A Game is composed of 4 elements :
+An unsigned integer who contains the id of the game.
+A string who contains the name of the game.
+An unsigned integer who contains the number of players.
+An unsigned integer who contains the number of slots.
+
+A Resource is composed of 3 elements :
+An unsigned integer who contains the id of the resource.
+An unsigned integer who contains the size of the resourc.
+An array of char of size size.
+
+A Sprite is composed of 3 elements :
+An unsigned integer who contains the id of the sprite.
+An unsigned integer who contains the id of the texture.
+A list of Frames.
+
+A Frame is composed of 2 elements :
+A vec2 for the first point.
+A vec2 for the second point.
+
+A GraphicElement is composed of 6 elements :
+A Game for apply the GraphicElement.
+A vec3 who contains the position of the GraphicElement.
+A float32 who contains the rotation of the GraphicElement.
+A vec2 who contains the size of the GraphicElement.
+A unsigned integer who contains the id of the sprite.
+A frame.
+
+A Player is composed of two elements :
+An unsigned integer who contains the id of the player.
+A string who contains the name of the player.
+
+A Scenery is composed of 2 elements :
+An unsigned integer who contains the id of the ressource.
+A float32 who contains the speed of the scenery.
+
+A Background is composed of 3 elements :
+An unsigned integer who contains the id of the background.
+A float32 who contains the speed of the background.
+A float32 who contains the repeat of the background.
+
+A Sound is composed of 3 elements :
+An unsigned integer who contains the id of the Sound.
+An unsigned integer who contains the ressource id.
+A float32 who contains the repeat of the Sound.
 
 .nf
 +-----------------+--------------------------------+
@@ -257,7 +436,7 @@ Figure 5 - Server data formating
 | String          | message : string               |
 |                 | char[size]                     |
 +-----------------+--------------------------------+
-| uinterger       | uint32                         |
+| uinteger       | uint32                         |
 +-----------------+--------------------------------+
 | Game            | id : uinteger                  |
 |                 | name : string                  |
@@ -304,8 +483,92 @@ Figure 6 - Data formating
 .in 6
 Here we present sequence diagrams for a basic RTP implementation.
 Only the last digits of the reply codes are used.
+There is no packet without answer (ping-pong system).
 
 .in 9
+
+Detailed composition :
+
+Sign in composition :
+type 0
+request 0
+action 0
+
+Sign in success composition :
+type 1
+request 0
+action 0
+
+Sign in failed composition :
+type 1
+request 0
+action 1
+
+General informations composition :
+type 1
+request 1
+action 0
+
+List games composition :
+type 0
+request 1
+action 0
+
+Game list composition :
+type 1
+request 1
+action 1
+
+Create game composition :
+type 0
+request 2
+action 2
+
+Game created composition :
+type 1
+request 3
+action 0
+
+Join game composition :
+type 0
+request 2
+action 0
+
+Game joined composition :
+type 1
+request 0
+action 2
+
+Resources composition :
+type 1
+request 2
+action 2
+
+Player list composition :
+type 1
+request 2
+action 6
+
+New player composition :
+type 1
+request 2
+action 4
+
+Player ready composition :
+type 1
+request 2
+action 5
+
+Ready to start composition :
+type 0
+request 2
+action 3
+
+Game start composition :
+type 1
+request 2
+action 1
+
 .nf
  /---------\\                    /---------\\                /---------\\
  |  Client |                    |  Server |                | Client2 |
@@ -320,7 +583,7 @@ Only the last digits of the reply codes are used.
     | |  101 - Sign in failed       | |                          |
     | |<----------------------------| |                          |
     | |                             | |                          |
-    | |  110 - General inforations  | |                          |
+    | |  110 - General informations | |                          |
     | |<----------------------------| |                          |
     | |                             | |                          |
     | |  111 - Games list           | |                          |
@@ -392,7 +655,19 @@ Only the last digits of the reply codes are used.
 .ti 6
 2.2.1 The UDP part
 
+.fi
 .in 9
+The UDP protocol is used to deal with every in game events.
+
+
+.fi
+.in 9
+A BP transfer mainly consists of a packet type, the size of the data, and the data itself.
+The packet type is intended to determine the action to execute; the data size specify the size of the following
+data; and the data designate the data the command needs to working properly.
+
+
+.in 12
 .nf
 +------------------+-----------------+--------------------+
 |                  |                 |                    |
@@ -401,13 +676,52 @@ Only the last digits of the reply codes are used.
 +------------------+-----------------+--------------------+
 |     1 byte       |      type       |     Packet type    |
 +------------------+-----------------+--------------------+
-|     2 byte       |      size       |      Data size     |
+|     2 bytes      |      size       |      Data size     |
 +------------------+-----------------+--------------------+
-|   byte[1] size   |      data       |        Data        |
+|   size bytes[0]  |      data       |        Data        |
 +------------------+-----------------+--------------------+
 
 .ce
 Figure 7 - Structure of a packet
+
+.fi
+.in 9
+[0] 'size' in "size bytes" refers to the value put into the 'size' variable.
+
+
+.fi
+.in 9
+The following replies are used to communicate from a server to a client.
+These informations are needed by the client for present a coherent game.
+There are a lot of packet transmit at every moment, so lost a packet isn't important.
+Only two types of packets are important : UPDATE_LIFE and GAME_FINISHED.
+UPDATE_SCORE isn't important cause it's updated at each shoot.
+TIME isn't important cause it's always updated.
+UPDATE_LIFE is important cause a client need to know who is alive or not.
+GAME_FINISHED is important for obviously reasons, a client cannot play if the game is finished.
+GRAPHIC_ELEMENTS and PHYSICS_ELEMENTS aren't criticals because they often are sended.
+
+GRAPHIS_ELEMENTS is composed of one element :
+A list of GraphicElements.
+
+PHYSIC_ELEMENTS is composed one element:
+A list of PhysicElements.
+
+TIME is composed one element :
+A float32 who contains the time.
+
+UPDATE_LIFE is composed of 3 elements :
+An unsigned integer who contains the packet id.
+An unsigned integer who contains the player id.
+A float32 who contains the new life of the player.
+
+UPDATE_SCORE is composed of 2 elements :
+An unsigned integer who contains the id of the player.
+An unsigned integer who contains the new score.
+
+GAME_FINISHED is composed of 2 elements :
+An unsigned integer who contains the packet id.
+A list of FinalResult.
 
 .nf
 +------------------+-----------------+--------------------+
@@ -439,6 +753,29 @@ Figure 7 - Structure of a packet
 Figure 8 - Server to client communication
 
 
+.fi
+.in 9
+The following commands are used to communicate from a client to a server.
+The client doesn't send lot of information to the server.
+Only his direction, shoot and collisions.
+Collision is critical for prevent from cheat.
+The USER_DIRECTION is needed by other client to show a player in the good direction.
+The PHYSIC_COLLICION is needed by the server and the arbiter to know if a player touch something on the map.
+This packet is critical cause a collision often significate the death of a player.
+
+USER_DIRECTION is composed of one element :
+A vec2 who contains the direction of the user.
+
+USER_SHOOT is composed of 3 elements :
+An unsigned integer who contains the packet id.
+An unsigned integer who contains the button pushed.
+A float32 who contains who contains the power of the shoot.
+
+PHYSIC_COLLISION is composed of 3 elements :
+An unsigned integer who contains the id of the physic collision.
+An unsigned integer who contains the id of the first element of the collision.
+An unsigned integer who contains the id of the second element of the collision.
+
 .nf
 +------------------+-----------------+--------------------+
 |                  |                 |                    |
@@ -459,6 +796,13 @@ Figure 8 - Server to client communication
 .ce
 Figure 9 - Client to server communication
 
+.fi
+.in 9
+A critical packet always needs a response.
+This response just indicate an id to know if a packet is received or not.
+
+PACKET_RECEIVED is composed of one element :
+A unsigned integer who indicate if the packet is received or not.
 
 +------------------+-----------------+--------------------+
 |                  |                 |                    |
@@ -471,6 +815,35 @@ Figure 9 - Client to server communication
 .ce
 Figure 10 - Response to a critical packet
 
+.fi
+.in 9
+
+GraphicElement is composed of 6 elements:
+An unsigned integer which contains the id of the graphic element.
+A vec3 who contains the position of the graphic element.
+A float32 who contains the rotation of the graphic element.
+A vec2 who contains the size of the graphic element.
+An unsigned integer who contains the sprite id.
+A frame.
+
+PhysicElement is composed of 4 elements:
+An unsigned element who contains the id of the physic element.
+A vec3 who contains the position of the physic element.
+A float32 who contains the rotation of the physic element.
+A vec2 who contains the size of the physic element.
+
+Frame is composed of 2 elements :
+A vec2 who contains the position of the frame.
+A vec2 who contains the size of the frame.
+
+vec2/vec3 is composed of 3 elements :
+A float32 who contains the x position.
+A float32 who contains the y position.
+A float32 who contains the z position (vec3 only).
+
+FinalResult is composed of 2 elements :
+An unsigned integer who contains the id player.
+A float32 who contains the score of the player
 
 .nf
 +------------------+--------------------------------------+
@@ -478,7 +851,7 @@ Figure 10 - Response to a critical packet
 |    Name          |     Format                           |
 |                  |                                      |
 +------------------+--------------------------------------+
-| GGraphicElement  |  id : uinteger                       |
+| GraphicElement   |  id : uinteger                       |
 |                  |  position : vec3                     |
 |                  |  rotation : float32                  |
 |                  |  size : vec2                         |
@@ -519,13 +892,13 @@ Here we present sequence diagrams for a basic RTP implementation.
     | |                             | |                          |
     | |                             |_|                          |
     | |                              |                          |-|
-    | |                              |                          | |
-    | |                             |-|<--      USER_SHOOT      | |
-    |_|                             | |   |__                   | |
-     |                              | |      |____              | |
-     |                              | |           |____         | |
-     |                              |_|                |        | |
-     |                               |                 |________| |
+    | |                              |          USER_SHOOT      | |
+    | |                             |-|<------------------------| |
+    |_|                             | |                         | |
+     |                              | |                         | |
+     |                              | |                         | |
+     |                              |_|                         | |
+     |                               |                          | |
      |                               |                          | |
      |                               |                          |_|
      |                               |                           |
@@ -575,3 +948,14 @@ Here we present sequence diagrams for a basic RTP implementation.
      |                               |                           |
      |                               |                           |
      |                               |                           |
+
+
+.in 0
+REFERENCES
+
+.fi
+.in 3
+[1] "Transmission Control Protocol - DARPA Internet Program Protocol Specification", RFC 793, DARPA, September 1981
+
+.in 3
+[2] "User Datagram Protocol", RFC 768, August 1980
