@@ -11,18 +11,22 @@
 
 # include "OpenGL.h"
 # include "Types.h"
+# include "Object.h"
 
 namespace Graphic {
     
     //! Class for manipulation of OpenGL textures
-    class Texture {
+    class Texture : public Object {
     public:
         
         //! Create a new texture
         Texture();
         
+        //! Create a new texture with a given id
+        Texture(uint32 id);
+        
         //! Destruct the texture
-        ~Texture();
+        virtual ~Texture();
         
         //! Binds the texture
         /*!
@@ -38,10 +42,10 @@ namespace Graphic {
         void    setData(uint32 width, uint32 height, const uint8* data);
         
         //! Return the internal OpenGL id of the texture
-        uint32  getId() const;
+        uint32  getGLID() const;
         
     private:
-        GLuint  _id;
+        GLuint  _glID;
     };
     
 }

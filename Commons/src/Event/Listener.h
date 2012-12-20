@@ -19,17 +19,19 @@ namespace Event {
     
     class Listener {
     public:
-        Listener(Type type, IListenerDelegate* delegate=NULL);
-        Listener(Type type, Rect const& rect, IListenerDelegate* delegate=NULL);
+        Listener(uint32 type, IListenerDelegate* delegate=NULL);
+        Listener(uint32 type, Rect const& rect, IListenerDelegate* delegate=NULL);
         
         Type            getType() const;
         Rect const&     getRect() const;
+        bool            hasRect() const;
         void            processEvent(Event const& event);
         
     private:
         Type                _type;
         IListenerDelegate*  _delegate;
         Rect                _rect;
+        bool                _hasRect;
     };
     
 }

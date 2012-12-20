@@ -43,17 +43,18 @@ void Event::Manager::fire(Event const& event) {
     for (std::vector<Listener*>::iterator it = _listeners.begin(),
          end = _listeners.end(); it != end; ++it) {
         Listener* listener = *it;
-        if (listener->getType() == event.type) {
+        if ((listener->getType() & event.type)
+            && (!listener->hasRect() || listener->getRect().in(event.pos))) {
             listener->processEvent(event);
         }
         
         // Pointer in/out events
-        if (event.type == PointerMove && listener->getType() == PointerIn
+        if ((event.type & PointerMove) && (listener->getType() & PointerIn)
             && !listener->getRect().in(_lastPointerPos)
             && listener->getRect().in(event.pos)) {
             listener->processEvent(Event(PointerIn, event.pos, event.sender));
         }
-        if (event.type == PointerMove && listener->getType() == PointerOut
+        if ((event.type & PointerMove) && (listener->getType() & PointerOut)
             && listener->getRect().in(_lastPointerPos)
             && !listener->getRect().in(event.pos)) {
             listener->processEvent(Event(PointerOut, event.pos, event.sender));
