@@ -7,17 +7,17 @@
 //
 
 #include "Debug.h"
-#include "../Client/src/Sound/SoundManager.h"
+#include "Sound/SoundManager.h"
 
 int	main(int argc, char *argv[]) {
     Sound::SoundManager	manager;
     
-    manager.load("marseille.wav");
-    manager.load("highpass.wav");
-    manager.play("marseille.wav");
-    manager.play("highpass.wav");
-    std::cout << manager.isPlaying("highpass.wav") << ' ' << manager.isPlaying("marseille.wav") << std::endl;
+    manager.load("sound1.aiff");
+    manager.load("sound2.aiff");
+    manager.play("sound1.aiff");
+    manager.play("sound2.aiff");
+    std::cout << manager.isPlaying("sound1.aiff") << ' ' << manager.isPlaying("sound2.aiff") << std::endl;
     sleep(2);
-    std::cout << manager.isPlaying("highpass.wav") << ' ' << manager.isPlaying("marseille.wav") << std::endl;
+    std::cout << manager.isPlaying("sound1.aiff") << ' ' << manager.isPlaying("sound2.aiff") << std::endl;
     return (0);
 }
