@@ -11,7 +11,7 @@
 
 # include <cstdlib>
 # include "IProvider.h"
-# include "Rect.h"
+# include "Vec2.h"
 
 namespace Event {
     
@@ -25,11 +25,11 @@ namespace Event {
     struct Event {
     public:
         Event(Type type, IProvider* sender=NULL);
-        Event(Type type, Rect const& rect, IProvider* sender=NULL);
+        Event(Type type, Vec2 const& rect, IProvider* sender=NULL);
         
         Type        type;
         IProvider*  sender;
-        Rect        rect;
+        Vec2        pos;
     };
 }
 

@@ -15,6 +15,7 @@
 # include "Event.h"
 # include "IProvider.h"
 # include "Listener.h"
+# include "Vec2.h"
 
 namespace Event {
     
@@ -34,6 +35,7 @@ namespace Event {
         
         std::vector<IProvider*> _providers;
         std::vector<Listener*>  _listeners;
+        Vec2                    _lastPointerPos;
     };
     
 }

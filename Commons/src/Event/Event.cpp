@@ -9,9 +9,9 @@
 #include "Event.h"
 
 Event::Event::Event(Type type, IProvider* sender)
-: type(type), sender(sender), rect() {
+: type(type), sender(sender), pos() {
 }
 
-Event::Event::Event(Type type, Rect const& rect, IProvider* sender)
-: type(type), sender(sender), rect(rect) {
+Event::Event::Event(Type type, Vec2 const& pos, IProvider* sender)
+: type(type), sender(sender), pos(pos) {
 }

@@ -9,8 +9,9 @@
 #ifndef __R_Type__Event__Listener__
 # define __R_Type__Event__Listener__
 
-# include "Event.h"
 # include <cstdlib>
+# include "Event.h"
+# include "Rect.h"
 
 namespace Event {
     
@@ -19,13 +20,16 @@ namespace Event {
     class Listener {
     public:
         Listener(Type type, IListenerDelegate* delegate=NULL);
+        Listener(Type type, Rect const& rect, IListenerDelegate* delegate=NULL);
         
-        Type    getType() const;
-        void    processEvent(Event const& event);
+        Type            getType() const;
+        Rect const&     getRect() const;
+        void            processEvent(Event const& event);
         
     private:
         Type                _type;
         IListenerDelegate*  _delegate;
+        Rect                _rect;
     };
     
 }

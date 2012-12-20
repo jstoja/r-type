@@ -53,11 +53,15 @@ void Graphic::Renderer::processEvents(Event::Manager* manager) {
     sf::Event sfEvent;
     while (_window->pollEvent(sfEvent)) {
         switch (sfEvent.type) {
-            case sf::Event::Closed:
+            case sf::Event::Closed: {
                 manager->fire(Event::Event(Event::Close, this));
                 break;
-                
-            default:
+            } case sf::Event::MouseMoved: {
+                manager->fire(Event::Event(Event::PointerMove,
+                                           Vec2(sfEvent.mouseMove.x, sfEvent.mouseMove.y),
+                                           this));
+                break;
+            } default:
                 break;
         }
     }

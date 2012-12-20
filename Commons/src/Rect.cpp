@@ -9,9 +9,18 @@
 #include "Rect.h"
 
 Rect::Rect(float32 x, float32 y, float32 width, float32 height)
-: x(x), y(y), width(width), height(height) {
+: pos(x, y), size(width, height) {
     
 }
 
 Rect::~Rect() {
+}
+
+bool Rect::in(Vec2 const& point) const {
+    return pos <= point && (pos + size) >= point;
+}
+
+std::ostream& operator<<(std::ostream& stream, Rect const& rect) {
+    return stream << "Rect(" << rect.pos.x << ", " << rect.pos.y
+    << ", " << rect.size.x << ", " << rect.size.y << ")";
 }

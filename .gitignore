@@ -12,4 +12,11 @@
 *.la
 *.a
 
+# Build files
+build/*
+Bin/*
+Makefile
+clean.sh
+
+# System hidden files
 .DS_Store

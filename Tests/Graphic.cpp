@@ -19,6 +19,14 @@ public:
         
         Event::Manager::getInstance()
         .addEventListener(new Event::Listener(Event::Close, this));
+        Event::Manager::getInstance()
+        .addEventListener(new Event::Listener(Event::PointerIn,
+                                              Rect(100, 100, 100, 100),
+                                              this));
+        Event::Manager::getInstance()
+        .addEventListener(new Event::Listener(Event::PointerOut,
+                                              Rect(100, 100, 100, 100),
+                                              this));
         
         while (!_close) {
             Event::Manager::getInstance().processEvents();

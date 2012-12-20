@@ -8,10 +8,11 @@
 
 #include <algorithm>
 
+#include "Debug.h"
 #include "Manager.h"
 #include "Event.h"
 
-Event::Manager::Manager() : _providers() {
+Event::Manager::Manager() : _providers(), _listeners(), _lastPointerPos() {
     
 }
 
@@ -45,5 +46,20 @@ void Event::Manager::fire(Event const& event) {
         if (listener->getType() == event.type) {
             listener->processEvent(event);
         }
+        
+        // Pointer in/out events
+        if (event.type == PointerMove && listener->getType() == PointerIn
+            && !listener->getRect().in(_lastPointerPos)
+            && listener->getRect().in(event.pos)) {
+            listener->processEvent(Event(PointerIn, event.pos, event.sender));
+        }
+        if (event.type == PointerMove && listener->getType() == PointerOut
+            && listener->getRect().in(_lastPointerPos)
+            && !listener->getRect().in(event.pos)) {
+            listener->processEvent(Event(PointerOut, event.pos, event.sender));
+        }
     }
+ 
+    if (event.type == PointerMove)
+        _lastPointerPos = event.pos;
 }

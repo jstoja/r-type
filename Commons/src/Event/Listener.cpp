@@ -10,7 +10,11 @@
 #include "IListenerDelegate.h"
 
 Event::Listener::Listener(Type type, IListenerDelegate* delegate)
-: _type(type), _delegate(delegate) {
+: _type(type), _delegate(delegate), _rect() {
+}
+
+Event::Listener::Listener(Type type, Rect const& rect, IListenerDelegate* delegate)
+: _type(type), _delegate(delegate), _rect(rect) {
 }
 
 Event::Type Event::Listener::getType() const {
@@ -20,4 +24,8 @@ Event::Type Event::Listener::getType() const {
 void Event::Listener::processEvent(Event const& event) {
     if (_delegate)
         _delegate->processEvent(event);
+}
+
+Rect const& Event::Listener::getRect() const {
+    return _rect;
 }
