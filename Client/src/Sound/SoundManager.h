@@ -16,42 +16,47 @@
 
 namespace Sound {
   
-  class	Sound;
-  class	ChannelGroup;
+    class	Sound;
+    class	ChannelGroup;
 
-  class	SoundManager {
-  public:
-    //! Constructor
-    SoundManager();
-    //! Destructor
-    ~SoundManager();
+    class	SoundManager {
+        public:
+            //! Constructor
+            SoundManager();
 
-    //! Load a sound
-    void	load(std::string const&);
-    //! Remove a sound by name
-    void	remove(std::string const&);
-    //! Remove a sound by id
-    void	remove(uint32);
+            //! Destructor
+            ~SoundManager();
 
-    //! Play sound by name
-    void	play(std::string const&);
-    //! Play sound by id
-    void	play(uint32);
+            //! Load a sound
+            void	load(std::string const&);
 
-    //! Get sound by id
-    Sound	*getSound(uint32);
-    //! Get sound by name
-    Sound *getSound(std::string const&);
+            //! Remove a sound by name
+            void	remove(std::string const&);
 
-    //! isPlaying by id
-    bool	isPlaying(uint32);
+            //! Remove a sound by id
+            void	remove(uint32);
 
-    //! isPlaying by name
-    bool	isPlaying(std::string const&);
-  private: 
-    std::list<ChannelGroup*>			_channelsGroups;
-    std::map<uint32, Sound*>			_soundsId;
-    std::map<std::string, Sound*>		_soundsName;
+            //! Play sound by name
+            void	play(std::string const&);
+
+            //! Play sound by id
+            void	play(uint32);
+
+            //! Get sound by id
+            Sound	*getSound(uint32);
+
+            //! Get sound by name
+            Sound *getSound(std::string const&);
+
+            //! isPlaying by id
+            bool	isPlaying(uint32);
+
+            //! isPlaying by name
+            bool	isPlaying(std::string const&);
+        private:
+            std::list<ChannelGroup*>			_channelsGroups;
+        std::map<uint32, Sound*>			_soundsId;
+        std::map<std::string, Sound*>		_soundsName;
   };
 
 }

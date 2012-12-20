@@ -12,12 +12,12 @@
 uint32 UUIDGenerator::_id = 0;
 
 UUIDGenerator::UUIDGenerator() {
-  _id = 0;
+    _id = 0;
 }
 
 UUIDGenerator::~UUIDGenerator() {
 }
 
 uint32 UUIDGenerator::getUUID() {
-  return _id++;
+    return _id++;
 }

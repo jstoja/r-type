@@ -15,39 +15,47 @@
 # include "ByteArray.h"
 
 class Resource {
-  public:
-    //! Constructor
-    Resource();
-    //! Constructor with name
-    Resource(std::string const&);	   
-    //! Copy constructor
-    Resource(Resource const&);
-    //! Destructor
-    ~Resource();
-    
-    //! Assignation operator
-    Resource&	operator=(Resource const&);
-    //! Comparaison operator
-    bool		operator==(Resource const&);
-    
-    //! Name getter
-    std::string const& getName() const;
-    //! Name setter
-    void	setName(std::string const&);
-    //! File getter
-    ByteArray const&	getFile() const;
-    //! ID getter
-    uint32 getId() const;
+    public:
+        //! Constructor
+        Resource();
 
-  private:
-    //! Read file and put in into a ByteArray
-    void	readFile();
-    //! Array setter
-    void	setArray(ByteArray const&);
+        //! Constructor with name
+        Resource(std::string const&);
+    
+        //! Copy constructor
+        Resource(Resource const&);
 
-    ByteArray	_file;
-    uint32		_id;
-    std::string	_name;
+        //! Destructor
+        ~Resource();
+    
+        //! Assignation operator
+        Resource&	operator=(Resource const&);
+    
+        //! Comparaison operator
+        bool		operator==(Resource const&);
+    
+        //! Name getter
+        std::string const& getName() const;
+
+        //! Name setter
+        void	setName(std::string const&);
+
+        //! File getter
+        ByteArray const&	getFile() const;
+
+        //! ID getter
+        uint32 getId() const;
+
+    private:
+        //! Read file and put in into a ByteArray
+        void	readFile();
+
+        //! Array setter
+        void	setArray(ByteArray const&);
+
+        ByteArray	_file;
+        uint32		_id;
+        std::string	_name;
 };
 
 #endif

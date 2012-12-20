@@ -16,17 +16,18 @@
 class UUIDGenerator : public Singleton<UUIDGenerator> {
     friend class Singleton<UUIDGenerator>;
 
-  public:
-    //! Return and increment the UUID
-    uint32 getUUID();
+    public:
+        //! Return and increment the UUID
+        uint32 getUUID();
 
-  private:
-  //! Construct the object
-  UUIDGenerator();
-  //! Destruct the object
-  ~UUIDGenerator();
+    private:
+        //! Construct the object
+        UUIDGenerator();
 
-    static uint32 _id;
+        //! Destruct the object
+        ~UUIDGenerator();
+
+        static uint32 _id;
 };
 
 #endif

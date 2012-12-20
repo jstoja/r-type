@@ -14,39 +14,39 @@
 
 namespace Sound {
 
-  class Sound;
+    class Sound;
 
-  class Channel {
-  public:
-    //! Constructor with sound
-    Channel(Sound*);
+    class Channel {
+        public:
+            //! Constructor with sound
+            Channel(Sound*);
 
-    //! Destructor
-    ~Channel();
+            //! Destructor
+            ~Channel();
 
-    //! Set sound
-    void	setSound(Sound*);
+            //! Set sound
+            void	setSound(Sound*);
 
-    //! Play sound
-    void	play();
+            //! Play sound
+            void	play();
 
-    //! Stop playing sound
-    void	stop();
+            //! Stop playing sound
+            void	stop();
 
-    //! return true if sound is playing
-    bool	isPlaying() const;
+            //! return true if sound is playing
+            bool	isPlaying() const;
 
-    //! Get sound id
-    uint32	getId() const;
+            //! Get sound id
+            uint32	getId() const;
 
-    //! Get sound name
-    std::string const&	getName() const;
+            //! Get sound name
+            std::string const&	getName() const;
 
-    //! Get sound
-    Sound*	getSound() const;
-  private:
-    Sound*	_sound;
-  };
+            //! Get sound
+            Sound*	getSound() const;
+        private:
+            Sound*	_sound;
+    };
 
 };
 

@@ -17,99 +17,99 @@ Sound::SoundManager::~SoundManager() {
 }
 
 void	Sound::SoundManager::load(std::string const& name) {
-  std::list<ChannelGroup*>::iterator it;
-  Sound		*snd = new Sound(name);
+    std::list<ChannelGroup*>::iterator it;
+    Sound		*snd = new Sound(name);
 
-  _soundsName[name] = snd;
-  _soundsId[snd->getId()] = snd;
+    _soundsName[name] = snd;
+    _soundsId[snd->getId()] = snd;
 
-  for (it = _channelsGroups.begin(); it != _channelsGroups.end(); ++it)
-    if ((*it)->load(snd) == true)
-      break;
-  if (it == _channelsGroups.end()) {
-    _channelsGroups.push_back(new ChannelGroup());
-    _channelsGroups.back()->load(snd);
-  }
+    for (it = _channelsGroups.begin(); it != _channelsGroups.end(); ++it)
+        if ((*it)->load(snd) == true)
+            break;
+    if (it == _channelsGroups.end()) {
+        _channelsGroups.push_back(new ChannelGroup());
+        _channelsGroups.back()->load(snd);
+    }
 }
 
 void	Sound::SoundManager::remove(std::string const& name) {
-  std::list<ChannelGroup*>::iterator it;
-  Sound *item = getSound(name);
+    std::list<ChannelGroup*>::iterator it;
+    Sound *item = getSound(name);
 
-  if (item != NULL) {
-      _soundsId.erase(item->getId());
-      _soundsName.erase(item->getName());
-      for (it = _channelsGroups.begin(); it != _channelsGroups.end(); ++it)
-	if ((*it)->remove(name) == true)
-	  break;
-  }
+    if (item != NULL) {
+        _soundsId.erase(item->getId());
+        _soundsName.erase(item->getName());
+        for (it = _channelsGroups.begin(); it != _channelsGroups.end(); ++it)
+            if ((*it)->remove(name) == true)
+                break;
+    }
 }
 
 void	Sound::SoundManager::remove(uint32 id) {
-  std::list<ChannelGroup*>::iterator it;
-  Sound *item = getSound(id);
+    std::list<ChannelGroup*>::iterator it;
+    Sound *item = getSound(id);
 
-  if (item != NULL) {
-      _soundsId.erase(item->getId());
-      _soundsName.erase(item->getName());
-      for (it = _channelsGroups.begin(); it != _channelsGroups.end(); ++it)
-	if ((*it)->remove(id) == true)
-	  break;
-  }
+    if (item != NULL) {
+        _soundsId.erase(item->getId());
+        _soundsName.erase(item->getName());
+        for (it = _channelsGroups.begin(); it != _channelsGroups.end(); ++it)
+            if ((*it)->remove(id) == true)
+                break;
+    }
 }
 
 void	Sound::SoundManager::play(std::string const& name) {  
-  std::list<ChannelGroup*>::iterator it;
-  Sound *item = getSound(name);
+    std::list<ChannelGroup*>::iterator it;
+    Sound *item = getSound(name);
 
-  if (item != NULL) {
-    for (it = _channelsGroups.begin(); it != _channelsGroups.end(); ++it)
-      if ((*it)->play(name) == true)
-	break;
-  }
+    if (item != NULL) {
+        for (it = _channelsGroups.begin(); it != _channelsGroups.end(); ++it)
+            if ((*it)->play(name) == true)
+                break;
+    }
 }
 
 void	Sound::SoundManager::play(uint32 id) {
-  std::list<ChannelGroup*>::iterator it;
-  Sound *item = getSound(id);
+    std::list<ChannelGroup*>::iterator it;
+    Sound *item = getSound(id);
 
-  if (item != NULL) {
-    for (it = _channelsGroups.begin(); it != _channelsGroups.end(); ++it)
-      if ((*it)->play(id) == true)
-	break;
-  }
+    if (item != NULL) {
+        for (it = _channelsGroups.begin(); it != _channelsGroups.end(); ++it)
+            if ((*it)->play(id) == true)
+                break;
+    }
 }
 
 Sound::Sound	*Sound::SoundManager::getSound(uint32 id) {
-  std::map<uint32, Sound*>::const_iterator it;  
+    std::map<uint32, Sound*>::const_iterator it;
 
-  if ((it = _soundsId.find(id)) != _soundsId.end())
-    return it->second;
-  return NULL;
+    if ((it = _soundsId.find(id)) != _soundsId.end())
+        return it->second;
+    return NULL;
 }
 
 Sound::Sound	*Sound::SoundManager::getSound(std::string const& name) {
-  std::map<std::string, Sound*>::const_iterator it;  
+    std::map<std::string, Sound*>::const_iterator it;
 
-  if ((it = _soundsName.find(name)) != _soundsName.end())
-    return it->second;
-  return NULL;
+    if ((it = _soundsName.find(name)) != _soundsName.end())
+        return it->second;
+    return NULL;
 }
 
 bool	Sound::SoundManager::isPlaying(uint32 id) {
-  Sound	*snd = getSound(id);
+    Sound	*snd = getSound(id);
 
-  if (snd) {
-    return snd->isPlaying();
-  }
-  return false;
+    if (snd) {
+        return snd->isPlaying();
+    }
+    return false;
 }
 
 bool	Sound::SoundManager::isPlaying(std::string const& name) {
-  Sound	*snd = getSound(name);
+    Sound	*snd = getSound(name);
 
-  if (snd) {
-    return snd->isPlaying();
-  }
-  return false;
+    if (snd) {
+        return snd->isPlaying();
+    }
+    return false;
 }

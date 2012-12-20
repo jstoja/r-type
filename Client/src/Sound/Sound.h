@@ -8,14 +8,23 @@
 #ifndef _SFML_SOUND_H_
 # define _SFML_SOUND_H_
 
-# include <SFML/Audio.hpp>
 # include <iostream>
 # include <string>
 # include "Types.h"
 
+# if (defined OS_IOS)
+#  define AUDIO_IOS
+# else
+# define AUDIO_SFML
+# endif
+
+# ifdef AUDIO_SFML
+# include <SFML/Audio.hpp>
+# endif
+
 namespace Sound {
 
-  class	Sound {
+class	Sound {
   public:
       
     //! Constructor
@@ -48,9 +57,11 @@ namespace Sound {
   private:
     uint32			_id;
     std::string		_name;
+# ifdef AUDIO_SFML
     sf::SoundBuffer	_buf;
     sf::Sound		_sound;
-  };
+# endif
+    };
 
 };
 

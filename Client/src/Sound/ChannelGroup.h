@@ -15,10 +15,10 @@
 
 namespace Sound {
 
-  class Sound;
-  class Channel;
+    class Sound;
+    class Channel;
 
-  class ChannelGroup {
+    class ChannelGroup {
   public:
     //! Constructor
     ChannelGroup();

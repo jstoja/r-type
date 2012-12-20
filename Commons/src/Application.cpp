@@ -16,22 +16,22 @@ Application::~Application() {
 }
 
 void Application::concatPath() {
-  _resourcesPath = _av[0];
+    _resourcesPath = _av[0];
 # if defined OS_WINDOWS
-  // ajouter la fonction pour gerer ca sous windaube
+    // ajouter la fonction pour gerer ca sous windaube
 # else
-  _resourcesPath = _resourcesPath.substr(0, _resourcesPath.find_last_of('/'));
-  _resourcesPath += "/";
+    _resourcesPath = _resourcesPath.substr(0, _resourcesPath.find_last_of('/'));
+    _resourcesPath += "/";
 # endif
 
 }
 
 void Application::init(char **av, int32 ac) {
-  _av = av;
-  _ac = ac;  
-  concatPath();
+    _av = av;
+    _ac = ac;
+    concatPath();
 }
 
 std::string const& Application::getResourcesPath() const {
-  return _resourcesPath;
+    return _resourcesPath;
 }

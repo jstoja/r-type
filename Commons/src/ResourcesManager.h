@@ -15,28 +15,32 @@
 
 class Resource;
 
-  class ResourcesManager {
-  public:
-    //! Constructor
-    ResourcesManager();
-    //! Destructor
-    ~ResourcesManager();
+class ResourcesManager {
+    public:
+        //! Constructor
+        ResourcesManager();
     
-    //! Add resource in map
-    void addResource(Resource *);
-    //! Load a resource and return a pointer to it
-    Resource* loadResource(std::string const&);
-    //! Remove resource from map
-    void removeResource(std::string const&);
+        //! Destructor
+        ~ResourcesManager();
     
-    //! Get a resource by name
-    Resource*	getResource(std::string const&);
-    //! Get a resource by id
-    Resource*	getResource(uint32) const;
+        //! Add resource in map
+        void addResource(Resource *);
 
-  private:
-    std::map<uint32, Resource*>		_resourcesId;
-    std::map<std::string, Resource*>	_resourcesName;
+        //! Load a resource and return a pointer to it
+        Resource* loadResource(std::string const&);
+    
+        //! Remove resource from map
+        void removeResource(std::string const&);
+    
+        //! Get a resource by name
+        Resource*	getResource(std::string const&);
+
+        //! Get a resource by id
+        Resource*	getResource(uint32) const;
+
+    private:
+        std::map<uint32, Resource*>		_resourcesId;
+        std::map<std::string, Resource*>	_resourcesName;
 };
 
 #endif

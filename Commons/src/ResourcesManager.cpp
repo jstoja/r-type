@@ -17,37 +17,37 @@ ResourcesManager::~ResourcesManager() {
 }
 
 void ResourcesManager::addResource(Resource *resource) {
-  _resourcesName[resource->getName()] = resource;
-  _resourcesId[resource->getId()] = resource;
+    _resourcesName[resource->getName()] = resource;
+    _resourcesId[resource->getId()] = resource;
 }
 
 void ResourcesManager::removeResource(std::string const& name) {
-  Resource *item = getResource(name);
-  if (item != NULL) {
-      _resourcesId.erase(item->getId());
-      _resourcesName.erase(item->getName());
+    Resource *item = getResource(name);
+    if (item != NULL) {
+        _resourcesId.erase(item->getId());
+        _resourcesName.erase(item->getName());
     }
 }
 
 Resource* ResourcesManager::loadResource(std::string const& name) {
-  Resource *res = new Resource(name);
-  _resourcesName[name] = res;
-  _resourcesId[res->getId()] = res;
-  return res;
+    Resource *res = new Resource(name);
+    _resourcesName[name] = res;
+    _resourcesId[res->getId()] = res;
+    return res;
 }
 
 Resource*	ResourcesManager::getResource(std::string const& name) {
-  std::map<std::string, Resource*>::const_iterator it;
+    std::map<std::string, Resource*>::const_iterator it;
 
-  if ((it = _resourcesName.find(name)) != _resourcesName.end())
-    return it->second;
-  return NULL;
+    if ((it = _resourcesName.find(name)) != _resourcesName.end())
+      return it->second;
+    return NULL;
 }
 
 Resource*	ResourcesManager::getResource(uint32 id) const {
-  std::map<uint32, Resource*>::const_iterator it;  
+    std::map<uint32, Resource*>::const_iterator it;
 
-  if ((it = _resourcesId.find(id)) != _resourcesId.end())
-    return it->second;
-  return NULL;
+    if ((it = _resourcesId.find(id)) != _resourcesId.end())
+        return it->second;
+    return NULL;
 }
