@@ -10,6 +10,7 @@
 # define __R_Type__Renderer__
 
 # include <string>
+# include "Event/IProvider.h"
 # include "Types.h"
 # include "Vec2.h"
 
@@ -25,7 +26,7 @@
 
 namespace Graphic {
     
-    class Renderer {
+    class Renderer : public Event::IProvider {
     public:
         
         struct Settings {
@@ -42,6 +43,8 @@ namespace Graphic {
         
         Renderer(Settings const& settings=Settings());
         ~Renderer();
+        
+        virtual void processEvents(Event::Manager* manager);
       
     private:
         uint32          _antialiasingLevel;

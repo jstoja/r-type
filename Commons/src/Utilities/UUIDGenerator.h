@@ -19,15 +19,15 @@ namespace Utilities {
     friend class Singleton<UUIDGenerator>;
 
   public:
-    //! Construct the object
-    UUIDGenerator();
-    //! Destruct the object
-    ~UUIDGenerator();
-
     //! Return and increment the UUID
     uint32 getUUID();
 
   private:
+  //! Construct the object
+  UUIDGenerator();
+  //! Destruct the object
+  ~UUIDGenerator();
+
     static uint32 _id;
   };
 

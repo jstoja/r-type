@@ -6,6 +6,6 @@
 //
 //
 
-#include "Debug.hpp"
+#include "Debug.h"
 
 std::ostream* Debug::logStream = &std::cerr;

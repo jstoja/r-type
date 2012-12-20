@@ -6,8 +6,10 @@
 //
 //
 
+#include "Debug.h"
 #include "Renderer.h"
-#include "Debug.hpp"
+#include "Event/Manager.h"
+#include "Event/Event.h"
 
 #ifdef GRAPHIC_RENDERER_SFML
 
@@ -38,12 +40,27 @@ Graphic::Renderer::Renderer(Settings const& settings)
     Log("OpenGL Version " << contextSettings.majorVersion << "." << contextSettings.minorVersion
         << ", Antialiasing level: " << _antialiasingLevel);
     
-    sleep(2);
+    // Register to the Event manager
+    Event::Manager::getInstance().registerProvider(this);
 }
 
 Graphic::Renderer::~Renderer() {
     if (_window)
         delete _window;
+}
+
+void Graphic::Renderer::processEvents(Event::Manager* manager) {
+    sf::Event sfEvent;
+    while (_window->pollEvent(sfEvent)) {
+        switch (sfEvent.type) {
+            case sf::Event::Closed:
+                manager->fire(Event::Event(Event::Close, this));
+                break;
+                
+            default:
+                break;
+        }
+    }
 }
 
 #endif

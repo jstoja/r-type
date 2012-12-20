@@ -6,7 +6,7 @@
 //
 //
 
-#include "Debug.hpp"
+#include "Debug.h"
 
 int	main(int argc, char *argv[]) {
     

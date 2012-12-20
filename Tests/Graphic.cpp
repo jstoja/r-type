@@ -6,9 +6,11 @@
 //
 //
 
-#include "Debug.hpp"
+#include "Debug.h"
+
+#include "Graphic/Renderer.h"
 
 int	main(int argc, char *argv[]) {
-    
+    Graphic::Renderer renderer;
 	return (0);
 }
