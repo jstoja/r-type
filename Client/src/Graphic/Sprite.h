@@ -12,8 +12,8 @@
 # include <vector>
 # include "Object.h"
 # include "Vec2.h"
-# include "Graphic/Texture.h"
-# include "Graphic/Buffer.hpp"
+# include "Texture.h"
+# include "Buffer.hpp"
 
 namespace Graphic {
     

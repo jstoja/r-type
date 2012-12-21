@@ -25,7 +25,11 @@ public:
         
         // Setup scene
         _button.setPosition(Vec2(8, 4.5));
-        _button.setSize(Vec2(3, 1));
+        _button.setSize(Vec2(9, 3));
+        
+//        Graphic::Element* button2 = new Graphic::Element();
+//        button2->setPosition(Vec2(2, 2));
+//        button2->setSize(Vec2(3, 1));
         
         sf::Image image;
         image.loadFromFile("button.png");
@@ -34,12 +38,15 @@ public:
         buttonTexture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
         Graphic::Sprite* buttonSprite = new Graphic::Sprite();
         buttonSprite->setTexture(buttonTexture);
-        buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.0), Vec2(1.0, 0.33)));
-        buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.33), Vec2(1.0, 0.66)));
-        buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.66), Vec2(1.0, 1)));
+        buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.0),      Vec2(1.0,  0.333333)));
+        buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.333333), Vec2(1.0, 0.666666)));
+        buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.666666), Vec2(1.0, 1)));
         
         _button.setSprite(buttonSprite);
         _button.setCurrentFrame(0);
+        
+//        button2->setSprite(buttonSprite);
+//        _scene.addElement(button2);
         
         _scene.addElement(&_button);
         
