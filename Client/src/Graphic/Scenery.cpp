@@ -27,3 +27,13 @@ float32 Graphic::Scenery::getSpeed(void) const {
 void Graphic::Scenery::setSpeed(float32 speed) {
     _speed = speed;
 }
+
+float32 Graphic::Scenery::getDepth(void) const {
+    return _depth;
+}
+
+void Graphic::Scenery::setDepth(float32 depth) {
+    _depth = depth;
+}
+
+
