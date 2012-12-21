@@ -66,7 +66,14 @@ namespace Graphic {
          \param sprite Sprite object
          */
         void        setSprite(Sprite* sprite);
+
+        //! Return the current Sprite frame used
         uint16      getCurrentFrame(void) const;
+
+        //! Set the Sprite frame to be used
+        /*!
+         \param frame The frame number
+         */
         void        setCurrentFrame(uint16 frame);
         
         //! Return the transformation Matrix
