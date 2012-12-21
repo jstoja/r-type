@@ -12,9 +12,15 @@
 # include "Exception.h"
 
 namespace Graphic {
-    
+   
+   	//! Class to specify graphical exceptions
     class Exception : public ::Exception {
     public:
+
+    	//! Create a new Exception
+    	/*!
+    	 \param message The message to be printed when the Exception is thrown
+    	 */
         Exception(std::string const& message);
         virtual ~Exception() throw();
         

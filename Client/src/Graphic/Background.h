@@ -14,18 +14,39 @@
 # include "Vec2.h"
 
 namespace Graphic {
-    
+
+    //! Class for using a texture as Background
     class Background : public Object {
     public:
-        
+
+        //! Create a new Background
         Background(void);
+
+        //! Create a new Background specifying the Object id
+        /*!
+         \param id the Object id
+        */
         Background(uint32 id);
+
+        //! Destruct the Background
         virtual ~Background();
         
+        //! Return the range used for the Background
         Vec2 const& getRange(void) const;
+
+        //! Set the range of the background
+        /*!
+         \param range Range of the Background
+         */
         void        setRange(Vec2 const& range);
         
+        //! Return the repeat ratio of the Background
         float32     getRepeat(void) const;
+
+        //! Set the repeat ratio of the Background
+        /*!
+         \param repeat Repeat ratio
+         */
         void        setRepeat(float32 repeat);
         
     private:
