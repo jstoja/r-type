@@ -11,12 +11,14 @@
 #include "Debug.h"
 
 Graphic::Element::Element(void) :
-Object(), _position(), _rotation(0), _size(), _sprite(NULL),
+Object(), _position(), _rotation(0), _size(),
+_sprite(NULL), _currentFrame(0),
 _updateTransformationMatrix(true) {
 }
 
 Graphic::Element::Element(uint32 id) :
-Object(id), _position(), _rotation(0), _size(), _sprite(NULL),
+Object(id), _position(), _rotation(0), _size(),
+_sprite(NULL), _currentFrame(0),
 _updateTransformationMatrix(true) {
 }
 
@@ -53,6 +55,14 @@ Graphic::Sprite* Graphic::Element::getSprite(void) const {
 
 void Graphic::Element::setSprite(Sprite* sprite) {
     _sprite = sprite;
+}
+
+uint16 Graphic::Element::getCurrentFrame(void) const {
+    return _currentFrame;
+}
+
+void Graphic::Element::setCurrentFrame(uint16 frame) {
+    _currentFrame = frame;
 }
 
 Graphic::Matrix4f const& Graphic::Element::getTransformationMatrix(void) {

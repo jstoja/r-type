@@ -36,6 +36,8 @@ namespace Graphic {
         
         Sprite*     getSprite(void) const;
         void        setSprite(Sprite* sprite);
+        uint16      getCurrentFrame(void) const;
+        void        setCurrentFrame(uint16 frame);
         
         Matrix4f const& getTransformationMatrix(void);
         Rect            getRect(void) const;
@@ -45,6 +47,7 @@ namespace Graphic {
         float32     _rotation;
         Vec2        _size;
         Sprite*     _sprite;
+        uint16      _currentFrame;
         Matrix4f    _transformationMatrix;
         bool        _updateTransformationMatrix;
     };

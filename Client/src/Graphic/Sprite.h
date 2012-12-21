@@ -11,8 +11,9 @@
 
 # include <vector>
 # include "Object.h"
-# include "Texture.h"
 # include "Vec2.h"
+# include "Graphic/Texture.h"
+# include "Graphic/Buffer.hpp"
 
 namespace Graphic {
     
@@ -37,9 +38,13 @@ namespace Graphic {
         void            addFrame(Frame const& frame);
         Frame const&    getFrame(uint32 index);
         
+        Bufferf*        getTexuteCoordsBuffer(void);
+        
     private:
         Texture*            _texture;
-        std::vector<Frame>   _frames;
+        std::vector<Frame>  _frames;
+        Bufferf*            _textureCoords;
+        bool                _needRebuildTextureCoords;
     };
     
 }
