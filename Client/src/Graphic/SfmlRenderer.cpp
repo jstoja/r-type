@@ -52,14 +52,15 @@ void Graphic::Renderer::processEvents(Event::Manager* manager) {
             manager->fire(Event::Event(Event::Close, this));
         } else if (sfEvent.type == sf::Event::MouseMoved) {
             manager->fire(Event::Event(Event::PointerMove,
-                                       Vec2(sfEvent.mouseMove.x, sfEvent.mouseMove.y),
+                                       viewportToScene(Vec2(sfEvent.mouseMove.x,
+                                                            sfEvent.mouseMove.y)),
                                        this));
         } else if (sfEvent.type == sf::Event::MouseButtonPressed
                    || sfEvent.type == sf::Event::MouseButtonReleased) {
             Event::Event event(sfEvent.type == sf::Event::MouseButtonPressed ?
                                Event::PointerPushed : Event::PointerReleased);
             event.pointerButton = pointerButtonValues[sfEvent.mouseButton.button];
-            event.pos = Vec2(sfEvent.mouseButton.x, sfEvent.mouseButton.y);
+            event.pos = viewportToScene(Vec2(sfEvent.mouseButton.x, sfEvent.mouseButton.y));
             event.sender = this;
             manager->fire(event);
         }

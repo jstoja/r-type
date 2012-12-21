@@ -30,10 +30,9 @@ static const char* vertexShader =
 
 static const char* fragmentShader =
     "varying vec2       vTextureCoords;\n"
-    //"uniform sampler2D  textureSampler;\n"
+    "uniform sampler2D  textureSampler;\n"
     "void main(){\n"
-        //"gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, -vTextureCoord.t));\n"
-        "gl_FragColor = vec4(1, 1, 1, 1);\n"
+        "gl_FragColor = texture2D(textureSampler, vec2(vTextureCoords.s, -vTextureCoords.t));\n"
     "}\n"
 ;
 
@@ -128,17 +127,13 @@ void Graphic::Renderer::render(void) {
     glEnableVertexAttribArray(_vertexPositionLocation);
     glEnableVertexAttribArray(_vertexTextureCoordsLocation);
     
-    // Setup data common to all scene elements (vertexes, indexes, world matrix...)
+    // Setup data common to all scene elements (world matrix, vertexes, indexes...)
+    glUniformMatrix4fv(_worldMatrixLocation, 1, GL_FALSE,
+                       (const float32*)_scene->getWorldMatrix());
+    
     _vertexesBuffer->bind();
     glVertexAttribPointer(_vertexPositionLocation, 3, GL_FLOAT,
                           GL_FALSE, 0, (void*)0);
-    
-    _textureCoordsBuffer->bind();
-    glVertexAttribPointer(_vertexTextureCoordsLocation, 2, GL_FLOAT,
-                          GL_FALSE, 0, (void*)0);
-    
-    glUniformMatrix4fv(_worldMatrixLocation, 1, GL_FALSE,
-                       (const float32*)_scene->getWorldMatrix());
     
     _indexesBuffer->bind();
     
@@ -151,13 +146,20 @@ void Graphic::Renderer::render(void) {
         glUniformMatrix4fv(_transformationMatrixLocation, 1, GL_FALSE,
                            (const float32*)element->getTransformationMatrix());
         
+        // Send texture coords for the sprite frame
+        element->getSprite()->getTexuteCoordsBuffer()->bind();
+        uint32 frameTextureCoordsIndex = element->getCurrentFrame() * 12 * sizeof(GL_FLOAT);
+        glVertexAttribPointer(_vertexTextureCoordsLocation, 2, GL_FLOAT,
+                              GL_FALSE, 0, (void*)frameTextureCoordsIndex);
+        
+        // Setup texture
+        glActiveTexture(GL_TEXTURE0);
+        element->getSprite()->getTexture()->bind();
+        glUniform1i(_textureSamplerLocation, 0);
+
         // Draw element
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     }
-    
-    //        glActiveTexture(GL_TEXTURE0);
-    //        texture.bind();
-    //        glUniform1i(textureUniformLocation, 0);
     
     glDisableVertexAttribArray(_vertexTextureCoordsLocation);
     glDisableVertexAttribArray(_vertexPositionLocation);

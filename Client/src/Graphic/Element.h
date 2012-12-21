@@ -66,6 +66,8 @@ namespace Graphic {
          \param sprite Sprite object
          */
         void        setSprite(Sprite* sprite);
+        uint16      getCurrentFrame(void) const;
+        void        setCurrentFrame(uint16 frame);
         
         //! Return the transformation Matrix
         /*!
@@ -85,6 +87,7 @@ namespace Graphic {
         float32     _rotation;
         Vec2        _size;
         Sprite*     _sprite;
+        uint16      _currentFrame;
         Matrix4f    _transformationMatrix;
         bool        _updateTransformationMatrix;
     };
