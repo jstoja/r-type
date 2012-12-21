@@ -13,7 +13,6 @@
 #include "Event.h"
 
 Event::Manager::Manager() : _providers(), _listeners(), _lastPointerPos() {
-    
 }
 
 Event::Manager::~Manager() {

@@ -18,10 +18,11 @@
 class Test : public Event::IListenerDelegate {
 public:
     Test()
-    : _close(false), _renderer(), _scene(), _button() {
+    : _close(false), _scene(), _button() {
         
         // Setup renderer
-        _renderer.setScene(&_scene);
+        Graphic::Renderer::getInstance().init();
+        Graphic::Renderer::getInstance().setScene(&_scene);
         
         // Setup scene
         _button.setPosition(Vec2(8, 4.5));
@@ -67,7 +68,7 @@ public:
             Event::Manager::getInstance().processEvents();
             
             // Render
-            _renderer.render();
+            Graphic::Renderer::getInstance().render();
         }
     }
     
@@ -89,7 +90,6 @@ public:
 
 private:
     bool                _close;
-    Graphic::Renderer   _renderer;
     Graphic::Scene      _scene;
     Graphic::Element    _button;
 };

@@ -13,15 +13,13 @@
 		2699A9E71684AD400092AC40 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E61684AD400092AC40 /* GLKit.framework */; };
 		2699A9E91684AD400092AC40 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E81684AD400092AC40 /* OpenGLES.framework */; };
 		2699A9EF1684AD400092AC40 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2699A9ED1684AD400092AC40 /* InfoPlist.strings */; };
-		2699A9F11684AD400092AC40 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2699A9F01684AD400092AC40 /* main.m */; };
+		2699A9F11684AD400092AC40 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2699A9F01684AD400092AC40 /* main.mm */; };
 		2699A9F51684AD400092AC40 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2699A9F41684AD400092AC40 /* AppDelegate.m */; };
 		2699A9F71684AD400092AC40 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2699A9F61684AD400092AC40 /* Default.png */; };
 		2699A9F91684AD400092AC40 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2699A9F81684AD400092AC40 /* Default@2x.png */; };
 		2699A9FB1684AD400092AC40 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2699A9FA1684AD400092AC40 /* Default-568h@2x.png */; };
 		2699A9FE1684AD400092AC40 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2699A9FC1684AD400092AC40 /* MainStoryboard_iPhone.storyboard */; };
 		2699AA011684AD400092AC40 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2699A9FF1684AD400092AC40 /* MainStoryboard_iPad.storyboard */; };
-		2699AA031684AD400092AC40 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2699AA021684AD400092AC40 /* Shader.fsh */; };
-		2699AA051684AD400092AC40 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2699AA041684AD400092AC40 /* Shader.vsh */; };
 		2699AA081684AD400092AC40 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA071684AD400092AC40 /* ViewController.mm */; };
 		2699AA101684AD400092AC40 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699AA0F1684AD400092AC40 /* SenTestingKit.framework */; };
 		2699AA111684AD400092AC40 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E01684AD400092AC40 /* UIKit.framework */; };
@@ -53,7 +51,7 @@
 		2699AA7F1684AED40092AC40 /* WinMutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA6B1684AED40092AC40 /* WinMutex.cpp */; };
 		2699AA801684AED40092AC40 /* UUIDGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA6E1684AED40092AC40 /* UUIDGenerator.cpp */; };
 		2699AA811684AED40092AC40 /* Vec2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA701684AED40092AC40 /* Vec2.cpp */; };
-		2699AA8C1684B84B0092AC40 /* iOSRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA8A1684B84B0092AC40 /* iOSRenderer.cpp */; };
+		2699AA8C1684B84B0092AC40 /* iOSRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA8A1684B84B0092AC40 /* iOSRenderer.mm */; };
 		2699AAAA1684C8570092AC40 /* Rect2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AAA81684C8570092AC40 /* Rect2.cpp */; };
 /* End PBXBuildFile section */
 
@@ -76,7 +74,7 @@
 		2699A9E81684AD400092AC40 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		2699A9EC1684AD400092AC40 /* R-Type-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "R-Type-Info.plist"; sourceTree = "<group>"; };
 		2699A9EE1684AD400092AC40 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		2699A9F01684AD400092AC40 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2699A9F01684AD400092AC40 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		2699A9F21684AD400092AC40 /* R-Type-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "R-Type-Prefix.pch"; sourceTree = "<group>"; };
 		2699A9F31684AD400092AC40 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2699A9F41684AD400092AC40 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -85,8 +83,6 @@
 		2699A9FA1684AD400092AC40 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		2699A9FD1684AD400092AC40 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		2699AA001684AD400092AC40 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		2699AA021684AD400092AC40 /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
-		2699AA041684AD400092AC40 /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
 		2699AA061684AD400092AC40 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		2699AA071684AD400092AC40 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		2699AA0E1684AD400092AC40 /* R-TypeTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "R-TypeTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,7 +152,7 @@
 		2699AA6F1684AED40092AC40 /* UUIDGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UUIDGenerator.h; path = ../../../Commons/src/UUIDGenerator.h; sourceTree = "<group>"; };
 		2699AA701684AED40092AC40 /* Vec2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Vec2.cpp; path = ../../../Commons/src/Vec2.cpp; sourceTree = "<group>"; };
 		2699AA711684AED40092AC40 /* Vec2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vec2.h; path = ../../../Commons/src/Vec2.h; sourceTree = "<group>"; };
-		2699AA8A1684B84B0092AC40 /* iOSRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = iOSRenderer.cpp; sourceTree = "<group>"; };
+		2699AA8A1684B84B0092AC40 /* iOSRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSRenderer.mm; sourceTree = "<group>"; };
 		2699AAA81684C8570092AC40 /* Rect2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Rect2.cpp; path = ../../../Commons/src/Rect2.cpp; sourceTree = "<group>"; };
 		2699AAA91684C8570092AC40 /* Rect2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rect2.h; path = ../../../Commons/src/Rect2.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -228,8 +224,6 @@
 				2699A9F41684AD400092AC40 /* AppDelegate.m */,
 				2699A9FC1684AD400092AC40 /* MainStoryboard_iPhone.storyboard */,
 				2699A9FF1684AD400092AC40 /* MainStoryboard_iPad.storyboard */,
-				2699AA021684AD400092AC40 /* Shader.fsh */,
-				2699AA041684AD400092AC40 /* Shader.vsh */,
 				2699AA061684AD400092AC40 /* ViewController.h */,
 				2699AA071684AD400092AC40 /* ViewController.mm */,
 				2699A9EB1684AD400092AC40 /* Supporting Files */,
@@ -242,7 +236,7 @@
 			children = (
 				2699A9EC1684AD400092AC40 /* R-Type-Info.plist */,
 				2699A9ED1684AD400092AC40 /* InfoPlist.strings */,
-				2699A9F01684AD400092AC40 /* main.m */,
+				2699A9F01684AD400092AC40 /* main.mm */,
 				2699A9F21684AD400092AC40 /* R-Type-Prefix.pch */,
 				2699A9F61684AD400092AC40 /* Default.png */,
 				2699A9F81684AD400092AC40 /* Default@2x.png */,
@@ -289,7 +283,7 @@
 				2699AA341684AE670092AC40 /* Scenery.cpp */,
 				2699AA351684AE670092AC40 /* Scenery.h */,
 				2699AA361684AE670092AC40 /* SfmlRenderer.cpp */,
-				2699AA8A1684B84B0092AC40 /* iOSRenderer.cpp */,
+				2699AA8A1684B84B0092AC40 /* iOSRenderer.mm */,
 				2699AA371684AE670092AC40 /* ShaderProgram.cpp */,
 				2699AA381684AE670092AC40 /* ShaderProgram.h */,
 				2699AA391684AE670092AC40 /* Sprite.cpp */,
@@ -444,8 +438,6 @@
 				2699A9FB1684AD400092AC40 /* Default-568h@2x.png in Resources */,
 				2699A9FE1684AD400092AC40 /* MainStoryboard_iPhone.storyboard in Resources */,
 				2699AA011684AD400092AC40 /* MainStoryboard_iPad.storyboard in Resources */,
-				2699AA031684AD400092AC40 /* Shader.fsh in Resources */,
-				2699AA051684AD400092AC40 /* Shader.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,7 +472,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2699A9F11684AD400092AC40 /* main.m in Sources */,
+				2699A9F11684AD400092AC40 /* main.mm in Sources */,
 				2699A9F51684AD400092AC40 /* AppDelegate.m in Sources */,
 				2699AA081684AD400092AC40 /* ViewController.mm in Sources */,
 				2699AA3D1684AE670092AC40 /* Background.cpp in Sources */,
@@ -508,7 +500,7 @@
 				2699AA7F1684AED40092AC40 /* WinMutex.cpp in Sources */,
 				2699AA801684AED40092AC40 /* UUIDGenerator.cpp in Sources */,
 				2699AA811684AED40092AC40 /* Vec2.cpp in Sources */,
-				2699AA8C1684B84B0092AC40 /* iOSRenderer.cpp in Sources */,
+				2699AA8C1684B84B0092AC40 /* iOSRenderer.mm in Sources */,
 				2699AAAA1684C8570092AC40 /* Rect2.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -623,6 +615,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "R-Type/R-Type-Prefix.pch";
 				INFOPLIST_FILE = "R-Type/R-Type-Info.plist";
@@ -637,6 +631,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "R-Type/R-Type-Prefix.pch";
 				INFOPLIST_FILE = "R-Type/R-Type-Info.plist";

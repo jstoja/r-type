@@ -11,6 +11,7 @@
 
 # include <string>
 
+# include "Singleton.hpp"
 # include "Scene.h"
 # include "Buffer.hpp"
 # include "ShaderProgram.h"
@@ -21,6 +22,10 @@
 
 # if (defined OS_IOS)
 #  define GRAPHIC_RENDERER_IOS
+#  if defined (__OBJC__)
+#   import <UIKit/UIKit.h>
+#   import <GLKit/GLKit.h>
+#  endif
 # else
 # define GRAPHIC_RENDERER_SFML
 # endif
@@ -32,8 +37,10 @@
 namespace Graphic {
     
     //! Class of the Renderer that put a scene into a window
-    class Renderer : public Event::IProvider {
+    class Renderer : public Singleton<Renderer>, public Event::IProvider {
     public:
+        
+        friend class Singleton<Renderer>;
         
         struct Settings {
 
@@ -55,8 +62,8 @@ namespace Graphic {
             bool        fullScreen;
         };
         
-        //! Create the renderer with the specified Settings
-        Renderer(Settings const& settings=Settings());
+        //! Init the renderer with the specified settings
+        void init(Settings const& settings=Settings());
         
         //! Platform-specific destructor
         virtual ~Renderer(void);
@@ -93,11 +100,14 @@ namespace Graphic {
         
         //! Coords transformations
         Vec2    viewportToScene(Vec2 const& coords) const;
-        Rect2    viewportToScene(Rect2 const& coords) const;
+        Rect2   viewportToScene(Rect2 const& coords) const;
         Vec2    sceneToViewport(Vec2 const& coords) const;
-        Rect2    sceneToViewport(Rect2 const& coords) const;
-      
+        Rect2   sceneToViewport(Rect2 const& coords) const;
+              
     private:
+        // Private constructor
+        Renderer(void);
+        
         //! OpenGL stuff
         void _fillVertexesBuffer(float32 x=0.5, float32 y=0.5);
         void _fillTextureCoordsBuffer(float32 repeatX=1, float32 repeatY=1);
@@ -118,8 +128,10 @@ namespace Graphic {
         uint32                  _transformationMatrixLocation;
         uint32                  _textureSamplerLocation;
         
-# ifdef GRAPHIC_RENDERER_SFML
-        sf::Window*     _window;
+# if defined (GRAPHIC_RENDERER_SFML)
+#  include "SfmlRendererMembers.h"
+# elif defined (GRAPHIC_RENDERER_IOS)
+#  include "iOSRendererMembers.h"
 # endif
     };
     

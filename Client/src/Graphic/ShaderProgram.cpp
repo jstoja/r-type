@@ -32,11 +32,15 @@ Graphic::ShaderProgram::ShaderProgram(std::string const& vertexShader,
     glGetShaderiv(vertexShaderID, GL_COMPILE_STATUS, &result);
     if (result == GL_FALSE) {
         glGetShaderiv(vertexShaderID, GL_INFO_LOG_LENGTH, &infoLogLength);
-        errorMessage.resize(infoLogLength);
-        glGetShaderInfoLog(vertexShaderID, infoLogLength, NULL, &errorMessage[0]);
-        throw new Graphic::Exception(
-                                     std::string("Vertex shader compilation error:\n") +
-                                     std::string(errorMessage.data()));
+        if (infoLogLength > 0) {
+            errorMessage.resize(infoLogLength);
+            glGetShaderInfoLog(vertexShaderID, infoLogLength, NULL, &errorMessage[0]);
+            throw new Graphic::Exception(
+                                         std::string("Vertex shader compilation error:\n") +
+                                         std::string(errorMessage.data()));
+        } else {
+            throw new Graphic::Exception("Vertex shader compilation error: No message available");
+        }
     }
     
     // Compile and check fragment shader

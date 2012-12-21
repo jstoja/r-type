@@ -29,10 +29,14 @@ static const char* vertexShader =
 ;
 
 static const char* fragmentShader =
+# if defined (GRAPHIC_RENDERER_IOS)
+    "precision mediump float;\n"
+# endif
     "varying vec2       vTextureCoords;\n"
     "uniform sampler2D  textureSampler;\n"
     "void main(){\n"
         "gl_FragColor = texture2D(textureSampler, vec2(vTextureCoords.s, -vTextureCoords.t));\n"
+        "gl_FragColor.r = 1.0;\n"
     "}\n"
 ;
 
@@ -43,7 +47,7 @@ Graphic::Renderer::Settings::Settings(std::string const& title,
 : title(title), size(size), antialiasingLevel(antialiasingLevel), fullScreen(fullScreen) {
 }
 
-Graphic::Renderer::Renderer(Settings const& settings) :
+Graphic::Renderer::Renderer() :
 _antialiasingLevel(0), _scene(NULL),
 _vertexesBuffer(NULL),
 _textureCoordsBuffer(NULL), _indexesBuffer(NULL),
@@ -53,12 +57,14 @@ _vertexTextureCoordsLocation(0),
 _worldMatrixLocation(0),
 _transformationMatrixLocation(0),
 _textureSamplerLocation(0) {
+}
+
+void Graphic::Renderer::init(Settings const& settings) {
+    // Register to the Event manager
+    Event::Manager::getInstance().registerProvider(this);
     
     // Let platform-specific code create OpenGL context
     createContext(settings);
-    
-    // Register to the Event manager
-    Event::Manager::getInstance().registerProvider(this);
     
     // Init and configure OpenGL context
 # if !defined OS_IOS

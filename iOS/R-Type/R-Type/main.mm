@@ -10,6 +10,10 @@
 
 #import "AppDelegate.h"
 
+#include "Debug.h"
+#include "Exception.h"
+#include <exception>
+
 int main(int argc, char *argv[])
 {
     @autoreleasepool {
