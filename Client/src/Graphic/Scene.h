@@ -14,6 +14,7 @@
 # include "Background.h"
 # include "Scenery.h"
 # include "Element.h"
+# include "Matrix.hpp"
 
 namespace Graphic {
     
@@ -27,10 +28,17 @@ namespace Graphic {
         void addScenery(Scenery* scenery);
         void addElement(Element* element);
         
+        std::vector<Element*> const &   getElements(void) const;
+        
+        Matrix4f const& getWorldMatrix(void) const;
+        Vec2 const&     getViewport(void) const;
+        
     private:
         std::vector<Background*>    _backgrounds;
         std::vector<Scenery*>       _sceneries;
         std::vector<Element*>       _elements;
+        Matrix4f                    _worldMatrix;
+        Vec2                        _viewport;
     };
     
 }

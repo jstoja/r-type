@@ -10,7 +10,10 @@
 
 Rect::Rect(float32 x, float32 y, float32 width, float32 height)
 : pos(x, y), size(width, height) {
-    
+}
+
+Rect::Rect(Vec2 const& pos, Vec2 const& size)
+: pos(pos), size(size) {
 }
 
 Rect::~Rect() {

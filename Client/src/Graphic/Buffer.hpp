@@ -10,7 +10,7 @@
 # define __RType__Buffer__
 
 # include "Graphic/OpenGL.h"
-# include "Graphic/Exception.h"
+# include "Graphic/GraphicException.h"
 # include "Types.h"
 
 namespace Graphic {

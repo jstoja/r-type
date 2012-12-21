@@ -11,12 +11,22 @@
 #include "Event/Listener.h"
 #include "Event/IListenerDelegate.h"
 #include "Graphic/Renderer.h"
+#include "Graphic/Scene.h"
 
 class Test : public Event::IListenerDelegate {
 public:
     Test()
-    : _close(false), _renderer() {
+    : _close(false), _renderer(), _scene(), _button() {
         
+        // Setup renderer
+        _renderer.setScene(&_scene);
+        
+        // Setup scene
+        _button.setPosition(Vec2(2, 2));
+        _button.setSize(Vec2(1, 1));
+        _scene.addElement(&_button);
+        
+        // Add event listeners
         Event::Manager::getInstance()
         .addEventListener(new Event::Listener(Event::Close, this));
         Event::Manager::getInstance()
@@ -25,14 +35,16 @@ public:
                                               | Event::PointerMove
                                               | Event::PointerPushed
                                               | Event::PointerReleased,
-                                              Rect(100, 100, 100, 100),
+                                              _renderer.sceneToViewport(_button.getRect()),
                                               this));
-
         
         while (!_close) {
+            // Process events
             Event::Manager::getInstance().processEvents();
+            
+            // Render
+            _renderer.render();
         }
-        
     }
     
     ~Test() {}
@@ -45,7 +57,7 @@ public:
         } else if (event.type == Event::PointerOut) {
             Log("OUT !");
         } else if (event.type == Event::PointerMove) {
-            Log("Move: " << event.pos);
+            Log("Move: " << _renderer.viewportToScene(event.pos));
         } else {
             Log("Event: " << event.type << " at " << event.pos);
         }
@@ -54,10 +66,15 @@ public:
 private:
     bool                _close;
     Graphic::Renderer   _renderer;
+    Graphic::Scene      _scene;
+    Graphic::Element    _button;
 };
 
 int	main(int argc, char *argv[]) {
-    Test client;
-    
+    try {
+        Test client;
+    } catch (std::exception* e) {
+        std::cerr << e->what() << std::endl;
+    }
 	return (0);
 }

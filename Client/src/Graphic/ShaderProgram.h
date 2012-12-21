@@ -34,13 +34,13 @@ namespace Graphic {
         uint32  getId() const;
         
         //! Retrieve the location of a uniform from the program
-        void    registerUniformLocation(std::string const& uniform);
+        uint32  registerUniformLocation(std::string const& uniform);
         
         //! Returns the location of a previously registered uniform
         uint32  getUniformLocation(std::string const& uniform);
         
         //! Retrieve the location of an attribute from the program
-        void    registerAttributeLocation(std::string const& attribute);
+        uint32  registerAttributeLocation(std::string const& attribute);
         
         //! Returns the location of a previously registered attribute
         uint32  getAttributeLocation(std::string const& attribute);

@@ -16,6 +16,7 @@
 struct Rect {
     
     Rect(float32 x=0, float32 y=0, float32 width=0, float32 height=0);
+    Rect(Vec2 const& pos, Vec2 const& size);
     ~Rect();
     
     //! Tests wether a point is in the rect

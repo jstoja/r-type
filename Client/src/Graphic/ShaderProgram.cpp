@@ -85,26 +85,36 @@ uint32 Graphic::ShaderProgram::getId() const {
     return _id;
 }
 
-void Graphic::ShaderProgram::registerUniformLocation(std::string const& uniform) {
+uint32 Graphic::ShaderProgram::registerUniformLocation(std::string const& uniform) {
     GLint location = glGetUniformLocation(_id, uniform.c_str());
     if (location == -1) {
         throw new Graphic::Exception("Unknown uniform: \"" + uniform + "\"");
     }
     _uniformLocations[uniform] = location;
+    return location;
 }
 
 uint32 Graphic::ShaderProgram::getUniformLocation(std::string const& uniform) {
-    return _uniformLocations[uniform];
+    std::map<std::string, uint32>::const_iterator it =
+        _uniformLocations.find(uniform);
+    if (it == _uniformLocations.end())
+        return registerUniformLocation(uniform);
+    return it->second;
 }
 
-void Graphic::ShaderProgram::registerAttributeLocation(std::string const& attribute) {
+uint32 Graphic::ShaderProgram::registerAttributeLocation(std::string const& attribute) {
     GLint location = glGetAttribLocation(_id, attribute.c_str());
     if (location == -1) {
         throw new Graphic::Exception("Unknown attribute: \"" + attribute + "\"");
     }
     _attributeLocations[attribute] = location;
+    return location;
 }
 
 uint32 Graphic::ShaderProgram::getAttributeLocation(std::string const& attribute) {
-    return _attributeLocations[attribute];
+    std::map<std::string, uint32>::const_iterator it =
+        _attributeLocations.find(attribute);
+    if (it == _attributeLocations.end())
+        return registerAttributeLocation(attribute);
+    return it->second;
 }

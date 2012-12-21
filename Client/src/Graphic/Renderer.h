@@ -10,9 +10,14 @@
 # define __R_Type__Renderer__
 
 # include <string>
+
+# include "Graphic/Scene.h"
+# include "Graphic/Buffer.hpp"
+# include "Graphic/ShaderProgram.h"
 # include "Event/IProvider.h"
 # include "Types.h"
 # include "Vec2.h"
+# include "Rect.h"
 
 # if (defined OS_IOS)
 #  define GRAPHIC_RENDERER_IOS
@@ -42,12 +47,51 @@ namespace Graphic {
         };
         
         Renderer(Settings const& settings=Settings());
-        ~Renderer();
+        
+        //! Platform-specific destructor
+        virtual ~Renderer(void);
+        
+        //! General destructor
+        void destruct();
+        
+        //! Platform-specific operations
+        void    createContext(Settings const& settings=Settings());
+        void    refresh(void);
+        Vec2    getViewportSize(void) const;
         
         virtual void processEvents(Event::Manager* manager);
+        
+        //! Rendering
+        void    setScene(Scene const* scene);
+        void    render(void);
+        void    updateViewport(void);
+        
+        //! Coords transformations
+        Vec2    viewportToScene(Vec2 const& coords) const;
+        Rect    viewportToScene(Rect const& coords) const;
+        Vec2    sceneToViewport(Vec2 const& coords) const;
+        Rect    sceneToViewport(Rect const& coords) const;
       
     private:
-        uint32          _antialiasingLevel;
+        //! OpenGL stuff
+        void _fillVertexesBuffer(float32 x=0.5, float32 y=0.5);
+        void _fillTextureCoordsBuffer(float32 repeatX=1, float32 repeatY=1);
+        void _fillIndexesBuffer(void);
+        
+        uint32              _antialiasingLevel;
+        Scene const*        _scene;
+        
+        //! OpenGL resources
+        Graphic::Bufferf*       _vertexesBuffer;
+        Graphic::Bufferf*       _textureCoordsBuffer;
+        Graphic::Bufferui*      _indexesBuffer;
+        Graphic::ShaderProgram* _shaderProgram;
+        
+        uint32                  _vertexPositionLocation;
+        uint32                  _vertexTextureCoordsLocation;
+        uint32                  _worldMatrixLocation;
+        uint32                  _transformationMatrixLocation;
+        uint32                  _textureSamplerLocation;
         
 # ifdef GRAPHIC_RENDERER_SFML
         sf::Window*     _window;

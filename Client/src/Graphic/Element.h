@@ -13,6 +13,8 @@
 # include "Sprite.h"
 # include "Types.h"
 # include "Vec2.h"
+# include "Rect.h"
+# include "Matrix.hpp"
 
 namespace Graphic {
     
@@ -30,16 +32,21 @@ namespace Graphic {
         void        setRotation(float32 rotation);
         
         Vec2 const& getSize(void) const;
-        void        setSize(float32 size);
+        void        setSize(Vec2 const& size);
         
         Sprite*     getSprite(void) const;
         void        setSprite(Sprite* sprite);
         
+        Matrix4f const& getTransformationMatrix(void);
+        Rect            getRect(void) const;
+        
     private:
-        Vec2    _position;
-        float32 _rotation;
-        Vec2    _size;
-        Sprite* _sprite;
+        Vec2        _position;
+        float32     _rotation;
+        Vec2        _size;
+        Sprite*     _sprite;
+        Matrix4f    _transformationMatrix;
+        bool        _updateTransformationMatrix;
     };
     
 }

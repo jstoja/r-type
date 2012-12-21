@@ -13,16 +13,7 @@
 
 #ifdef GRAPHIC_RENDERER_SFML
 
-Graphic::Renderer::Settings::Settings(std::string const& title,
-                                      Vec2 size,
-                                      uint32 antialiasingLevel,
-                                      bool fullScreen)
-: title(title), size(size), antialiasingLevel(antialiasingLevel), fullScreen(fullScreen) {
-}
-
-Graphic::Renderer::Renderer(Settings const& settings)
-: _antialiasingLevel(0), _window(NULL) {
-    
+void Graphic::Renderer::createContext(Settings const& settings) {    
     sf::ContextSettings contextSettings;
     contextSettings.antialiasingLevel = settings.antialiasingLevel;
     contextSettings.majorVersion = 2;
@@ -39,14 +30,12 @@ Graphic::Renderer::Renderer(Settings const& settings)
     
     Log("OpenGL Version " << contextSettings.majorVersion << "." << contextSettings.minorVersion
         << ", Antialiasing level: " << _antialiasingLevel);
-    
-    // Register to the Event manager
-    Event::Manager::getInstance().registerProvider(this);
 }
 
 Graphic::Renderer::~Renderer() {
     if (_window)
         delete _window;
+    destruct();
 }
 
 void Graphic::Renderer::processEvents(Event::Manager* manager) {
@@ -74,7 +63,20 @@ void Graphic::Renderer::processEvents(Event::Manager* manager) {
             event.sender = this;
             manager->fire(event);
         }
+        //! Update the viewport if window size has changed
+        else if (sfEvent.type == sf::Event::Resized) {
+            updateViewport();
+        }
     }
+}
+
+Vec2 Graphic::Renderer::getViewportSize(void) const {
+    sf::Vector2u size = _window->getSize();
+    return Vec2(size.x, size.y);
+}
+
+void Graphic::Renderer::refresh(void) {
+    _window->display();
 }
 
 #endif
