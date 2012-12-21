@@ -6,24 +6,24 @@
 //
 //
 
-#include "Rect.h"
+#include "Rect2.h"
 
-Rect::Rect(float32 x, float32 y, float32 width, float32 height)
+Rect2::Rect2(float32 x, float32 y, float32 width, float32 height)
 : pos(x, y), size(width, height) {
 }
 
-Rect::Rect(Vec2 const& pos, Vec2 const& size)
+Rect2::Rect2(Vec2 const& pos, Vec2 const& size)
 : pos(pos), size(size) {
 }
 
-Rect::~Rect() {
+Rect2::~Rect2() {
 }
 
-bool Rect::in(Vec2 const& point) const {
+bool Rect2::in(Vec2 const& point) const {
     return pos <= point && (pos + size) >= point;
 }
 
-std::ostream& operator<<(std::ostream& stream, Rect const& rect) {
+std::ostream& operator<<(std::ostream& stream, Rect2 const& rect) {
     return stream << "(" << rect.pos.x << ", " << rect.pos.y
     << ", " << rect.size.x << ", " << rect.size.y << ")";
 }

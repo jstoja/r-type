@@ -77,6 +77,6 @@ Graphic::Matrix4f const& Graphic::Element::getTransformationMatrix(void) {
     return _transformationMatrix;
 }
 
-Rect Graphic::Element::getRect() const {
-    return Rect(_position - _size / 2, _size);
+Rect2 Graphic::Element::getRect() const {
+    return Rect2(_position - _size / 2, _size);
 }

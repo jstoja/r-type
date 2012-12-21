@@ -17,7 +17,7 @@
 # include "Event/IProvider.h"
 # include "Types.h"
 # include "Vec2.h"
-# include "Rect.h"
+# include "Rect2.h"
 
 # if (defined OS_IOS)
 #  define GRAPHIC_RENDERER_IOS
@@ -93,9 +93,9 @@ namespace Graphic {
         
         //! Coords transformations
         Vec2    viewportToScene(Vec2 const& coords) const;
-        Rect    viewportToScene(Rect const& coords) const;
+        Rect2    viewportToScene(Rect2 const& coords) const;
         Vec2    sceneToViewport(Vec2 const& coords) const;
-        Rect    sceneToViewport(Rect const& coords) const;
+        Rect2    sceneToViewport(Rect2 const& coords) const;
       
     private:
         //! OpenGL stuff

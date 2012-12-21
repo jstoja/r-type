@@ -46,7 +46,6 @@
 		2699AA771684AED40092AC40 /* Manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA541684AED40092AC40 /* Manager.cpp */; };
 		2699AA781684AED40092AC40 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA561684AED40092AC40 /* Exception.cpp */; };
 		2699AA791684AED40092AC40 /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA581684AED40092AC40 /* Object.cpp */; };
-		2699AA7A1684AED40092AC40 /* Rect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA5B1684AED40092AC40 /* Rect.cpp */; };
 		2699AA7B1684AED40092AC40 /* Resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA5D1684AED40092AC40 /* Resource.cpp */; };
 		2699AA7C1684AED40092AC40 /* ResourcesManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA5F1684AED40092AC40 /* ResourcesManager.cpp */; };
 		2699AA7D1684AED40092AC40 /* MutexLocker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA651684AED40092AC40 /* MutexLocker.cpp */; };
@@ -55,6 +54,7 @@
 		2699AA801684AED40092AC40 /* UUIDGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA6E1684AED40092AC40 /* UUIDGenerator.cpp */; };
 		2699AA811684AED40092AC40 /* Vec2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA701684AED40092AC40 /* Vec2.cpp */; };
 		2699AA8C1684B84B0092AC40 /* iOSRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA8A1684B84B0092AC40 /* iOSRenderer.cpp */; };
+		2699AAAA1684C8570092AC40 /* Rect2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AAA81684C8570092AC40 /* Rect2.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,8 +136,6 @@
 		2699AA581684AED40092AC40 /* Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Object.cpp; path = ../../../Commons/src/Object.cpp; sourceTree = "<group>"; };
 		2699AA591684AED40092AC40 /* Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Object.h; path = ../../../Commons/src/Object.h; sourceTree = "<group>"; };
 		2699AA5A1684AED40092AC40 /* OS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OS.h; path = ../../../Commons/src/OS.h; sourceTree = "<group>"; };
-		2699AA5B1684AED40092AC40 /* Rect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Rect.cpp; path = ../../../Commons/src/Rect.cpp; sourceTree = "<group>"; };
-		2699AA5C1684AED40092AC40 /* Rect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rect.h; path = ../../../Commons/src/Rect.h; sourceTree = "<group>"; };
 		2699AA5D1684AED40092AC40 /* Resource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Resource.cpp; path = ../../../Commons/src/Resource.cpp; sourceTree = "<group>"; };
 		2699AA5E1684AED40092AC40 /* Resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Resource.h; path = ../../../Commons/src/Resource.h; sourceTree = "<group>"; };
 		2699AA5F1684AED40092AC40 /* ResourcesManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ResourcesManager.cpp; path = ../../../Commons/src/ResourcesManager.cpp; sourceTree = "<group>"; };
@@ -159,6 +157,8 @@
 		2699AA701684AED40092AC40 /* Vec2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Vec2.cpp; path = ../../../Commons/src/Vec2.cpp; sourceTree = "<group>"; };
 		2699AA711684AED40092AC40 /* Vec2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vec2.h; path = ../../../Commons/src/Vec2.h; sourceTree = "<group>"; };
 		2699AA8A1684B84B0092AC40 /* iOSRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = iOSRenderer.cpp; sourceTree = "<group>"; };
+		2699AAA81684C8570092AC40 /* Rect2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Rect2.cpp; path = ../../../Commons/src/Rect2.cpp; sourceTree = "<group>"; };
+		2699AAA91684C8570092AC40 /* Rect2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rect2.h; path = ../../../Commons/src/Rect2.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -338,6 +338,8 @@
 		2699AA821684AEDC0092AC40 /* Commons */ = {
 			isa = PBXGroup;
 			children = (
+				2699AAA81684C8570092AC40 /* Rect2.cpp */,
+				2699AAA91684C8570092AC40 /* Rect2.h */,
 				2699AA471684AED40092AC40 /* Application.cpp */,
 				2699AA481684AED40092AC40 /* Application.h */,
 				2699AA491684AED40092AC40 /* ByteArray.cpp */,
@@ -350,8 +352,6 @@
 				2699AA581684AED40092AC40 /* Object.cpp */,
 				2699AA591684AED40092AC40 /* Object.h */,
 				2699AA5A1684AED40092AC40 /* OS.h */,
-				2699AA5B1684AED40092AC40 /* Rect.cpp */,
-				2699AA5C1684AED40092AC40 /* Rect.h */,
 				2699AA5D1684AED40092AC40 /* Resource.cpp */,
 				2699AA5E1684AED40092AC40 /* Resource.h */,
 				2699AA5F1684AED40092AC40 /* ResourcesManager.cpp */,
@@ -501,7 +501,6 @@
 				2699AA771684AED40092AC40 /* Manager.cpp in Sources */,
 				2699AA781684AED40092AC40 /* Exception.cpp in Sources */,
 				2699AA791684AED40092AC40 /* Object.cpp in Sources */,
-				2699AA7A1684AED40092AC40 /* Rect.cpp in Sources */,
 				2699AA7B1684AED40092AC40 /* Resource.cpp in Sources */,
 				2699AA7C1684AED40092AC40 /* ResourcesManager.cpp in Sources */,
 				2699AA7D1684AED40092AC40 /* MutexLocker.cpp in Sources */,
@@ -510,6 +509,7 @@
 				2699AA801684AED40092AC40 /* UUIDGenerator.cpp in Sources */,
 				2699AA811684AED40092AC40 /* Vec2.cpp in Sources */,
 				2699AA8C1684B84B0092AC40 /* iOSRenderer.cpp in Sources */,
+				2699AAAA1684C8570092AC40 /* Rect2.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -700,6 +700,7 @@
 				2699AA221684AD400092AC40 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2699AA231684AD400092AC40 /* Build configuration list for PBXNativeTarget "R-TypeTests" */ = {
 			isa = XCConfigurationList;
@@ -708,6 +709,7 @@
 				2699AA251684AD400092AC40 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

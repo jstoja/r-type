@@ -187,7 +187,7 @@ Vec2 Graphic::Renderer::viewportToScene(Vec2 const& coords) const {
     return newCoords;
 }
 
-Rect Graphic::Renderer::viewportToScene(Rect const& rect) const {
+Rect2 Graphic::Renderer::viewportToScene(Rect2 const& rect) const {
     if (_scene == NULL)
         throw new Graphic::Exception("Tried to transform coords but no scene was specified");
     Vec2 viewport = getViewportSize();
@@ -195,7 +195,7 @@ Rect Graphic::Renderer::viewportToScene(Rect const& rect) const {
     Vec2 newPos = viewportToScene(rect.pos);
     Vec2 newSize = rect.size / viewport * scene;
     newPos.y -= newSize.y;
-    Rect newRect(newPos, Vec2(newSize));
+    Rect2 newRect(newPos, Vec2(newSize));
     return newRect;
 }
 
@@ -210,7 +210,7 @@ Vec2 Graphic::Renderer::sceneToViewport(Vec2 const& coords) const {
     return newCoords;
 }
 
-Rect Graphic::Renderer::sceneToViewport(Rect const& rect) const {
+Rect2 Graphic::Renderer::sceneToViewport(Rect2 const& rect) const {
     if (_scene == NULL)
         throw new Graphic::Exception("Tried to transform coords but no scene was specified");
     Vec2 viewport = getViewportSize();
@@ -218,7 +218,7 @@ Rect Graphic::Renderer::sceneToViewport(Rect const& rect) const {
     Vec2 newPos = sceneToViewport(rect.pos);
     Vec2 newSize = rect.size / scene * viewport;
     newPos.y -= newSize.y;
-    Rect newRect(newPos, Vec2(newSize));
+    Rect2 newRect(newPos, Vec2(newSize));
     return newRect;
 }
 

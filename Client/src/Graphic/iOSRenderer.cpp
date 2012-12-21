@@ -8,8 +8,8 @@
 
 #include "Debug.h"
 #include "Renderer.h"
-#include "Manager.h"
-#include "Event.h"
+#include "Event/Manager.h"
+#include "Event/Event.h"
 
 #ifdef GRAPHIC_RENDERER_IOS
 

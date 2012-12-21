@@ -36,7 +36,7 @@ namespace Graphic {
         float32 getDepth(void) const;
 
 		//! Set the depth of the Scenery
-        void	setDepth(float42 depth);
+        void	setDepth(float32 depth);
         
     private:
         float32 _speed;

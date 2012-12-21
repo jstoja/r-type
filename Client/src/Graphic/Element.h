@@ -13,7 +13,7 @@
 # include "Sprite.h"
 # include "Types.h"
 # include "Vec2.h"
-# include "Rect.h"
+# include "Rect2.h"
 # include "Matrix.hpp"
 
 namespace Graphic {
@@ -87,7 +87,7 @@ namespace Graphic {
         /*!
 		 This an be used to detect collision with other Rectangles
 		 */
-        Rect            getRect(void) const;
+        Rect2            getRect(void) const;
         
     private:
         Vec2        _position;
