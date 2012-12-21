@@ -31,10 +31,19 @@
 
 namespace Graphic {
     
+    //! Class of the Renderer that put a scene into a window
     class Renderer : public Event::IProvider {
     public:
         
         struct Settings {
+
+        	//! Creates the Settings
+        	/*!
+        	 \param title The title of the window. Default is 'RType'
+        	 \param size The size of the window. Default is '1280x720'
+        	 \param antialiasingLevel The antialiasing level. Default is '2'
+        	 \param fullScreen The fullscreen state. Default is false.
+        	 */
             Settings(std::string const& title="RType",
                      Vec2 size=Vec2(1280, 720),
                      uint32 antialiasingLevel=2,
@@ -46,6 +55,7 @@ namespace Graphic {
             bool        fullScreen;
         };
         
+        //! Create the renderer with the specified Settings
         Renderer(Settings const& settings=Settings());
         
         //! Platform-specific destructor
@@ -56,14 +66,29 @@ namespace Graphic {
         
         //! Platform-specific operations
         void    createContext(Settings const& settings=Settings());
+
+        //! Refreshing the Renderer
         void    refresh(void);
+
+        //! Return the size vector of the Renderer
         Vec2    getViewportSize(void) const;
         
+        //! Process the pending events
+        /*!
+         \param manager Event Manager with/without pending events
+         */
         virtual void processEvents(Event::Manager* manager);
         
-        //! Rendering
+        //! Set the Scene to be rendered
+        /*!
+         \param scene The Scene object
+         */
         void    setScene(Scene const* scene);
+
+        //! Rendering the Scene
         void    render(void);
+
+        //! Updating the window
         void    updateViewport(void);
         
         //! Coords transformations
