@@ -11,10 +11,10 @@
 
 # include <string>
 
-# include "Graphic/Scene.h"
-# include "Graphic/Buffer.hpp"
-# include "Graphic/ShaderProgram.h"
-# include "Event/IProvider.h"
+# include "Scene.h"
+# include "Buffer.hpp"
+# include "ShaderProgram.h"
+# include "IProvider.h"
 # include "Types.h"
 # include "Vec2.h"
 # include "Rect.h"

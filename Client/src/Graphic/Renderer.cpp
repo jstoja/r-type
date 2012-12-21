@@ -9,9 +9,9 @@
 #include "Renderer.h"
 
 #include "Debug.h"
-#include "Graphic/OpenGL.h"
-#include "Graphic/GraphicException.h"
-#include "Event/Manager.h"
+#include "OpenGL.h"
+#include "GraphicException.h"
+#include "Manager.h"
 
 static const char* vertexShader =
     "attribute vec3 position;\n"
@@ -61,11 +61,13 @@ _textureSamplerLocation(0) {
     Event::Manager::getInstance().registerProvider(this);
     
     // Init and configure OpenGL context
+# if !defined OS_IOS
     GLenum error = glewInit();
     if (error != GLEW_OK) {
         throw new Graphic::Exception(std::string("Glew init failed: ")
                                      + reinterpret_cast<const char*>(glewGetErrorString(error)));
     }
+# endif
     
     // Enable depth test
     glEnable(GL_DEPTH_TEST);
@@ -74,8 +76,10 @@ _textureSamplerLocation(0) {
     // Enable blending and antialiasing
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+# if defined GL_POLYGON_SMOOTH
     if (_antialiasingLevel > 0)
         glEnable(GL_POLYGON_SMOOTH);
+# endif
     
     // Background color
     glClearColor(0.f, 0.f, 0.f, 1.f);

@@ -8,8 +8,8 @@
 
 #include "Debug.h"
 #include "Renderer.h"
-#include "Event/Manager.h"
-#include "Event/Event.h"
+#include "Manager.h"
+#include "Event.h"
 
 #ifdef GRAPHIC_RENDERER_SFML
 
