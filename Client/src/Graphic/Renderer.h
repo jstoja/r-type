@@ -14,7 +14,7 @@
 # include "Scene.h"
 # include "Buffer.hpp"
 # include "ShaderProgram.h"
-# include "IProvider.h"
+# include "Event/IProvider.h"
 # include "Types.h"
 # include "Vec2.h"
 # include "Rect.h"

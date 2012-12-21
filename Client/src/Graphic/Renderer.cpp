@@ -11,7 +11,7 @@
 #include "Debug.h"
 #include "OpenGL.h"
 #include "GraphicException.h"
-#include "Manager.h"
+#include "Event/Manager.h"
 
 static const char* vertexShader =
     "attribute vec3 position;\n"

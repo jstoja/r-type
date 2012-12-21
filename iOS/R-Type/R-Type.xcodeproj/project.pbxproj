@@ -22,7 +22,7 @@
 		2699AA011684AD400092AC40 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2699A9FF1684AD400092AC40 /* MainStoryboard_iPad.storyboard */; };
 		2699AA031684AD400092AC40 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 2699AA021684AD400092AC40 /* Shader.fsh */; };
 		2699AA051684AD400092AC40 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 2699AA041684AD400092AC40 /* Shader.vsh */; };
-		2699AA081684AD400092AC40 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA071684AD400092AC40 /* ViewController.m */; };
+		2699AA081684AD400092AC40 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA071684AD400092AC40 /* ViewController.mm */; };
 		2699AA101684AD400092AC40 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699AA0F1684AD400092AC40 /* SenTestingKit.framework */; };
 		2699AA111684AD400092AC40 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E01684AD400092AC40 /* UIKit.framework */; };
 		2699AA121684AD400092AC40 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E21684AD400092AC40 /* Foundation.framework */; };
@@ -88,7 +88,7 @@
 		2699AA021684AD400092AC40 /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
 		2699AA041684AD400092AC40 /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
 		2699AA061684AD400092AC40 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		2699AA071684AD400092AC40 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		2699AA071684AD400092AC40 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		2699AA0E1684AD400092AC40 /* R-TypeTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "R-TypeTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2699AA0F1684AD400092AC40 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		2699AA171684AD400092AC40 /* R-TypeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "R-TypeTests-Info.plist"; sourceTree = "<group>"; };
@@ -231,7 +231,7 @@
 				2699AA021684AD400092AC40 /* Shader.fsh */,
 				2699AA041684AD400092AC40 /* Shader.vsh */,
 				2699AA061684AD400092AC40 /* ViewController.h */,
-				2699AA071684AD400092AC40 /* ViewController.m */,
+				2699AA071684AD400092AC40 /* ViewController.mm */,
 				2699A9EB1684AD400092AC40 /* Supporting Files */,
 			);
 			path = "R-Type";
@@ -482,7 +482,7 @@
 			files = (
 				2699A9F11684AD400092AC40 /* main.m in Sources */,
 				2699A9F51684AD400092AC40 /* AppDelegate.m in Sources */,
-				2699AA081684AD400092AC40 /* ViewController.m in Sources */,
+				2699AA081684AD400092AC40 /* ViewController.mm in Sources */,
 				2699AA3D1684AE670092AC40 /* Background.cpp in Sources */,
 				2699AA3E1684AE670092AC40 /* Element.cpp in Sources */,
 				2699AA3F1684AE670092AC40 /* Exception.cpp in Sources */,
@@ -622,10 +622,13 @@
 		2699AA211684AD400092AC40 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "R-Type/R-Type-Prefix.pch";
 				INFOPLIST_FILE = "R-Type/R-Type-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "";
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "../../Commons/src/ ../../Client/src/";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -633,10 +636,13 @@
 		2699AA221684AD400092AC40 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "R-Type/R-Type-Prefix.pch";
 				INFOPLIST_FILE = "R-Type/R-Type-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "";
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "../../Client/src/ ../../Commons/src/";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
