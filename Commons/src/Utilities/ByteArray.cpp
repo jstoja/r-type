@@ -54,12 +54,20 @@ Utilities::ByteArray&	Utilities::ByteArray::operator<<(ByteArray const& cpy) {
   return *this;
 }
 
+Utilities::ByteArray::operator char*() {
+  return (char*)&_buffer[0];
+}
+
 std::vector<char>	Utilities::ByteArray::getBuffer() const {
   return _buffer;
 }
 
 uint32	Utilities::ByteArray::getSize() const {
   return _buffer.size();
+}
+
+void Utilities::ByteArray::resize(uint32 size) {
+  _buffer.resize(size);
 }
 
 void	  Utilities::ByteArray::append(ByteArray const& cpy) {

@@ -22,18 +22,22 @@ namespace Utilities {
     ~ByteArray();
     
     //! Assignation
-    ByteArray&	operator=(ByteArray const&);
+    ByteArray&		operator=(ByteArray const&);
     //! Comparaison
     bool		operator==(ByteArray const&);
     //! Comparaison
     bool		operator!=(ByteArray const&);  
     //! Append
-    ByteArray&	operator<<(ByteArray const&);
+    ByteArray&		operator<<(ByteArray const&);
+    //! Return a pointer to the buffer
+    operator char*();
 
     //! Buffer getter
     std::vector<char>	getBuffer() const;
     //! Size getter
     uint32		getSize() const;
+    //! Resize
+    void		resize(uint32);
     //! Append ByteArray
     void		append(ByteArray const&);
     //! Append char * / uint32
