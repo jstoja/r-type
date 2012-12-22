@@ -15,7 +15,7 @@
 # include "ASocket.h"
 # include "HostAddress.h"
 # include "Types.h"
-# include "Utilities/ByteArray.h"
+# include "ByteArray.h"
 # include "Threading/Mutex.h"
 # include "Threading/MutexLocker.h"
 
@@ -35,8 +35,8 @@ public:
 
   bool		connect(const HostAddress& address, uint16 port);
   bool		listen(const HostAddress& address, uint16 port);
-  void		read(Utilities::ByteArray&, bool all = true);
-  void		write(Utilities::ByteArray&, const HostAddress& hostAddress = HostAddress::AnyAddress, uint16 port = 0);
+  void		read(ByteArray&, bool all = true);
+  void		write(ByteArray&, const HostAddress& hostAddress = HostAddress::AnyAddress, uint16 port = 0);
   void		close();
   uint16       	getLocalPort() const;
 
@@ -48,15 +48,15 @@ private:
   HostAddress		_hostAddress;
   uint16		_hostPort;
 
-  Utilities::ByteArray 	_buffer;
+  ByteArray		_buffer;
   Threading::Mutex	_bufferMutex;
 
   unsigned int		_toRead;
-  Utilities::ByteArray*	_bufferToRead;
+  ByteArray*		_bufferToRead;
   bool			_readAll;
   Threading::Mutex	_bufferToReadMutex;
 
-  Utilities::ByteArray*	_bufferToWrite;
+  ByteArray*		_bufferToWrite;
   uint32		_writePosition;
   Threading::Mutex	_bufferToWriteMutex;
 };

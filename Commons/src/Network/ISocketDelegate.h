@@ -10,7 +10,7 @@
 #ifndef _ISOCKET_DELEGATE_H_
 # define _ISOCKET_DELEGATE_H_
 
-# include "Utilities/ByteArray.h"
+# include "ByteArray.h"
 # include "HostAddress.h"
 
 namespace Network {
@@ -20,10 +20,10 @@ class ASocket;
 class ISocketDelegate {
  public:
   virtual void newConnection(ASocket*) = 0;
-  virtual void readFinished(ASocket*, Utilities::ByteArray&, const HostAddress& hostAddress, uint16 port) = 0;
-  virtual void dataReceived(ASocket*, Utilities::ByteArray&, uint32) = 0;
-  virtual void dataSent(ASocket*, Utilities::ByteArray&, uint32) = 0;
-  virtual void writeFinished(ASocket*, Utilities::ByteArray&) = 0;
+  virtual void readFinished(ASocket*, ByteArray&, const HostAddress& hostAddress, uint16 port) = 0;
+  virtual void dataReceived(ASocket*, ByteArray&, uint32) = 0;
+  virtual void dataSent(ASocket*, ByteArray&, uint32) = 0;
+  virtual void writeFinished(ASocket*, ByteArray&) = 0;
   virtual void disconnection(ASocket*) = 0;
 };
 

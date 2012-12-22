@@ -34,8 +34,8 @@ namespace Network {
     int   getId() const;
 
     bool	bind(const HostAddress& address = HostAddress::AnyAddress, uint16 port = 0);
-    void	read(Utilities::ByteArray&, bool all = true);
-    void	write(Utilities::ByteArray&, const HostAddress& hostAddress = HostAddress::AnyAddress, uint16 port = 0);
+    void	read(ByteArray&, bool all = true);
+    void	write(ByteArray&, const HostAddress& hostAddress = HostAddress::AnyAddress, uint16 port = 0);
     void	close();
 
     void	canRead();
@@ -45,10 +45,10 @@ namespace Network {
   private:
     int				_fd;
 
-    Utilities::ByteArray*	_readBuffer;
+    ByteArray*			_readBuffer;
     Threading::Mutex		_readMutex;
 
-    Utilities::ByteArray*	_writeBuffer;
+    ByteArray*			_writeBuffer;
     Threading::Mutex		_writeMutex;
     HostAddress			_writeAddress;
     uint16			_writePort;

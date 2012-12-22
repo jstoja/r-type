@@ -41,7 +41,7 @@ bool Network::UdpSocket::bind(const HostAddress& address, uint16 port) {
   return (true);
 }
 
-void Network::UdpSocket::read(Utilities::ByteArray& biteArray, bool all) {
+void Network::UdpSocket::read(ByteArray& biteArray, bool all) {
   Threading::MutexLocker(&(this->_readMutex));
 
   _reading = true;
@@ -49,7 +49,7 @@ void Network::UdpSocket::read(Utilities::ByteArray& biteArray, bool all) {
   (void)all;
 }
 
-void Network::UdpSocket::write(Utilities::ByteArray& biteArray, const HostAddress& hostAddress, uint16 port) {
+void Network::UdpSocket::write(ByteArray& biteArray, const HostAddress& hostAddress, uint16 port) {
   Threading::MutexLocker(&(this->_writeMutex));  
 
   _writing = true;

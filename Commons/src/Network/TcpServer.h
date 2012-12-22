@@ -29,10 +29,10 @@ namespace Network {
   uint16	getLocalPort() const;
 
   void	newConnection(ASocket*);
-  void	readFinished(ASocket*, Utilities::ByteArray&, const HostAddress&, uint16) {}
-  void	dataReceived(ASocket*, Utilities::ByteArray&, uint32) {}
-  void	dataSent(ASocket*, Utilities::ByteArray&, uint32) {}
-  void	writeFinished(ASocket*, Utilities::ByteArray&) {}
+  void	readFinished(ASocket*, ByteArray&, const HostAddress&, uint16) {}
+  void	dataReceived(ASocket*, ByteArray&, uint32) {}
+  void	dataSent(ASocket*, ByteArray&, uint32) {}
+  void	writeFinished(ASocket*, ByteArray&) {}
   void	disconnection(ASocket*) {}
 
  private:

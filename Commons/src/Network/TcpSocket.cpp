@@ -73,7 +73,7 @@ bool Network::TcpSocket::listen(const HostAddress& address, uint16 port) {
   return (true);
 }
 
-void Network::TcpSocket::write(Utilities::ByteArray& biteArray, const HostAddress& hostAddress, uint16 port) {
+void Network::TcpSocket::write(ByteArray& biteArray, const HostAddress& hostAddress, uint16 port) {
   (void)hostAddress;
   (void)port;
 
@@ -83,7 +83,7 @@ void Network::TcpSocket::write(Utilities::ByteArray& biteArray, const HostAddres
   _bufferToWrite = &biteArray;
 }
 
-void Network::TcpSocket::read(Utilities::ByteArray& biteArray, bool all) {
+void Network::TcpSocket::read(ByteArray& biteArray, bool all) {
   uint32 size = biteArray.getSize();
   
   _bufferToReadMutex.lock();
