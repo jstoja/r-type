@@ -12,7 +12,7 @@
 
 # include <iostream>
 # include <cstring>
-# include "Os.h"
+# include "OS.h"
 # ifdef OS_WINDOWS
 #  include <winsock2.h>
 # else
