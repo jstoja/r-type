@@ -53,6 +53,7 @@
 		2699AA811684AED40092AC40 /* Vec2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA701684AED40092AC40 /* Vec2.cpp */; };
 		2699AA8C1684B84B0092AC40 /* iOSRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA8A1684B84B0092AC40 /* iOSRenderer.mm */; };
 		2699AAAA1684C8570092AC40 /* Rect2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AAA81684C8570092AC40 /* Rect2.cpp */; };
+		2699AAC7168510C90092AC40 /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2699AAC6168510C90092AC40 /* button.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +156,7 @@
 		2699AA8A1684B84B0092AC40 /* iOSRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSRenderer.mm; sourceTree = "<group>"; };
 		2699AAA81684C8570092AC40 /* Rect2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Rect2.cpp; path = ../../../Commons/src/Rect2.cpp; sourceTree = "<group>"; };
 		2699AAA91684C8570092AC40 /* Rect2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rect2.h; path = ../../../Commons/src/Rect2.h; sourceTree = "<group>"; };
+		2699AAC6168510C90092AC40 /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button.png; path = ../../../Bin/Tests/button.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +228,7 @@
 				2699A9FF1684AD400092AC40 /* MainStoryboard_iPad.storyboard */,
 				2699AA061684AD400092AC40 /* ViewController.h */,
 				2699AA071684AD400092AC40 /* ViewController.mm */,
+				2699AAC5168510A40092AC40 /* Resources */,
 				2699A9EB1684AD400092AC40 /* Supporting Files */,
 			);
 			path = "R-Type";
@@ -361,6 +364,14 @@
 			name = Commons;
 			sourceTree = "<group>";
 		};
+		2699AAC5168510A40092AC40 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2699AAC6168510C90092AC40 /* button.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -438,6 +449,7 @@
 				2699A9FB1684AD400092AC40 /* Default-568h@2x.png in Resources */,
 				2699A9FE1684AD400092AC40 /* MainStoryboard_iPhone.storyboard in Resources */,
 				2699AA011684AD400092AC40 /* MainStoryboard_iPad.storyboard in Resources */,
+				2699AAC7168510C90092AC40 /* button.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

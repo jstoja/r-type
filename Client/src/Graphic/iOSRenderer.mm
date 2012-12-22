@@ -13,10 +13,10 @@
 
 #ifdef GRAPHIC_RENDERER_IOS
 
-#   import <UIKit/UIKit.h>
-#   import <GLKit/GLKit.h>
+# import <UIKit/UIKit.h>
+# import <GLKit/GLKit.h>
 
-void Graphic::Renderer::init(GLKView* view) {
+void Graphic::Renderer::init(GLKView* view) {    
     _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     if (_context == NULL) {
         throw new Graphic::Exception("Failed to create OpenGL ES context");
@@ -31,8 +31,6 @@ void Graphic::Renderer::init(GLKView* view) {
 }
 
 void Graphic::Renderer::createContext(Settings const& settings) {
-//    _context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-//    [EAGLContext setCurrentContext:_context];
 }
 
 Graphic::Renderer::~Renderer() {
@@ -44,16 +42,12 @@ void Graphic::Renderer::processEvents(Event::Manager* manager) {
 }
 
 Vec2 Graphic::Renderer::getViewportSize(void) const {
-    return Vec2(640, 480);
+    CGRect  viewRect = _view.bounds;
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    return Vec2(viewRect.size.width * scale, viewRect.size.height * scale);
 }
 
 void Graphic::Renderer::refresh(void) {
 }
-
-//void Graphic::Renderer::setView(GLKView* view) {
-//    _view = view;
-//    _view.context = _context;
-//    _view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-//}
 
 #endif

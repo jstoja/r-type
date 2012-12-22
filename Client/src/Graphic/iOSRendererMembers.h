@@ -12,6 +12,7 @@
 // Includes in the "private:" section of the renderer class declaration
 
 # if defined (__OBJC__)
+
 EAGLContext*    _context;
 GLKView*        _view;
 

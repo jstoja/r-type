@@ -14,7 +14,6 @@
 class Test;
 
 @property (nonatomic) Test* test;
-
 @property (strong, nonatomic) EAGLContext *context;
 
 @end

@@ -111,8 +111,7 @@ void Graphic::Renderer::init(Settings const& settings) {
     _vertexTextureCoordsLocation = _shaderProgram->getAttributeLocation("textureCoords");
     _worldMatrixLocation = _shaderProgram->getUniformLocation("worldMatrix");
     _transformationMatrixLocation = _shaderProgram->getUniformLocation("transformationMatrix");
-    //_shaderProgram->registerUniformLocation("textureSampler");
-    //_textureSamplerLocation = _shaderProgram->getUniformLocation("textureSampler");
+    _textureSamplerLocation = _shaderProgram->getUniformLocation("textureSampler");
 }
 
 void Graphic::Renderer::destruct() {
