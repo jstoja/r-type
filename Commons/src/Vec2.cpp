@@ -24,5 +24,5 @@ Vec2 operator+(Vec2 const& v1, Vec2 const& v2) {
 }
 
 std::ostream& operator<<(std::ostream& stream, Vec2 const& v) {
-    return stream << "Vec2(" << v.x << ", " << v.y << ")";
+    return stream << "(" << v.x << ", " << v.y << ")";
 }

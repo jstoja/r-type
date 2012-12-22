@@ -9,12 +9,12 @@
 #include "Listener.h"
 #include "IListenerDelegate.h"
 
-Event::Listener::Listener(Type type, IListenerDelegate* delegate)
-: _type(type), _delegate(delegate), _rect() {
+Event::Listener::Listener(uint32 type, IListenerDelegate* delegate)
+: _type(static_cast<Type>(type)), _delegate(delegate), _rect(), _hasRect(false) {
 }
 
-Event::Listener::Listener(Type type, Rect const& rect, IListenerDelegate* delegate)
-: _type(type), _delegate(delegate), _rect(rect) {
+Event::Listener::Listener(uint32 type, Rect const& rect, IListenerDelegate* delegate)
+: _type(static_cast<Type>(type)), _delegate(delegate), _rect(rect), _hasRect(true) {
 }
 
 Event::Type Event::Listener::getType() const {
@@ -28,4 +28,8 @@ void Event::Listener::processEvent(Event const& event) {
 
 Rect const& Event::Listener::getRect() const {
     return _rect;
+}
+
+bool Event::Listener::hasRect() const {
+    return _hasRect;
 }

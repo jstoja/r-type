@@ -11,6 +11,7 @@
 #include "../Client/src/Sound/SoundManager.h"
 #include "../Commons/src/ResourcesManager.h"
 #include "../Commons/src/Resource.h"
+#include "Sound/SoundManager.h"
 
 int	main(int argc, char *argv[]) {
     ResourcesManager& mn = ResourcesManager::getInstance();
@@ -22,12 +23,12 @@ int	main(int argc, char *argv[]) {
     std::cerr << r2->getName() << std::endl;
     Sound::SoundManager manager;
     
-    manager.load("marseille.wav");
-    manager.load("highpass.wav");
-    manager.play("marseille.wav");
-    manager.play("highpass.wav");
-    std::cout << manager.isPlaying("highpass.wav") << ' ' << manager.isPlaying("marseille.wav") << std::endl;
+    manager.load("sound1.aiff");
+    manager.load("sound2.aiff");
+    manager.play("sound1.aiff");
+    manager.play("sound2.aiff");
+    std::cout << manager.isPlaying("sound1.aiff") << ' ' << manager.isPlaying("sound2.aiff") << std::endl;
     sleep(2);
-    std::cout << manager.isPlaying("highpass.wav") << ' ' << manager.isPlaying("marseille.wav") << std::endl;
+    std::cout << manager.isPlaying("sound1.aiff") << ' ' << manager.isPlaying("sound2.aiff") << std::endl;
     return (0);
 }

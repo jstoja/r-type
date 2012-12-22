@@ -8,10 +8,21 @@
 
 #include "Texture.h"
 
+#include "UUIDGenerator.h"
 #include "GraphicException.h"
 
-Graphic::Texture::Texture() : _id(0) {
-    glGenTextures(1, &_id);
+Graphic::Texture::Texture() : Object(), _glID(0) {
+    glGenTextures(1, &_glID);
+    
+    // Configure the texture
+    bind();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+}
+
+
+Graphic::Texture::Texture(uint32 id) : Object(id), _glID(0) {
+    glGenTextures(1, &_glID);
     
     // Configure the texture
     bind();
@@ -20,11 +31,11 @@ Graphic::Texture::Texture() : _id(0) {
 }
 
 Graphic::Texture::~Texture() {
-    glDeleteTextures(1, &_id);
+    glDeleteTextures(1, &_glID);
 }
 
 void Graphic::Texture::bind() {
-    glBindTexture(GL_TEXTURE_2D, _id);
+    glBindTexture(GL_TEXTURE_2D, _glID);
 }
 
 
@@ -42,6 +53,6 @@ void Graphic::Texture::setData(uint32 width, uint32 height, const uint8* data) {
     Graphic::Exception::checkOpenGLError();
 }
 
-uint32 Graphic::Texture::getId() const {
-    return _id;
+uint32 Graphic::Texture::getGLID() const {
+    return _glID;
 }

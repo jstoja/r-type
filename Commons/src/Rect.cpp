@@ -21,6 +21,6 @@ bool Rect::in(Vec2 const& point) const {
 }
 
 std::ostream& operator<<(std::ostream& stream, Rect const& rect) {
-    return stream << "Rect(" << rect.pos.x << ", " << rect.pos.y
+    return stream << "(" << rect.pos.x << ", " << rect.pos.y
     << ", " << rect.size.x << ", " << rect.size.y << ")";
 }

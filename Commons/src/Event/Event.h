@@ -16,20 +16,29 @@
 namespace Event {
     
     enum Type {
-        Close,
-        PointerIn,
-        PointerOut,
-        PointerMove
+        Close           =   1 << 1,
+        PointerIn       =   1 << 2,
+        PointerOut      =   1 << 3,
+        PointerMove     =   1 << 4,
+        PointerPushed   =   1 << 5,
+        PointerReleased =   1 << 6
+    };
+    
+    enum PointerButton {
+        PointerLeft     =   0,
+        PointerRight    =   1,
+        PointerMiddle   =   2
     };
     
     struct Event {
     public:
         Event(Type type, IProvider* sender=NULL);
-        Event(Type type, Vec2 const& rect, IProvider* sender=NULL);
+        Event(Type type, Vec2 const& pos, IProvider* sender=NULL);
         
-        Type        type;
-        IProvider*  sender;
-        Vec2        pos;
+        Type            type;
+        IProvider*      sender;
+        Vec2            pos;
+        PointerButton   pointerButton;
     };
 }
 
