@@ -134,7 +134,12 @@ void Network::TcpSocket::canRead() {
     socklen_t len = sizeof(addr);
 
     bzero(&addr, sizeof(addr));
+#if !defined(OS_MAC)
+    // TODO: Use accept or anything POSIX instead of accept4
     int ret = ::accept4(_fd, (struct sockaddr*)&addr, &len, SOCK_NONBLOCK);
+#else
+      int ret = 0;
+#endif
     if (ret != -1 && _delegate) {
       TcpSocket* newConnection = new TcpSocket(ret);
       newConnection->_hostAddress = HostAddress(inet_ntoa(addr.sin_addr));

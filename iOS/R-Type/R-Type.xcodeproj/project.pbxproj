@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2658303E1685DE1300BFB900 /* iOSRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2658303C1685DE1300BFB900 /* iOSRenderer.mm */; };
 		2699A9E11684AD400092AC40 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E01684AD400092AC40 /* UIKit.framework */; };
 		2699A9E31684AD400092AC40 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E21684AD400092AC40 /* Foundation.framework */; };
 		2699A9E51684AD400092AC40 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E41684AD400092AC40 /* CoreGraphics.framework */; };
@@ -51,7 +52,6 @@
 		2699AA7F1684AED40092AC40 /* WinMutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA6B1684AED40092AC40 /* WinMutex.cpp */; };
 		2699AA801684AED40092AC40 /* UUIDGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA6E1684AED40092AC40 /* UUIDGenerator.cpp */; };
 		2699AA811684AED40092AC40 /* Vec2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA701684AED40092AC40 /* Vec2.cpp */; };
-		2699AA8C1684B84B0092AC40 /* iOSRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA8A1684B84B0092AC40 /* iOSRenderer.mm */; };
 		2699AAAA1684C8570092AC40 /* Rect2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AAA81684C8570092AC40 /* Rect2.cpp */; };
 		2699AAC7168510C90092AC40 /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2699AAC6168510C90092AC40 /* button.png */; };
 /* End PBXBuildFile section */
@@ -67,6 +67,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2658303C1685DE1300BFB900 /* iOSRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iOSRenderer.mm; path = ../../../iOS/src/Graphic/iOSRenderer.mm; sourceTree = "<group>"; };
+		2658303D1685DE1300BFB900 /* iOSRendererMembers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iOSRendererMembers.h; path = ../../../iOS/src/Graphic/iOSRendererMembers.h; sourceTree = "<group>"; };
 		2699A9DC1684AD400092AC40 /* R-Type.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "R-Type.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2699A9E01684AD400092AC40 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2699A9E21684AD400092AC40 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -153,7 +155,6 @@
 		2699AA6F1684AED40092AC40 /* UUIDGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UUIDGenerator.h; path = ../../../Commons/src/UUIDGenerator.h; sourceTree = "<group>"; };
 		2699AA701684AED40092AC40 /* Vec2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Vec2.cpp; path = ../../../Commons/src/Vec2.cpp; sourceTree = "<group>"; };
 		2699AA711684AED40092AC40 /* Vec2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vec2.h; path = ../../../Commons/src/Vec2.h; sourceTree = "<group>"; };
-		2699AA8A1684B84B0092AC40 /* iOSRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSRenderer.mm; sourceTree = "<group>"; };
 		2699AAA81684C8570092AC40 /* Rect2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Rect2.cpp; path = ../../../Commons/src/Rect2.cpp; sourceTree = "<group>"; };
 		2699AAA91684C8570092AC40 /* Rect2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rect2.h; path = ../../../Commons/src/Rect2.h; sourceTree = "<group>"; };
 		2699AAC6168510C90092AC40 /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button.png; path = ../../../Bin/Tests/button.png; sourceTree = "<group>"; };
@@ -281,12 +282,13 @@
 				2699AA2F1684AE670092AC40 /* OpenGL.h */,
 				2699AA301684AE670092AC40 /* Renderer.cpp */,
 				2699AA311684AE670092AC40 /* Renderer.h */,
+				2658303C1685DE1300BFB900 /* iOSRenderer.mm */,
+				2658303D1685DE1300BFB900 /* iOSRendererMembers.h */,
 				2699AA321684AE670092AC40 /* Scene.cpp */,
 				2699AA331684AE670092AC40 /* Scene.h */,
 				2699AA341684AE670092AC40 /* Scenery.cpp */,
 				2699AA351684AE670092AC40 /* Scenery.h */,
 				2699AA361684AE670092AC40 /* SfmlRenderer.cpp */,
-				2699AA8A1684B84B0092AC40 /* iOSRenderer.mm */,
 				2699AA371684AE670092AC40 /* ShaderProgram.cpp */,
 				2699AA381684AE670092AC40 /* ShaderProgram.h */,
 				2699AA391684AE670092AC40 /* Sprite.cpp */,
@@ -512,8 +514,8 @@
 				2699AA7F1684AED40092AC40 /* WinMutex.cpp in Sources */,
 				2699AA801684AED40092AC40 /* UUIDGenerator.cpp in Sources */,
 				2699AA811684AED40092AC40 /* Vec2.cpp in Sources */,
-				2699AA8C1684B84B0092AC40 /* iOSRenderer.mm in Sources */,
 				2699AAAA1684C8570092AC40 /* Rect2.cpp in Sources */,
+				2658303E1685DE1300BFB900 /* iOSRenderer.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
