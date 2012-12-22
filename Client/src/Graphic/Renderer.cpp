@@ -36,7 +36,6 @@ static const char* fragmentShader =
     "uniform sampler2D  textureSampler;\n"
     "void main(){\n"
         "gl_FragColor = texture2D(textureSampler, vec2(vTextureCoords.s, -vTextureCoords.t));\n"
-        "gl_FragColor.r = 1.0;\n"
     "}\n"
 ;
 
@@ -82,6 +81,7 @@ void Graphic::Renderer::init(Settings const& settings) {
     // Enable blending and antialiasing
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
 # if defined GL_POLYGON_SMOOTH
     if (_antialiasingLevel > 0)
         glEnable(GL_POLYGON_SMOOTH);

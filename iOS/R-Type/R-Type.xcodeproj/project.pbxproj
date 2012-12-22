@@ -54,6 +54,8 @@
 		2699AA811684AED40092AC40 /* Vec2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA701684AED40092AC40 /* Vec2.cpp */; };
 		2699AAAA1684C8570092AC40 /* Rect2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AAA81684C8570092AC40 /* Rect2.cpp */; };
 		2699AAC7168510C90092AC40 /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2699AAC6168510C90092AC40 /* button.png */; };
+		26B59C4B1685E67200BC64D7 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B59C4A1685E67200BC64D7 /* icon@2x.png */; };
+		26B59C4E1685E6D500BC64D7 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B59C4D1685E6D500BC64D7 /* icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +160,8 @@
 		2699AAA81684C8570092AC40 /* Rect2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Rect2.cpp; path = ../../../Commons/src/Rect2.cpp; sourceTree = "<group>"; };
 		2699AAA91684C8570092AC40 /* Rect2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rect2.h; path = ../../../Commons/src/Rect2.h; sourceTree = "<group>"; };
 		2699AAC6168510C90092AC40 /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button.png; path = ../../../Bin/Tests/button.png; sourceTree = "<group>"; };
+		26B59C4A1685E67200BC64D7 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../icon@2x.png"; sourceTree = "<group>"; };
+		26B59C4D1685E6D500BC64D7 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -369,6 +373,8 @@
 		2699AAC5168510A40092AC40 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				26B59C4D1685E6D500BC64D7 /* icon.png */,
+				26B59C4A1685E67200BC64D7 /* icon@2x.png */,
 				2699AAC6168510C90092AC40 /* button.png */,
 			);
 			name = Resources;
@@ -452,6 +458,8 @@
 				2699A9FE1684AD400092AC40 /* MainStoryboard_iPhone.storyboard in Resources */,
 				2699AA011684AD400092AC40 /* MainStoryboard_iPad.storyboard in Resources */,
 				2699AAC7168510C90092AC40 /* button.png in Resources */,
+				26B59C4B1685E67200BC64D7 /* icon@2x.png in Resources */,
+				26B59C4E1685E6D500BC64D7 /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
