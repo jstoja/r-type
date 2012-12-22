@@ -12,10 +12,15 @@
 
 # include <iostream>
 # include <cstring>
-# include <sys/types.h>
-# include <sys/socket.h>
-# include <arpa/inet.h>
-# include <unistd.h>
+# include "Os.h"
+# ifdef OS_WINDOWS
+#  include <winsock2.h>
+# else
+#  include <sys/types.h>
+#  include <sys/socket.h>
+#  include <arpa/inet.h>
+#  include <unistd.h>
+# endif
 # include "ASocket.h"
 # include "Threading/Mutex.h"
 # include "Threading/MutexLocker.h"

@@ -7,7 +7,12 @@
 // Started on  Tue Dec 18 15:51:08 2012 loick michard
 //
 
-#include <arpa/inet.h>
+#include "OS.h"
+#if defined(OS_WINDOWS)
+# include <winsock2.h>
+#else
+# include <arpa/inet.h>
+#endif
 #include "HostAddress.h"
 
 Network::HostAddress Network::HostAddress::AnyAddress = HostAddress(INADDR_ANY);

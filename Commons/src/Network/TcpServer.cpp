@@ -8,9 +8,14 @@
 //
 
 #include <iostream>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
+#include "OS.h"
+#ifdef OS_WINDOWS
+# include <winsock2.h>
+#else
+# include <sys/types.h>
+# include <sys/socket.h>
+# include <arpa/inet.h>
+#endif
 #include "TcpServer.h"
 
 Network::TcpServer::TcpServer() : _socket(), _delegate(NULL) {

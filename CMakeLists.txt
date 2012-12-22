@@ -150,6 +150,10 @@ iF (UNIX)
     TARGET_LINK_LIBRARIES (Client pthread)
     TARGET_LINK_LIBRARIES (Server pthread)
 ENDIF(UNIX)
+IF (WIN32)
+    TARGET_LINK_LIBRARIES (Client Ws2_32)
+    TARGET_LINK_LIBRARIES (Server Ws2_32)
+ENDIF (WIN32)
 
 #
 # Setup bundles
@@ -269,6 +273,13 @@ FOREACH (TEST_FILE ${TESTS_FILES})
         ${OPENGL_LIBRARIES}
         ${GLEW_LIBRARIES}
     )
+    
+    iF (UNIX)
+        TARGET_LINK_LIBRARIES (${TEST_NAME} pthread)
+    ENDIF(UNIX)
+    IF (WIN32)
+        TARGET_LINK_LIBRARIES (${TEST_NAME} Ws2_32)
+    ENDIF (WIN32)
     
     # Put binaries in a Tests directory
     SET_PROPERTY (

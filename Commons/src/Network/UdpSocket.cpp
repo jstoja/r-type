@@ -9,6 +9,12 @@
 
 #include "UdpSocket.h"
 #include "NetworkManager.h"
+#include "OS.h"
+#ifdef OS_WINDOWS
+typedef int socklen_t;
+#else
+# define closesocket(x) close(x)
+#endif
 
 Network::UdpSocket::UdpSocket() : _readBuffer(NULL), _readMutex(),
 				  _writeBuffer(NULL), _writeAddress(HostAddress::AnyAddress) {
@@ -22,7 +28,7 @@ Network::UdpSocket::UdpSocket(int fd) : _fd(fd), _readBuffer(NULL), _readMutex()
 
 Network::UdpSocket::~UdpSocket() {
   if (_fd != -1)
-    ::close(_fd);
+    ::closesocket(_fd);
 }
 
 int Network::UdpSocket::getId() const {
@@ -32,7 +38,7 @@ int Network::UdpSocket::getId() const {
 bool Network::UdpSocket::bind(const HostAddress& address, uint16 port) {
   struct sockaddr_in addr;
   
-  bzero(&addr, sizeof(addr));
+  memset(&addr, 0, sizeof(addr));
   addr.sin_family = AF_INET;
   addr.sin_addr.s_addr = address.toIPv4Address();
   addr.sin_port = htons(port);
@@ -61,7 +67,7 @@ void Network::UdpSocket::write(ByteArray& biteArray, const HostAddress& hostAddr
 
 void Network::UdpSocket::close() {
   if (_fd != -1)
-    ::close(_fd);
+    ::closesocket(_fd);
   _fd = -1;
   NetworkManager::getInstance().unregisterSocket(this);
   if (_delegate)
@@ -72,7 +78,7 @@ void  Network::UdpSocket::canRead() {
   struct sockaddr_in	addr;
   socklen_t		size = sizeof(addr);
   
-  bzero(&addr, sizeof(addr));
+  memset(&addr, 0, sizeof(addr));
   _readMutex.lock();
   _reading = false;
   int ret = recvfrom(_fd, (char*)(*_readBuffer), _readBuffer->getSize(), 0, (struct sockaddr*)&addr, &size);
@@ -92,7 +98,7 @@ void  Network::UdpSocket::canWrite() {
 
     struct sockaddr_in addr;
 
-    bzero(&addr, sizeof(addr));
+    memset(&addr, 0, sizeof(addr));
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = _writeAddress.toIPv4Address();
     addr.sin_port = htons(_writePort);

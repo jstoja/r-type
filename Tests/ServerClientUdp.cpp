@@ -7,6 +7,9 @@
 // Started on  Mon Dec 17 21:45:54 2012 loick michard
 //
 
+#ifndef WIN32_LEAN_AND_MEAN
+# define WIN32_LEAN_AND_MEAN
+#endif
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>

@@ -9,10 +9,17 @@
 
 #include <iostream>
 #include <cstring>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <unistd.h>
+#include "OS.h"
+#ifdef OS_WINDOWS
+# include <winsock2.h>
+typedef int socklen_t;
+#else
+# include <sys/types.h>
+# include <sys/socket.h>
+# include <arpa/inet.h>
+# include <unistd.h>
+# define closesocket(x) close(x)
+#endif
 #include "TcpSocket.h"
 
 Network::TcpSocket::TcpSocket() : _hostAddress(HostAddress::AnyAddress), _hostPort(0),
@@ -33,7 +40,7 @@ Network::TcpSocket::TcpSocket(int fd) : _hostAddress(HostAddress::AnyAddress), _
 
 Network::TcpSocket::~TcpSocket() {
   if (_fd != -1)
-    ::close(_fd);
+    ::closesocket(_fd);
 }
 
 int Network::TcpSocket::getId() const {
@@ -43,7 +50,7 @@ int Network::TcpSocket::getId() const {
 bool Network::TcpSocket::connect(const HostAddress& address, uint16 port) {
   struct sockaddr_in addr;
 
-  bzero(&addr, sizeof(addr));
+  memset(&addr, 0, sizeof(addr));
   addr.sin_family = AF_INET;
   addr.sin_addr.s_addr = address.toIPv4Address();
   addr.sin_port = htons(port);
@@ -60,7 +67,7 @@ bool Network::TcpSocket::connect(const HostAddress& address, uint16 port) {
 bool Network::TcpSocket::listen(const HostAddress& address, uint16 port) {
   struct sockaddr_in addr;
 
-  bzero(&addr, sizeof(addr));
+  memset(&addr, 0, sizeof(addr));
   addr.sin_family = AF_INET ;
   addr.sin_addr.s_addr = address.toIPv4Address();
   addr.sin_port = htons(port);
@@ -121,7 +128,7 @@ void Network::TcpSocket::read(ByteArray& biteArray, bool all) {
 }
 
 void Network::TcpSocket::close() {
-  ::close(_fd);
+  ::closesocket(_fd);
   _fd = -1;
   NetworkManager::getInstance().unregisterSocket(this);
   if (_delegate)
@@ -133,13 +140,8 @@ void Network::TcpSocket::canRead() {
     struct sockaddr_in addr;
     socklen_t len = sizeof(addr);
 
-    bzero(&addr, sizeof(addr));
-#if !defined(OS_MAC)
-    // TODO: Use accept or anything POSIX instead of accept4
-    int ret = ::accept4(_fd, (struct sockaddr*)&addr, &len, SOCK_NONBLOCK);
-#else
-      int ret = 0;
-#endif
+    memset(&addr, 0, sizeof(addr));
+    int ret = ::accept(_fd, (struct sockaddr*)&addr, &len);
     if (ret != -1 && _delegate) {
       TcpSocket* newConnection = new TcpSocket(ret);
       newConnection->_hostAddress = HostAddress(inet_ntoa(addr.sin_addr));

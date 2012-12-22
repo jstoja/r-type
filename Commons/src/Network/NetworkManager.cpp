@@ -8,14 +8,23 @@
 //
 
 #include <iostream>
-#include <unistd.h>
-#include <sys/select.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <unistd.h>
+#include "OS.h"
+#ifdef OS_WINDOWS
+# include <winsock2.h>
+# define usleep(x) Sleep((x) / 1000)
+#else
+# include <unistd.h>
+# include <sys/select.h>
+# include <sys/time.h>
+# include <sys/types.h>
+#endif
 #include "NetworkManager.h"
 
 Network::NetworkManager::NetworkManager() : _runThread(this) {
+#ifdef OS_WINDOWS
+     WSADATA wsa;
+     WSAStartup (MAKEWORD (2,2), &wsa);
+#endif
   _runThread.run();
 }
 
@@ -90,6 +99,6 @@ void Network::NetworkManager::operator()() {
 	_socketsMutex.unlock();
       }
     } else
-      usleep(0.1);
+      usleep(100000);
   }
 }
