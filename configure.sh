@@ -3,10 +3,10 @@
 mkdir -p build
 cd build
 echo "Executing Cmake"
-cmake ..
+cmake .. $@
 cd ..
 echo "Generating Makefile and clean.sh"
 echo -e "all:\n\tmake -C build" > Makefile
-echo -e "#!/bin/bash\n\nrm -Rf build\nrm -f Makefile clean.sh" > clean.sh
+echo -e "#!/bin/bash\n\nrm -Rf build Bin\nrm -f Makefile clean.sh" > clean.sh
 chmod +x clean.sh
 echo "Done"
