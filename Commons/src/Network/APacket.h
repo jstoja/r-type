@@ -10,6 +10,7 @@
 #ifndef _APACKET_H_
 # define _APACKET_H_
 
+# include <list>
 # include <string>
 # include "ByteArray.h"
 # include "ASocket.h"
@@ -32,8 +33,17 @@ namespace Network {
 
     APacket&		operator<<(uint32);
     APacket&		operator<<(const std::string&);
+    template <typename T>
+    APacket&		operator<<(const std::list<T*>&);
+    template <typename T>
+    APacket&		operator<<(const std::list<T>&);
     APacket&		operator>>(uint32&);
     APacket&		operator>>(std::string&);
+    template <typename T>
+    APacket&		operator>>(std::list<T*>&);
+    template <typename T>
+    APacket&		operator>>(std::list<T>&);
+
 
   protected:
     ByteArray	_data;

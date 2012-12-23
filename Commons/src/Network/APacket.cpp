@@ -58,3 +58,46 @@ Network::APacket& Network::APacket::operator>>(std::string& str) {
   return *this;
 }
 
+template <typename T>
+Network::APacket& Network::APacket::operator<<(const std::list<T*>& elements) {
+  typename std::list<T*>::const_iterator it;
+
+  *this << elements.size();
+  for (it = elements.begin(); it != elements.end(); ++it) {
+    *this << *(*it);
+  }
+}
+
+template <typename T>
+Network::APacket& Network::APacket::operator<<(const std::list<T>& elements) {
+  typename std::list<T*>::const_iterator it;
+
+  *this << elements.size();
+  for (it = elements.begin(); it != elements.end(); ++it) {
+    *this << (*it);
+  }
+}
+
+template <typename T>
+Network::APacket& Network::APacket::operator>>(std::list<T*>& elements) {
+  uint32 size;
+
+  *this >> size;
+  for (uint32 i = 0; i < size; ++i) {
+    T* element = new T;
+    *this >> *element;
+    elements.push_front(element);
+  }
+}
+
+template <typename T>
+Network::APacket& Network::APacket::operator>>(std::list<T>& elements) {
+  uint32 size;
+
+  *this >> size;
+  for (uint32 i = 0; i < size; ++i) {
+    T element;
+    *this >> element;
+    elements.push_front(element);
+  }  
+}
