@@ -10,10 +10,11 @@
 #ifndef _CLIENT_H_
 # define _CLIENT_H_
 
-#include "Network/TcpSocket.h"
-#include "Network/Proxy.hpp"
-#include "Network/IProxyDelegate.h"
-#include "Network/TcpPacket.h"
+# include <map>
+# include "Network/TcpSocket.h"
+# include "Network/Proxy.hpp"
+# include "Network/IProxyDelegate.h"
+# include "Network/TcpPacket.h"
 
 class Client : public Network::IProxyDelegate<Network::TcpPacket> {
  public:
@@ -24,10 +25,16 @@ class Client : public Network::IProxyDelegate<Network::TcpPacket> {
   void	packetWrited(Network::TcpPacket* packet);
 
   void	connection(const std::string& name);
+
+  typedef void (Client::* commandPointer)(Network::TcpPacket*);
+
+  // All protocol functions
+  void	connectionSuccess(Network::TcpPacket*);
   
  private:
   Network::TcpSocket			_tcpSocket;
   Network::Proxy<Network::TcpPacket>*	_proxy;
+  std::map<int, commandPointer>         _commands;
 };
 
 #endif

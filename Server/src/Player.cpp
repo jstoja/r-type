@@ -40,4 +40,9 @@ void Player::connection(Network::TcpPacket* packet) {
   
   *packet >> login;
   std::cout << "Connection with login " << login << std::endl;
+
+  Network::Proxy<Network::TcpPacket>::ToSend toSend(new Network::TcpPacket(), Network::HostAddress::AnyAddress, 0);
+  toSend.packet->setCode(0x01000000);
+  *toSend.packet << 42;
+  _proxy.sendPacket(toSend);
 }
