@@ -12,7 +12,7 @@
 
 # include <iostream>
 # include "Network/TcpServer.h"
-# include "Client.h"
+# include "Player.h"
 
 class Server : public Network::ITcpServerDelegate {
 public:
@@ -22,7 +22,7 @@ public:
   void newConnection(Network::ASocket*);
 private:
   Network::TcpServer	_tcpServer;
-  std::vector<Client*>	_clients;
+  std::vector<Player*>	_players;
 };
 
 #endif

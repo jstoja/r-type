@@ -16,11 +16,11 @@ Server::Server() {
 }
 
 Server::~Server() {
-  std::vector<Client*>::iterator it;
-  for (it = _clients.begin(); it != _clients.end(); ++it)
+  std::vector<Player*>::iterator it;
+  for (it = _players.begin(); it != _players.end(); ++it)
     delete *it;
 }
 
 void Server::newConnection(Network::ASocket* socket) {
-  _clients.push_back(new Client(socket));
+  _players.push_back(new Player(socket));
 }

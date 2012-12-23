@@ -90,14 +90,14 @@ void Network::TcpSocket::write(ByteArray& biteArray, const HostAddress& hostAddr
   _bufferToWrite = &biteArray;
 }
 
-void Network::TcpSocket::read(ByteArray& biteArray, bool all) {
-  uint32 size = biteArray.getSize();
+void Network::TcpSocket::read(ByteArray& biteArray, bool all, uint32 start) {
+  uint32 size = biteArray.getSize() - start;
   
   _bufferToReadMutex.lock();
   _bufferMutex.lock();
   if (_buffer.getSize() >= size) {
     for (unsigned int i = 0; i < size; ++i)
-      ((char*)biteArray)[i] = ((char*)_buffer)[i];
+      ((char*)biteArray)[i + start] = ((char*)_buffer)[i];
     for (unsigned int i = size; i < _buffer.getSize(); ++i)
       ((char*)_buffer)[i - size] = ((char*)_buffer)[i];
     _buffer.resize(_buffer.getSize() - size);
@@ -105,7 +105,7 @@ void Network::TcpSocket::read(ByteArray& biteArray, bool all) {
     size = (_buffer.getSize() > size) ? size : _buffer.getSize();
     biteArray.resize(size);
     for (unsigned int i = 0; i < size; ++i)
-      ((char*)biteArray)[i] = ((char*)_buffer)[i];
+      ((char*)biteArray)[i + start] = ((char*)_buffer)[i];
     for (unsigned int i = size; i < _buffer.getSize(); ++i)
       ((char*)_buffer)[i - size] = ((char*)_buffer)[i];
     _buffer.resize(_buffer.getSize() - size);
@@ -113,6 +113,7 @@ void Network::TcpSocket::read(ByteArray& biteArray, bool all) {
     _toRead = size;
     _bufferToRead = &biteArray;
     _readAll = all;
+    _readStart = start;
     _bufferToReadMutex.unlock();
     _bufferMutex.unlock();
     if (_delegate)
@@ -121,6 +122,7 @@ void Network::TcpSocket::read(ByteArray& biteArray, bool all) {
   }
   _toRead = 0;
   _bufferToRead = NULL;
+  _readStart = 0;
   _bufferToReadMutex.unlock();
   _bufferMutex.unlock();
   if (_delegate)
@@ -165,7 +167,7 @@ void Network::TcpSocket::canRead() {
 	_buffer.resize(size + ret);
     }
     if (_bufferToRead)
-      this->read(*_bufferToRead);
+      this->read(*_bufferToRead, _readAll, _readStart);
   }
 }
 

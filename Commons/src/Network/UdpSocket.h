@@ -39,7 +39,7 @@ namespace Network {
     int   getId() const;
 
     bool	bind(const HostAddress& address = HostAddress::AnyAddress, uint16 port = 0);
-    void	read(ByteArray&, bool all = true);
+    void	read(ByteArray&, bool all = true, uint32 start = 0);
     void	write(ByteArray&, const HostAddress& hostAddress = HostAddress::AnyAddress, uint16 port = 0);
     void	close();
 

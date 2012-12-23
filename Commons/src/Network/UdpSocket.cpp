@@ -47,7 +47,7 @@ bool Network::UdpSocket::bind(const HostAddress& address, uint16 port) {
   return (true);
 }
 
-void Network::UdpSocket::read(ByteArray& biteArray, bool all) {
+void Network::UdpSocket::read(ByteArray& biteArray, bool all, uint32) {
   Threading::MutexLocker(&(this->_readMutex));
 
   _reading = true;

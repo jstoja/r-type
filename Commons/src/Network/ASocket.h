@@ -26,7 +26,7 @@ namespace Network {
     bool	isWriting() const;
     void	setDelegate(ISocketDelegate*);
 
-    virtual void	read(ByteArray&, bool all = true) = 0;
+    virtual void	read(ByteArray&, bool all = true, uint32 start = 0) = 0;
     virtual void	write(ByteArray&, const HostAddress& hostAddress = HostAddress::AnyAddress, uint16 port = 0) = 0;
     virtual void       	close() = 0;
     virtual int		getId() const = 0;

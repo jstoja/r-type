@@ -35,7 +35,7 @@ public:
 
   bool		connect(const HostAddress& address, uint16 port);
   bool		listen(const HostAddress& address, uint16 port);
-  void		read(ByteArray&, bool all = true);
+  void		read(ByteArray&, bool all = true, uint32 start = 0);
   void		write(ByteArray&, const HostAddress& hostAddress = HostAddress::AnyAddress, uint16 port = 0);
   void		close();
   uint16       	getLocalPort() const;
@@ -54,6 +54,7 @@ private:
   unsigned int		_toRead;
   ByteArray*		_bufferToRead;
   bool			_readAll;
+  uint32		_readStart;
   Threading::Mutex	_bufferToReadMutex;
 
   ByteArray*		_bufferToWrite;

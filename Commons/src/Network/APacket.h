@@ -10,7 +10,10 @@
 #ifndef _APACKET_H_
 # define _APACKET_H_
 
+# include <string>
 # include "ByteArray.h"
+# include "ASocket.h"
+# include "HostAddress.h"
 
 namespace Network {
 
@@ -19,9 +22,23 @@ namespace Network {
     APacket();
     ~APacket();
 
-    ByteArray&	getData();
+    virtual ByteArray&	getData();
+    uint32		getSize() const;
+
+    virtual void	read(ASocket*) = 0;
+    virtual void	update() = 0;
+    virtual bool	isComplete() const = 0;
+
+
+    APacket&		operator<<(uint32);
+    APacket&		operator<<(const std::string&);
+    APacket&		operator>>(uint32&);
+    APacket&		operator>>(std::string&);
+
   protected:
     ByteArray	_data;
+    uint32      _size;
+    uint32	_curser;
   };
 
 }
