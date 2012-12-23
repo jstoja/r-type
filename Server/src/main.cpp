@@ -11,6 +11,12 @@
 # define WIN32_LEAN_AND_MEAN
 #endif
 
+#include <cstdio>
+#include "Server.h"
+
 int	main(int argc, char *argv[]) {
-	return (0);
+  Server server;
+
+  getchar();
+  return (0);
 }
