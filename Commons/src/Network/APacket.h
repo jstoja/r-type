@@ -32,12 +32,14 @@ namespace Network {
 
 
     APacket&		operator<<(uint32);
+    APacket&		operator<<(char);
     APacket&		operator<<(const std::string&);
     template <typename T>
     APacket&		operator<<(const std::list<T*>&);
     template <typename T>
     APacket&		operator<<(const std::list<T>&);
     APacket&		operator>>(uint32&);
+    APacket&		operator>>(char&);
     APacket&		operator>>(std::string&);
     template <typename T>
     APacket&		operator>>(std::list<T*>&);

@@ -43,6 +43,6 @@ void Player::connection(Network::TcpPacket* packet) {
 
   Network::Proxy<Network::TcpPacket>::ToSend toSend(new Network::TcpPacket(), Network::HostAddress::AnyAddress, 0);
   toSend.packet->setCode(0x01000000);
-  *toSend.packet << 42;
+  *toSend.packet << (uint32)42;
   _proxy.sendPacket(toSend);
 }

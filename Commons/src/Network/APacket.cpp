@@ -32,8 +32,15 @@ Network::APacket& Network::APacket::operator<<(uint32 integer) {
   return *this;
 }
 
+Network::APacket& Network::APacket::operator<<(char character) {
+  _size += 1;
+  _data.resize(_data.getSize() + 1);
+  *((char*)(&((char*)_data)[_data.getSize() - 1])) = character;
+  return *this;
+}
+
 Network::APacket& Network::APacket::operator<<(const std::string& str) {
-  *this << str.size();
+  *this << (uint32)str.size();
   _size += str.size();
   _data.resize(_data.getSize() + str.size());
   for (unsigned int i = 0; i < str.size(); ++i)
@@ -44,6 +51,12 @@ Network::APacket& Network::APacket::operator<<(const std::string& str) {
 Network::APacket& Network::APacket::operator>>(uint32& integer) {
   integer = *((int*)(&((char*)_data)[_curser]));
   _curser += 4;
+  return *this;
+}
+
+Network::APacket& Network::APacket::operator>>(char& character) {
+  character = *((char*)(&((char*)_data)[_curser]));
+  _curser += 1;
   return *this;
 }
 
