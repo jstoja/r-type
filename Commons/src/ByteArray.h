@@ -57,6 +57,9 @@ class	ByteArray {
         //! Get char buffer
         char*       getCharBuffer() const;
     
+        operator    char*();
+        void        resize(uint32);
+    
         void		debug() const;
   private:
         std::vector<char>	_buffer;
