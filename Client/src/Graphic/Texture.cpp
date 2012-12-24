@@ -8,6 +8,7 @@
 
 #include "Texture.h"
 
+#include "Debug.h"
 #include "UUIDGenerator.h"
 #include "GraphicException.h"
 

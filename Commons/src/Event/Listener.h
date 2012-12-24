@@ -11,7 +11,7 @@
 
 # include <cstdlib>
 # include "Event.h"
-# include "Rect.h"
+# include "Rect2.h"
 
 namespace Event {
     
@@ -20,17 +20,17 @@ namespace Event {
     class Listener {
     public:
         Listener(uint32 type, IListenerDelegate* delegate=NULL);
-        Listener(uint32 type, Rect const& rect, IListenerDelegate* delegate=NULL);
+        Listener(uint32 type, Rect2 const& rect, IListenerDelegate* delegate=NULL);
         
         Type            getType() const;
-        Rect const&     getRect() const;
+        Rect2 const&     getRect() const;
         bool            hasRect() const;
         void            processEvent(Event const& event);
         
     private:
         Type                _type;
         IListenerDelegate*  _delegate;
-        Rect                _rect;
+        Rect2                _rect;
         bool                _hasRect;
     };
     

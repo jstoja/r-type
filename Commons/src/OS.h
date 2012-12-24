@@ -18,4 +18,12 @@
 # if (defined __unix__ || defined OS_MAC)
 #  define OS_UNIX
 # endif
+
+# if (defined OS_MAC)
+#  include <TargetConditionals.h>
+#  if TARGET_OS_IPHONE
+#   define OS_IOS
+#  endif
+# endif
+
 #endif

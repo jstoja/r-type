@@ -9,8 +9,8 @@
 #ifndef __RType__Buffer__
 # define __RType__Buffer__
 
-# include "Graphic/OpenGL.h"
-# include "Graphic/Exception.h"
+# include "OpenGL.h"
+# include "GraphicException.h"
 # include "Types.h"
 
 namespace Graphic {
@@ -29,8 +29,6 @@ namespace Graphic {
             /*! Vertex array buffer, to store an array of vertex attributes */
             ElementArray = GL_ELEMENT_ARRAY_BUFFER,
             /*! Element array buffer, to store an array of vertex indices */
-            UniformArray = GL_UNIFORM_BUFFER,
-            /*! Uniform buffer, to store program uniforms */
         };
         
         //! Buffer usages

@@ -8,8 +8,11 @@
 
 #include "Scene.h"
 
-Graphic::Scene::Scene(void)
-: _backgrounds(), _sceneries(), _elements(NULL) {
+Graphic::Scene::Scene(void) :
+_backgrounds(), _sceneries(), _elements(NULL),
+_worldMatrix(), _viewport(16.0, 9.0) {
+    _worldMatrix.translate(-1, -1);
+    _worldMatrix.scale(2.0/_viewport.x, 2.0/_viewport.y);
 }
 
 Graphic::Scene::~Scene() {
@@ -25,4 +28,16 @@ void Graphic::Scene::addScenery(Scenery* scenery) {
 
 void Graphic::Scene::addElement(Element* element) {
     _elements.push_back(element);
+}
+
+std::vector<Graphic::Element*> const & Graphic::Scene::getElements(void) const {
+    return _elements;
+}
+
+Graphic::Matrix4f const& Graphic::Scene::getWorldMatrix(void) const {
+    return _worldMatrix;
+}
+
+Vec2 const& Graphic::Scene::getViewport(void) const {
+    return _viewport;
 }

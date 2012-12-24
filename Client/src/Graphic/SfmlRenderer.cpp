@@ -13,16 +13,7 @@
 
 #ifdef GRAPHIC_RENDERER_SFML
 
-Graphic::Renderer::Settings::Settings(std::string const& title,
-                                      Vec2 size,
-                                      uint32 antialiasingLevel,
-                                      bool fullScreen)
-: title(title), size(size), antialiasingLevel(antialiasingLevel), fullScreen(fullScreen) {
-}
-
-Graphic::Renderer::Renderer(Settings const& settings)
-: _antialiasingLevel(0), _window(NULL) {
-    
+void Graphic::Renderer::createContext(Settings const& settings) {    
     sf::ContextSettings contextSettings;
     contextSettings.antialiasingLevel = settings.antialiasingLevel;
     contextSettings.majorVersion = 2;
@@ -39,14 +30,12 @@ Graphic::Renderer::Renderer(Settings const& settings)
     
     Log("OpenGL Version " << contextSettings.majorVersion << "." << contextSettings.minorVersion
         << ", Antialiasing level: " << _antialiasingLevel);
-    
-    // Register to the Event manager
-    Event::Manager::getInstance().registerProvider(this);
 }
 
 Graphic::Renderer::~Renderer() {
     if (_window)
         delete _window;
+    destruct();
 }
 
 void Graphic::Renderer::processEvents(Event::Manager* manager) {
@@ -63,18 +52,32 @@ void Graphic::Renderer::processEvents(Event::Manager* manager) {
             manager->fire(Event::Event(Event::Close, this));
         } else if (sfEvent.type == sf::Event::MouseMoved) {
             manager->fire(Event::Event(Event::PointerMove,
-                                       Vec2(sfEvent.mouseMove.x, sfEvent.mouseMove.y),
+                                       viewportToScene(Vec2(sfEvent.mouseMove.x,
+                                                            sfEvent.mouseMove.y)),
                                        this));
         } else if (sfEvent.type == sf::Event::MouseButtonPressed
                    || sfEvent.type == sf::Event::MouseButtonReleased) {
             Event::Event event(sfEvent.type == sf::Event::MouseButtonPressed ?
                                Event::PointerPushed : Event::PointerReleased);
             event.pointerButton = pointerButtonValues[sfEvent.mouseButton.button];
-            event.pos = Vec2(sfEvent.mouseButton.x, sfEvent.mouseButton.y);
+            event.pos = viewportToScene(Vec2(sfEvent.mouseButton.x, sfEvent.mouseButton.y));
             event.sender = this;
             manager->fire(event);
         }
+        //! Update the viewport if window size has changed
+        else if (sfEvent.type == sf::Event::Resized) {
+            updateViewport();
+        }
     }
+}
+
+Vec2 Graphic::Renderer::getViewportSize(void) const {
+    sf::Vector2u size = _window->getSize();
+    return Vec2(size.x, size.y);
+}
+
+void Graphic::Renderer::refresh(void) {
+    _window->display();
 }
 
 #endif

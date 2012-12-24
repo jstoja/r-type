@@ -6,17 +6,18 @@
 //
 //
 
-#ifndef __R_Type__Rect__
-# define __R_Type__Rect__
+#ifndef __R_Type__Rect2__
+# define __R_Type__Rect2__
 
 # include <ostream>
 # include "Types.h"
 # include "Vec2.h"
 
-struct Rect {
+struct Rect2 {
     
-    Rect(float32 x=0, float32 y=0, float32 width=0, float32 height=0);
-    ~Rect();
+    Rect2(float32 x=0, float32 y=0, float32 width=0, float32 height=0);
+    Rect2(Vec2 const& pos, Vec2 const& size);
+    ~Rect2();
     
     //! Tests wether a point is in the rect
     bool    in(Vec2 const& point) const;
@@ -25,6 +26,6 @@ struct Rect {
     Vec2    size;
 };
 
-std::ostream& operator<<(std::ostream& stream, Rect const& rect);
+std::ostream& operator<<(std::ostream& stream, Rect2 const& rect);
 
 #endif /* defined(__R_Type__Rect__) */

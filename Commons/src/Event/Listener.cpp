@@ -13,7 +13,7 @@ Event::Listener::Listener(uint32 type, IListenerDelegate* delegate)
 : _type(static_cast<Type>(type)), _delegate(delegate), _rect(), _hasRect(false) {
 }
 
-Event::Listener::Listener(uint32 type, Rect const& rect, IListenerDelegate* delegate)
+Event::Listener::Listener(uint32 type, Rect2 const& rect, IListenerDelegate* delegate)
 : _type(static_cast<Type>(type)), _delegate(delegate), _rect(rect), _hasRect(true) {
 }
 
@@ -26,7 +26,7 @@ void Event::Listener::processEvent(Event const& event) {
         _delegate->processEvent(event);
 }
 
-Rect const& Event::Listener::getRect() const {
+Rect2 const& Event::Listener::getRect() const {
     return _rect;
 }
 

@@ -9,11 +9,15 @@
 #ifndef RType_OpenGL_h
 # define RType_OpenGL_h
 
-# include <OS.h>
+# include "OS.h"
 
-# include <GL/glew.h>
-# if defined(OS_WINDOWS)
-#  include <GL/wglew.h>
+# if defined (OS_IOS)
+#  include <OpenGLES/ES2/gl.h>
+# else
+#   include <GL/glew.h>
+#   if defined(OS_WINDOWS)
+#       include <GL/wglew.h>
+#   endif
 # endif
 
 namespace Graphic {

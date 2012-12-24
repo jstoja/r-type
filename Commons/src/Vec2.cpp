@@ -11,16 +11,36 @@
 Vec2::Vec2(float32 x, float32 y) : x(x), y(y) {
 }
 
-bool operator>=(Vec2 const& v1, Vec2 const& v2) {
-    return v1.x >= v2.x && v1.y >= v2.y;
+bool Vec2::operator>=(Vec2 const& v2) const{
+    return x >= v2.x && y >= v2.y;
 }
 
-bool operator<=(Vec2 const& v1, Vec2 const& v2) {
-    return v1.x <= v2.x && v1.y <= v2.y;
+bool Vec2::operator<=(Vec2 const& v2) const{
+    return x <= v2.x && y <= v2.y;
 }
 
-Vec2 operator+(Vec2 const& v1, Vec2 const& v2) {
-    return Vec2(v1.x + v2.x, v1.y + v2.y);
+Vec2 Vec2::operator+(Vec2 const& v2) const{
+    return Vec2(x + v2.x, y + v2.y);
+}
+
+Vec2 Vec2::operator-(Vec2 const& v2) const{
+    return Vec2(x - v2.x, y - v2.y);
+}
+
+Vec2 Vec2::operator/(Vec2 const& v2) const{
+    return Vec2(x / v2.x, y / v2.y);
+}
+
+Vec2 Vec2::operator*(Vec2 const& v2) const{
+    return Vec2(x * v2.x, y * v2.y);
+}
+
+Vec2 Vec2::operator/(float32 v) const{
+    return Vec2(x / v, y / v);
+}
+
+Vec2 Vec2::operator*(float32 v) const{
+    return Vec2(x * v, y * v);
 }
 
 std::ostream& operator<<(std::ostream& stream, Vec2 const& v) {

@@ -6,7 +6,12 @@
 //
 //
 
-#include <stdexcept>
+#include "OS.h"
+#ifdef OS_WINDOWS
+# include <windows.h>
+# define sleep(x) Sleep((x) * 1000)
+#endif
+
 #include "Debug.h"
 #include "../Client/src/Sound/SoundManager.h"
 #include "../Commons/src/ResourcesManager.h"
