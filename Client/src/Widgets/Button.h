@@ -31,10 +31,11 @@ namespace Widget {
         
             //! Destruct the Button
             ~Button(void);
-        
+            // This method will be private after, it will be used to load a default image
             bool    loadImage(const std::string &image_path);
 
-            //! We know the size of the Image, so if we know the orientation and the number of frames, we can split the Image correctly.
+            // We know the size of the Image, so if we know the orientation and the number of frames, we can split the Image correctly.
+            // This will be private but it can be nice to export it to the other classes imo
             uint32  setAutoFrames(uint32 framesNumber, framesOrientation orientation);
             uint32  setManualFrame(const Graphic::Sprite::Frame &frame);
         
