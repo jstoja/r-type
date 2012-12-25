@@ -25,49 +25,29 @@ public:
         Graphic::Renderer::getInstance().init();
         Graphic::Renderer::getInstance().setScene(&_scene);
         
-		_button = Widget::Button("button.png", Vec2(8, 4.5), Vec2(9, 3));
+		_button = Widget::Button();
+        
         // Setup scene
-        //_button.setPosition(Vec2(8, 4.5));
-        //_button.setSize(Vec2(9, 3));
+        _button.setPosition(Vec2(8, 4.5));
+        _button.setSize(Vec2(9, 3));
+        _button.loadImage("button.png");
         
-//        Graphic::Element* button2 = new Graphic::Element();
-//        button2->setPosition(Vec2(2, 2));
-//        button2->setSize(Vec2(3, 1));
+        _scene.addElement(_button.getElement());
         
-        /*sf::Image image;
-        image.loadFromFile("button.png");
-        
-        Graphic::Texture* buttonTexture = new Graphic::Texture();
-        buttonTexture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
-        Graphic::Sprite* buttonSprite = new Graphic::Sprite();
-        buttonSprite->setTexture(buttonTexture);
-        buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.0),      Vec2(1.0,  0.333333)));
-        buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.333333), Vec2(1.0, 0.666666)));
-        buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.666666), Vec2(1.0, 1)));
-        
-        _button.setSprite(buttonSprite);
-        _button.setCurrentFrame(0);
-        */
-//        button2->setSprite(buttonSprite);
-//        _scene.addElement(button2);
-        
-        //_scene.addElement(&_button);
-        
+        /*
         // Add event listeners
-        /*Event::Manager::getInstance()
-        .addEventListener(new Event::Listener(Event::Close, this));
-        Event::Manager::getInstance()
-        .addEventListener(new Event::Listener(Event::PointerIn
+        Event::Manager::getInstance().addEventListener(new Event::Listener(Event::Close, this));
+        Event::Manager::getInstance().addEventListener(new Event::Listener(Event::PointerIn
                                               | Event::PointerOut
                                               | Event::PointerMove
                                               | Event::PointerPushed
                                               | Event::PointerReleased,
-                                              _button.getRect(),
+                                              _button.getElement()->getRect(),
                                               this));
-        */
+         */
         while (!_close) {
             // Process events
-            Event::Manager::getInstance().processEvents();
+            //Event::Manager::getInstance().processEvents();
             
             // Render
             Graphic::Renderer::getInstance().render();

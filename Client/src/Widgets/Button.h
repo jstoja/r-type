@@ -17,13 +17,39 @@
 namespace Widget {
     class Button: public Object {
         public:
-            Button(void);
-            Button(uint32 id);
-            //Button(const std::string &image_path, const Vec2 &pos, const Vec2 &size);
-            ~Button();
         
+            enum framesOrientation {
+                VERTICAL,
+                HORIZONTAL
+            };
+        
+            //! Create the Button
+            Button(void);
+        
+            //! Create the Button with the specified Object id
+            Button(uint32 id);
+        
+            //! Destruct the Button
+            ~Button(void);
+        
+            bool    loadImage(const std::string &image_path);
+
+            //! We know the size of the Image, so if we know the orientation and the number of frames, we can split the Image correctly.
+            uint32  setAutoFrames(uint32 framesNumber, framesOrientation orientation);
+            uint32  setManualFrame(const Graphic::Sprite::Frame &frame);
+        
+            void setPosition(const Vec2 &position);
+            void setSize(const Vec2 &size);
+        
+            Vec2 const &getPosition(void) const;
+            Vec2 const &getSize(void) const;
+        
+            Graphic::Element *getElement();
         private:
-            Graphic::Element _element;
+            Graphic::Element    _element;
+            Vec2                _size;
+            Vec2                _position;
+            
     };
 }
 
