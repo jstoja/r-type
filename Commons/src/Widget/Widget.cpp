@@ -8,20 +8,21 @@
 
 #include "Widget.h"
 
-Widget::Widget(Widget* parent) _parent(parent) {
+Widget::Object::Object(Object* parent) {
+    _parent = parent;
 }
 
-Widget::~Widget() {
+Widget::Object::~Object() {
 }
 
-uint32    Widget::getId() const {
+uint32    Widget::Object::getId() const {
     return _id;
 }
 
-void    Widget::setFocus(bool focus) {
+void    Widget::Object::setFocus(bool focus) {
     _focus = focus;
 }
 
-bool    Widget::getFocus() const {
+bool    Widget::Object::isFocus() const {
     return _focus;
 }

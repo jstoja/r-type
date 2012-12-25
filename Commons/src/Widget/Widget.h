@@ -14,42 +14,44 @@
 # include "Types.h"
 # include "OS.h"
 
-class Widget {
-public:
-    //! Constructor
-    Widget(Widget *parent = NULL);
+namespace Widget {
+    class Object {
+    public:
+        //! Constructor
+        Object(Object *parent = NULL);
 
-    //! Destructor
-    ~Widget();
+        //! Destructor
+        ~Object();
     
-    //! Get id of Widget
-    uint32  getId() const;
+        //! Get id of Widget
+        uint32  getId() const;
     
-    //! Get Widget position
-    //WPoint*  getPos() const;
+        //! Get Widget position
+        //WPoint*  getPos() const;
 
-    //! Set Widget position
-    //void        setPos(WPosition*);
-
-    //! Get Widget size
-    //WSize*      getSize() const;
-
-    //! Set Widget size
-    //void        setSize(WSize*);
-
-    //! Set focus
-    void        setFocus(bool);
-
-    //! Get focus
-    bool        isFocus();
-private:
-    Widget*     _parent;
-    //WPosition*  _position;
-    //WSize*      _size;
-    uint32      _id;
-    uint32      _x;
-    uint32      _y;
-    bool        _focus;
-};
+        //! Set Widget position
+        //void        setPos(WPosition*);
+        
+        //! Get Widget size
+        //WSize*      getSize() const;
+        
+        //! Set Widget size
+        //void        setSize(WSize*);
+        
+        //! Set focus
+        void        setFocus(bool);
+        
+        //! Get focus
+        bool        isFocus() const;
+    private:
+        Object*     _parent;
+        //WPoint*   _position;
+        //WSize*    _size;
+        uint32      _id;
+        uint32      _x;
+        uint32      _y;
+        bool        _focus;
+    };
+}
 
 #endif /* defined(__R_Type__Widget__) */
