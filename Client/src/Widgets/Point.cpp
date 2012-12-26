@@ -17,18 +17,18 @@ Widget::Point::Point(uint32 x, uint32 y) {
 }
 
 Widget::Point::Point(Point const& cpy) {
-    setX(cpy.x());
-    setY(cpy.y());
+    setX(cpy.getX());
+    setY(cpy.getY());
 }
 
 Widget::Point::~Point() {
 }
 
-uint32  Widget::Point::x() const {
+uint32  Widget::Point::getX() const {
     return _x;
 }
 
-uint32  Widget::Point::y() const {
+uint32  Widget::Point::getY() const {
     return _y;
 }
 
@@ -41,15 +41,15 @@ void    Widget::Point::setY(uint32 y) {
 }
 
 Widget::Point   Widget::Point::operator=(Widget::Point const& cpy) {
-    setX(cpy.x());
-    setY(cpy.y());
+    setX(cpy.getX());
+    setY(cpy.getY());
     return *this;
 }
 
 bool    Widget::Point::operator==(Widget::Point const& cmp) const {
-    return (x() == cmp.x() && y() == cmp.y());
+    return (getX() == cmp.getX() && getY() == cmp.getY());
 }
 
 bool    Widget::Point::operator!=(Widget::Point const& cmp)  const {
-    return (x() != cmp.x() || y() != cmp.y());
+    return (getX() != cmp.getX() || getY() != cmp.getY());
 }

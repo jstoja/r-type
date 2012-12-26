@@ -13,9 +13,10 @@
 # include <string>
 # include "Object.h"
 # include "Graphic/Element.h"
+# include "Widget.h"
 
 namespace Widget {
-    class Button: public Object {
+    class Button: public Widget {
         public:
         
             enum framesOrientation {

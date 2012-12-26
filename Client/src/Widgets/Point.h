@@ -29,10 +29,10 @@ namespace Widget {
         ~Point();
     
         //! Get x pos
-        uint32  x() const;
+        uint32  getX() const;
     
         //! Get y pos
-        uint32  y() const;
+        uint32  getY() const;
     
         //! Set x pos
         void    setX(uint32);

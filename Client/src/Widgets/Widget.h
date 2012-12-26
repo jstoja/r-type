@@ -10,24 +10,23 @@
 # define __R_Type__Widget__
 
 # include <iostream>
+# include "Object.h"
 # include "UUIDGenerator.h"
 # include "Types.h"
 # include "OS.h"
 
 namespace Widget {
-    class Object {
+    class Widget : Object {
     public:
         //! Constructor
-        Object(Object *parent = NULL);
+        Widget(Widget *parent = NULL);
 
+        //! Constructor with id
+        Widget(uint32);
+        
         //! Destructor
-        ~Object();
-    
-        //! Get id of Widget
-        uint32  getId() const;
-    
-        //! Get Widget position
-        //WPoint*  getPos() const;
+        ~Widget();
+
 
         //! Set Widget position
         //void        setPos(WPosition*);
@@ -44,10 +43,9 @@ namespace Widget {
         //! Get focus
         bool        isFocus() const;
     private:
-        Object*     _parent;
+        Widget*     _parent;
         //WPoint*   _position;
         //WSize*    _size;
-        uint32      _id;
         uint32      _x;
         uint32      _y;
         bool        _focus;

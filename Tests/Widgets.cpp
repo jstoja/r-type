@@ -57,9 +57,9 @@ public:
     ~Test() {}
     
     virtual void processEvent(Event::Event const& event) {
-        /*if (event.type == Event::Close) {
+        if (event.type == Event::Close) {
             _close = true;
-        } else if (event.type & Event::PointerIn) {
+        } /*else if (event.type & Event::PointerIn) {
             _button.setCurrentFrame(2);
         } else if (event.type & Event::PointerOut) {
             _button.setCurrentFrame(0);

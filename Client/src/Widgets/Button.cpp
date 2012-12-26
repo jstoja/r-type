@@ -10,12 +10,12 @@
 #include "Button.h"
 
 Widget::Button::Button(void) :
-Object(), _element(NULL) {
+    Widget(), _element(NULL) {
     
 }
 
 Widget::Button::Button(uint32 id) :
-Object(id), _element(NULL) {
+    Widget(id), _element(NULL) {
 }
 
 Widget::Button::~Button() {
