@@ -37,25 +37,9 @@ namespace Widget {
         //! Setter text
         void    setText(const char *);
         
-        //! Setter position
-        void setPosition(const Vec2 &position);
-
-        //! Setter size
-        void setSize(const Vec2 &size);
-        
-        //! Getter position
-        Vec2 const &getPosition(void) const;
-
-        //! Getter size
-        Vec2 const &getSize(void) const;
-        
-        Graphic::Element *getElement();
     private:
         Event::Listener     _event;
-        Graphic::Element    _element;
         std::string         _text;
-        Vec2                _size;
-        Vec2                _position;
     };
 };
 
