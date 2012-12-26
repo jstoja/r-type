@@ -5,20 +5,18 @@
 //  Created by Franck Lavisse on 26/12/12.
 //
 //
-#include "Listener.h"
-#include "Element.h"
+#include <SFML/Graphics.hpp>
+#include "../../../Commons/src/Event/Listener.h"
+#include "../Graphic/Element.h"
 #include "Widget.h"
-#inckude "ByteArray.h"
 #include "TextEdit.h"
 
-Widget::TextEdit() : Widget() {
+Widget::TextEdit::TextEdit() :
+    Widget(), _event(NULL), _element(NULL) {
 }
 
-Widget::TextEdit(std::string const& text) _text(text) {
-}
-
-
-Widget::~Widget() {
+Widget::TextEdit::TextEdit(std::string const& text) :
+    Widget(), _event(NULL), _element(NULL), _text(text) {
 }
 
 std::string const&  Widget::TextEdit::getText() const {
@@ -33,19 +31,19 @@ void    Widget::TextEdit::setText(const char* text) {
     _text = text;
 }
 
-void Widget::Button::setPosition(const Vec2 &position) {
+void Widget::TextEdit::setPosition(const Vec2 &position) {
     _position = position;
 }
 
-void Widget::Button::setSize(const Vec2 &size) {
+void Widget::TextEdit::setSize(const Vec2 &size) {
     _size = size;
 }
 
-Vec2 const &Widget::Button::getPosition(void) const {
+Vec2 const &Widget::TextEdit::getPosition(void) const {
     return _position;
 }
 
-Vec2 const &Widget::Button::getSize(void) const {
+Vec2 const &Widget::TextEdit::getSize(void) const {
     return _size;
 }
 

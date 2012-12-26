@@ -28,9 +28,6 @@ namespace Widget {
         //! Constructor with text
         TextEdit(std::string const&);
         
-        //! Constructor with parent widget
-        TextEdit(Widget*);
-        
         //! Getter text
         std::string const&   getText() const;
 
@@ -59,7 +56,7 @@ namespace Widget {
         std::string         _text;
         Vec2                _size;
         Vec2                _position;
-    }
+    };
 };
 
 
