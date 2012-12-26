@@ -55,3 +55,8 @@ void    Widget::Button::setPosition(Vec2 const& v) {
     _element.setPosition(v);
     _position = v;
 }
+
+void    Widget::Button::setSize(Vec2 const& v) {
+    _element.setSize(v);
+    _size = v;
+}

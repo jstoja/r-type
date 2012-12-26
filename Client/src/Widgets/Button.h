@@ -44,6 +44,9 @@ namespace Widget {
         
             //! Redefinition of setPosition for set element position
             void    setPosition(Vec2 const&);
+        
+            //! Redefinition of setSize for set element size
+            void    setSize(Vec2 const&);
         private:
             Graphic::Element    _element;
         
