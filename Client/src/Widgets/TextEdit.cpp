@@ -19,6 +19,9 @@ Widget::TextEdit::TextEdit(std::string const& text) :
     Widget(), _event(NULL), _element(NULL), _text(text) {
 }
 
+Widget::TextEdit::~TextEdit() {    
+}
+
 std::string const&  Widget::TextEdit::getText() const {
     return _text;
 }
