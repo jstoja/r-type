@@ -28,12 +28,12 @@ public:
 		_button = Widget::Button();
         
         // Setup scene
-        _button.setPosition(Vec2(8, 4.5));
+        _button.setPosition(Vec2(4,4));
         _button.setSize(Vec2(9, 3));
         _button.loadImage("button.png");
         
         _scene.addElement(_button.getElement());
-        
+      
         /*
         // Add event listeners
         Event::Manager::getInstance().addEventListener(new Event::Listener(Event::Close, this));

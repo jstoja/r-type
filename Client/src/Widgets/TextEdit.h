@@ -17,7 +17,7 @@ class Event::Listener;
 namespace Widget {
     class Widget;
     
-    class TextEdit : public Widget {
+    class TextEdit : protected Widget {
     public:
         //! Constructor
         TextEdit();

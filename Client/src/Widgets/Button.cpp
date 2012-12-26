@@ -50,3 +50,8 @@ uint32  Widget::Button::setManualFrame(const Graphic::Sprite::Frame &frame) {
 Graphic::Element *Widget::Button::getElement() {
     return &_element;
 }
+
+void    Widget::Button::setPosition(Vec2 const& v) {
+    _element.setPosition(v);
+    _position = v;
+}

@@ -27,10 +27,10 @@ namespace Widget {
         Widget(uint32);
         
         //! Destructor
-        ~Widget();
+        virtual ~Widget();
 
         //! Set Widget position
-        void        setPosition(Vec2 const&);
+        virtual void        setPosition(Vec2 const&);
                 
         //! Pos getter
         Vec2 const& getPosition() const;
@@ -39,14 +39,14 @@ namespace Widget {
         Vec2 const& getSize() const;
         
         //! Set Widget size
-        void        setSize(Vec2 const&);
+        virtual void        setSize(Vec2 const&);
         
         //! Set focus
-        void        setFocus(bool);
+        virtual void        setFocus(bool);
         
         //! Get focus
         bool        isFocus() const;
-    private:
+    protected:
         Widget*     _parent;
         Vec2        _size;
         Vec2        _position;

@@ -41,6 +41,9 @@ namespace Widget {
             uint32  setManualFrame(const Graphic::Sprite::Frame &frame);
         
             Graphic::Element *getElement();
+        
+            //! Redefinition of setPosition for set element position
+            void    setPosition(Vec2 const&);
         private:
             Graphic::Element    _element;
         
