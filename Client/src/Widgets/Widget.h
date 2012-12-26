@@ -15,6 +15,8 @@
 # include "Types.h"
 # include "OS.h"
 
+class Vec2;
+
 namespace Widget {
     class Widget : Object {
     public:
@@ -27,15 +29,17 @@ namespace Widget {
         //! Destructor
         ~Widget();
 
-
         //! Set Widget position
-        //void        setPos(WPosition*);
+        void        setPosition(Vec2 const&);
+                
+        //! Pos getter
+        Vec2 const& getPosition() const;
         
         //! Get Widget size
-        //WSize*      getSize() const;
+        Vec2 const& getSize() const;
         
         //! Set Widget size
-        //void        setSize(WSize*);
+        void        setSize(Vec2 const&);
         
         //! Set focus
         void        setFocus(bool);
@@ -44,8 +48,8 @@ namespace Widget {
         bool        isFocus() const;
     private:
         Widget*     _parent;
-        //WPoint*   _position;
-        //WSize*    _size;
+        Vec2        _size;
+        Vec2        _position;
         uint32      _x;
         uint32      _y;
         bool        _focus;

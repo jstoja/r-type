@@ -16,7 +16,7 @@
 # include "Widget.h"
 
 namespace Widget {
-    class Button: public Widget {
+    class Button : public Widget {
         public:
         
             enum framesOrientation {
@@ -40,18 +40,10 @@ namespace Widget {
             uint32  setAutoFrames(uint32 framesNumber, framesOrientation orientation);
             uint32  setManualFrame(const Graphic::Sprite::Frame &frame);
         
-            void setPosition(const Vec2 &position);
-            void setSize(const Vec2 &size);
-        
-            Vec2 const &getPosition(void) const;
-            Vec2 const &getSize(void) const;
-        
             Graphic::Element *getElement();
         private:
             Graphic::Element    _element;
-            Vec2                _size;
-            Vec2                _position;
-            
+        
     };
 }
 

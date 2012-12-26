@@ -6,6 +6,7 @@
 //
 //
 
+#include "Vec2.h"
 #include "Widget.h"
 
 Widget::Widget::Widget(Widget* parent) {
@@ -25,3 +26,20 @@ void    Widget::Widget::setFocus(bool focus) {
 bool    Widget::Widget::isFocus() const {
     return _focus;
 }
+
+void    Widget::Widget::setPosition(Vec2 const& v) {
+    _position = v;
+}
+
+void    Widget::Widget::setSize(Vec2 const& v) {
+    _size = v;
+}
+
+Vec2 const&   Widget::Widget::getSize() const {
+    return _size;
+}
+
+Vec2 const&   Widget::Widget::getPosition() const {
+    return _position;
+}
+

@@ -47,22 +47,6 @@ uint32  Widget::Button::setManualFrame(const Graphic::Sprite::Frame &frame) {
     return 0;
 }
 
-void Widget::Button::setPosition(const Vec2 &position) {
-    _position = position;
-}
-
-void Widget::Button::setSize(const Vec2 &size) {
-    _size = size;
-}
-
-Vec2 const &Widget::Button::getPosition(void) const {
-    return _position;
-}
-
-Vec2 const &Widget::Button::getSize(void) const {
-    return _size;
-}
-
 Graphic::Element *Widget::Button::getElement() {
     return &_element;
 }
