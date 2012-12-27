@@ -20,7 +20,7 @@ class Vec2;
 
 namespace Widget {
     
-    class Widget : Object {
+    class Widget : public Object {
 
         public:
             //! Constructor
