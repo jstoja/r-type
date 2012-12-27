@@ -31,20 +31,24 @@ void    Widget::Label::setText(std::string const& text) {
 
 void    Widget::Label::init() {
     try {
-        sf::Image   image;
-        image.loadFromFile("alphabet.png");
-        Graphic::Texture*   labelTexture = new Graphic::Texture();
-        labelTexture->setData(image.getSize().x,
-                              image.getSize().y,
-                              image.getPixelsPtr());
-        Graphic::Sprite*    labelSprite = new Graphic::Sprite();
-        labelSprite->setTexture(labelTexture);
-        labelSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.03, 0.08),
-                                                     Vec2(0.15, 0.22)));
-        _element.setSprite(labelSprite);
-        _element.setCurrentFrame(0);
+        _image.loadFromFile("alphabet.png");
+        loadLetter(0);
     } catch (std::exception e) {
         std::cerr << e.what() << std::endl;
     }
+}
+
+void    Widget::Label::loadLetter(uint32 index) {
+    (void)index;
+    Graphic::Texture*   labelTexture = new Graphic::Texture();
+    labelTexture->setData(_image.getSize().x,
+                          _image.getSize().y,
+                          _image.getPixelsPtr());
+    Graphic::Sprite*    labelSprite = new Graphic::Sprite();
+    labelSprite->setTexture(labelTexture);
+    labelSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.03, 0.08),
+                                                 Vec2(0.15, 0.22)));
+    _element.setSprite(labelSprite);
+    _element.setCurrentFrame(0);
     
 }

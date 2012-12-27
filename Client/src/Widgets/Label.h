@@ -35,10 +35,14 @@ namespace   Widget {
         //! Init label, load alphabet image
         void    init();
         
+        //! Load a letter
+        void    loadLetter(uint32);
+        
         void    update() {}
         
         void    draw() {}
     private:
+        sf::Image       _image;
         std::string     _text;
     };
 };

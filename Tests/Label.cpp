@@ -30,7 +30,7 @@ public:
         
         // Setup scene
         _label.setPosition(Vec2(4,4));
-        _label.setSize(Vec2(3,3));
+        _label.setSize(Vec2(1,1));
         _label.init();
         //_button.loadImage("button.png");
         
