@@ -12,11 +12,11 @@
 #include "TextEdit.h"
 
 Widget::TextEdit::TextEdit() :
-    Widget(), _event(NULL), _element(NULL) {
+    Widget(), _event(NULL) {
 }
 
 Widget::TextEdit::TextEdit(std::string const& text) :
-    Widget(), _event(NULL), _element(NULL), _text(text) {
+    Widget(), _event(NULL), _text(text) {
 }
 
 Widget::TextEdit::~TextEdit() {    
@@ -32,24 +32,4 @@ void    Widget::TextEdit::setText(std::string const& text) {
 
 void    Widget::TextEdit::setText(const char* text) {
     _text = text;
-}
-
-void Widget::TextEdit::setPosition(const Vec2 &position) {
-    _position = position;
-}
-
-void Widget::TextEdit::setSize(const Vec2 &size) {
-    _size = size;
-}
-
-Vec2 const &Widget::TextEdit::getPosition(void) const {
-    return _position;
-}
-
-Vec2 const &Widget::TextEdit::getSize(void) const {
-    return _size;
-}
-
-Graphic::Element *Widget::TextEdit::getElement() {
-    return &_element;
 }
