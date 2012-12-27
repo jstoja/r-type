@@ -43,6 +43,6 @@ namespace Widget {
         bool    _checked;
         Button  _button;
     };
-}
+};
 
 #endif /* defined(__R_Type__CheckBox__) */

@@ -5,7 +5,7 @@
 //  Created by Julien Bordellier on 25/12/12.
 //
 //
-
+#include "../Graphic/Sprite.h"
 #include "Button.h"
 
 Widget::Button::Button(void) :
@@ -25,6 +25,7 @@ uint32  Widget::Button::setAutoFrames(uint32 framesNumber, framesOrientation ori
 }
 
 uint32  Widget::Button::setManualFrame(const Graphic::Sprite::Frame &frame) {
+    _element.getSprite()->addFrame(frame);
     return 0;
 }
 

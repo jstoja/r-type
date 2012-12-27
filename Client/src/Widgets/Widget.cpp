@@ -29,13 +29,11 @@ bool    Widget::Widget::hasFocus() const {
 }
 
 void    Widget::Widget::setPosition(Vec2 const& v) {
-    std::cerr << "lol" << std::endl;
     _element.setPosition(v);
     _position = v;
 }
 
 void    Widget::Widget::setSize(Vec2 const& v) {
-    std::cerr << "lul" << std::endl;
     _element.setSize(v);
     _size = v;
 }
@@ -61,11 +59,16 @@ bool    Widget::Widget::loadImage(const std::string &image_path) {
     Graphic::Sprite* buttonSprite = new Graphic::Sprite();
     buttonSprite->setTexture(buttonTexture);
     
+    //buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0,0), Vec2(0.5, 0.5)));
+    //buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.5, 0.5), Vec2(1,1)));
     // THIS SECTION HAS TO MOVE OUT AFTER
-    buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.0), Vec2(1.0,  1.0)));
+    buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0,0), Vec2(1,1)));
+    /*buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0, 0.5),
+                                                  Vec2(1, 1)));
+    buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.0),
+                                                  Vec2(1.0,0.5)));*/
     _element.setSprite(buttonSprite);
-    _element.setCurrentFrame(0);
-    //
+    //_element.setCurrentFrame(1);
     
     return true;
 }

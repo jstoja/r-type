@@ -5,23 +5,29 @@
 //  Created by Franck Lavisse on 27/12/12.
 //
 //
-
+#include "../Graphic/Sprite.h"
 #include "Widget.h"
 #include "Button.h"
 #include "CheckBox.h"
 
 Widget::CheckBox::CheckBox(bool checked) : Widget(),
     _checked(checked), _button() {
-    _button.loadImage("checkbox.png");
 }
 
 Widget::CheckBox::~CheckBox() {
 }
 
+
 void    Widget::CheckBox::init() {
+    setPosition(Vec2(5,5));
+    setSize(Vec2(1,1));
     _button.loadImage("checkbox.png");
-    setPosition(Vec2(3,3));
-    setSize(Vec2(3,3));
+    _element = *_button.getElement();
+    _element.getSprite()->addFrame(Graphic::Sprite::Frame(Vec2(0,0.5),
+                                                          Vec2(1,1)));
+    _element.getSprite()->addFrame(Graphic::Sprite::Frame(Vec2(0,0),
+                                                          Vec2(1,0.5)));
+    _element.setCurrentFrame(1);
 }
 
 bool    Widget::CheckBox::isChecked() const {
@@ -34,9 +40,9 @@ void    Widget::CheckBox::setChecked(bool checked) {
 
 void    Widget::CheckBox::update() {
     if (_checked) {
-        _button.setCurrentFrame(1);
+        _element.setCurrentFrame(2);
     } else {
-        _button.setCurrentFrame(0);
+        _element.setCurrentFrame(1);
     }
 }
 
