@@ -53,6 +53,12 @@ namespace Widget {
             //! Get Element
             Graphic::Element    *getElement();
         
+            //! Draw virtual method
+            virtual void        draw() = 0;
+        
+            //! Update virtual method
+            virtual void        update() = 0;
+        
             //! Load image of the Element with the image specified in the image_path parameter
             bool                loadImage(const std::string &image_path);
         protected:

@@ -44,6 +44,10 @@ namespace Widget {
             uint32  setManualFrame(const Graphic::Sprite::Frame &frame);
         
             void    setCurrentFrame(uint32);
+        
+            void    draw() {};
+        
+            void    update() {};
         private:
             Graphic::Element    _element;
         

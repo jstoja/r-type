@@ -35,8 +35,9 @@ namespace   Widget {
         //! Init label, load alphabet image
         void    init();
         
-        //! temporary function
-        void    setFrame();
+        void    update() {}
+        
+        void    draw() {}
     private:
         std::string     _text;
     };

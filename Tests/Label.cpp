@@ -43,7 +43,6 @@ public:
         while (!_close) {
             //Event::Process events
             Event::Manager::getInstance().processEvents();
-            _label.setFrame();
             // Render
             Graphic::Renderer::getInstance().render();
         }

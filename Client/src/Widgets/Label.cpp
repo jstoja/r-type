@@ -48,10 +48,3 @@ void    Widget::Label::init() {
     }
     
 }
-
-void    Widget::Label::setFrame() {
-    //Graphic::Sprite*    sp = _element.getSprite();
-    //Graphic::Sprite::Frame f(Vec2(0,0), Vec2(1,1));
-    //sp->addFrame(f);
-    //_element.setCurrentFrame(0);
-}

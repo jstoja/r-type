@@ -37,6 +37,10 @@ namespace Widget {
         //! Setter text
         void    setText(const char *);
         
+        void    draw() {}
+        
+        void    update() {}
+        
     private:
         Event::Listener     _event;
         std::string         _text;
