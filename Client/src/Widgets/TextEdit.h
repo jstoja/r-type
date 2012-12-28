@@ -17,7 +17,7 @@ class Event::Listener;
 namespace Widget {
     class Widget;
     
-    class TextEdit : protected Widget {
+    class TextEdit : public Widget {
     public:
         //! Constructor
         TextEdit();
@@ -36,6 +36,10 @@ namespace Widget {
         
         //! Setter text
         void    setText(const char *);
+        
+        void    draw() {}
+        
+        void    update() {}
         
     private:
         Event::Listener     _event;
