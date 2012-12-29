@@ -14,10 +14,17 @@
 #include "Graphic/Renderer.h"
 #include "Graphic/Scene.h"
 
-class Test : public Event::IListenerDelegate {
+#include <stack>
+
+class Test : public Event::IListenerDelegate, public Event::IProvider {
 public:
     Test(GLKView* view)
     : _close(false), _scene(), _button() {
+        
+        
+        // Register this class as an event provider, so it can pass events
+        // from the view controller to the event manager
+        Event::Manager::getInstance().registerProvider(this);
         
         // Setup renderer
         Graphic::Renderer::getInstance().init(view);
@@ -85,24 +92,11 @@ public:
     }
     
     void render() {
+        Event::Manager::getInstance().processEvents();
         Graphic::Renderer::getInstance().render();
     }
     
     ~Test() {}
-    
-    virtual void processEvent(Event::Event const& event) {
-        if (event.type == Event::Close) {
-            _close = true;
-        } else if (event.type & Event::PointerIn) {
-            _button.setCurrentFrame(2);
-        } else if (event.type & Event::PointerOut) {
-            _button.setCurrentFrame(0);
-        } else if (event.type & Event::PointerPushed) {
-            _button.setCurrentFrame(1);
-        } else if (event.type & Event::PointerReleased) {
-            _button.setCurrentFrame(2);
-        }
-    }
     
     uint8* getImageData(UIImage* image) {
         CGImageRef imageRef = [image CGImage];
@@ -125,11 +119,36 @@ public:
         return rawData;
     }
     
+    virtual void processEvent(Event::Event const& event) {
+        if (event.type == Event::Close) {
+            _close = true;
+        } else if (event.type & Event::PointerOut) {
+            _button.setCurrentFrame(0);
+        } else if (event.type & Event::PointerPushed) {
+            _button.setCurrentFrame(1);
+        } else if (event.type & Event::PointerReleased) {
+            _button.setCurrentFrame(0);
+        }
+    }
+    
+    virtual void processEvents(Event::Manager* manager) {
+        while (!_events.empty()) {
+            manager->fire(_events.top());
+            _events.pop();
+        }
+    }
+    
+    void pushEvent(Event::Event& event) {
+        event.sender = this;
+        _events.push(event);
+    }
+    
     
 private:
-    bool                _close;
-    Graphic::Scene      _scene;
-    Graphic::Element    _button;
+    bool                        _close;
+    Graphic::Scene              _scene;
+    Graphic::Element            _button;
+    std::stack<Event::Event>    _events;
 };
 
 
@@ -143,6 +162,39 @@ private:
         _test = new Test((GLKView *)self.view);
     } catch (Exception* e) {
         Log("Error: " << e->getMessage());
+    }
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    for (UITouch* touchEvent in touches) {
+        CGPoint location = [touchEvent locationInView:self.view];
+        Event::Event event(Event::PointerPushed,
+                           Graphic::Renderer::getInstance()
+                           .viewportToScene(Vec2(location.x, location.y)));
+        _test->pushEvent(event);
+    }
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    for (UITouch* touchEvent in touches) {
+        CGPoint location = [touchEvent locationInView:self.view];
+        Event::Event event(Event::PointerMove,
+                           Graphic::Renderer::getInstance()
+                           .viewportToScene(Vec2(location.x, location.y)));
+        _test->pushEvent(event);
+    }
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    for (UITouch* touchEvent in touches) {
+        CGPoint location = [touchEvent locationInView:self.view];
+        Event::Event event(Event::PointerReleased,
+                           Graphic::Renderer::getInstance()
+                           .viewportToScene(Vec2(location.x, location.y)));
+        _test->pushEvent(event);
     }
 }
 
