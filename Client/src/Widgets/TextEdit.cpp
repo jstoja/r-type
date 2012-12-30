@@ -21,7 +21,7 @@ Widget::TextEdit::TextEdit(std::string const& text) :
     Widget(), _event(NULL), _label() {
 }
 
-Widget::TextEdit::~TextEdit() {    
+Widget::TextEdit::~TextEdit() {
 }
 
 std::string const&  Widget::TextEdit::getText() const {
@@ -30,4 +30,34 @@ std::string const&  Widget::TextEdit::getText() const {
 
 void    Widget::TextEdit::setText(std::string const& text) {
     _label.setText(text);
+    update();
+}
+
+void    Widget::TextEdit::update() {
+    _label.update();
+    _element = *_label.getElement();
+}
+
+void    Widget::TextEdit::operator<<(char c) {
+    _label << c;
+    update();
+}
+
+void    Widget::TextEdit::operator<<(std::string const& str) {
+    _label << str;
+    update();
+}
+
+void    Widget::TextEdit::init() {
+    _label.init();
+}
+
+void    Widget::TextEdit::setPosition(Vec2 const& v) {
+    _position = v;
+    _label.setPosition(v);
+    update();
+}
+
+void    Widget::TextEdit::clear() {
+    _label.clear();
 }

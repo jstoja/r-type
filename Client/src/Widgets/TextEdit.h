@@ -37,7 +37,17 @@ namespace Widget {
         
         void    draw() {}
         
-        void    update() {}
+        void    update();
+        
+        void    operator<<(char);
+        
+        void    operator<<(std::string const&);
+        
+        void    init();
+        
+        void    clear();
+        
+        void    setPosition(Vec2 const&);
         
     private:
         Event::Listener     _event;

@@ -70,3 +70,7 @@ void    Widget::Label::operator<<(std::string const& str) {
     _text += str;
     update();
 }
+
+void    Widget::Label::clear() {
+    setText(std::string(""));
+}

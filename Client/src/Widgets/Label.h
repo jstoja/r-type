@@ -52,6 +52,8 @@ namespace   Widget {
         
         //! Contact
         void    operator<<(std::string const&);
+     
+        void    clear();
         
         void    update();
         
