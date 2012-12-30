@@ -16,6 +16,7 @@ class Event::Listener;
 
 namespace Widget {
     class Widget;
+    class Label;
     
     class TextEdit : public Widget {
     public:
@@ -34,16 +35,13 @@ namespace Widget {
         //! Setter text
         void    setText(std::string const&);
         
-        //! Setter text
-        void    setText(const char *);
-        
         void    draw() {}
         
         void    update() {}
         
     private:
         Event::Listener     _event;
-        std::string         _text;
+        Label               _label;
     };
 };
 

@@ -7,15 +7,24 @@
 //
 #include <SFML/Graphics.hpp>
 #include <stdexcept>
+#include <ft2build.h>
+#include FT_FREETYPE_H
+#include <freetype/freetype.h>
+#include <freetype/ftglyph.h>
+#include <freetype/ftoutln.h>
+#include <freetype/fttrigon.h>
+
+#include "Types.h"
 #include "Widget.h"
 #include "../Graphic/Texture.h"
 #include "../Graphic/Sprite.h"
+#include "../Graphic/Font.h"
 #include "Label.h"
 
-Widget::Label::Label() : Widget() {
+Widget::Label::Label() : Widget(), _font("/Library/Fonts/marion.ttc", 9) {
 }
 
-Widget::Label::Label(std::string const& text) : Widget(), _text(text) {
+Widget::Label::Label(std::string const& text) : Widget(), _text(text), _font("/Library/Fonts/marion.ttc", 9) {
 }
 
 Widget::Label::~Label() {
@@ -27,28 +36,37 @@ std::string const&  Widget::Label::getText() const {
 
 void    Widget::Label::setText(std::string const& text) {
     _text = text;
+    update();
 }
 
 void    Widget::Label::init() {
     try {
-        _image.loadFromFile("alphabet.png");
-        loadLetter(0);
+        Graphic::Texture *texture = new Graphic::Texture();
+        texture->setData(_font.getStringWidth(_text), _font.getStringHeight(_text), _font.stringData(_text));
+        Graphic::Sprite *sprite = new Graphic::Sprite();
+        sprite->setTexture(texture);
+        sprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0,0.0), Vec2(1.0,1.0)));
+        _element.setSprite(sprite);
+        _element.setCurrentFrame(0);
     } catch (std::exception e) {
         std::cerr << e.what() << std::endl;
     }
 }
 
-void    Widget::Label::loadLetter(uint32 index) {
-    (void)index;
-    Graphic::Texture*   labelTexture = new Graphic::Texture();
-    labelTexture->setData(_image.getSize().x,
-                          _image.getSize().y,
-                          _image.getPixelsPtr());
-    Graphic::Sprite*    labelSprite = new Graphic::Sprite();
-    labelSprite->setTexture(labelTexture);
-    labelSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.03, 0.08),
-                                                 Vec2(0.15, 0.22)));
-    _element.setSprite(labelSprite);
-    _element.setCurrentFrame(0);
-    
+void    Widget::Label::update() {
+    setSize(Vec2(_text.length(), 1));
+    Graphic::Texture *texture = new Graphic::Texture();
+    texture->setData(_font.getStringWidth(_text), _font.getStringHeight(_text), _font.stringData(_text));
+    Graphic::Sprite *sprite = _element.getSprite();
+    sprite->setTexture(texture);
+}
+
+void    Widget::Label::operator<<(char c) {
+    _text.push_back(c);
+    update();
+}
+
+void    Widget::Label::operator<<(std::string const& str) {
+    _text += str;
+    update();
 }

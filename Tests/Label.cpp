@@ -13,6 +13,18 @@
 #include "Graphic/Renderer.h"
 #include "Graphic/Scene.h"
 #include "Widgets/Widget.h"
+
+#include <ft2build.h>
+#include FT_FREETYPE_H
+#include <freetype/freetype.h>
+#include <freetype/ftglyph.h>
+#include <freetype/ftoutln.h>
+#include <freetype/fttrigon.h>
+
+#include "Types.h"
+#include "Graphic/Texture.h"
+#include "Graphic/Sprite.h"
+#include "Graphic/Font.h"
 #include "Widgets/Label.h"
 
 #include <SFML/Graphics.hpp>
@@ -26,13 +38,19 @@ public:
         Graphic::Renderer::getInstance().init();
         Graphic::Renderer::getInstance().setScene(&_scene);
         
-		_label = Widget::Label();
+
         
+        //
+        
+        std::string str("Coucou_Karina");
+		_label = Widget::Label(str);
+    
         // Setup scene
-        _label.setPosition(Vec2(4,4));
-        _label.setSize(Vec2(1,1));
+        _label.setPosition(Vec2(7,7));
+        _label.setSize(Vec2(str.length(),1));
         _label.init();
-        //_button.loadImage("button.png");
+        //_label << "marseille";
+        //_label.setText("molotov");
         
         _scene.addElement(_label.getElement());
         

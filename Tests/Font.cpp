@@ -28,7 +28,7 @@ public:
         Graphic::Renderer::getInstance().init();
         Graphic::Renderer::getInstance().setScene(&_scene);
     
-		Graphic::FreetypeFont font("SciFly.ttf", 14);
+		Graphic::FreetypeFont font("/Library/Fonts/marion.ttc", 14);
 
 		Graphic::Texture texture;
 		//texture.setData(font.getWidth('b'), font.getHeight('b'), font.letterData('b'));
