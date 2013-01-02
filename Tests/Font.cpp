@@ -29,6 +29,7 @@ public:
         Graphic::Renderer::getInstance().setScene(&_scene);
     
 		Graphic::FreetypeFont font("/Library/Fonts/Marion.ttc", 14);
+		Graphic::FreetypeFont font("/Library/Fonts/marion.ttc", 14);
 
 		Graphic::Texture texture;
 		//texture.setData(font.getWidth('b'), font.getHeight('b'), font.letterData('b'));

@@ -17,10 +17,16 @@ Widget::CheckBox::CheckBox(bool checked) : Widget(),
 Widget::CheckBox::~CheckBox() {
 }
 
+Widget::CheckBox::CheckBox(Vec2 const& size,
+                           Vec2 const& position,
+                           bool checked) :  Widget(),
+                                            _checked(checked),
+                                            _button() {
+    setSize(size);
+    setPosition(position);
+}
 
 void    Widget::CheckBox::init() {
-    setPosition(Vec2(5,5));
-    setSize(Vec2(1,1));
     _button.loadImage("checkbox.png");
     _element = *_button.getElement();
     _element.getSprite()->addFrame(Graphic::Sprite::Frame(Vec2(0,0.5),

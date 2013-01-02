@@ -43,8 +43,7 @@ void Graphic::Renderer::processEvents(Event::Manager* manager) {
 
 Vec2 Graphic::Renderer::getViewportSize(void) const {
     CGRect  viewRect = _view.bounds;
-    CGFloat scale = [[UIScreen mainScreen] scale];
-    return Vec2(viewRect.size.width * scale, viewRect.size.height * scale);
+    return Vec2(viewRect.size.width, viewRect.size.height);
 }
 
 void Graphic::Renderer::refresh(void) {

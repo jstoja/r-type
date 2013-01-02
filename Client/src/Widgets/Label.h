@@ -12,6 +12,18 @@
 # include <iostream>
 # include <string>
 
+# include <ft2build.h>
+# include FT_FREETYPE_H
+# include <freetype/freetype.h>
+# include <freetype/ftglyph.h>
+# include <freetype/ftoutln.h>
+# include <freetype/fttrigon.h>
+
+
+namespace Graphic {
+    class  FreetypeFont;
+};
+
 namespace   Widget {
     class   Widget;
     
@@ -35,15 +47,21 @@ namespace   Widget {
         //! Init label, load alphabet image
         void    init();
         
-        //! Load a letter
-        void    loadLetter(uint32);
+        //! Add a letter in wod
+        void    operator<<(char);
         
-        void    update() {}
+        //! Contact
+        void    operator<<(std::string const&);
+     
+        void    clear();
+        
+        void    update();
         
         void    draw() {}
     private:
-        sf::Image       _image;
-        std::string     _text;
+        Graphic::FreetypeFont   _font;
+        sf::Image               _image;
+        std::string             _text;
     };
 };
 

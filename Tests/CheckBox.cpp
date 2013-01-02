@@ -26,7 +26,7 @@ public:
         Graphic::Renderer::getInstance().init();
         Graphic::Renderer::getInstance().setScene(&_scene);
         
-		_box = Widget::CheckBox();
+		_box = Widget::CheckBox(Vec2(1,1), Vec2(5,5));
         _box.init();
         _scene.addElement(_box.getElement());
         

@@ -20,6 +20,9 @@ namespace Widget {
         //! Constructor
         CheckBox(bool checked = false);
         
+        //! Constructor
+        CheckBox(Vec2 const&, Vec2 const&, bool checked = false);
+        
         //! Destructor
         ~CheckBox();
         
