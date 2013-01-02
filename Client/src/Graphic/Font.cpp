@@ -35,20 +35,25 @@ Graphic::FreetypeFont::FreetypeFont(const std::string &font_path, uint8 size) {
         throw std::runtime_error("The font file could not be opened or read, or simply that it is broken.");
     }
     
-    FT_Set_Char_Size( face, size << 6, size << 6, 300, 300);
+    FT_Set_Char_Size( face, 0, size * 64, 300, 300);
     
-    FT_Glyph glyph;
+    FT_GlyphSlot slot;
     for(unsigned char ch = 0; ch < 128; ch++) {
-        error = FT_Load_Glyph(face, FT_Get_Char_Index(face, ch), FT_LOAD_RENDER);
+        error = FT_Load_Char(face, ch, FT_LOAD_RENDER);
         if (error) {
             std::cerr << "error loading glyph" << std::endl;
             throw std::runtime_error("FT_Load_Glyph failed");
         }
-        FT_GlyphSlot slot = face->glyph;
+        slot = face->glyph;
+
         _width.push_back(slot->bitmap.width);
         _height.push_back(slot->bitmap.rows);
-        _escapement.push_back(slot->advance.x >> 6);
-        _character_tab.push_back(_returnRGBA(slot->bitmap.buffer, slot->bitmap.width * slot->bitmap.rows));
+        if (ch != ' ')
+            _escapement_left.push_back(slot->bitmap_left);
+        else
+            _escapement_left.push_back(slot->advance.x/64);
+        _escapement_top.push_back(slot->bitmap_top);
+        _character_tab.push_back(_returnRGBA(slot->bitmap.buffer, slot->bitmap.width * slot->bitmap.rows * 4));
     }
     
     FT_Done_Face(face);
@@ -56,10 +61,10 @@ Graphic::FreetypeFont::FreetypeFont(const std::string &font_path, uint8 size) {
 }
 
 uint8 *Graphic::FreetypeFont::_returnRGBA(uint8* bitmap, int size) {
-    uint8 *data = new uint8[4 * size];
+    uint8 *data = new uint8[size];
     int i, j;
     
-    for (i = 0, j = 0; i < size*4; i += 4, j++) {
+    for (i = 0, j = 0; i < size; i += 4, j++) {
         if (bitmap[j] != 0) {
             data[i] = 255;
             data[i+1] = 255;
@@ -75,57 +80,61 @@ uint8 *Graphic::FreetypeFont::_returnRGBA(uint8* bitmap, int size) {
     return data;
 }
 
+Graphic::Texture *Graphic::FreetypeFont::getStringTexture(std::string &str) {
+    Graphic::Texture *tex = new Texture();
+    
+    tex->setData(getStringWidth(str), getStringHeight(str), stringData(str));
+    return tex;
+}
+
+
 uint8 *Graphic::FreetypeFont::stringData(std::string &str) const {
     int max_x = 0;
-    int max_y = 0;
+    int y_max = 0;
+    int y_min = 0;
     int esc = 0;
     char c;
-    std::vector<int> save;
     for (int i = 0; str[i] != '\0'; ++i) {
         c = str[i];
-        save.push_back(0);
-        
         max_x += _width[c];
-        if (str[i+1])
-            esc += _escapement[c];
-        if (_height[c] > max_y) {
-            max_y = _height[c];
+        if (i != 0)
+            esc += _escapement_left[c];
+        if (_escapement_top[c] > y_max) {
+            y_max = _escapement_top[c];
+        }
+        if ((_height[c] - _escapement_top[c]) > y_min) {
+            y_min = _height[c] - _escapement_top[c];
         }
     }
     
+    int max_y = y_max + y_min;
+    int origin_y = y_max;
     uint8 *data = new uint8[(max_x + esc) * max_y * 4];
+    int save_x = 0;
     int xx = 0;
-    int char_n = 0;
-    c = str[char_n];
-    int max_save = _width[c] * _height[c] * 4;
-    for (int i = 0; i < (max_x + esc) * max_y * 4; i += 4, ++xx) {
-        if (xx >= _width[c]) {
+    int yy = 0;
+    for (int ch = 0; str[ch] != '\0'; ++ch) {
+        c = str[ch];
+        std::cout << c << " " << _width[c] << " " << _escapement_left[c] << std::endl;
+        if (ch > 0 && str[ch-1] != ' ') {
+            save_x += xx + (_escapement_left[c]*4);
+        }
+        yy = 0;
+        for (int y = (origin_y - _escapement_top[c]); y <= (origin_y - _escapement_top[c] + _height[c]); ++y) {
             xx = 0;
-            
-            //for (int w = 0; w < (_escapement[c] * max_y); ++w) {
-                //data[i + w] = 0;
-            //}
-            
-            
-            
-            char_n += 1;
-            if (char_n == str.size()) {
-                char_n = 0;
-            } else {
-                i += (_escapement[c]*4);
+            for (int x = save_x; x < (save_x + (_width[c] * 4)); ++x) {
+                if (yy < _height[c]) {
+                    data[(y * (max_x + esc) * 4) + x] = _character_tab[c][(yy * _width[c] * 4) + xx];
+                } else {
+                    data[(y * (max_x + esc) * 4) + x] = 0;
+                }
+                xx++;
             }
-            c = str[char_n];
-            max_save = _width[c] * _height[c] * 4;
+            yy++;
         }
-        for (int k = 0; k < 4; ++k) {
-            if (save[char_n] < max_save) {
-                data[i + k] = _character_tab[c][save[char_n] + k];
-            } else {
-                data[i + k] = 0;
-            }
-        }
-        save[char_n] += 4;
+        yy = 0;
     }
+    
     return data;
 }
 
@@ -133,11 +142,12 @@ int     Graphic::FreetypeFont::getStringWidth(const std::string &str) {
     int save;
     
     save = 0;
-    for (int i = 0; i < str.size(); ++i) {
-        if (str[i+1])
-            save += _width[str[i]] + _escapement[str[i]];
-        else
+    for (int i = 0; str[i] != '\0'; ++i) {
+        if (i != 0) {
+            save += _width[str[i]] + _escapement_left[str[i]];
+        } else  {
             save += _width[str[i]];
+        }
     }
     return save;
 }
@@ -151,7 +161,7 @@ int     Graphic::FreetypeFont::getStringHeight(const std::string &str) {
             save = _height[str[i]];
         }
     }
-    return save;
+    return save*2;
 }
 
 

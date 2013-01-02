@@ -47,7 +47,7 @@ public:
          */
         while (!_close) {
             // Process events
-            //Event::Manager::getInstance().processEvents();
+            Event::Manager::getInstance().processEvents();
             
             // Render
             Graphic::Renderer::getInstance().render();
