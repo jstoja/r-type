@@ -2,12 +2,6 @@
 #include <string>
 #include <exception>
 #include <stdexcept>
-#include <ft2build.h>
-#include FT_FREETYPE_H
-//#include <freetype/freetype.h>
-#include <freetype/ftglyph.h>
-//#include <freetype/ftoutln.h>
-//#include <freetype/fttrigon.h>
 
 #include "Types.h"
 #include "Font.h"
@@ -17,16 +11,14 @@ Graphic::FreetypeFont::FreetypeFont(const std::string &font_path, uint8 size) {
     _font_path = font_path;
     
     int         error;
-    FT_Library  library;
     
-    error = FT_Init_FreeType(&library);
+    error = FT_Init_FreeType(&_library);
     if (error) {
         std::cerr << "error init library" << std::endl;
         throw std::runtime_error("An error occurred during Freetype library initialization.");
     }
     
-    FT_Face face;
-    error = FT_New_Face(library, font_path.c_str(), 0, &face);
+    error = FT_New_Face(_library, font_path.c_str(), 0, &_face);
     if ( error == FT_Err_Unknown_File_Format ) {
         std::cerr << "error file format" << std::endl;
         throw std::runtime_error("The font file could be opened and read, but it appears that its font format is unsupported.");
@@ -34,16 +26,16 @@ Graphic::FreetypeFont::FreetypeFont(const std::string &font_path, uint8 size) {
         std::cerr << "error loading file" << std::endl;
         throw std::runtime_error("The font file could not be opened or read, or simply that it is broken.");
     }
-    FT_Set_Char_Size( face, 0, size * 64, 300, 300);
+    FT_Set_Char_Size(_face, 0, size * 64, 300, 300);
     
     FT_GlyphSlot slot;
     for(unsigned char ch = 0; ch < 128; ch++) {
-        error = FT_Load_Char(face, ch, FT_LOAD_RENDER);
+        error = FT_Load_Glyph(_face, FT_Get_Char_Index(_face, ch), FT_LOAD_RENDER);
         if (error) {
             std::cerr << "error loading glyph" << std::endl;
             throw std::runtime_error("FT_Load_Glyph failed");
         }
-        slot = face->glyph;
+        slot = _face->glyph;
 
         _width.push_back(slot->bitmap.width);
         _height.push_back(slot->bitmap.rows);
@@ -54,10 +46,17 @@ Graphic::FreetypeFont::FreetypeFont(const std::string &font_path, uint8 size) {
         _escapement_top.push_back(slot->bitmap_top);
         _character_tab.push_back(_returnRGBA(slot->bitmap.buffer, slot->bitmap.width * slot->bitmap.rows * 4));
     }
-    
-    FT_Done_Face(face);
-    FT_Done_FreeType(library);
+
 }
+
+Graphic::FreetypeFont::~FreetypeFont(void) {
+    for(unsigned char ch = 0; ch < 128; ch++) {
+        delete[] _character_tab[ch];
+    }
+    FT_Done_Face(_face);
+    FT_Done_FreeType(_library);
+}
+
 
 uint8 *Graphic::FreetypeFont::_returnRGBA(uint8* bitmap, int size) {
     uint8 *data = new uint8[size];
@@ -114,7 +113,6 @@ uint8 *Graphic::FreetypeFont::stringData(std::string &str) const {
     int yy = 0;
     for (int ch = 0; str[ch] != '\0'; ++ch) {
         c = str[ch];
-        std::cout << c << " " << _width[c] << " " << _escapement_left[c] << std::endl;
         if (ch > 0 && str[ch-1] != ' ') {
             save_x += xx + (_escapement_left[c]*4);
         }
