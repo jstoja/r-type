@@ -40,10 +40,10 @@ Graphic::FreetypeFont::FreetypeFont(const std::string &font_path, uint8 size) {
         _width.push_back(slot->bitmap.width);
         _height.push_back(slot->bitmap.rows);
         if (ch != ' ')
-            _escapement_left.push_back(slot->bitmap_left);
+            _bearing_left.push_back(slot->bitmap_left);
         else
-            _escapement_left.push_back(slot->advance.x/64);
-        _escapement_top.push_back(slot->bitmap_top);
+            _bearing_left.push_back(slot->advance.x/64);
+        _bearing_top.push_back(slot->bitmap_top);
         _character_tab.push_back(_returnRGBA(slot->bitmap.buffer, slot->bitmap.width * slot->bitmap.rows * 4));
     }
 
@@ -95,41 +95,41 @@ uint8 *Graphic::FreetypeFont::stringData(std::string &str) const {
     for (int i = 0; str[i] != '\0'; ++i) {
         c = str[i];
         max_x += _width[c];
-        if (i != 0)
-            esc += _escapement_left[c];
-        if (_escapement_top[c] > y_max) {
-            y_max = _escapement_top[c];
+        if (i != 0) {
+            esc += _bearing_left[c];
         }
-        if ((_height[c] - _escapement_top[c]) > y_min) {
-            y_min = _height[c] - _escapement_top[c];
+        if (_bearing_top[c] > y_max) {
+            y_max = _bearing_top[c];
+        }
+        if ((_height[c] - _bearing_top[c]) > y_min) {
+            y_min = _height[c] - _bearing_top[c];
         }
     }
-    
+
+    int max_line_width = (max_x + esc) * 4;
     int max_y = y_max + y_min;
-    int origin_y = y_max;
-    uint8 *data = new uint8[(max_x + esc) * max_y * 4];
+
+    uint8 *data = new uint8[max_line_width * max_y];
     int save_x = 0;
-    int xx = 0;
-    int yy = 0;
-    for (int ch = 0; str[ch] != '\0'; ++ch) {
-        c = str[ch];
-        if (ch > 0 && str[ch-1] != ' ') {
-            save_x += xx + (_escapement_left[c]*4);
+    int y_char = 0;
+    int line_width = 0;
+    // Iterate over all the chars in the string to add then in the new texture (a RGBA Bitmap)
+    for (int ci = 0; str[ci] != '\0'; ++ci) {
+        c = str[ci];
+        if (ci > 0 && str[ci-1] != ' ') {
+            save_x += line_width + (_bearing_left[c] * 4);
         }
-        yy = 0;
-        for (int y = (origin_y - _escapement_top[c]); y <= (origin_y - _escapement_top[c] + _height[c]); ++y) {
-            xx = 0;
-            for (int x = save_x; x < (save_x + (_width[c] * 4)); ++x) {
-                if (yy < _height[c]) {
-                    data[(y * (max_x + esc) * 4) + x] = _character_tab[c][(yy * _width[c] * 4) + xx];
-                } else {
-                    data[(y * (max_x + esc) * 4) + x] = 0;
-                }
-                xx++;
+        // Iterate over all the lines of one char an copy the line in the Texture
+        for (int y = (y_max - _bearing_top[c]), y_char = 0; y < (y_max - _bearing_top[c] + _height[c]); ++y, ++y_char) {
+            line_width = _width[c] * 4;
+            if (y_char < _height[c]) {
+                memcpy(data + ((y * max_line_width) + save_x),
+                       _character_tab[c] + ((y_char * line_width)),
+                       line_width);
+            } else {
+                memset(data + ((y * max_line_width) + save_x), 0, line_width);
             }
-            yy++;
         }
-        yy = 0;
     }
     return data;
 }
@@ -140,7 +140,7 @@ int     Graphic::FreetypeFont::getStringWidth(const std::string &str) {
     save = 0;
     for (int i = 0; str[i] != '\0'; ++i) {
         if (i != 0) {
-            save += _width[str[i]] + _escapement_left[str[i]];
+            save += _width[str[i]] + _bearing_left[str[i]];
         } else  {
             save += _width[str[i]];
         }

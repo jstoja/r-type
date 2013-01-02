@@ -41,8 +41,8 @@ namespace Graphic {
             std::vector<uint8*>     _character_tab;
             std::vector<int>        _width;
             std::vector<int>        _height;
-            std::vector<int>        _escapement_left;
-            std::vector<int>        _escapement_top;
+            std::vector<int>        _bearing_left;
+            std::vector<int>        _bearing_top;
     };
 }
 
