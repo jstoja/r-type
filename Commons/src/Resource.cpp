@@ -11,13 +11,14 @@
 #include "UUIDGenerator.h"
 #include "Resource.h"
 #include "Application.h"
+#include "Exception.h"
 
 Resource::Resource() : Object() {
 }
 
 Resource::Resource(std::string const& name) : Object() {
     _name = name;
-    readFile();
+    _readFile();
 }
 
 Resource::~Resource() {
@@ -49,23 +50,24 @@ bool	Resource::operator==(Resource const& cmp) {
 }
 
 ByteArray const& Resource::getFile() const {
-    return _file;
+    return _data;
 }
 
 void Resource::setArray(ByteArray const& cpy) {
-    _file = cpy;
+    _data = cpy;
 }
 
-void	Resource::readFile() {
-    std::ifstream	ifs(_name.c_str(), std::ios::binary);
-    char*		buffer;
-    uint32		fileSize;
+void	Resource::_readFile() {
+    std::ifstream   ifs(_name.c_str(), std::ios::binary);
+    uint32          fileSize;
 
+    if (!ifs.is_open()) {
+        throw new Exception::Exception("Cannot open resource file: " + _name);
+    }
     ifs.seekg(0, std::ios::end);
     fileSize = (uint32)ifs.tellg();
     ifs.seekg(0, std::ios::beg);
-    buffer = new char[fileSize];
-    ifs.read(buffer, fileSize);
+    _data.resize(fileSize);
+    ifs.read((char*)_data, fileSize);
     ifs.close();
-    _file.bufcopy(buffer, fileSize);
 }

@@ -6,8 +6,8 @@
 # include <vector>
 # include "Types.h"
 
-class	ByteArray {
-  public:
+class ByteArray {
+    public:
         //! Constructor
         ByteArray();
     
@@ -57,7 +57,11 @@ class	ByteArray {
         //! Get char buffer
         char*       getCharBuffer() const;
     
-        operator    char*();
+        // Return pointer to buffer data
+        operator char*();
+    
+        operator const char*() const;
+    
         void        resize(uint32);
     
         void		debug() const;

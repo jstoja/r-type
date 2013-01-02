@@ -58,6 +58,10 @@ ByteArray::operator char*() {
   return (char*)&_buffer[0];
 }
 
+ByteArray::operator const char*() const {
+    return (const char*)&_buffer[0];
+}
+
 std::vector<char>	ByteArray::getBuffer() const {
   return _buffer;
 }
