@@ -16,12 +16,12 @@ Application::~Application() {
 }
 
 void Application::concatPath() {
-    _resourcesPath = _av[0];
 # if defined OS_WINDOWS
     // ajouter la fonction pour gerer ca sous windaube
 # else
-    _resourcesPath = _resourcesPath.substr(0, _resourcesPath.find_last_of('/'));
-    _resourcesPath += "/";
+    _binaryPath = _av[0];
+    _binaryPath = _binaryPath.substr(0, _binaryPath.find_last_of('/'));
+    _binaryPath += '/';
 # endif
 
 }
@@ -32,6 +32,10 @@ void Application::init(char **av, int32 ac) {
     concatPath();
 }
 
-std::string const& Application::getResourcesPath() const {
-    return _resourcesPath;
+std::string Application::getResourcesPath() const {
+    return _binaryPath + _resourcesPath;
+}
+
+void Application::setRelativeResourcesPath(std::string const& path) {
+    _resourcesPath = path;
 }

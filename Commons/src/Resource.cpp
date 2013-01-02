@@ -12,21 +12,19 @@
 #include "Resource.h"
 #include "Application.h"
 
-Resource::Resource() {
+Resource::Resource() : Object() {
 }
 
-Resource::Resource(std::string const& name) {  
+Resource::Resource(std::string const& name) : Object() {
     _name = name;
-    _id = UUIDGenerator::getInstance().getUUID();
     readFile();
 }
 
 Resource::~Resource() {
 }
 
-Resource::Resource(Resource const& cpy) {
+Resource::Resource(Resource const& cpy) : Object(cpy.getId()) {
     setName(cpy.getName());
-    _id = cpy.getId();
     setArray(cpy.getFile());
 }
 
@@ -40,7 +38,7 @@ void	Resource::setName(std::string const& name) {
 
 Resource&	Resource::operator=(Resource const& cpy) {
     setName(cpy.getName());
-    _id = cpy.getId();
+    setId(cpy.getId());
     return *this;
 }
 
@@ -48,10 +46,6 @@ bool	Resource::operator==(Resource const& cmp) {
     if (getId() == cmp.getId())
         return true;
     return false;
-}
-
-uint32 Resource::getId() const {
-    return _id;
 }
 
 ByteArray const& Resource::getFile() const {

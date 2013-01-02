@@ -13,9 +13,11 @@
 # include <iostream>
 # include "Types.h"
 # include "ByteArray.h"
+# include "Object.h"
 
-class Resource {
+class Resource : public Object {
     public:
+    
         //! Constructor
         Resource();
 
@@ -43,9 +45,6 @@ class Resource {
         //! File getter
         ByteArray const&	getFile() const;
 
-        //! ID getter
-        uint32 getId() const;
-
     private:
         //! Read file and put in into a ByteArray
         void	readFile();
@@ -54,7 +53,6 @@ class Resource {
         void	setArray(ByteArray const&);
 
         ByteArray	_file;
-        uint32		_id;
         std::string	_name;
 };
 

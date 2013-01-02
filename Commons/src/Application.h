@@ -29,7 +29,10 @@ class Application : public Singleton<Application> {
         void init(char **, int32);
 
         //! Get the resources path
-        std::string const&	getResourcesPath() const;
+        std::string getResourcesPath() const;
+    
+        // Set the resources path, relative to the binary
+        void        setRelativeResourcesPath(std::string const& path);
 
         //! Contact path for resources
         void	concatPath();
@@ -37,6 +40,7 @@ class Application : public Singleton<Application> {
     private:
         char**		_av;
         int32		_ac;
+        std::string	_binaryPath;
         std::string	_resourcesPath;
 };
 

@@ -28,7 +28,7 @@ public:
         Graphic::Renderer::getInstance().init();
         Graphic::Renderer::getInstance().setScene(&_scene);
     
-		Graphic::FreetypeFont font("/Library/Fonts/Marion.ttc", 18);
+		Graphic::FreetypeFont font1("/Library/Fonts/marion.ttc", 14);
 
 		std::string str = "nik ta race";
 		Graphic::Texture *texture = font.getStringTexture(str);
