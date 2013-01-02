@@ -28,29 +28,20 @@ public:
         Graphic::Renderer::getInstance().init();
         Graphic::Renderer::getInstance().setScene(&_scene);
     
-		Graphic::FreetypeFont font("/Library/Fonts/Marion.ttc", 14);
-		Graphic::FreetypeFont font("/Library/Fonts/marion.ttc", 14);
+		Graphic::FreetypeFont font("/Library/Fonts/Marion.ttc", 18);
 
-		Graphic::Texture texture;
-		//texture.setData(font.getWidth('b'), font.getHeight('b'), font.letterData('b'));
-		
-		//std::string str("a");
-		//texture.setData(font.getWidth('a'), font.getHeight('a'), font.stringData(str));
-		
-		std::string str("a bd");
-		std::cout << font.getStringWidth(str) << std::endl;
-		std::cout << font.getStringHeight(str) << std::endl;
-		texture.setData(font.getStringWidth(str), font.getStringHeight(str), font.stringData(str));
+		std::string str = "nik ta race";
+		Graphic::Texture *texture = font.getStringTexture(str);
 		
 		Graphic::Sprite sprite;
-		sprite.setTexture(&texture);
+		sprite.setTexture(texture);
 
 		Graphic::Element elem;
 		sprite.addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.0), Vec2(1.0,  1.0)));
 		elem.setSprite(&sprite);
 		elem.setCurrentFrame(0);
 		elem.setPosition(Vec2(8, 4));
-		elem.setSize(Vec2(1, 1));
+		elem.setSize(Vec2(str.size()-1, 1.0));
         _scene.addElement(&elem);
     	while (!_close) {
             Graphic::Renderer::getInstance().render();
