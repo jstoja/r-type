@@ -34,7 +34,6 @@ Graphic::FreetypeFont::FreetypeFont(const std::string &font_path, uint8 size) {
         std::cerr << "error loading file" << std::endl;
         throw std::runtime_error("The font file could not be opened or read, or simply that it is broken.");
     }
-    
     FT_Set_Char_Size( face, 0, size * 64, 300, 300);
     
     FT_GlyphSlot slot;
@@ -134,7 +133,6 @@ uint8 *Graphic::FreetypeFont::stringData(std::string &str) const {
         }
         yy = 0;
     }
-    
     return data;
 }
 

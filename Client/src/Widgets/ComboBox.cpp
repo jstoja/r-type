@@ -82,10 +82,9 @@ void    Widget::ComboBox::push(std::string const& name,
                                Event::IListenerDelegate *delegate) {
     CheckBox    *check = new CheckBox(Vec2(1,1), pos);
     Label       *text = new Label(name);
-
-    check->init();
     text->setPosition(Vec2(pos.x + 1, pos.y));
     text->init();
+    check->init();
     push(check, text, delegate);
 }
 

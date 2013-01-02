@@ -59,7 +59,7 @@ namespace   Widget {
         
         void    draw() {}
     private:
-        Graphic::FreetypeFont   _font;
+        static Graphic::FreetypeFont   *_font;
         sf::Image               _image;
         std::string             _text;
     };
