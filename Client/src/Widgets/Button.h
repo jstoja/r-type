@@ -29,9 +29,6 @@ namespace Widget {
             //! Create the Button
             Button(void);
         
-            //! Create the Button with the specified Object id
-            Button(uint32 id);
-        
             //! Destruct the Button
             ~Button(void);
         

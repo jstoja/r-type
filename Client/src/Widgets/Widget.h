@@ -20,15 +20,12 @@ class Vec2;
 
 namespace Widget {
     
-    class Widget : public Object {
+    class Widget {
 
         public:
             //! Constructor
             Widget(Widget *parent = NULL);
-            
-            //! Constructor with id
-            Widget(uint32);
-            
+
             //! Destructor
             virtual ~Widget();
             

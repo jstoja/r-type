@@ -14,9 +14,6 @@ Widget::Widget::Widget(Widget* parent) {
     _parent = parent;
 }
 
-Widget::Widget::Widget(uint32 id) : Object(id) {
-}
-
 Widget::Widget::~Widget() {
 }
 
