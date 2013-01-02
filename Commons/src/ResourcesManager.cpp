@@ -16,20 +16,20 @@ ResourcesManager::ResourcesManager() {
 ResourcesManager::~ResourcesManager() {
 }
 
-void ResourcesManager::addResource(Resource *resource) {
-    _resourcesName[resource->getName()] = resource;
-    _resourcesId[resource->getId()] = resource;
-}
-
 void ResourcesManager::removeResource(std::string const& name) {
     Resource *item = getResource(name);
     if (item != NULL) {
         _resourcesId.erase(item->getId());
         _resourcesName.erase(item->getName());
+		delete item;
     }
 }
 
 Resource* ResourcesManager::loadResource(std::string const& name) {
+    std::map<std::string, Resource*>::iterator it;
+
+    if ((it = _resourcesName.find(name)) != _resourcesName.end())
+      return it->second;
     Resource *res = new Resource(name);
     
     _resourcesName[name] = res;

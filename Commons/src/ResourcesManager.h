@@ -18,20 +18,17 @@ class Resource;
 
 class ResourcesManager : public Singleton<ResourcesManager> {
     friend class Singleton<ResourcesManager>;
-    
+
     public:
         //! Destructor
         ~ResourcesManager();
     
-        //! Add resource in map
-        void addResource(Resource *);
-
         //! Load a resource and return a pointer to it
         Resource* loadResource(std::string const&);
-    
+
         //! Remove resource from map
         void removeResource(std::string const&);
-    
+
         //! Get a resource by name
         Resource*	getResource(std::string const&);
 

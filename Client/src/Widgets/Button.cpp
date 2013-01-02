@@ -13,10 +13,6 @@ Widget::Button::Button(void) :
     
 }
 
-Widget::Button::Button(uint32 id) :
-    Widget(id) {
-}
-
 Widget::Button::~Button() {
 }
 
