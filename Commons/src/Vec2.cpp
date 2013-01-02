@@ -46,3 +46,7 @@ Vec2 Vec2::operator*(float32 v) const{
 std::ostream& operator<<(std::ostream& stream, Vec2 const& v) {
     return stream << "(" << v.x << ", " << v.y << ")";
 }
+
+bool    Vec2::operator==(Vec2 const& v) const {
+    return (x == v.x && y == v.y);
+}

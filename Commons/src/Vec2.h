@@ -26,6 +26,8 @@ struct Vec2 {
     Vec2 operator/(float32 v2) const;
     Vec2 operator*(float32 v2) const;
     
+    bool operator==(Vec2 const& v2) const;
+    
     float32 x;
     float32 y;
 };
