@@ -28,7 +28,7 @@ public:
         Graphic::Renderer::getInstance().init();
         Graphic::Renderer::getInstance().setScene(&_scene);
     
-		Graphic::FreetypeFont font("SciFly.ttf", 14);
+		Graphic::FreetypeFont font("/Library/Fonts/Marion.ttc", 14);
 
 		Graphic::Texture texture;
 		//texture.setData(font.getWidth('b'), font.getHeight('b'), font.letterData('b'));
@@ -36,7 +36,7 @@ public:
 		//std::string str("a");
 		//texture.setData(font.getWidth('a'), font.getHeight('a'), font.stringData(str));
 		
-		std::string str("abd");
+		std::string str("a bd");
 		std::cout << font.getStringWidth(str) << std::endl;
 		std::cout << font.getStringHeight(str) << std::endl;
 		texture.setData(font.getStringWidth(str), font.getStringHeight(str), font.stringData(str));
@@ -48,7 +48,7 @@ public:
 		sprite.addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.0), Vec2(1.0,  1.0)));
 		elem.setSprite(&sprite);
 		elem.setCurrentFrame(0);
-		elem.setPosition(Vec2(1, 1));
+		elem.setPosition(Vec2(8, 4));
 		elem.setSize(Vec2(1, 1));
         _scene.addElement(&elem);
     	while (!_close) {

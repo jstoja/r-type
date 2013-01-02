@@ -31,6 +31,7 @@ namespace Graphic {
             std::vector<uint8*>     _character_tab;
             std::vector<int>        _width;
             std::vector<int>        _height;
+            std::vector<int>        _escapement;
     };
 }
 
