@@ -24,13 +24,16 @@
 Graphic::FreetypeFont   *Widget::Label::_font = NULL;
 
 Widget::Label::Label() : Widget() {
-    if (_font == NULL)
-        _font = new Graphic::FreetypeFont("/Library/Fonts/marion.ttc", 9);
+    if (_font == NULL) {
+        _font = new Graphic::FreetypeFont();
+        _font->init("/Library/Fonts/Marion.ttc", 9);
+	}
 }
 
 Widget::Label::Label(std::string const& text) : Widget(), _text(text) {
     if (_font == NULL)
-        _font = new Graphic::FreetypeFont("/Library/Fonts/marion.ttc", 9);
+        _font = new Graphic::FreetypeFont();
+        _font->init("/Library/Fonts/Marion.ttc", 9);
 }
 
 Widget::Label::~Label() {

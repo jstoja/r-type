@@ -6,7 +6,11 @@
 #include "Types.h"
 #include "Font.h"
 
-Graphic::FreetypeFont::FreetypeFont(const std::string &font_path, uint8 size) {
+Graphic::FreetypeFont::FreetypeFont()
+: _font_path("/Library/Fonts/Marion.ttc"), _font_size(14) {
+}
+
+void Graphic::FreetypeFont::init(const std::string &font_path, uint8 size) {
     _font_size = size;
     _font_path = font_path;
     
@@ -36,7 +40,7 @@ Graphic::FreetypeFont::FreetypeFont(const std::string &font_path, uint8 size) {
             throw std::runtime_error("FT_Load_Glyph failed");
         }
         slot = _face->glyph;
-
+        
         _width.push_back(slot->bitmap.width);
         _height.push_back(slot->bitmap.rows);
         if (ch != ' ')
@@ -46,7 +50,6 @@ Graphic::FreetypeFont::FreetypeFont(const std::string &font_path, uint8 size) {
         _bearing_top.push_back(slot->bitmap_top);
         _character_tab.push_back(_returnRGBA(slot->bitmap.buffer, slot->bitmap.width * slot->bitmap.rows * 4));
     }
-
 }
 
 Graphic::FreetypeFont::~FreetypeFont(void) {

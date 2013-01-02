@@ -16,8 +16,9 @@
 namespace Graphic {
     class FreetypeFont {
         public:
-            //FreetypeFont();
-            FreetypeFont(const std::string &font_path, uint8 size);
+            FreetypeFont();
+
+            void init(const std::string &font_path, uint8 size);
         
             ~FreetypeFont();
         
