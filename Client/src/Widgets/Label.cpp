@@ -31,6 +31,7 @@ Widget::Label::Label(Widget* parent) : Widget(parent) {
 }
 
 Widget::Label::Label(std::string const& text, Widget* parent) : Widget(parent), _text(text) {
+    _element.setSize(Vec2(_text.size() - 1, 1.0));
     if (_font == NULL)
         _font = new Graphic::FreetypeFont();
         _font->init("/Library/Fonts/Marion.ttc", 9);
@@ -45,6 +46,7 @@ std::string const&  Widget::Label::getText() const {
 
 void    Widget::Label::setText(std::string const& text) {
     _text = text;
+    _element.setSize(Vec2(_text.size() - 1, 1.0));
     update();
 }
 

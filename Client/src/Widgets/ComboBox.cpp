@@ -87,7 +87,8 @@ void    Widget::ComboBox::push(std::string const& name,
                                Event::IListenerDelegate *delegate) {
     CheckBox    *check = new CheckBox(Vec2(1,1), pos);
     Label       *text = new Label(name);
-    text->setPosition(Vec2(pos.x + name.length() / 2, pos.y));
+    Vec2        size = text->getElementSize();
+    text->setPosition(Vec2(pos.x + size.x / 2 + 1, pos.y));
     text->init();
     check->init();
     push(check, text, delegate);
@@ -101,4 +102,11 @@ void    Widget::ComboBox::updateEvent(Event::Event const& event) {
             (*it)->first->setChecked(false);
         (*it)->first->update();
     }
+}
+
+void    Widget::ComboBox::uncheck() {
+    std::vector<std::pair<CheckBox*, Label*>* >::iterator it;
+    
+    for (it = _items.begin(); it != _items.end(); ++it)
+        (*it)->first->setChecked(false);
 }

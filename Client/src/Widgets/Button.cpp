@@ -13,6 +13,16 @@ Widget::Button::Button(Widget* parent) :
     
 }
 
+Widget::Button::Button(Vec2 const& size,
+                       Vec2 const& position,
+                       std::string const& image,
+                       Widget* parent) :
+    Widget(parent) {
+    setPosition(position);
+    setSize(size);
+    loadImage(image);
+}
+
 Widget::Button::~Button() {
 }
 

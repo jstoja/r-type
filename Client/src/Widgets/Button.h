@@ -29,6 +29,12 @@ namespace Widget {
             //! Create the Button
             Button(Widget* parent = NULL);
         
+            //! Create a button with position/size and image
+            Button(Vec2 const&,
+                   Vec2 const&,
+                   std::string const&,
+                   Widget* parent = NULL);
+        
             //! Destruct the Button
             ~Button(void);
         

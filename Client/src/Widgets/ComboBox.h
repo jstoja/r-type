@@ -65,6 +65,7 @@ namespace Widget {
         
         void    updateEvent(Event::Event const&);
         
+        void    uncheck();
     private:
         std::vector<std::pair<CheckBox* ,Label*>* >    _items;
     };

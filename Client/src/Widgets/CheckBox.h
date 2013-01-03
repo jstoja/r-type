@@ -23,6 +23,7 @@ namespace Widget {
         //! Constructor
         CheckBox(Vec2 const&,
                  Vec2 const&,
+                 std::string const& = std::string("checkbox.png"),
                  bool checked = false,
                  Widget* parent = NULL);
         
@@ -46,8 +47,9 @@ namespace Widget {
         
         void    init();
     private:
-        bool    _checked;
-        Button  _button;
+        std::string         _imagePath;
+        bool                _checked;
+        Button              _button;
     };
 };
 

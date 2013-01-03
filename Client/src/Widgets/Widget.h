@@ -34,7 +34,10 @@ namespace Widget {
             
             //! Get Widget size
             Vec2 const&         getSize() const;
-            
+        
+            //! Get element size
+            Vec2 const&         getElementSize() const;
+        
             //! Set Widget position
             virtual void        setPosition(Vec2 const&);
             

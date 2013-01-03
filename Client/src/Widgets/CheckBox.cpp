@@ -12,6 +12,7 @@
 
 Widget::CheckBox::CheckBox(bool checked, Widget* parent) : Widget(parent),
     _checked(checked), _button() {
+    _imagePath = std::string("checkbox.png");
 }
 
 Widget::CheckBox::~CheckBox() {
@@ -19,8 +20,10 @@ Widget::CheckBox::~CheckBox() {
 
 Widget::CheckBox::CheckBox(Vec2 const& size,
                            Vec2 const& position,
+                           std::string const& image,
                            bool checked,
                            Widget* parent) :  Widget(parent),
+                                            _imagePath(image),
                                             _checked(checked),
                                             _button() {
     setSize(size);
@@ -28,7 +31,7 @@ Widget::CheckBox::CheckBox(Vec2 const& size,
 }
 
 void    Widget::CheckBox::init() {
-    _button.loadImage("checkbox.png");
+    _button.loadImage(_imagePath.c_str());
     _element = *_button.getElement();
     _element.getSprite()->addFrame(Graphic::Sprite::Frame(Vec2(0,0.5),
                                                           Vec2(1,1)));

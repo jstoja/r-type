@@ -43,6 +43,10 @@ Vec2 const&   Widget::Widget::getPosition() const {
     return _position;
 }
 
+Vec2 const&     Widget::Widget::getElementSize() const {
+    return _element.getSize();
+}
+
 Graphic::Element *Widget::Widget::getElement() {
     return &_element;
 }
