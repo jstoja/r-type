@@ -18,10 +18,13 @@ namespace Widget {
     class CheckBox : public Widget {
     public:
         //! Constructor
-        CheckBox(bool checked = false);
+        CheckBox(bool checked = false, Widget* parent = NULL);
         
         //! Constructor
-        CheckBox(Vec2 const&, Vec2 const&, bool checked = false);
+        CheckBox(Vec2 const&,
+                 Vec2 const&,
+                 bool checked = false,
+                 Widget* parent = NULL);
         
         //! Destructor
         ~CheckBox();

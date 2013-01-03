@@ -29,16 +29,19 @@ namespace Widget {
     class ComboBox : public Widget {
     public:
         //! Constructor
-        ComboBox();
+        ComboBox(Widget* parent = NULL);
         
         //! Constructor with vector of Label / CheckBox
         ComboBox(std::vector<Label*>&,
                  std::vector<CheckBox*>&,
-                 Event::IListenerDelegate *);
+                 Event::IListenerDelegate *,
+                 Widget* parent = NULL);
         
         //! Constructor with a vector of pair
-        ComboBox(std::vector<std::pair<CheckBox*, Label*>* >&,
-                 Event::IListenerDelegate *);
+        ComboBox(std::vector<std::pair<CheckBox*,
+                 Label*>* >&,
+                 Event::IListenerDelegate *,
+                 Widget* parent = NULL);
         
         //! Destructor
         ~ComboBox();

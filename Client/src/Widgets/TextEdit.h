@@ -21,13 +21,13 @@ namespace Widget {
     class TextEdit : public Widget {
     public:
         //! Constructor
-        TextEdit();
+        TextEdit(Widget* parent = NULL);
         
         //! Destructor
         ~TextEdit();
         
         //! Constructor with text
-        TextEdit(std::string const&);
+        TextEdit(std::string const&, Widget* parent = NULL);
         
         //! Getter text
         std::string const&   getText() const;

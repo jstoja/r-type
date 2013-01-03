@@ -8,8 +8,8 @@
 #include "../Graphic/Sprite.h"
 #include "Button.h"
 
-Widget::Button::Button(void) :
-    Widget() {
+Widget::Button::Button(Widget* parent) :
+    Widget(parent) {
     
 }
 
@@ -24,11 +24,6 @@ uint32  Widget::Button::setManualFrame(const Graphic::Sprite::Frame &frame) {
     _element.getSprite()->addFrame(frame);
     return 0;
 }
-
-/*Graphic::Element *Widget::Button::getElement() {
-    return &_element;
-}*/
-
 
 void    Widget::Button::setCurrentFrame(uint32 nb) {
     _element.setCurrentFrame(nb);

@@ -16,7 +16,7 @@
 # include "OS.h"
 # include "Graphic/Element.h"
 
-class Vec2;
+struct Vec2;
 
 namespace Widget {
     
@@ -27,7 +27,7 @@ namespace Widget {
             Widget(Widget *parent = NULL);
 
             //! Destructor
-            virtual ~Widget();
+                virtual ~Widget();
             
             //! Pos getter
             Vec2 const&         getPosition() const;
@@ -58,7 +58,10 @@ namespace Widget {
         
             //! Load image of the Element with the image specified in the image_path parameter
             bool                loadImage(const std::string &image_path);
-        protected:
+        
+            //! Parent widget getter
+            Widget* getParent() const;
+    protected:
             Widget*             _parent;
             Graphic::Element    _element;
             Vec2                _size;

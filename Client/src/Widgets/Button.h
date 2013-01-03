@@ -27,7 +27,7 @@ namespace Widget {
             };
         
             //! Create the Button
-            Button(void);
+            Button(Widget* parent = NULL);
         
             //! Destruct the Button
             ~Button(void);

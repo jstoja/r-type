@@ -42,11 +42,11 @@ public:
         
         _comboBox = Widget::ComboBox();
         std::string text1("marseille");
-        std::string text2("marseille");
-        std::string text3("marseille");
+        std::string text2("molotov");
+        std::string text3("noob");
         _comboBox.push(text1, Vec2(6,5), this);
         _comboBox.push(text2, Vec2(6,6), this);
-//        _comboBox.push(text3, Vec2(6,7), this);
+        _comboBox.push(text3, Vec2(6,7), this);
         _comboBox.putInScene(_scene);
         while (!_close) {
             // Process events

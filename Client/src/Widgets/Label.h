@@ -30,10 +30,10 @@ namespace   Widget {
     class   Label : public Widget {
     public:
         //! Constructor
-        Label();
+        Label(Widget* parent = NULL);
         
         //! Constructor with text
-        Label(std::string const&);
+        Label(std::string const&, Widget* parent = NULL);
         
         //! Destructor
         ~Label();

@@ -69,3 +69,7 @@ bool    Widget::Widget::loadImage(const std::string &image_path) {
     
     return true;
 }
+
+Widget::Widget*  Widget::Widget::getParent() const {
+    return _parent;
+}

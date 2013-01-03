@@ -10,7 +10,7 @@
 #include "Button.h"
 #include "CheckBox.h"
 
-Widget::CheckBox::CheckBox(bool checked) : Widget(),
+Widget::CheckBox::CheckBox(bool checked, Widget* parent) : Widget(parent),
     _checked(checked), _button() {
 }
 
@@ -19,7 +19,8 @@ Widget::CheckBox::~CheckBox() {
 
 Widget::CheckBox::CheckBox(Vec2 const& size,
                            Vec2 const& position,
-                           bool checked) :  Widget(),
+                           bool checked,
+                           Widget* parent) :  Widget(parent),
                                             _checked(checked),
                                             _button() {
     setSize(size);

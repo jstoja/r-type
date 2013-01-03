@@ -13,12 +13,12 @@
 #include "Label.h"
 #include "TextEdit.h"
 
-Widget::TextEdit::TextEdit() :
-    Widget(), _event(NULL), _label() {
+Widget::TextEdit::TextEdit(Widget* parent) :
+    Widget(parent), _event(NULL), _label() {
 }
 
-Widget::TextEdit::TextEdit(std::string const& text) :
-    Widget(), _event(NULL), _label() {
+Widget::TextEdit::TextEdit(std::string const& text, Widget* parent) :
+    Widget(parent), _event(NULL), _label() {
 }
 
 Widget::TextEdit::~TextEdit() {

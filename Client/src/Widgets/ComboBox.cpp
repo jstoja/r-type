@@ -19,13 +19,15 @@
 #include "CheckBox.h"
 #include "ComboBox.h"
 
-Widget::ComboBox::ComboBox() {
+Widget::ComboBox::ComboBox(Widget* parent) : Widget(parent) {
     _items.resize(0);
 }
 
 Widget::ComboBox::ComboBox(std::vector<Label*>& labels,
                            std::vector<CheckBox*>& checks,
-                           Event::IListenerDelegate *delegate) {
+                           Event::IListenerDelegate *delegate,
+                           Widget* parent) :
+    Widget(parent) {
     if (labels.size() == checks.size()) {
         std::vector<Label*>::iterator it_label = labels.begin();
         std::vector<CheckBox*>::iterator it_check = checks.begin();
@@ -35,8 +37,11 @@ Widget::ComboBox::ComboBox(std::vector<Label*>& labels,
     }
 }
 
-Widget::ComboBox::ComboBox(std::vector<std::pair<CheckBox*, Label*>* >& v,
-                           Event::IListenerDelegate *delegate) {
+Widget::ComboBox::ComboBox(std::vector<std::pair<CheckBox*,
+                           Label*>* >& v,
+                           Event::IListenerDelegate *delegate,
+                           Widget* parent) :
+    Widget(parent) {
     for (std::vector<std::pair<CheckBox*, Label*>* >::iterator it = v.begin();
          it != v.end(); ++it)
         push((*it)->first, (*it)->second, delegate);
@@ -82,7 +87,7 @@ void    Widget::ComboBox::push(std::string const& name,
                                Event::IListenerDelegate *delegate) {
     CheckBox    *check = new CheckBox(Vec2(1,1), pos);
     Label       *text = new Label(name);
-    text->setPosition(Vec2(pos.x + 1, pos.y));
+    text->setPosition(Vec2(pos.x + name.length() / 2, pos.y));
     text->init();
     check->init();
     push(check, text, delegate);
