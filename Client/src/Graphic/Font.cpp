@@ -1,8 +1,7 @@
 #include <iostream>
 #include <string>
-#include <exception>
-#include <stdexcept>
 
+#include <Exception.h>
 #include "Types.h"
 #include "Font.h"
 
@@ -17,27 +16,22 @@ void Graphic::FreetypeFont::init(const std::string &font_path, uint8 size) {
     int         error;
     
     error = FT_Init_FreeType(&_library);
-    if (error) {
-        std::cerr << "error init library" << std::endl;
-        throw std::runtime_error("An error occurred during Freetype library initialization.");
-    }
-    
+    if (error)
+        throw new Exception("An error occurred during Freetype library initialization.");
+
     error = FT_New_Face(_library, font_path.c_str(), 0, &_face);
-    if ( error == FT_Err_Unknown_File_Format ) {
-        std::cerr << "error file format" << std::endl;
-        throw std::runtime_error("The font file could be opened and read, but it appears that its font format is unsupported.");
-    } else if (error) {
-        std::cerr << "error loading file" << std::endl;
-        throw std::runtime_error("The font file could not be opened or read, or simply that it is broken.");
-    }
+    if ( error == FT_Err_Unknown_File_Format )
+        throw new Exception("The font file could be opened and read, but it appears that its font format is unsupported.");
+    else if (error)
+//		throw new Exception("The font file \"" + font_path + "\"could not be opened or read, or simply that it is broken.");
+		throw new Exception(".");
     FT_Set_Char_Size(_face, 0, size * 64, 300, 300);
     
     FT_GlyphSlot slot;
-    for(unsigned char ch = 0; ch < 128; ch++) {
+    for (unsigned char ch = 0; ch < 128; ch++) {
         error = FT_Load_Glyph(_face, FT_Get_Char_Index(_face, ch), FT_LOAD_RENDER);
         if (error) {
-            std::cerr << "error loading glyph" << std::endl;
-            throw std::runtime_error("FT_Load_Glyph failed");
+            throw new Exception("FT_Load_Glyph failed");
         }
         slot = _face->glyph;
         
