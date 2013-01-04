@@ -40,14 +40,13 @@ public:
         Graphic::Renderer::getInstance().init();
         Graphic::Renderer::getInstance().setScene(&_scene);
         
-        _comboBox = Widget::ComboBox();
+        _comboBox = new Widget::ComboBox(&_scene);
         std::string text1("marseille");
         std::string text2("molotov");
         std::string text3("noob");
-        _comboBox.push(text1, Vec2(6,5), this);
-        _comboBox.push(text2, Vec2(6,6), this);
-        _comboBox.push(text3, Vec2(6,7), this);
-        _comboBox.putInScene(_scene);
+        _comboBox->push(text1, Vec2(6,5), this);
+        _comboBox->push(text2, Vec2(6,6), this);
+        _comboBox->push(text3, Vec2(6,7), this);
         while (!_close) {
             // Process events
             Event::Manager::getInstance().processEvents();
@@ -67,7 +66,7 @@ virtual void processEvent(Event::Event const& event) {
     } else if (event.type & Event::PointerOut) {
         std::cerr << "Pointer out " << std::endl;
     } else if (event.type & Event::PointerPushed) {
-        _comboBox.updateEvent(event);
+        _comboBox->updateEvent(event);
         std::cerr << "Pointer pushed" << std::endl;
     } else if (event.type & Event::PointerReleased) {
         std::cerr << "Pointer released" << std::endl;
@@ -77,7 +76,7 @@ virtual void processEvent(Event::Event const& event) {
 private:
     bool                _close;
     Graphic::Scene      _scene;
-    Widget::ComboBox    _comboBox;
+    Widget::ComboBox*   _comboBox;
 };
 
 int	main(int argc, char *argv[]) {

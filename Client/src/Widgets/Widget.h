@@ -18,17 +18,30 @@
 
 struct Vec2;
 
+namespace Graphic {
+    class Scene;
+};
+
 namespace Widget {
     
     class Widget {
 
         public:
             //! Constructor
-            Widget(Widget *parent = NULL);
+            Widget(Graphic::Scene*, Widget* parent = NULL);
 
             //! Destructor
-                virtual ~Widget();
-            
+            virtual ~Widget();
+        
+            //! Scene setter
+            void    setScene(Graphic::Scene*);
+        
+            //! Add element in scene
+            void    addElement();
+        
+            //! Scene getter
+            Graphic::Scene*     getScene() const;
+        
             //! Pos getter
             Vec2 const&         getPosition() const;
             
@@ -46,7 +59,7 @@ namespace Widget {
             
             //! Set focus
             virtual void        setFocus(bool);
-            
+        
             //! Get focus
             bool                hasFocus() const;
             
@@ -65,6 +78,7 @@ namespace Widget {
             //! Parent widget getter
             Widget* getParent() const;
     protected:
+            Graphic::Scene*     _scene;
             Widget*             _parent;
             Graphic::Element    _element;
             Vec2                _size;

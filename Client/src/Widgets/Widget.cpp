@@ -8,13 +8,26 @@
 
 #include <SFML/Graphics.hpp>
 #include "Vec2.h"
+#include "../Graphic/Scene.h"
 #include "Widget.h"
 
-Widget::Widget::Widget(Widget* parent) {
-    _parent = parent;
+Widget::Widget::Widget(Graphic::Scene* scene, Widget* parent)
+: _scene(scene), _parent(parent) {
 }
 
 Widget::Widget::~Widget() {
+}
+
+void    Widget::Widget::addElement() {
+    _scene->addElement(&_element);
+}
+
+void    Widget::Widget::setScene(Graphic::Scene* scene) {
+    _scene = scene;
+}
+
+Graphic::Scene*  Widget::Widget::getScene() const {
+    return _scene;
 }
 
 void    Widget::Widget::setFocus(bool focus) {

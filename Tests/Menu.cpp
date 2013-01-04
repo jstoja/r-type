@@ -29,17 +29,18 @@ public:
         Graphic::Renderer::getInstance().setScene(&_scene);
         
         
-        _comboBox = Widget::ComboBox();
-        _comboBox.push(std::string("marseille"), Vec2(6,5), this);
-        _comboBox.push(std::string("molotov"), Vec2(6,6), this);
-        _comboBox.push(std::string("noob"), Vec2(6,7), this);
-        _comboBox.putInScene(_scene);
-        _button = Widget::Button(Vec2(1,1),
-                                 Vec2(6,8),
-                                 std::string("click.png"));
-        _scene.addElement(_button.getElement());
+        _comboBox = new Widget::ComboBox(&_scene);
+        _comboBox->push(std::string("marseille"), Vec2(6,5), this);
+        _comboBox->push(std::string("molotov"), Vec2(6,6), this);
+        _comboBox->push(std::string("noob"), Vec2(6,7), this);
+        //_comboBox.putInScene(_scene);
+        _button = new Widget::Button(&_scene,
+                                     Vec2(1,1),
+                                     Vec2(6,8),
+                                     std::string("click.png"));
+        //_scene.addElement(_button.getElement());
         
-        Event::Manager::getInstance().addEventListener(new Event::Listener(Event::PointerPushed, _button.getElement()->getRect(), this));
+        Event::Manager::getInstance().addEventListener(new Event::Listener(Event::PointerPushed, _button->getElement()->getRect(), this));
         while (!_close) {
             // Process events
             Event::Manager::getInstance().processEvents();
@@ -55,16 +56,16 @@ public:
         if (event.type == Event::Close) {
             _close = true;
         }  else if (event.type & Event::PointerPushed) {
-            _comboBox.updateEvent(event);
-            if (_button.getElement()->getRect().in(event.pos)) {
-                _comboBox.uncheck();
+            _comboBox->updateEvent(event);
+            if (_button->getElement()->getRect().in(event.pos)) {
+                _comboBox->uncheck();
             }
         }
     }
     
 private:
-    Widget::ComboBox    _comboBox;
-    Widget::Button      _button;
+    Widget::ComboBox*   _comboBox;
+    Widget::Button*     _button;
     bool                _close;
     Graphic::Scene      _scene;
 };

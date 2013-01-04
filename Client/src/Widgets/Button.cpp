@@ -5,22 +5,26 @@
 //  Created by Julien Bordellier on 25/12/12.
 //
 //
+#include "../Graphic/Scene.h"
 #include "../Graphic/Sprite.h"
 #include "Button.h"
 
-Widget::Button::Button(Widget* parent) :
-    Widget(parent) {
-    
+Widget::Button::Button(Graphic::Scene* scene,
+                       Widget* parent) :
+    Widget(scene, parent) {
+    addElement();
 }
 
-Widget::Button::Button(Vec2 const& size,
+Widget::Button::Button(Graphic::Scene* scene,
+                       Vec2 const& size,
                        Vec2 const& position,
                        std::string const& image,
                        Widget* parent) :
-    Widget(parent) {
+    Widget(scene, parent) {
     setPosition(position);
     setSize(size);
     loadImage(image);
+    addElement();
 }
 
 Widget::Button::~Button() {

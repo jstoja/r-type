@@ -19,20 +19,18 @@
 class Test : public Event::IListenerDelegate {
 public:
     Test()
-    : _close(false), _scene(), _button() {
+    : _close(false), _scene() {
         
         // Setup renderer
         Graphic::Renderer::getInstance().init();
         Graphic::Renderer::getInstance().setScene(&_scene);
         
-		_button = Widget::Button();
+		_button = new Widget::Button(&_scene);
         
         // Setup scene
-        _button.setPosition(Vec2(4,4));
-        _button.setSize(Vec2(9, 3));
-        _button.loadImage("button.png");
-        
-        _scene.addElement(_button.getElement());
+        _button->setPosition(Vec2(4,4));
+        _button->setSize(Vec2(9, 3));
+        _button->loadImage("button.png");
       
         /*
         // Add event listeners
@@ -74,7 +72,7 @@ private:
     bool                _close;
     Graphic::Scene      _scene;
     //Graphic::Element    _button;
-	Widget::Button		_button;
+	Widget::Button*		_button;
 };
 
 int	main(int argc, char *argv[]) {
