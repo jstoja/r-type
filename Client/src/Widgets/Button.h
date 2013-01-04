@@ -15,6 +15,10 @@
 # include "Graphic/Element.h"
 # include "Widget.h"
 
+namespace Graphic {
+    class Scene;
+};
+
 namespace Widget {
     class Widget;
 
@@ -27,10 +31,11 @@ namespace Widget {
             };
         
             //! Create the Button
-            Button(Widget* parent = NULL);
+            Button(Graphic::Scene*, Widget* parent = NULL);
         
             //! Create a button with position/size and image
-            Button(Vec2 const&,
+            Button(Graphic::Scene*,
+                   Vec2 const&,
                    Vec2 const&,
                    std::string const&,
                    Widget* parent = NULL);

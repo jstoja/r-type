@@ -19,15 +19,17 @@
 #include "CheckBox.h"
 #include "ComboBox.h"
 
-Widget::ComboBox::ComboBox(Widget* parent) : Widget(parent) {
+Widget::ComboBox::ComboBox(Graphic::Scene* scene,
+                           Widget* parent) : Widget(scene, parent) {
     _items.resize(0);
 }
 
-Widget::ComboBox::ComboBox(std::vector<Label*>& labels,
+Widget::ComboBox::ComboBox(Graphic::Scene* scene,
+                           std::vector<Label*>& labels,
                            std::vector<CheckBox*>& checks,
                            Event::IListenerDelegate *delegate,
                            Widget* parent) :
-    Widget(parent) {
+    Widget(scene, parent) {
     if (labels.size() == checks.size()) {
         std::vector<Label*>::iterator it_label = labels.begin();
         std::vector<CheckBox*>::iterator it_check = checks.begin();
@@ -37,11 +39,12 @@ Widget::ComboBox::ComboBox(std::vector<Label*>& labels,
     }
 }
 
-Widget::ComboBox::ComboBox(std::vector<std::pair<CheckBox*,
+Widget::ComboBox::ComboBox(Graphic::Scene* scene,
+                           std::vector<std::pair<CheckBox*,
                            Label*>* >& v,
                            Event::IListenerDelegate *delegate,
                            Widget* parent) :
-    Widget(parent) {
+    Widget(scene, parent) {
     for (std::vector<std::pair<CheckBox*, Label*>* >::iterator it = v.begin();
          it != v.end(); ++it)
         push((*it)->first, (*it)->second, delegate);
@@ -49,13 +52,6 @@ Widget::ComboBox::ComboBox(std::vector<std::pair<CheckBox*,
 
 
 Widget::ComboBox::~ComboBox() {
-}
-
-void    Widget::ComboBox::putInScene(Graphic::Scene& scene) {
-    for (std::vector<std::pair<CheckBox*, Label*>* >::iterator it = _items.begin(); it != _items.end(); ++it) {
-        scene.addElement((*it)->first->getElement());
-        scene.addElement((*it)->second->getElement());
-    }
 }
 
 void    Widget::ComboBox::update() {
@@ -85,8 +81,8 @@ void    Widget::ComboBox::push(CheckBox *cb,
 void    Widget::ComboBox::push(std::string const& name,
                                Vec2 const& pos,
                                Event::IListenerDelegate *delegate) {
-    CheckBox    *check = new CheckBox(Vec2(1,1), pos);
-    Label       *text = new Label(name);
+    CheckBox    *check = new CheckBox(_scene, Vec2(1,1), pos);
+    Label       *text = new Label(_scene, name);
     Vec2        size = text->getElementSize();
     text->setPosition(Vec2(pos.x + size.x / 2 + 1, pos.y));
     text->init();

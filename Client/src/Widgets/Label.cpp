@@ -23,14 +23,17 @@
 
 Graphic::FreetypeFont   *Widget::Label::_font = NULL;
 
-Widget::Label::Label(Widget* parent) : Widget(parent) {
+Widget::Label::Label(Graphic::Scene* scene,
+                     Widget* parent) : Widget(scene, parent) {
     if (_font == NULL) {
         _font = new Graphic::FreetypeFont();
         _font->init("/Library/Fonts/Marion.ttc", 9);
 	}
 }
 
-Widget::Label::Label(std::string const& text, Widget* parent) : Widget(parent), _text(text) {
+Widget::Label::Label(Graphic::Scene* scene,
+                     std::string const& text,
+                     Widget* parent) : Widget(scene, parent), _text(text) {
     _element.setSize(Vec2(_text.size() - 1, 1.0));
     if (_font == NULL)
         _font = new Graphic::FreetypeFont();
@@ -60,6 +63,7 @@ void    Widget::Label::init() {
         _element.setSprite(sprite);
         _element.setCurrentFrame(0);
         _element.setSize(Vec2(_text.size() - 1, 1.0));
+        addElement();
     } catch (std::exception e) {
         std::cerr << e.what() << std::endl;
     }

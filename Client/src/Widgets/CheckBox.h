@@ -11,6 +11,10 @@
 
 # include <iostream>
 
+namespace Graphic {
+    class Scene;
+};
+
 namespace Widget {
     class Widget;
     class Button;
@@ -18,10 +22,13 @@ namespace Widget {
     class CheckBox : public Widget {
     public:
         //! Constructor
-        CheckBox(bool checked = false, Widget* parent = NULL);
+        CheckBox(Graphic::Scene*,
+                 bool checked = false,
+                 Widget* parent = NULL);
         
         //! Constructor
-        CheckBox(Vec2 const&,
+        CheckBox(Graphic::Scene*,
+                 Vec2 const&,
                  Vec2 const&,
                  std::string const& = std::string("checkbox.png"),
                  bool checked = false,

@@ -14,6 +14,10 @@
 class Graphic::Element;
 class Event::Listener;
 
+namespace Graphic {
+    class Scene;
+};
+
 namespace Widget {
     class Widget;
     class Label;
@@ -21,13 +25,16 @@ namespace Widget {
     class TextEdit : public Widget {
     public:
         //! Constructor
-        TextEdit(Widget* parent = NULL);
+        TextEdit(Graphic::Scene*,
+                 Widget* parent = NULL);
         
         //! Destructor
         ~TextEdit();
         
         //! Constructor with text
-        TextEdit(std::string const&, Widget* parent = NULL);
+        TextEdit(Graphic::Scene*,
+                 std::string const&,
+                 Widget* parent = NULL);
         
         //! Getter text
         std::string const&   getText() const;

@@ -6,26 +6,30 @@
 //
 //
 #include "../Graphic/Sprite.h"
+#include "../Graphic/Scene.h"
 #include "Widget.h"
 #include "Button.h"
 #include "CheckBox.h"
 
-Widget::CheckBox::CheckBox(bool checked, Widget* parent) : Widget(parent),
-    _checked(checked), _button() {
+Widget::CheckBox::CheckBox(Graphic::Scene* scene,
+                           bool checked,
+                           Widget* parent) : Widget(scene, parent),
+    _checked(checked), _button(scene, parent) {
     _imagePath = std::string("checkbox.png");
 }
 
 Widget::CheckBox::~CheckBox() {
 }
 
-Widget::CheckBox::CheckBox(Vec2 const& size,
+Widget::CheckBox::CheckBox(Graphic::Scene* scene,
+                           Vec2 const& size,
                            Vec2 const& position,
                            std::string const& image,
                            bool checked,
-                           Widget* parent) :  Widget(parent),
+                           Widget* parent) :  Widget(scene, parent),
                                             _imagePath(image),
                                             _checked(checked),
-                                            _button() {
+                                            _button(scene, parent) {
     setSize(size);
     setPosition(position);
 }
@@ -38,6 +42,7 @@ void    Widget::CheckBox::init() {
     _element.getSprite()->addFrame(Graphic::Sprite::Frame(Vec2(0,0),
                                                           Vec2(1,0.5)));
     _element.setCurrentFrame(1);
+    addElement();
 }
 
 bool    Widget::CheckBox::isChecked() const {

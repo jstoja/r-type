@@ -21,6 +21,7 @@
 
 
 namespace Graphic {
+    class  Scene;
     class  FreetypeFont;
 };
 
@@ -30,10 +31,13 @@ namespace   Widget {
     class   Label : public Widget {
     public:
         //! Constructor
-        Label(Widget* parent = NULL);
+        Label(Graphic::Scene*,
+              Widget* parent = NULL);
         
         //! Constructor with text
-        Label(std::string const&, Widget* parent = NULL);
+        Label(Graphic::Scene*,
+              std::string const&,
+              Widget* parent = NULL);
         
         //! Destructor
         ~Label();

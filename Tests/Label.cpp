@@ -32,7 +32,7 @@
 class Test : public Event::IListenerDelegate {
 public:
     Test()
-    : _close(false), _scene(), _label() {
+    : _close(false), _scene() {
         
         // Setup renderer
         Graphic::Renderer::getInstance().init();
@@ -43,16 +43,16 @@ public:
         //
         
         std::string str("Coucou_Karina");
-		_label = Widget::Label(str);
+		_label = new Widget::Label(&_scene, str);
     
         // Setup scene
-        _label.setPosition(Vec2(7,7));
-        _label.setSize(Vec2(str.length(),1));
-        _label.init();
+        _label->setPosition(Vec2(7,7));
+        _label->setSize(Vec2(str.length(),1));
+        _label->init();
         //_label << "marseille";
         //_label.setText("molotov");
         
-        _scene.addElement(_label.getElement());
+        _scene.addElement(_label->getElement());
         
         
         // Add event listeners
@@ -78,7 +78,7 @@ public:
 private:
     bool                _close;
     Graphic::Scene      _scene;
-    Widget::Label       _label;
+    Widget::Label*      _label;
 };
 
 int	main(int argc, char *argv[]) {
