@@ -47,12 +47,12 @@ class Resource : public Object {
 
     private:
         //! Read file and put in into a ByteArray
-        void	readFile();
+        void	_readFile();
 
         //! Array setter
         void	setArray(ByteArray const&);
 
-        ByteArray	_file;
+        ByteArray	_data;
         std::string	_name;
 };
 

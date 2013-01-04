@@ -18,10 +18,14 @@ namespace Widget {
     class CheckBox : public Widget {
     public:
         //! Constructor
-        CheckBox(bool checked = false);
+        CheckBox(bool checked = false, Widget* parent = NULL);
         
         //! Constructor
-        CheckBox(Vec2 const&, Vec2 const&, bool checked = false);
+        CheckBox(Vec2 const&,
+                 Vec2 const&,
+                 std::string const& = std::string("checkbox.png"),
+                 bool checked = false,
+                 Widget* parent = NULL);
         
         //! Destructor
         ~CheckBox();
@@ -43,8 +47,9 @@ namespace Widget {
         
         void    init();
     private:
-        bool    _checked;
-        Button  _button;
+        std::string         _imagePath;
+        bool                _checked;
+        Button              _button;
     };
 };
 

@@ -30,10 +30,10 @@ namespace   Widget {
     class   Label : public Widget {
     public:
         //! Constructor
-        Label();
+        Label(Widget* parent = NULL);
         
         //! Constructor with text
-        Label(std::string const&);
+        Label(std::string const&, Widget* parent = NULL);
         
         //! Destructor
         ~Label();
@@ -59,7 +59,7 @@ namespace   Widget {
         
         void    draw() {}
     private:
-        Graphic::FreetypeFont   _font;
+        static Graphic::FreetypeFont   *_font;
         sf::Image               _image;
         std::string             _text;
     };

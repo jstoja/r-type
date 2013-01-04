@@ -4,6 +4,10 @@
 # include <string>
 # include <vector>
 
+# include <ft2build.h>
+# include FT_FREETYPE_H
+# include <freetype/ftglyph.h>
+
 # include "Types.h"
 # include "Object.h"
 # include "Texture.h"
@@ -12,10 +16,11 @@
 namespace Graphic {
     class FreetypeFont {
         public:
-            //FreetypeFont();
-            FreetypeFont(const std::string &font_path, uint8 size);
+            FreetypeFont();
+
+            void init(const std::string &font_path, uint8 size);
         
-            ~FreetypeFont() {}
+            ~FreetypeFont();
         
             Graphic::Texture *getStringTexture(std::string &str);
         
@@ -30,13 +35,15 @@ namespace Graphic {
     private:
             uint8                   *_returnRGBA(uint8* bitmap, int size);
 
+            FT_Library              _library;
+            FT_Face                 _face;
             std::string             _font_path;
             int                     _font_size;
             std::vector<uint8*>     _character_tab;
             std::vector<int>        _width;
             std::vector<int>        _height;
-            std::vector<int>        _escapement_left;
-            std::vector<int>        _escapement_top;
+            std::vector<int>        _bearing_left;
+            std::vector<int>        _bearing_top;
     };
 }
 

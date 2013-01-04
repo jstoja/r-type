@@ -28,7 +28,8 @@ public:
         Graphic::Renderer::getInstance().init();
         Graphic::Renderer::getInstance().setScene(&_scene);
     
-		Graphic::FreetypeFont font("/Library/Fonts/marion.ttc", 14);
+		Graphic::FreetypeFont font;
+		font.init("./Marion.ttc", 14);
 
 		std::string str = "nik ta race";
 		Graphic::Texture *texture = font.getStringTexture(str);
@@ -37,7 +38,8 @@ public:
 		sprite.setTexture(texture);
 
 		Graphic::Element elem;
-		sprite.addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.0), Vec2(1.0,  1.0)));
+		sprite.addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.0),
+                                               Vec2(1.0,  1.)));
 		elem.setSprite(&sprite);
 		elem.setCurrentFrame(0);
 		elem.setPosition(Vec2(8, 4));
