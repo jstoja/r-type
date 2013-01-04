@@ -26,20 +26,20 @@ public:
     : _close(false), _scene() {
         
         // Setup renderer
-    
-		Graphic::FreetypeFont font;
-		font.init("Marion.ttc", 14);
-		std::string str = "nik ta race";
-		Graphic::Texture *texture = font.getStringTexture(str);
-	
-		Graphic::Sprite sprite;
-		sprite.setTexture(texture);
-
 		Graphic::Renderer::getInstance().init();
         Graphic::Renderer::getInstance().setScene(&_scene);
+    
+		Graphic::FreetypeFont font;
+		font.init("./Marion.ttc", 14);
+		std::string str = "nik ta race";
+		Graphic::Texture *texture1 = font.getStringTexture(str);
+
+		Graphic::Sprite sprite;
+		sprite.setTexture(texture1);
+
 		Graphic::Element elem;
 		sprite.addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.0),
-											   Vec2(1.0,  1.)));
+											   Vec2(1.0,  1.0)));
 		elem.setSprite(&sprite);
 		elem.setCurrentFrame(0);
 		elem.setPosition(Vec2(8, 4));

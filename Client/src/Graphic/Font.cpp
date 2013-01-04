@@ -23,8 +23,8 @@ void Graphic::FreetypeFont::init(const std::string &font_path, uint8 size) {
     if ( error == FT_Err_Unknown_File_Format )
         throw new Exception("The font file could be opened and read, but it appears that its font format is unsupported.");
     else if (error)
-//		throw new Exception("The font file \"" + font_path + "\"could not be opened or read, or simply that it is broken.");
-		throw new Exception(".");
+		throw new Exception("The font file \"" + font_path + "\"could not be opened or read, or simply that it is broken.");
+		//throw new Exception(".");
     FT_Set_Char_Size(_face, 0, size * 64, 300, 300);
     
     FT_GlyphSlot slot;
@@ -48,7 +48,7 @@ void Graphic::FreetypeFont::init(const std::string &font_path, uint8 size) {
 
 Graphic::FreetypeFont::~FreetypeFont(void) {
 	for(unsigned char ch = 0; ch < 128; ++ch) {
-        delete[] _character_tab[ch];
+        //delete[] _character_tab[ch];
     }
     FT_Done_Face(_face);
     FT_Done_FreeType(_library);
@@ -76,7 +76,7 @@ uint8 *Graphic::FreetypeFont::_returnRGBA(uint8* bitmap, int size) {
 }
 
 Graphic::Texture *Graphic::FreetypeFont::getStringTexture(std::string &str) {
-    Graphic::Texture *tex = new Texture();
+    Graphic::Texture *tex = new Graphic::Texture();
     
     tex->setData(getStringWidth(str), getStringHeight(str), stringData(str));
     return tex;
@@ -108,7 +108,7 @@ uint8 *Graphic::FreetypeFont::stringData(std::string &str) const {
 
     uint8 *data = new uint8[max_line_width * max_y];
     int save_x = 0;
-    int y_char = 0;
+    //int y_char = 0;
     int line_width = 0;
     // Iterate over all the chars in the string to add then in the new texture (a RGBA Bitmap)
     for (int ci = 0; str[ci] != '\0'; ++ci) {
