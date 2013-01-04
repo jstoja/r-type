@@ -47,7 +47,7 @@ void Graphic::FreetypeFont::init(const std::string &font_path, uint8 size) {
 }
 
 Graphic::FreetypeFont::~FreetypeFont(void) {
-    for(unsigned char ch = 0; ch < 128; ch++) {
+	for(unsigned char ch = 0; ch < 128; ++ch) {
         delete[] _character_tab[ch];
     }
     FT_Done_Face(_face);
