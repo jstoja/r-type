@@ -14,6 +14,10 @@ ResourcesManager::ResourcesManager() {
 }
 
 ResourcesManager::~ResourcesManager() {
+	for (std::map<std::string, Resource*>::iterator it = _resourcesName.begin();
+		it != _resourcesName.end(); ++it) {
+		delete it->second;
+	}
 }
 
 void ResourcesManager::removeResource(std::string const& name) {
