@@ -16,9 +16,9 @@
 namespace Graphic {
     class FreetypeFont {
         public:
-            FreetypeFont();
+        FreetypeFont(uint8 size = 14, const std::string &str = "./Marion.ttc");
 
-            void init(const std::string &font_path, uint8 size);
+            void changeFont(const std::string &font_path, uint8 size);
         
             ~FreetypeFont();
         
@@ -35,6 +35,7 @@ namespace Graphic {
     private:
             uint8                   *_returnRGBA(uint8* bitmap, int size);
 
+            bool                    _font_loaded;
             FT_Library              _library;
             FT_Face                 _face;
             std::string             _font_path;

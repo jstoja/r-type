@@ -5,26 +5,27 @@
 #include "Types.h"
 #include "Font.h"
 
-Graphic::FreetypeFont::FreetypeFont()
-: _font_path("/Library/Fonts/Marion.ttc"), _font_size(14) {
+Graphic::FreetypeFont::FreetypeFont(uint8 size, const std::string &path)
+: _font_path(path), _font_size(size), _font_loaded(false) {
+    int         error;
+
+    error = FT_Init_FreeType(&_library);
+    if (error)
+        throw new Exception("An error occurred during Freetype library initialization.");
+    changeFont(_font_path, _font_size);
 }
 
-void Graphic::FreetypeFont::init(const std::string &font_path, uint8 size) {
+void Graphic::FreetypeFont::changeFont(const std::string &font_path, uint8 size) {
+    _font_loaded = false;
     _font_size = size;
     _font_path = font_path;
     
     int         error;
-    
-    error = FT_Init_FreeType(&_library);
-    if (error)
-        throw new Exception("An error occurred during Freetype library initialization.");
-
     error = FT_New_Face(_library, font_path.c_str(), 0, &_face);
     if ( error == FT_Err_Unknown_File_Format )
         throw new Exception("The font file could be opened and read, but it appears that its font format is unsupported.");
     else if (error)
 		throw new Exception("The font file \"" + font_path + "\"could not be opened or read, or simply that it is broken.");
-		//throw new Exception(".");
     FT_Set_Char_Size(_face, 0, size * 64, 300, 300);
     
     FT_GlyphSlot slot;
@@ -44,13 +45,16 @@ void Graphic::FreetypeFont::init(const std::string &font_path, uint8 size) {
         _bearing_top.push_back(slot->bitmap_top);
         _character_tab.push_back(_returnRGBA(slot->bitmap.buffer, slot->bitmap.width * slot->bitmap.rows * 4));
     }
+    _font_loaded = true;
 }
 
 Graphic::FreetypeFont::~FreetypeFont(void) {
-	for(unsigned char ch = 0; ch < 128; ++ch) {
-        //delete[] _character_tab[ch];
+    if (_font_loaded == true) {
+        for(unsigned char ch = 0; ch < _character_tab.size(); ++ch) {
+            delete[] _character_tab[ch];
+        }
+        FT_Done_Face(_face);
     }
-    FT_Done_Face(_face);
     FT_Done_FreeType(_library);
 }
 

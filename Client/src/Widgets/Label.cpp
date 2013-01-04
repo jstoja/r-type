@@ -25,10 +25,8 @@ Graphic::FreetypeFont   *Widget::Label::_font = NULL;
 
 Widget::Label::Label(Graphic::Scene* scene,
                      Widget* parent) : Widget(scene, parent) {
-    if (_font == NULL) {
-        _font = new Graphic::FreetypeFont();
-        _font->init("/Library/Fonts/Marion.ttc", 9);
-	}
+    if (_font == NULL)
+        _font = new Graphic::FreetypeFont(9);
 }
 
 Widget::Label::Label(Graphic::Scene* scene,
@@ -36,8 +34,7 @@ Widget::Label::Label(Graphic::Scene* scene,
                      Widget* parent) : Widget(scene, parent), _text(text) {
     _element.setSize(Vec2(_text.size() - 1, 1.0));
     if (_font == NULL)
-        _font = new Graphic::FreetypeFont();
-        _font->init("/Library/Fonts/Marion.ttc", 9);
+        _font = new Graphic::FreetypeFont(9);
 }
 
 Widget::Label::~Label() {
