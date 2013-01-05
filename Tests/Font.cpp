@@ -17,6 +17,7 @@
 #include "Graphic/Sprite.h"
 #include "Graphic/Texture.h"
 #include "Exception.h"
+#include "Application.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -29,7 +30,7 @@ public:
 		Graphic::Renderer::getInstance().init();
         Graphic::Renderer::getInstance().setScene(&_scene);
     
-		Graphic::FreetypeFont font;
+		Graphic::FreetypeFont font(14, Application::getInstance().getResourcesPath() + "Marion.ttc");
 		//font.init("./Marion.ttc", 14);
 		std::string str = "nik ta race";
 		Graphic::Texture *texture1 = font.getStringTexture(str);
@@ -58,6 +59,7 @@ private:
 };
 
 int	main(int argc, char *argv[]) {
+	Application::getInstance().init(argc, argv);
     try {
         Test client;
         while(1);

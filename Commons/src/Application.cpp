@@ -15,21 +15,18 @@ Application::Application() {
 Application::~Application() {
 }
 
-void Application::concatPath() {
+void Application::init(int32 ac, char **av) {
+    _ac = ac;
+    _av = av;
 # if defined OS_WINDOWS
-    // ajouter la fonction pour gerer ca sous windaube
+    _binaryPath = _av[0];
+    _binaryPath = _binaryPath.substr(0, _binaryPath.find_last_of('\\'));
+    _binaryPath += '\\';
 # else
     _binaryPath = _av[0];
     _binaryPath = _binaryPath.substr(0, _binaryPath.find_last_of('/'));
     _binaryPath += '/';
 # endif
-
-}
-
-void Application::init(char **av, int32 ac) {
-    _av = av;
-    _ac = ac;
-    concatPath();
 }
 
 std::string Application::getResourcesPath() const {

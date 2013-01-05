@@ -19,14 +19,12 @@ class Application : public Singleton<Application> {
     friend class Singleton<Application>;
 
     public:
-        //! Construct the object
-        Application();
     
         //! Destruct the object
         ~Application();
 
         //! Init with argc/argv of main
-        void init(char **, int32);
+        void init(int32 ac, char **av);
 
         //! Get the resources path
         std::string getResourcesPath() const;
@@ -34,11 +32,11 @@ class Application : public Singleton<Application> {
         // Set the resources path, relative to the binary
         void        setRelativeResourcesPath(std::string const& path);
 
-        //! Contact path for resources
-        void	concatPath();
-
     private:
-        char**		_av;
+        //! Construct the object
+        Application();
+
+		char**		_av;
         int32		_ac;
         std::string	_binaryPath;
         std::string	_resourcesPath;
