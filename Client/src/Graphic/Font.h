@@ -25,13 +25,13 @@ namespace Graphic {
             Graphic::Texture *getStringTexture(std::string &str);
         
             uint8   *letterData(char c) const;
-            uint8   *stringData(std::string &str) const;
+            uint8   *stringData(std::string const& str) const;
 
             int     getWidth(char c) const;
             int     getHeight(char c) const;
         
-            int     getStringHeight(const std::string &str);
-            int     getStringWidth(const std::string &str);
+            int     getStringHeight(std::string const& str);
+            int     getStringWidth(std::string const& str);
     private:
             uint8                   *_returnRGBA(uint8* bitmap, int size);
 

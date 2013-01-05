@@ -87,13 +87,13 @@ Graphic::Texture *Graphic::FreetypeFont::getStringTexture(std::string &str) {
 }
 
 
-uint8 *Graphic::FreetypeFont::stringData(std::string &str) const {
+uint8 *Graphic::FreetypeFont::stringData(std::string const& str) const {
     int max_x = 0;
     int y_max = 0;
     int y_min = 0;
     int esc = 0;
     char c;
-    for (int i = 0; str[i] != '\0'; ++i) {
+    for (int i = 0; i < str.size(); ++i) {
         c = str[i];
         max_x += _width[c];
         if (i != 0) {
@@ -135,11 +135,11 @@ uint8 *Graphic::FreetypeFont::stringData(std::string &str) const {
     return data;
 }
 
-int     Graphic::FreetypeFont::getStringWidth(const std::string &str) {
+int     Graphic::FreetypeFont::getStringWidth(std::string const &str) {
     int save;
     
     save = 0;
-    for (int i = 0; str[i] != '\0'; ++i) {
+    for (int i = 0; i < str.size(); ++i) {
         if (i != 0) {
             save += _width[str[i]] + _bearing_left[str[i]];
         } else  {
@@ -149,7 +149,7 @@ int     Graphic::FreetypeFont::getStringWidth(const std::string &str) {
     return save;
 }
 
-int     Graphic::FreetypeFont::getStringHeight(const std::string &str) {
+int     Graphic::FreetypeFont::getStringHeight(std::string const& str) {
     int save;
     
     save = 0;
