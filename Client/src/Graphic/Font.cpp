@@ -6,7 +6,7 @@
 #include "Font.h"
 
 Graphic::FreetypeFont::FreetypeFont(uint8 size, const std::string &path)
-: _font_path(path), _font_size(size), _font_loaded(false) {
+: _font_loaded(false), _font_path(path), _font_size(size) {
     int         error;
 
     error = FT_Init_FreeType(&_library);
@@ -112,10 +112,9 @@ uint8 *Graphic::FreetypeFont::stringData(std::string const& str) const {
 
     uint8 *data = new uint8[max_line_width * max_y];
     int save_x = 0;
-    //int y_char = 0;
     int line_width = 0;
     // Iterate over all the chars in the string to add then in the new texture (a RGBA Bitmap)
-    for (int ci = 0; str[ci] != '\0'; ++ci) {
+    for (int ci = 0; ci < str.size(); ++ci) {
         c = str[ci];
         if (ci > 0 && str[ci-1] != ' ') {
             save_x += line_width + (_bearing_left[c] * 4);
