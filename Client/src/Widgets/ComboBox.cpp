@@ -52,6 +52,11 @@ Widget::ComboBox::ComboBox(Graphic::Scene* scene,
 
 
 Widget::ComboBox::~ComboBox() {
+    size_t limit = _items.size();
+    for (size_t i = 0; i < limit; ++i) {
+        delete _items[i]->first;
+        delete _items[i]->second;
+    }
 }
 
 void    Widget::ComboBox::update() {

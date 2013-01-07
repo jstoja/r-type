@@ -38,6 +38,8 @@ Widget::Label::Label(Graphic::Scene* scene,
 }
 
 Widget::Label::~Label() {
+    delete _element.getSprite()->getTexture();
+    delete _element.getSprite();
 }
 
 std::string const&  Widget::Label::getText() const {
@@ -72,6 +74,7 @@ void    Widget::Label::update() {
     texture->setData(_font->getStringWidth(_text),
                      _font->getStringHeight(_text),
                      _font->stringData(_text));
+    delete _element.getSprite()->getTexture();
     Graphic::Sprite *sprite = _element.getSprite();
     sprite->setTexture(texture);
 }
