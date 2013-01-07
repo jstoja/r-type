@@ -26,7 +26,7 @@ void Graphic::FreetypeFont::changeFont(const std::string &font_path, uint8 size)
         throw new Exception("The font file could be opened and read, but it appears that its font format is unsupported.");
     else if (error)
 		throw new Exception("The font file \"" + font_path + "\"could not be opened or read, or simply that it is broken.");
-    FT_Set_Char_Size(_face, 0, size * 64, 300, 300);
+    FT_Set_Char_Size(_face, 0, size * 64, 600, 600);
     
     FT_GlyphSlot slot;
     for (unsigned char ch = 0; ch < 128; ch++) {
@@ -111,23 +111,35 @@ uint8 *Graphic::FreetypeFont::stringData(std::string const& str) const {
     int max_y = y_max + y_min;
 
     uint8 *data = new uint8[max_line_width * max_y];
+    int y_char = 0;
     int save_x = 0;
     int line_width = 0;
+    int debug_color = 0;
     // Iterate over all the chars in the string to add then in the new texture (a RGBA Bitmap)
     for (int ci = 0; ci < str.size(); ++ci) {
         c = str[ci];
         if (ci > 0 && str[ci-1] != ' ') {
-            save_x += line_width + (_bearing_left[c] * 4);
+            save_x += line_width;
+            std::cout << _bearing_left[c] << std::endl;
+            if (_bearing_left[c] > 0) {//space left between chars
+                for (int y = 0; y < max_y; ++y) {
+                    memset(data + ((y * max_line_width) + save_x), debug_color, _bearing_left[c] * 4);
+                }
+                save_x += (_bearing_left[c] * 4);
+            }
         }
+        line_width = _width[c] * 4;
         // Iterate over all the lines of one char an copy the line in the Texture
-        for (int y = (y_max - _bearing_top[c]), y_char = 0; y < (y_max - _bearing_top[c] + _height[c]); ++y, ++y_char) {
-            line_width = _width[c] * 4;
-            if (y_char < _height[c]) {
+        for (int y = 0, y_char = 0; y < max_y; ++y) {
+            if (y < (y_max - _bearing_top[c])) {//top of the char
+                memset(data + ((y * max_line_width) + save_x), debug_color, line_width);
+            } else if (y < (y_max - _bearing_top[c] + _height[c]) && y_char < _height[c]) { //the char
                 memcpy(data + ((y * max_line_width) + save_x),
                        _character_tab[c] + ((y_char * line_width)),
                        line_width);
-            } else {
-                memset(data + ((y * max_line_width) + save_x), 0, line_width);
+                ++y_char;
+            } else if (y < max_y) {//bottom of the char
+                memset(data + ((y * max_line_width) + save_x), debug_color, line_width);
             }
         }
     }
@@ -149,15 +161,20 @@ int     Graphic::FreetypeFont::getStringWidth(std::string const &str) {
 }
 
 int     Graphic::FreetypeFont::getStringHeight(std::string const& str) {
-    int save;
     
-    save = 0;
+    int y_max = 0;
+    int y_min = 0;
+    char c;
     for (int i = 0; i < str.size(); ++i) {
-        if (_height[str[i]] > save) {
-            save = _height[str[i]];
+        c = str[i];
+        if (_bearing_top[c] > y_max) {
+            y_max = _bearing_top[c];
+        }
+        if ((_height[c] - _bearing_top[c]) > y_min) {
+            y_min = _height[c] - _bearing_top[c];
         }
     }
-    return save*2;
+    return y_max + y_min;
 }
 
 

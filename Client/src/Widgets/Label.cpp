@@ -70,10 +70,7 @@ void    Widget::Label::init() {
 
 void    Widget::Label::update() {
     setSize(Vec2(_text.length(), 1));
-    Graphic::Texture *texture = new Graphic::Texture();
-    texture->setData(_font->getStringWidth(_text),
-                     _font->getStringHeight(_text),
-                     _font->stringData(_text));
+    Graphic::Texture *texture = _font->getStringTexture(_text);
     delete _element.getSprite()->getTexture();
     Graphic::Sprite *sprite = _element.getSprite();
     sprite->setTexture(texture);
