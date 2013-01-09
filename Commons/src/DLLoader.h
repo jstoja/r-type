@@ -11,7 +11,12 @@
 
 # include <iostream>
 # include <string>
-# include <dlfcn.h>
+
+# ifdef OS_WINDOWS
+#  include <windows.h>
+# else
+#  include <dlfcn.h>
+# endif
 
 class DLLoader {
 public:
@@ -27,7 +32,11 @@ public:
 private:
     std::string&    _fileName;
     bool    _load;
+#ifdef OS_WINDOWS
+    HINSTANCER  _handle;
+#else
     void*   _handle;
+#endif
     std::string     _errorString;
 };
 
