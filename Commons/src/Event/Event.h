@@ -35,13 +35,13 @@ namespace Event {
     public:
         Event(Type type, IProvider* sender=NULL);
         Event(Type type, Vec2 const& pos, IProvider* sender=NULL);
-        Event(Type type, char value, IProvider* sender=NULL);
+        Event(Type type, uint8 value, IProvider* sender=NULL);
         
         Type            type;
         IProvider*      sender;
         Vec2            pos;
         PointerButton   pointerButton;
-		char			value;
+		uint8			value;
     };
 }
 
