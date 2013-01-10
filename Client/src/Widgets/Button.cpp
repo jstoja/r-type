@@ -5,6 +5,7 @@
 //  Created by Julien Bordellier on 25/12/12.
 //
 //
+#include "../../../Commons/src/Event/IListenerDelegate.h"
 #include "../Graphic/Scene.h"
 #include "../Graphic/Sprite.h"
 #include "Button.h"

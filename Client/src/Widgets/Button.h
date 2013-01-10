@@ -43,6 +43,7 @@ namespace Widget {
             //! Destruct the Button
             ~Button(void);
         
+        
             // This method will be private after, it will be used to load a default image
             //bool    loadImage(const std::string &image_path);
 
