@@ -2,11 +2,15 @@
 #include <string>
 
 #include <Exception.h>
+#include <Application.h>
 #include "Types.h"
 #include "Font.h"
 
 Graphic::FreetypeFont::FreetypeFont(uint8 size, const std::string &path)
 : _font_loaded(false), _font_path(path), _font_size(size) {
+	if (_font_path.empty()) {
+		_font_path = Application::getInstance().getResourcesPath() + "./Marion.ttc";
+	}
     int         error;
 
     error = FT_Init_FreeType(&_library);
