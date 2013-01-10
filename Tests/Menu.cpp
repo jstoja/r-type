@@ -31,12 +31,13 @@ public:
         Graphic::Renderer::getInstance().setScene(&_scene);
         
         
-        _comboBox = new Widget::ComboBox(&_scene);
+        _comboBox = new Widget::ComboBox(&_scene, NULL);
         _comboBox->push(std::string("marseille"), Vec2(6,5), this);
         _comboBox->push(std::string("molotov"), Vec2(6,6), this);
         _comboBox->push(std::string("noob"), Vec2(6,7), this);
         //_comboBox.putInScene(_scene);
         _button = new Widget::Button(&_scene,
+                                     NULL,
                                      Vec2(1,1),
                                      Vec2(6,8),
 									 Application::getInstance().getResourcesPath() + std::string("click.png"));

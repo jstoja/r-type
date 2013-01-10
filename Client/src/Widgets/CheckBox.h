@@ -10,24 +10,26 @@
 # define __R_Type__CheckBox__
 
 # include <iostream>
-
-namespace Graphic {
-    class Scene;
-};
+# include "ICheckBoxDelegate.h"
+# include "Event/Manager.h"
+# include "Event/Listener.h"
+# include "Event/IListenerDelegate.h"
 
 namespace Widget {
     class Widget;
     class Button;
     
-    class CheckBox : public Widget {
+    class CheckBox : public Widget, public Event::IListenerDelegate {
     public:
         //! Constructor
         CheckBox(Graphic::Scene*,
+                 ICheckBoxDelegate *delegate,
                  bool checked = false,
                  Widget* parent = NULL);
         
         //! Constructor
         CheckBox(Graphic::Scene*,
+                 ICheckBoxDelegate *delegate,
                  Vec2 const&,
                  Vec2 const&,
                  std::string const& = std::string("checkbox.png"),
@@ -53,10 +55,15 @@ namespace Widget {
         void    setSize(Vec2 const&);
         
         void    init();
+
+        // IListenerDelegate Virtual Methods
+        virtual void processEvent(Event::Event const& event);
     private:
         std::string         _imagePath;
         bool                _checked;
         Button              _button;
+        ICheckBoxDelegate   *_delegate;
+        Event::Listener     *_eventListener;
     };
 };
 
