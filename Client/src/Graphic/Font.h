@@ -35,16 +35,16 @@ namespace Graphic {
     private:
             uint8                   *_returnRGBA(uint8* bitmap, int size);
 
-            bool                    _font_loaded;
+            bool                    _fontLoaded;
             FT_Library              _library;
             FT_Face                 _face;
-            std::string             _font_path;
-            int                     _font_size;
-            std::vector<uint8*>     _character_tab;
+            std::string             _fontPath;
+            int                     _fontSize;
+            std::vector<uint8*>     _characterTab;
             std::vector<int>        _width;
             std::vector<int>        _height;
-            std::vector<int>        _bearing_left;
-            std::vector<int>        _bearing_top;
+            std::vector<int>        _bearingLeft;
+            std::vector<int>        _bearingTop;
     };
 }
 
