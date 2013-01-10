@@ -5,7 +5,7 @@
 //  Created by Franck Lavisse on 09/01/13.
 //
 //
-#include "OS.h"
+
 #include "DLLoader.h"
 
 DLLoader::DLLoader(std::string& fileName) : _fileName(fileName),
@@ -50,8 +50,8 @@ void*	DLLoader::resolve(const char *name) {
         if (ptr == NULL) {
             _errorString = dlerror();
             return NULL;
-#endif
         }
+#endif
         return ptr;
     }
     return NULL;

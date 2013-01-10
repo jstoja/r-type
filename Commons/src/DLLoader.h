@@ -7,11 +7,12 @@
 //
 
 #ifndef __R_Type__DLLoader__
-#define __R_Type__DLLoader__
+# define __R_Type__DLLoader__
 
 # include <iostream>
 # include <string>
 
+# include <OS.h>
 # ifdef OS_WINDOWS
 #  include <windows.h>
 # else
@@ -33,7 +34,7 @@ private:
     std::string&    _fileName;
     bool    _load;
 #ifdef OS_WINDOWS
-    HINSTANCER  _handle;
+    HMODULE  _handle;
 #else
     void*   _handle;
 #endif
