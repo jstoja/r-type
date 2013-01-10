@@ -16,7 +16,7 @@
 namespace Graphic {
     class FreetypeFont {
         public:
-        FreetypeFont(uint8 size = 14, const std::string &str = "./Marion.ttc");
+        FreetypeFont(uint8 size = 14, const std::string &str = "");
 
             void changeFont(const std::string &font_path, uint8 size);
         

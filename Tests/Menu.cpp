@@ -6,6 +6,9 @@
 //
 //
 
+#include <SFML/Graphics.hpp>
+
+#include <Application.h>
 #include "Debug.h"
 #include "Event/Manager.h"
 #include "Event/Listener.h"
@@ -17,7 +20,6 @@
 #include "Widgets/Label.h"
 #include "Widgets/TextEdit.h"
 #include "Widgets/ComboBox.h"
-#include <SFML/Graphics.hpp>
 
 class Test : public Event::IListenerDelegate {
 public:
@@ -37,10 +39,11 @@ public:
         _button = new Widget::Button(&_scene,
                                      Vec2(1,1),
                                      Vec2(6,8),
-                                     std::string("click.png"));
+									 Application::getInstance().getResourcesPath() + std::string("click.png"));
         //_scene.addElement(_button.getElement());
         
         Event::Manager::getInstance().addEventListener(new Event::Listener(Event::PointerPushed, _button->getElement()->getRect(), this));
+		Event::Manager::getInstance().addEventListener(new Event::Listener(Event::Close, this));
         while (!_close) {
             // Process events
             Event::Manager::getInstance().processEvents();
@@ -72,6 +75,7 @@ private:
 
 int	main(int argc, char *argv[]) {
     try {
+		Application::getInstance().init(argc, argv);
         Test client;
     } catch (std::exception* e) {
         std::cerr << e->what() << std::endl;
