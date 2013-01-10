@@ -1,13 +1,13 @@
 //
-//  DLLoader.h
+//  Library.h
 //  R-Type
 //
 //  Created by Franck Lavisse on 09/01/13.
 //
 //
 
-#ifndef __R_Type__DLLoader__
-# define __R_Type__DLLoader__
+#ifndef __R_Type__Library__
+# define __R_Type__Library__
 
 # include <iostream>
 # include <string>
@@ -19,10 +19,10 @@
 #  include <dlfcn.h>
 # endif
 
-class DLLoader {
+class Library {
 public:
-    DLLoader(std::string& fileName);
-    ~DLLoader();
+    Library(std::string& fileName);
+    ~Library();
     std::string const& getErrorString() const;
     std::string const& getFileName() const;
     bool	isLoaded() const;
