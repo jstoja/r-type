@@ -12,6 +12,7 @@
 # include <iostream>
 # include <vector>
 # include <string>
+# include "IComboBoxDelegate.h"
 
 namespace Event {
     struct Event;
@@ -30,10 +31,12 @@ namespace Widget {
     public:
         //! Constructor
         ComboBox(Graphic::Scene*,
+                 IComboBoxDelegate *delegateCombo,
                  Widget* parent = NULL);
         
         //! Constructor with vector of Label / CheckBox
         ComboBox(Graphic::Scene*,
+                 IComboBoxDelegate *delegateCombo,
                  std::vector<Label*>&,
                  std::vector<CheckBox*>&,
                  Event::IListenerDelegate *,
@@ -41,6 +44,7 @@ namespace Widget {
         
         //! Constructor with a vector of pair
         ComboBox(Graphic::Scene*,
+                 IComboBoxDelegate *delegateCombo,
                  std::vector<std::pair<CheckBox*,
                  Label*>* >&,
                  Event::IListenerDelegate *,
@@ -67,7 +71,8 @@ namespace Widget {
         
         void    uncheck();
     private:
-        std::vector<std::pair<CheckBox* ,Label*>* >    _items;
+        std::vector<std::pair<CheckBox* ,Label*>* >     _items;
+        IComboBoxDelegate                               *_delegateCombo;
     };
 };
 

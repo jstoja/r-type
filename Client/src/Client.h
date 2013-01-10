@@ -16,7 +16,10 @@
 # include "Network/IProxyDelegate.h"
 # include "Network/TcpPacket.h"
 
-class Client : public Network::IProxyDelegate<Network::TcpPacket> {
+# include "Menu/IMenuDelegate.h"
+
+class Client : public Network::IProxyDelegate<Network::TcpPacket>/*,
+               public Menu::IMenuDelegate*/ {
  public:
   Client(const std::string& ip, uint16 port);
   ~Client();
@@ -30,7 +33,15 @@ class Client : public Network::IProxyDelegate<Network::TcpPacket> {
 
   // All protocol functions
   void	connectionSuccess(Network::TcpPacket*);
+
+  /*
+  // All IMenuDelegate functions
+  virtual void loginCompleted();
   
+  virtual void MapCompleted();
+  virtual void MapNotCompleted();
+  */
+
  private:
   Network::TcpSocket			_tcpSocket;
   Network::Proxy<Network::TcpPacket>*	_proxy;

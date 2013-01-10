@@ -40,7 +40,7 @@ public:
         Graphic::Renderer::getInstance().init();
         Graphic::Renderer::getInstance().setScene(&_scene);
         
-        _comboBox = new Widget::ComboBox(&_scene);
+        _comboBox = new Widget::ComboBox(&_scene, NULL);
         std::string text1("marseille");
         std::string text2("molotov");
         std::string text3("noob");

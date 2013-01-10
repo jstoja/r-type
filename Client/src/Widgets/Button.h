@@ -12,17 +12,18 @@
 # include <iostream>
 # include <string>
 # include "Object.h"
+# include "Graphic/Scene.h"
 # include "Graphic/Element.h"
 # include "Widget.h"
-
-namespace Graphic {
-    class Scene;
-};
+# include "IButtonDelegate.h"
+# include "Event/Manager.h"
+# include "Event/Listener.h"
+# include "Event/IListenerDelegate.h"
 
 namespace Widget {
     class Widget;
 
-    class Button : public Widget {
+    class Button : public Widget, public Event::IListenerDelegate {
         public:
         
             enum framesOrientation {
@@ -31,10 +32,11 @@ namespace Widget {
             };
         
             //! Create the Button
-            Button(Graphic::Scene*, Widget* parent = NULL);
+            Button(Graphic::Scene*, IButtonDelegate *delegate, Widget* parent = NULL);
         
             //! Create a button with position/size and image
             Button(Graphic::Scene*,
+                   IButtonDelegate *delegate,
                    Vec2 const&,
                    Vec2 const&,
                    std::string const&,
@@ -56,8 +58,14 @@ namespace Widget {
             void    draw() {};
         
             void    update() {};
+
+            // Event Listener Virtual Methods
+            virtual void processEvent(Event::Event const& event);
+
         private:
             Graphic::Element    _element;
+            IButtonDelegate     *_delegate;
+            Event::Listener     *_eventListener;
         
             //void    setPosition(Vec2 const&);
     };

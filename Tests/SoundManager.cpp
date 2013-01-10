@@ -10,6 +10,8 @@
 #ifdef OS_WINDOWS
 # include <windows.h>
 # define sleep(x) Sleep((x) * 1000)
+# else
+# include <unistd.h>
 #endif
 
 #include "Debug.h"
@@ -27,7 +29,7 @@ int	main(int argc, char *argv[]) {
     Resource *r2 = mn.getResource("marseille.wav");
     std::cerr << r2->getName() << std::endl;
     Sound::SoundManager manager;
-    
+
     manager.load("sound1.aiff");
     manager.load("sound2.aiff");
     manager.play("sound1.aiff");

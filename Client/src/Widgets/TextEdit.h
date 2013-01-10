@@ -10,6 +10,7 @@
 # define __R_Type__TextEdit__
 
 # include <iostream>
+# include "ITextEditDelegate.h"
 
 class Graphic::Element;
 class Event::Listener;
@@ -59,6 +60,7 @@ namespace Widget {
     private:
         Event::Listener     _event;
         Label               _label;
+        ITextEditDelegate   *_delegate;
     };
 };
 
