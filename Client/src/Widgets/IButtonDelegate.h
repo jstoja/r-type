@@ -11,7 +11,7 @@ namespace Widget {
     public:
       virtual ~IButtonDelegate() {}
 
-      virtual Button *buttonClicked() = 0;
+      virtual void buttonClicked(Button &instance) = 0;
       //virtual Widget::Button *buttonHover() = 0;
   };
 }

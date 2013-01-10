@@ -12,8 +12,8 @@ namespace Widget {
     public:
       virtual ~ICheckBoxDelegate() {}
 
-      virtual CheckBox *checked() = 0;
-      virtual CheckBox *unchecked() = 0;
+      virtual void checked(CheckBox &instance) = 0;
+      virtual void unchecked(CheckBox &instance) = 0;
   };
 }
 

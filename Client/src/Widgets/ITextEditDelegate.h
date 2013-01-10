@@ -12,7 +12,7 @@ namespace Widget {
     public:
       virtual ~ITextEditDelegate() {}
 
-      virtual TextEdit *textHasChanged() = 0;
+      virtual void textHasChanged(TextEdit &instance) = 0;
   };
 }
 

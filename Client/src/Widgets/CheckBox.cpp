@@ -78,3 +78,7 @@ void    Widget::CheckBox::setPosition(Vec2 const& v) {
   _button.setPosition(v);
   _position = v;
 }
+
+void    Widget::CheckBox::processEvent(Event::Event const& event) {
+
+}

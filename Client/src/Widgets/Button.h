@@ -12,18 +12,18 @@
 # include <iostream>
 # include <string>
 # include "Object.h"
+# include "Graphic/Scene.h"
 # include "Graphic/Element.h"
 # include "Widget.h"
 # include "IButtonDelegate.h"
-
-namespace Graphic {
-    class Scene;
-};
+# include "Event/Manager.h"
+# include "Event/Listener.h"
+# include "Event/IListenerDelegate.h"
 
 namespace Widget {
     class Widget;
 
-    class Button : public Widget {
+    class Button : public Widget, public Event::IListenerDelegate {
         public:
         
             enum framesOrientation {
@@ -58,9 +58,14 @@ namespace Widget {
             void    draw() {};
         
             void    update() {};
+
+            // Event Listener Virtual Methods
+            virtual void processEvent(Event::Event const& event);
+
         private:
             Graphic::Element    _element;
             IButtonDelegate     *_delegate;
+            Event::Listener     *_eventListener;
         
             //void    setPosition(Vec2 const&);
     };

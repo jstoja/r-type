@@ -11,16 +11,15 @@
 
 # include <iostream>
 # include "ICheckBoxDelegate.h"
-
-namespace Graphic {
-    class Scene;
-};
+# include "Event/Manager.h"
+# include "Event/Listener.h"
+# include "Event/IListenerDelegate.h"
 
 namespace Widget {
     class Widget;
     class Button;
     
-    class CheckBox : public Widget {
+    class CheckBox : public Widget, public Event::IListenerDelegate {
     public:
         //! Constructor
         CheckBox(Graphic::Scene*,
@@ -56,11 +55,15 @@ namespace Widget {
         void    setSize(Vec2 const&);
         
         void    init();
+
+        // IListenerDelegate Virtual Methods
+        virtual void processEvent(Event::Event const& event);
     private:
         std::string         _imagePath;
         bool                _checked;
         Button              _button;
         ICheckBoxDelegate   *_delegate;
+        Event::Listener     *_eventListener;
     };
 };
 

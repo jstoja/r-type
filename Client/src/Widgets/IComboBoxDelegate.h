@@ -8,8 +8,8 @@ namespace Widget {
     public:
       virtual ~IComboBoxDelegate() {}
 
-      virtual ComboBox *checked() = 0;
-      virtual ComboBox *unchecked() = 0;
+      virtual void checked(ComboBox &instance) = 0;
+      virtual void unchecked(ComboBox &instance) = 0;
   };
 }
 

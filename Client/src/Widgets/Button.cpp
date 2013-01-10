@@ -12,9 +12,17 @@
 
 Widget::Button::Button(Graphic::Scene* scene,
                        IButtonDelegate *delegate,
-                       Widget* parent) :
-    Widget(scene, parent), _delegate(delegate) {
-    addElement();
+                       Widget* parent)
+: Widget(scene, parent), _delegate(delegate) {
+
+  addElement();
+  _eventListener = new Event::Listener(
+        Event::PointerIn
+      | Event::PointerOut
+      | Event::PointerPushed
+      | Event::PointerReleased,
+      _element.getRect(),
+      this);
 }
 
 Widget::Button::Button(Graphic::Scene* scene,
@@ -28,6 +36,16 @@ Widget::Button::Button(Graphic::Scene* scene,
     setSize(size);
     loadImage(image);
     addElement();
+    _eventListener = new Event::Listener(
+        Event::PointerIn
+      | Event::PointerOut
+      | Event::PointerPushed
+      | Event::PointerReleased,
+      _element.getRect(),
+      this);
+  Event::Manager::getInstance().addEventListener(_eventListener);
+  addElement();
+
 }
 
 Widget::Button::~Button() {
@@ -44,4 +62,10 @@ uint32  Widget::Button::setManualFrame(const Graphic::Sprite::Frame &frame) {
 
 void    Widget::Button::setCurrentFrame(uint32 nb) {
     _element.setCurrentFrame(nb);
+}
+
+void    Widget::Button::processEvent(Event::Event const& event) {
+  if (event.type == Event::PointerReleased) {
+    _delegate->buttonClicked(*this);
+  }
 }
