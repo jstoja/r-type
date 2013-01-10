@@ -1,6 +1,4 @@
 #include "WelcomeMenu.h"
 
-Menu::WelcomeMenu()
-: _background() {
-
-}
+/*Menu::WelcomeMenu() {
+}*/
