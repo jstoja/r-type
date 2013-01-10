@@ -18,7 +18,7 @@ SET (
     CMAKE_MODULE_PATH
     ${CMAKE_SOURCE_DIR}/CMakeModules ${CMAKE_MODULE_PATH}
 )
-   
+
 #
 # Dependencies
 #
@@ -32,7 +32,7 @@ FIND_PACKAGE (OpenGL REQUIRED)
 # Find Glew
 FIND_PACKAGE (GLEW REQUIRED)
 
-FIND_PACKAGE (FREETYPE REQUIRED)
+FIND_PACKAGE (Freetype REQUIRED)
 
 #
 # Include Directories
@@ -120,14 +120,14 @@ FOREACH (FOLDER ${SOURCE_FOLDERS})
             ${FOLDER}
             NAME
         )
-        
+
         # Get source files in directories
         FILE (
             GLOB_RECURSE
             GROUP_SOURCE
             ${FOLDER}/*
         )
-        
+
         SOURCE_GROUP (
             ${GROUP_NAME}
             FILES
@@ -203,7 +203,7 @@ ADD_CUSTOM_COMMAND (
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${PROJECT_SOURCE_DIR}/Client/Resources"
         ${RTYPE_CLIENT_BUNDLE_PATH}/Resources)
-        
+
 ENDIF ()
 
 # Server bundle
@@ -223,9 +223,9 @@ SET_PROPERTY (
     PROPERTY RUNTIME_OUTPUT_DIRECTORY_RELEASE ${RTYPE_SERVER_BUNDLE_PATH}
 )
 
-# 
+#
 # Copy resources to bundle directory
-# 
+#
 
 ADD_CUSTOM_COMMAND (
     TARGET Server POST_BUILD
@@ -269,7 +269,7 @@ FOREACH (TEST_FILE ${TESTS_FILES})
         ${TEST_FILE}
         ${COMMON_TESTS_SOURCE}
     )
-    
+
     # Add dependency to all used libraries
     TARGET_LINK_LIBRARIES (
         ${TEST_NAME}
@@ -278,14 +278,14 @@ FOREACH (TEST_FILE ${TESTS_FILES})
         ${GLEW_LIBRARIES}
 		${FREETYPE_LIBRARIES}
     )
-    
+
     iF (UNIX)
         TARGET_LINK_LIBRARIES (${TEST_NAME} pthread)
     ENDIF(UNIX)
     IF (WIN32)
         TARGET_LINK_LIBRARIES (${TEST_NAME} Ws2_32)
     ENDIF (WIN32)
-    
+
     # Put binaries in a Tests directory
     SET_PROPERTY (
         TARGET ${TEST_NAME}
