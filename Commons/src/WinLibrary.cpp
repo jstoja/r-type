@@ -10,31 +10,38 @@
 
 #ifdef OS_WINDOWS
 
-#include "Library.h"
+# include "Library.h"
 
 bool	Library::load() {
     _load = false;
-    _handle = LoadLibrary(TEXT(_fileName.c_str()));
+    if ((_handle = LoadLibrary(TEXT(_fileName.c_str()))) == NULL)
+		_errorString = GetLastError();
+	else
+		_load = true;
     return _load;
 }
 
 void*	Library::resolve(const char *name) {
     if (isLoaded()) {
         void *ptr = GetProcAddress(_handle, name);
+		if (ptr == NULL)
+			_errorString = GetLastError();
         return ptr;
     }
+	_errorString = "Library is not loaded";
     return NULL;
 }
 
-void	Library::setFileName(std::string& filename) {
-    _fileName = filename;
-}
-
 bool	Library::unload() {
-    if (_load) {
-        FreeLibrary(_handle);
-        return true;
-    }
+    if (isLoaded()) {
+		if (FreeLibrary(_handle) == false) {
+			_errorString = GetLastError();
+			return (false);
+		}
+		else
+			return (true);
+	}
+	_errorString = "Library is not loaded";
     return false;
 }
 

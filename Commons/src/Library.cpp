@@ -8,8 +8,10 @@
 
 #include "Library.h"
 
-Library::Library(std::string& fileName) : _fileName(fileName),
-    _load(false), _handle(NULL) {
+Library::Library(std::string& fileName) :
+	_fileName(fileName),
+    _load(false),
+	_handle(NULL) {
 }
 
 Library::~Library() {
@@ -26,4 +28,8 @@ std::string const& Library::getFileName() const {
 
 bool	Library::isLoaded() const {
     return _load;
+}
+
+void	Library::setFileName(std::string& filename) {
+    _fileName = filename;
 }

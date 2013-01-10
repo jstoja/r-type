@@ -8,7 +8,7 @@
 
 #include <OS.h>
 
-#ifndef OS_WINDOWS
+#ifdef OS_UNIX
 
 # include "Library.h"
 
@@ -24,24 +24,24 @@ bool	Library::load() {
 void*	Library::resolve(const char *name) {
     if (isLoaded()) {
         void *ptr = dlsym(_handle, name);
-        if (ptr == NULL) {
+        if (ptr == NULL)
             _errorString = dlerror();
-            return NULL;
-        }
         return ptr;
     }
+	_errorString = "Library is not loaded";
     return NULL;
-}
-
-void	Library::setFileName(std::string& filename) {
-    _fileName = filename;
 }
 
 bool	Library::unload() {
     if (_load) {
-        dlclose(_handle);
-        return true;
+        if (dlclose(_handle) == 0)
+	       return true;
+		else {
+			_errorString = dlerror();
+			return false;
+		}
     }
+	_errorString = "Library is not loaded";
     return false;
 }
 
