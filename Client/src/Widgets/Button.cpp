@@ -8,19 +8,22 @@
 #include "../Graphic/Scene.h"
 #include "../Graphic/Sprite.h"
 #include "Button.h"
+#include "IButtonDelegate.h"
 
 Widget::Button::Button(Graphic::Scene* scene,
+                       IButtonDelegate *delegate,
                        Widget* parent) :
-    Widget(scene, parent) {
+    Widget(scene, parent), _delegate(delegate) {
     addElement();
 }
 
 Widget::Button::Button(Graphic::Scene* scene,
+                       IButtonDelegate *delegate,
                        Vec2 const& size,
                        Vec2 const& position,
                        std::string const& image,
                        Widget* parent) :
-    Widget(scene, parent) {
+    Widget(scene, parent), _delegate(delegate) {
     setPosition(position);
     setSize(size);
     loadImage(image);

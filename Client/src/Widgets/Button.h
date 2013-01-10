@@ -14,6 +14,7 @@
 # include "Object.h"
 # include "Graphic/Element.h"
 # include "Widget.h"
+# include "IButtonDelegate.h"
 
 namespace Graphic {
     class Scene;
@@ -31,10 +32,11 @@ namespace Widget {
             };
         
             //! Create the Button
-            Button(Graphic::Scene*, Widget* parent = NULL);
+            Button(Graphic::Scene*, IButtonDelegate *delegate, Widget* parent = NULL);
         
             //! Create a button with position/size and image
             Button(Graphic::Scene*,
+                   IButtonDelegate *delegate,
                    Vec2 const&,
                    Vec2 const&,
                    std::string const&,
@@ -58,6 +60,7 @@ namespace Widget {
             void    update() {};
         private:
             Graphic::Element    _element;
+            IButtonDelegate     *_delegate;
         
             //void    setPosition(Vec2 const&);
     };

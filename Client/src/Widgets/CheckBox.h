@@ -10,6 +10,7 @@
 # define __R_Type__CheckBox__
 
 # include <iostream>
+# include "ICheckBoxDelegate.h"
 
 namespace Graphic {
     class Scene;
@@ -23,11 +24,13 @@ namespace Widget {
     public:
         //! Constructor
         CheckBox(Graphic::Scene*,
+                 ICheckBoxDelegate *delegate,
                  bool checked = false,
                  Widget* parent = NULL);
         
         //! Constructor
         CheckBox(Graphic::Scene*,
+                 ICheckBoxDelegate *delegate,
                  Vec2 const&,
                  Vec2 const&,
                  std::string const& = std::string("checkbox.png"),
@@ -57,6 +60,7 @@ namespace Widget {
         std::string         _imagePath;
         bool                _checked;
         Button              _button;
+        ICheckBoxDelegate   *_delegate;
     };
 };
 

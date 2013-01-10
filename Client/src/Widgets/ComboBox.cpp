@@ -20,16 +20,21 @@
 #include "ComboBox.h"
 
 Widget::ComboBox::ComboBox(Graphic::Scene* scene,
-                           Widget* parent) : Widget(scene, parent) {
+                           IComboBoxDelegate *delegateCombo,
+                           Widget* parent)
+: Widget(scene, parent),
+  _delegateCombo(delegateCombo) {
+
     _items.resize(0);
 }
 
 Widget::ComboBox::ComboBox(Graphic::Scene* scene,
+                           IComboBoxDelegate *delegateCombo,
                            std::vector<Label*>& labels,
                            std::vector<CheckBox*>& checks,
                            Event::IListenerDelegate *delegate,
                            Widget* parent) :
-    Widget(scene, parent) {
+    Widget(scene, parent), _delegateCombo(delegateCombo) {
     if (labels.size() == checks.size()) {
         std::vector<Label*>::iterator it_label = labels.begin();
         std::vector<CheckBox*>::iterator it_check = checks.begin();
@@ -40,11 +45,12 @@ Widget::ComboBox::ComboBox(Graphic::Scene* scene,
 }
 
 Widget::ComboBox::ComboBox(Graphic::Scene* scene,
+                           IComboBoxDelegate *delegateCombo,
                            std::vector<std::pair<CheckBox*,
                            Label*>* >& v,
                            Event::IListenerDelegate *delegate,
                            Widget* parent) :
-    Widget(scene, parent) {
+    Widget(scene, parent), _delegateCombo(delegateCombo){
     for (std::vector<std::pair<CheckBox*, Label*>* >::iterator it = v.begin();
          it != v.end(); ++it)
         push((*it)->first, (*it)->second, delegate);
@@ -86,7 +92,7 @@ void    Widget::ComboBox::push(CheckBox *cb,
 void    Widget::ComboBox::push(std::string const& name,
                                Vec2 const& pos,
                                Event::IListenerDelegate *delegate) {
-    CheckBox    *check = new CheckBox(_scene, Vec2(1,1), pos);
+    CheckBox    *check = new CheckBox(_scene, (ICheckBoxDelegate*)_delegateCombo,Vec2(1,1), pos);
     Label       *text = new Label(_scene, name);
     Vec2        size = text->getElementSize();
     text->setPosition(Vec2(pos.x + size.x / 2 + 1, pos.y));

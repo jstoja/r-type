@@ -25,8 +25,8 @@ public:
         Graphic::Renderer::getInstance().init();
         Graphic::Renderer::getInstance().setScene(&_scene);
         
-		_button = new Widget::Button(&_scene);
-        
+        _button = new Widget::Button(&_scene, NULL);
+
         // Setup scene
         _button->setPosition(Vec2(4,4));
         _button->setSize(Vec2(9, 3));

@@ -27,6 +27,7 @@ public:
         Graphic::Renderer::getInstance().setScene(&_scene);
         
 		_box = new Widget::CheckBox(&_scene,
+		                    NULL,
                                     Vec2(1,1),
                                     Vec2(5,5),
                                     std::string("checkbox.png"));
