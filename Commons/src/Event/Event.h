@@ -21,7 +21,8 @@ namespace Event {
         PointerOut      =   1 << 3,
         PointerMove     =   1 << 4,
         PointerPushed   =   1 << 5,
-        PointerReleased =   1 << 6
+        PointerReleased =   1 << 6,
+        TextEntered		=   1 << 7
     };
     
     enum PointerButton {
@@ -34,11 +35,13 @@ namespace Event {
     public:
         Event(Type type, IProvider* sender=NULL);
         Event(Type type, Vec2 const& pos, IProvider* sender=NULL);
+        Event(Type type, char value, IProvider* sender=NULL);
         
         Type            type;
         IProvider*      sender;
         Vec2            pos;
         PointerButton   pointerButton;
+		char			value;
     };
 }
 

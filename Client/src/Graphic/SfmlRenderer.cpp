@@ -63,6 +63,9 @@ void Graphic::Renderer::processEvents(Event::Manager* manager) {
             event.pos = viewportToScene(Vec2(sfEvent.mouseButton.x, sfEvent.mouseButton.y));
             event.sender = this;
             manager->fire(event);
+        } else if (sfEvent.type == sf::Event::TextEntered) {
+			Event::Event event(Event::TextEntered, sfEvent.text.unicode, this);
+            manager->fire(event);
         }
         //! Update the viewport if window size has changed
         else if (sfEvent.type == sf::Event::Resized) {
