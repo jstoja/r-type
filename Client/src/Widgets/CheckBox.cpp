@@ -82,11 +82,13 @@ void    Widget::CheckBox::setPosition(Vec2 const& v) {
 
 void    Widget::CheckBox::processEvent(Event::Event const& event) {
     if (event.type == Event::PointerReleased) {
-        update();
         if (_checked == true) {
+            _checked = false;
             _delegate->checked(*this);
         } else {
+            _checked = true;
             _delegate->unchecked(*this);
         }
+        update();
     }
 }
