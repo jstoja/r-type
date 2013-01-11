@@ -45,6 +45,7 @@ public:
         
         _button.setSprite(buttonSprite);
         _button.setCurrentFrame(0);
+        //_button.setType(Graphic::Element::Floating);
         
 //        button2->setSprite(buttonSprite);
 //        _scene.addElement(button2);
@@ -63,12 +64,20 @@ public:
                                               _button.getRect(),
                                               this));
         
+        float32 xPos = 0.0;
+        
         while (!_close) {
             // Process events
             Event::Manager::getInstance().processEvents();
             
             // Render
             Graphic::Renderer::getInstance().render();
+            
+            _scene.setViewportPosition(Vec2(xPos, 0));
+            
+            //xPos += 0.05;
+            
+            usleep(10000);
         }
     }
     
