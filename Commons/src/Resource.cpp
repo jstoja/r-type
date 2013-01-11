@@ -26,7 +26,7 @@ Resource::~Resource() {
 
 Resource::Resource(Resource const& cpy) : Object(cpy.getId()) {
     setName(cpy.getName());
-    setArray(cpy.getFile());
+    setData(cpy.getData());
 }
 
 std::string const& Resource::getName() const {
@@ -49,20 +49,21 @@ bool	Resource::operator==(Resource const& cmp) {
     return false;
 }
 
-ByteArray const& Resource::getFile() const {
+ByteArray const& Resource::getData() const {
     return _data;
 }
 
-void Resource::setArray(ByteArray const& cpy) {
+void Resource::setData(ByteArray const& cpy) {
     _data = cpy;
 }
 
 void	Resource::_readFile() {
-    std::ifstream   ifs(_name.c_str(), std::ios::binary);
+    std::string filename = Application::getInstance().getResourcesPath() + _name;
+    std::ifstream   ifs(filename.c_str(), std::ios::binary);
     uint32          fileSize;
 
     if (!ifs.is_open()) {
-        throw new Exception("Cannot open resource file: " + _name);
+        throw new Exception("Cannot open resource file: " + filename);
     }
     ifs.seekg(0, std::ios::end);
     fileSize = (uint32)ifs.tellg();

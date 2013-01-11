@@ -9,6 +9,7 @@
 
 #include "Resource.h"
 #include "ResourcesManager.h"
+#include "Exception.h"
 
 ResourcesManager::ResourcesManager() {
 }
@@ -46,7 +47,7 @@ Resource*	ResourcesManager::getResource(std::string const& name) {
 
     if ((it = _resourcesName.find(name)) != _resourcesName.end())
       return it->second;
-    return NULL;
+    return loadResource(name);
 }
 
 Resource*	ResourcesManager::getResource(uint32 id) const {
@@ -54,5 +55,5 @@ Resource*	ResourcesManager::getResource(uint32 id) const {
 
     if ((it = _resourcesId.find(id)) != _resourcesId.end())
         return it->second;
-    return NULL;
+    throw new Exception("Cannot find resource with id " + id);
 }
