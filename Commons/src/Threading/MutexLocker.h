@@ -17,7 +17,7 @@ namespace Threading {
 	/*!
 		Mutex wrapper, locking and unlocking the mutex
 	*/
-	class MutexLocker {
+	class COMMON_EXPORT_IMPORT MutexLocker {
 	public:
 		//! Constructor
 		/*!

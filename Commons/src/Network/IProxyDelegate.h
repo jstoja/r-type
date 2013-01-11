@@ -10,10 +10,12 @@
 #ifndef _IPROXY_DELEGATE_H_
 # define _IPROXY_DELEGATE_H_
 
+# include <OS.h>
+
 namespace Network {
 
   template <typename T>
-  class IProxyDelegate {
+  class COMMON_EXPORT_IMPORT_REMOVED IProxyDelegate {
   public:
     virtual ~IProxyDelegate() {}
     virtual void newPacket(T*) = 0;

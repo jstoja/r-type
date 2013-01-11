@@ -19,7 +19,7 @@
 #  include <dlfcn.h>
 # endif
 
-class Library {
+class COMMON_EXPORT_IMPORT Library {
 public:
     Library(std::string& fileName);
     ~Library();

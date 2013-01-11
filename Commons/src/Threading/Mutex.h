@@ -24,7 +24,7 @@ namespace Threading {
 	/*!  
 		Provide a cross-platform class to use mutex
 	*/
-	class Mutex {
+	class COMMON_EXPORT_IMPORT Mutex {
 	public:
 
 		//! Constructor

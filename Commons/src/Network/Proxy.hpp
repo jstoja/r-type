@@ -20,7 +20,7 @@
 namespace Network {
   
   template <typename T>
-  class Proxy : public ISocketDelegate {
+  class COMMON_EXPORT_IMPORT_REMOVED Proxy : public ISocketDelegate {
   public:
     struct		ToSend {
       ToSend(T* packet, const HostAddress& hostAddress, uint16 port) :

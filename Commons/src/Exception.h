@@ -12,7 +12,9 @@
 # include <exception>
 # include <string>
 
-class Exception : public std::exception {
+# include <OS.h>
+
+class COMMON_EXPORT_IMPORT Exception : public std::exception {
 public:
     Exception(std::string const& message, std::string const& type="Exception");
     virtual ~Exception() throw();

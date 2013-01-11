@@ -18,7 +18,7 @@ namespace Threading {
 		Provide a Thread Safe Scalar Container
 	*/
 	template<class T>
-	class Atomic {
+	class COMMON_EXPORT_IMPORT Atomic {
 	public:
 		//! Constructor
 		/*!

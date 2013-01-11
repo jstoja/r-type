@@ -11,6 +11,7 @@
 
 # include <vector>
 
+# include <OS.h>
 # include "Singleton.hpp"
 # include "Event.h"
 # include "IProvider.h"
@@ -19,7 +20,7 @@
 
 namespace Event {
     
-    class Manager : public Singleton<Manager> {
+    class COMMON_EXPORT_IMPORT_REMOVED Manager : public Singleton<Manager> {
         friend class Singleton<Manager>;
         
     public:

@@ -14,7 +14,7 @@
 
 namespace Network {
 
-  class UdpPacket : public APacket {
+  class COMMON_EXPORT_IMPORT UdpPacket : public APacket {
   public:
     UdpPacket();
     ~UdpPacket();

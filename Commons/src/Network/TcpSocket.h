@@ -21,7 +21,7 @@
 
 namespace Network {
 
-  class TcpSocket : public ASocket  {
+  class COMMON_EXPORT_IMPORT TcpSocket : public ASocket  {
 
 public:
     const static uint32 readSize = 4096;

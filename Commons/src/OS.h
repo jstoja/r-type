@@ -26,4 +26,17 @@
 #  endif
 # endif
 
+# ifdef OS_WINDOWS
+#  ifdef COMMON_EXPORT
+#    define COMMON_EXPORT_IMPORT __declspec(dllexport)
+#    define COMMON_EXPORT_IMPORT_REMOVED __declspec(dllexport)
+#  else
+#    define COMMON_EXPORT_IMPORT __declspec(dllimport)
+#    define COMMON_EXPORT_IMPORT_REMOVED
+#  endif
+# else
+#  define COMMON_EXPORT_IMPORT_REMOVED
+#  define COMMON_EXPORT_IMPORT
+# endif
+
 #endif

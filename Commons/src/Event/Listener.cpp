@@ -17,6 +17,11 @@ Event::Listener::Listener(uint32 type, Rect2 const& rect, IListenerDelegate* del
 : _type(static_cast<Type>(type)), _delegate(delegate), _rect(rect), _hasRect(true) {
 }
 
+Event::Listener::~Listener() {
+
+}
+
+
 Event::Type Event::Listener::getType() const {
     return _type;
 }

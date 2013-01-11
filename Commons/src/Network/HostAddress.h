@@ -15,7 +15,7 @@
 
 namespace Network {
 
-class HostAddress {
+class COMMON_EXPORT_IMPORT HostAddress {
  public:
   static HostAddress AnyAddress;
   

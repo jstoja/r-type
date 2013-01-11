@@ -32,7 +32,7 @@ namespace Threading {
 		Provide a cross-platform class to use thread
 	*/
 	template<class T>
-	class Thread
+	class COMMON_EXPORT_IMPORT Thread
 	{
 	public:
 		//! Constructor

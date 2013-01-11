@@ -12,7 +12,7 @@
 # include <ostream>
 # include "Types.h"
 
-struct Vec2 {
+struct COMMON_EXPORT_IMPORT Vec2 {
     
     Vec2(float32 x=0.0, float32 y=0.0);
     

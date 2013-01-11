@@ -6,7 +6,7 @@
 # include <vector>
 # include "Types.h"
 
-class ByteArray {
+class COMMON_EXPORT_IMPORT ByteArray {
     public:
         //! Constructor
         ByteArray();

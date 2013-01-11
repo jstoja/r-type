@@ -18,7 +18,7 @@
 
 namespace Network {
 
-  class APacket {
+  class COMMON_EXPORT_IMPORT APacket {
   public:
     APacket();
     ~APacket();

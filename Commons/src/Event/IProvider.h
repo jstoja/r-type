@@ -7,15 +7,17 @@
 //
 
 #ifndef R_Type_Event_IProvider_h
-#define R_Type_Event_IProvider_h
+# define R_Type_Event_IProvider_h
+
+# include <OS.h>
 
 namespace Event {
     
     class Manager;
     
-    class IProvider {
+    class COMMON_EXPORT_IMPORT_REMOVED IProvider {
     public:
-        virtual ~IProvider() {};
+        inline virtual ~IProvider() {};
         
         virtual void processEvents(Manager* manager) = 0;
     };

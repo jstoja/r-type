@@ -39,7 +39,6 @@ namespace Graphic {
     //! Class of the Renderer that put a scene into a window
     class Renderer : public Singleton<Renderer>, public Event::IProvider {
     public:
-        
         friend class Singleton<Renderer>;
         
         struct Settings {

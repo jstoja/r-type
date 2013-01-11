@@ -10,9 +10,11 @@
 #ifndef _ITCP_SERVER_DELEGATE_H_
 # define _ITCP_SERVER_DELEGATE_H_
 
+# include <OS.h>
+
 namespace Network {
   
-  class ITcpServerDelegate {
+  class COMMON_EXPORT_IMPORT ITcpServerDelegate {
   public:
     virtual void newConnection(ASocket*) = 0;
   };

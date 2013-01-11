@@ -23,7 +23,6 @@ public:
     Test(GLKView* view)
     : _close(false), _scene(), _button(), _xPos(0) {
         
-        
         // Register this class as an event provider, so it can pass events
         // from the view controller to the event manager
         Event::Manager::getInstance().registerProvider(this);
@@ -31,6 +30,12 @@ public:
         // Setup renderer
         Graphic::Renderer::getInstance().init(view);
         Graphic::Renderer::getInstance().setScene(&_scene);
+        
+        // Adjust the scene size to device format
+        Vec2 viewport = _scene.getViewport();
+        Vec2 screen = Graphic::Renderer::getInstance().getViewportSize();
+        viewport.x = viewport.y * screen.y / screen.x;
+        _scene.setViewport(viewport);
         
         // Setup scene
         Graphic::Image image;
@@ -45,7 +50,7 @@ public:
         scenery = new Graphic::Scenery();
         scenery->setTexture(texture);
         scenery->setRange(Vec2(0, 1000));
-        scenery->setWidth(1);
+        scenery->setWidth(16);
         scenery->setSpeed(0);
         scenery->setDepth(0.999);
         _scene.addScenery(scenery);
@@ -56,7 +61,7 @@ public:
         scenery = new Graphic::Scenery();
         scenery->setTexture(texture);
         scenery->setRange(Vec2(0, 1000));
-        scenery->setWidth(1);
+        scenery->setWidth(16);
         scenery->setSpeed(0.2);
         scenery->setDepth(0.998);
         scenery->setOpacity(0.33);
@@ -68,7 +73,7 @@ public:
         scenery = new Graphic::Scenery();
         scenery->setTexture(texture);
         scenery->setRange(Vec2(0, 1000));
-        scenery->setWidth(1);
+        scenery->setWidth(16);
         scenery->setSpeed(0.8);
         scenery->setDepth(0.997);
         _scene.addScenery(scenery);
@@ -79,7 +84,7 @@ public:
         scenery = new Graphic::Scenery();
         scenery->setTexture(texture);
         scenery->setRange(Vec2(0, 1000));
-        scenery->setWidth(1);
+        scenery->setWidth(16);
         scenery->setSpeed(1.2);
         scenery->setDepth(0.996);
         _scene.addScenery(scenery);
@@ -90,7 +95,7 @@ public:
         scenery = new Graphic::Scenery();
         scenery->setTexture(texture);
         scenery->setRange(Vec2(0, 1000));
-        scenery->setWidth(3);
+        scenery->setWidth(3 * 16);
         scenery->setSpeed(0.5);
         scenery->setDepth(0.995);
         scenery->setOpacity(0.8);
@@ -104,7 +109,7 @@ public:
         
         _scene.setViewportPosition(Vec2(_xPos, 0));
         
-        _xPos += 0.05;
+        _xPos += 0.1;
     }
     
     ~Test() {}

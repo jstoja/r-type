@@ -13,7 +13,7 @@
 
 namespace Event {
     
-    class IListenerDelegate {
+    class COMMON_EXPORT_IMPORT IListenerDelegate {
     public:
         virtual ~IListenerDelegate() {};
         

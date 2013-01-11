@@ -17,7 +17,7 @@ namespace Network {
 
 class ASocket;
 
-class ISocketDelegate {
+class COMMON_EXPORT_IMPORT ISocketDelegate {
  public:
   virtual void newConnection(ASocket*) = 0;
   virtual void readFinished(ASocket*, ByteArray&, const HostAddress& hostAddress, uint16 port) = 0;

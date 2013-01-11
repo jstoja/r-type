@@ -14,7 +14,7 @@
 
 namespace Network {
 
-  class TcpPacket : public APacket {
+  class COMMON_EXPORT_IMPORT TcpPacket : public APacket {
   public:
     TcpPacket();
     ~TcpPacket();

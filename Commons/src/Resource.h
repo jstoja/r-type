@@ -15,7 +15,7 @@
 # include "ByteArray.h"
 # include "Object.h"
 
-class Resource : public Object {
+class COMMON_EXPORT_IMPORT Resource : public Object {
     public:
     
         //! Constructor

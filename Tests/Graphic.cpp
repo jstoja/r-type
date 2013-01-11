@@ -77,7 +77,7 @@ public:
             
             //xPos += 0.05;
             
-            usleep(10000);
+            //usleep(10000);
         }
     }
     
