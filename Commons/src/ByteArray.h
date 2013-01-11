@@ -37,7 +37,7 @@ class ByteArray {
         ByteArray&	operator<<(ByteArray const&);
 
         //! Buffer getter
-        std::vector<char>	getBuffer() const;
+        std::vector<char> const& getBuffer() const;
 
         //! Size getter
         uint32		getSize() const;
@@ -55,7 +55,7 @@ class ByteArray {
         void		bufcopy(std::vector<char> const&);
 
         //! Get char buffer
-        char*       getCharBuffer() const;
+        char const*       getData() const;
     
         // Return pointer to buffer data
         operator char*();

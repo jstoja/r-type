@@ -59,10 +59,10 @@ ByteArray::operator char*() {
 }
 
 ByteArray::operator const char*() const {
-    return (const char*)&_buffer[0];
+    return getData();
 }
 
-std::vector<char>	ByteArray::getBuffer() const {
+std::vector<char> const& ByteArray::getBuffer() const {
   return _buffer;
 }
 
@@ -103,15 +103,8 @@ void	ByteArray::bufcopy(std::vector<char> const& buffer) {
  copy(buffer.begin(), buffer.end(), _buffer.begin());
  }
 
-char* ByteArray::getCharBuffer() const {
-    char *buffer = new char[getSize()];
-    uint32 i = 0;
-    
-    for (std::vector<char>::const_iterator it = _buffer.begin();
-            it != _buffer.end(); ++it) {
-        buffer[i++] = *it;
-    }
-    return buffer;
+char const* ByteArray::getData() const {
+    return (const char*)&_buffer[0];
 }
 
 void	ByteArray::debug() const {

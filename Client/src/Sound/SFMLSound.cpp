@@ -18,8 +18,8 @@ Sound::Sound::Sound(Resource *resource) {
 	try {
 		_id = UUIDGenerator::getInstance().getUUID();
 		_name = resource->getName();
-        ByteArray arr = resource->getFile();
-        char *buffer = arr.getCharBuffer();
+        ByteArray arr = resource->getData();
+        char const *buffer = arr.getData();
 		if (_buf.loadFromMemory(buffer, arr.getSize())) {
 			_sound.setBuffer(_buf);
 		}
@@ -43,8 +43,8 @@ void	Sound::Sound::stop() {
 void	Sound::Sound::load(Resource *resource) {
     try {
 		_name = resource->getName();
-        ByteArray arr = resource->getFile();
-        char *buffer = arr.getCharBuffer();
+        ByteArray arr = resource->getData();
+        char const *buffer = arr.getData();
 		if (_buf.loadFromMemory(buffer, arr.getSize())) {
 			_sound.setBuffer(_buf);
 		}
