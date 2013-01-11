@@ -47,7 +47,7 @@ class Client : public Network::IProxyDelegate<Network::TcpPacket>,
   */
 
  private:
-  Network::TcpSocket			_tcpSocket;
+  Network::TcpSocket                    _tcpSocket;
   Network::Proxy<Network::TcpPacket>*	_proxy;
   std::map<int, commandPointer>         _commands;
 };

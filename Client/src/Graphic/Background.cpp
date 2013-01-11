@@ -23,7 +23,7 @@ void Graphic::Background::setTexture(Texture* texture) {
     _texture = texture;
 }
 
-Graphic::Texture* Graphic::Background::getTexture(void) const {
+Graphic::Texture *Graphic::Background::getTexture(void) const {
     return _texture;
 }
 
