@@ -5,11 +5,8 @@
 //  Created by Franck Lavisse on 26/12/12.
 //
 //
-#include <SFML/Graphics.hpp>
-#include "../../../Commons/src/Event/Listener.h"
-#include "../Graphic/Element.h"
+
 #include "Widget.h"
-#include "../Graphic/Font.h"
 #include "Label.h"
 #include "TextEdit.h"
 

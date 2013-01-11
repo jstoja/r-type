@@ -30,6 +30,11 @@ namespace Graphic {
             Vec2    p1;
             Vec2    p2;
         };
+
+        enum FramesOrientation {
+            VERTICAL,
+            HORIZONTAL
+        };
         
         //! Create a Sprite
         Sprite();
@@ -40,6 +45,11 @@ namespace Graphic {
         //! Destroy the Sprite
         virtual ~Sprite();
         
+        //! We know the size of the Image,
+        //! so if we know the orientation and the number of frames,
+        //! we can set automatically all frames.
+        void    setAutoFrames(uint32 framesNumber, Sprite::FramesOrientation orientation);
+
         //! Return the Sprite's Texture
         Texture*    getTexture() const;
 

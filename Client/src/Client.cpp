@@ -55,3 +55,7 @@ void Client::connectionSuccess(Network::TcpPacket* packet) {
 
   std::cout << "Connexion success ! My id is " << id << std::endl;
 }
+
+void Client::welcomeCompleted(void) {
+
+}

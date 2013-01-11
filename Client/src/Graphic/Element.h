@@ -21,6 +21,17 @@ namespace Graphic {
     //! Class for the Sprite manipulation as Elements
     class Element : public Object {
     public:
+        
+        //! Element types
+        enum Type {
+            Static,
+            /*! Static element, often part of the backround, that scrolls with
+                the viewport */
+            Dynamic,
+            /* An element that move often, like a missile or ship */
+            Floating
+            /* A fixed interface element that doesn't move with the viewport */
+        };
        
        	//! Create a new Element
         Element(void);
@@ -30,6 +41,12 @@ namespace Graphic {
 
         //! Destruct the Element
         virtual ~Element(void);
+        
+        //! Get the type of the element
+        Type        getType(void) const;
+        
+        //! Set the type of the element
+        void        setType(Type type);
         
         //! Return the position of the Element
         Vec2 const& getPosition(void) const;
@@ -90,6 +107,7 @@ namespace Graphic {
         Rect2            getRect(void) const;
         
     private:
+        Type        _type;
         Vec2        _position;
         float32     _rotation;
         Vec2        _size;

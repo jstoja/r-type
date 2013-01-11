@@ -19,6 +19,14 @@ Graphic::Background::Background(uint32 id)
 Graphic::Background::~Background() {
 }
 
+void Graphic::Background::setTexture(Texture* texture) {
+    _texture = texture;
+}
+
+Graphic::Texture* Graphic::Background::getTexture(void) const {
+    return _texture;
+}
+
 Vec2 const& Graphic::Background::getRange(void) const {
     return _range;
 }

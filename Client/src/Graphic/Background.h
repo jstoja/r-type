@@ -14,7 +14,8 @@
 # include "Vec2.h"
 
 namespace Graphic {
-
+    class Texture;
+    
     //! Class for using a texture as Background
     class Background : public Object {
     public:
@@ -23,34 +24,29 @@ namespace Graphic {
         Background(void);
 
         //! Create a new Background specifying the Object id
-        /*!
-         \param id the Object id
-        */
         Background(uint32 id);
 
         //! Destruct the Background
         virtual ~Background();
         
+        //! Set the background texture
+        void    setTexture(Texture* texture);
+        
+        //! Get the background texture
+        Texture*    getTexture(void) const;
+        
         //! Return the range used for the Background
         Vec2 const& getRange(void) const;
-
         //! Set the range of the background
-        /*!
-         \param range Range of the Background
-         */
         void        setRange(Vec2 const& range);
         
         //! Return the repeat ratio of the Background
         float32     getRepeat(void) const;
-
         //! Set the repeat ratio of the Background
-        /*!
-         \param repeat Repeat ratio
-         */
         void        setRepeat(float32 repeat);
         
     private:
-        Texture*    _texture;
+        Graphic::Texture*    _texture;
         Vec2        _range;
         float32     _repeat;
     };

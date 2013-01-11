@@ -6,15 +6,7 @@
 //
 //
 
-#include <SFML/Graphics.hpp>
 #include "Widget.h"
-#include "Button.h"
-#include "../Graphic/Scene.h"
-#include "../Graphic/Font.h"
-#include "../../Commons/src/Event/Event.h"
-#include "../../Commons/src/Event/Manager.h"
-#include "../../Commons/src/Event/Listener.h"
-#include "../../Commons/src/Event/IListenerDelegate.h"
 #include "Label.h"
 #include "CheckBox.h"
 #include "ComboBox.h"

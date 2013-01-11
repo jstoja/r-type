@@ -8,7 +8,7 @@
 
 #include "Scenery.h"
 
-Graphic::Scenery::Scenery(void) : Background(), _speed(1), _depth(0) {
+Graphic::Scenery::Scenery(void) : Background(), _speed(1), _depth(0), _width(1) {
     
 }
 
@@ -36,4 +36,10 @@ void Graphic::Scenery::setDepth(float32 depth) {
     _depth = depth;
 }
 
+void Graphic::Scenery::setWidth(float32 width) {
+    _width = width;
+}
 
+float32 Graphic::Scenery::getWidth(void) const {
+    return _width;
+}

@@ -14,17 +14,10 @@
 #include "Graphic/Scene.h"
 #include "Widgets/Widget.h"
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
-#include <freetype/freetype.h>
-#include <freetype/ftglyph.h>
-#include <freetype/ftoutln.h>
-#include <freetype/fttrigon.h>
-
 #include "Types.h"
 #include "Graphic/Texture.h"
 #include "Graphic/Sprite.h"
-#include "Graphic/Font.h"
+#include "Graphic/FreetypeFont.h"
 #include "Widgets/Label.h"
 
 #include <SFML/Graphics.hpp>

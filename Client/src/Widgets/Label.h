@@ -11,19 +11,8 @@
 
 # include <iostream>
 # include <string>
-
-# include <ft2build.h>
-# include FT_FREETYPE_H
-# include <freetype/freetype.h>
-# include <freetype/ftglyph.h>
-# include <freetype/ftoutln.h>
-# include <freetype/fttrigon.h>
-
-
-namespace Graphic {
-    class  Scene;
-    class  FreetypeFont;
-};
+# include "Graphic/FreetypeFont.h"
+# include "Widget.h"
 
 namespace   Widget {
     class   Widget;
@@ -64,7 +53,6 @@ namespace   Widget {
         void    draw() {}
     private:
         static Graphic::FreetypeFont   *_font;
-        sf::Image               _image;
         std::string             _text;
     };
 };

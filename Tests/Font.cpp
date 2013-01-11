@@ -12,7 +12,7 @@
 #include "Event/IListenerDelegate.h"
 #include "Graphic/Renderer.h"
 #include "Graphic/Scene.h"
-#include "Graphic/Font.h"
+#include "Graphic/FreetypeFont.h"
 #include "Graphic/Element.h"
 #include "Graphic/Sprite.h"
 #include "Graphic/Texture.h"
