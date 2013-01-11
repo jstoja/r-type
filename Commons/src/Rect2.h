@@ -13,7 +13,7 @@
 # include "Types.h"
 # include "Vec2.h"
 
-struct Rect2 {
+struct COMMON_EXPORT_IMPORT Rect2 {
     
     Rect2(float32 x=0, float32 y=0, float32 width=0, float32 height=0);
     Rect2(Vec2 const& pos, Vec2 const& size);

@@ -18,7 +18,7 @@
 
 namespace Network {
 
-  class TcpServer : public ISocketDelegate {
+  class COMMON_EXPORT_IMPORT TcpServer : public ISocketDelegate {
  public:
 
   TcpServer();

@@ -11,7 +11,7 @@
 
 # include "Types.h"
 
-class Object {
+class COMMON_EXPORT_IMPORT Object {
 public:
     
     Object();
@@ -22,6 +22,8 @@ public:
     uint32  getId() const;
     void    setId(uint32 id);
     
+	virtual Object&	operator=(Object const& obj);
+
 private:
     uint32  _id;
 };

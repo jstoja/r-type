@@ -12,11 +12,13 @@
 
 # include <map>
 # include <string>
+
 # include "Singleton.hpp"
+# include <OS.h>
 
 class Resource;
 
-class ResourcesManager : public Singleton<ResourcesManager> {
+class COMMON_EXPORT_IMPORT_REMOVED ResourcesManager : public Singleton<ResourcesManager> {
     friend class Singleton<ResourcesManager>;
 
     public:

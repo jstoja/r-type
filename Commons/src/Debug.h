@@ -12,6 +12,8 @@
 # include <iostream>
 # include <string>
 
+# include <OS.h>
+
 # define DEBUG_ENABLED
 
 # ifdef DEBUG_ENABLED
@@ -20,7 +22,7 @@
 #  define Log(x)
 # endif
 
-class Debug {
+class COMMON_EXPORT_IMPORT Debug {
 public:
     
     static std::ostream* logStream;

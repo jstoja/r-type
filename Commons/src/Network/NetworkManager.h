@@ -19,26 +19,26 @@
 
 namespace Network {
   
-  class NetworkManager : public Singleton<NetworkManager> {
+	class COMMON_EXPORT_IMPORT NetworkManager : public Singleton<NetworkManager> {
     
     friend class Singleton<NetworkManager>;
     friend class Threading::Thread<NetworkManager>;
     
-  public:
-    void	registerSocket(ASocket*);
-    void	unregisterSocket(ASocket*);
+	public:
+		void	registerSocket(ASocket*);
+		void	unregisterSocket(ASocket*);
 
-    void	operator()();
+		void	operator()();
 
-  private:
+	private:
 
-    NetworkManager();
-    ~NetworkManager();
+		NetworkManager();
+		~NetworkManager();
 
-    std::vector<ASocket*>			_sockets;
-    Threading::Mutex				_socketsMutex;
-    Threading::Thread<NetworkManager>		_runThread;
-};
+		std::vector<ASocket*>			_sockets;
+		Threading::Mutex				_socketsMutex;
+		Threading::Thread<NetworkManager>		_runThread;
+	};
 
 }
 

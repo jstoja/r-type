@@ -12,6 +12,7 @@
 # include <cstdlib>
 # include "IProvider.h"
 # include "Vec2.h"
+# include <OS.h>
 
 namespace Event {
     
@@ -31,7 +32,7 @@ namespace Event {
         PointerMiddle   =   2
     };
     
-    struct Event {
+    struct COMMON_EXPORT_IMPORT Event {
     public:
         Event(Type type, IProvider* sender=NULL);
         Event(Type type, Vec2 const& pos, IProvider* sender=NULL);

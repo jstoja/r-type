@@ -27,3 +27,7 @@ uint32 Object::getId() const {
 void Object::setId(uint32 id) {
     _id = id;
 }
+
+Object&	Object::operator=(Object const& obj) {
+	return (*this);
+}

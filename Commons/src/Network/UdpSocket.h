@@ -27,7 +27,7 @@
 
 namespace Network {
   
-  class UdpSocket : public ASocket {
+  class COMMON_EXPORT_IMPORT UdpSocket : public ASocket {
   public:
     const static uint32 readSize = 32768;
     const static uint32 writeSize = 2048;

@@ -15,7 +15,7 @@
 # include "Types.h"
 # include "Singleton.hpp"
 
-class Application : public Singleton<Application> {
+class COMMON_EXPORT_IMPORT_REMOVED Application : public Singleton<Application> {
     friend class Singleton<Application>;
 
     public:

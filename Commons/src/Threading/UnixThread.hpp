@@ -32,7 +32,7 @@ namespace Threading {
 		Provide an implementation of the AThread class for the Unix Operating System
 	*/
 	template<class T>
-	class Thread
+	class COMMON_EXPORT_IMPORT Thread
 	{
 	public:
 		//! Constructor

@@ -16,7 +16,7 @@
 
 namespace Network {
   
-  class ASocket {
+  class COMMON_EXPORT_IMPORT ASocket {
   public:
     ASocket();
     ~ASocket();

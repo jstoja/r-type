@@ -13,7 +13,7 @@
 # include "Types.h"
 # include "Singleton.hpp"
 
-class UUIDGenerator : public Singleton<UUIDGenerator> {
+class COMMON_EXPORT_IMPORT UUIDGenerator : public Singleton<UUIDGenerator> {
     friend class Singleton<UUIDGenerator>;
 
     public:

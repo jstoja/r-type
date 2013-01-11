@@ -13,7 +13,7 @@
 namespace Network {
 
   template <typename T>
-  class IProxyDelegate {
+  class COMMON_EXPORT_IMPORT_REMOVED IProxyDelegate {
   public:
     virtual ~IProxyDelegate() {}
     virtual void newPacket(T*) = 0;

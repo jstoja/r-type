@@ -10,6 +10,8 @@
 # define __R_Type__Event__Listener__
 
 # include <cstdlib>
+
+# include <OS.h>
 # include "Event.h"
 # include "Rect2.h"
 
@@ -17,13 +19,14 @@ namespace Event {
     
     class IListenerDelegate;
     
-    class Listener {
+    class COMMON_EXPORT_IMPORT Listener {
     public:
         Listener(uint32 type, IListenerDelegate* delegate=NULL);
         Listener(uint32 type, Rect2 const& rect, IListenerDelegate* delegate=NULL);
+		virtual ~Listener();
         
         Type            getType() const;
-        Rect2 const&     getRect() const;
+        Rect2 const&	getRect() const;
         bool            hasRect() const;
         void            processEvent(Event const& event);
         
