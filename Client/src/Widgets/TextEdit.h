@@ -17,14 +17,23 @@
 # include "Widget.h"
 # include "ITextEditDelegate.h"
 
+namespace Event {
+    class Manager;
+    class Listener;
+    class IListenerDelegate;
+};
+
 namespace Widget {
     class Widget;
     class Label;
+    class ITextEditDelegate;
     
-    class TextEdit : public Widget {
+    class TextEdit : public Widget,
+                     public Event::IListenerDelegate {
     public:
         //! Constructor
         TextEdit(Graphic::Scene*,
+                 ITextEditDelegate *,
                  Widget* parent = NULL);
         
         //! Destructor
@@ -32,6 +41,7 @@ namespace Widget {
         
         //! Constructor with text
         TextEdit(Graphic::Scene*,
+                 ITextEditDelegate*,
                  std::string const&,
                  Widget* parent = NULL);
         
@@ -41,24 +51,33 @@ namespace Widget {
         //! Setter text
         void    setText(std::string const&);
         
+        //! Draw
         void    draw() {}
         
+        //! Update
         void    update();
         
+        //! Put a char in string
         void    operator<<(char);
         
+        //! Put a string in string
         void    operator<<(std::string const&);
         
+        //! Init the text edit
         void    init();
         
+        //! Clear text
         void    clear();
         
+        //! Set position
         void    setPosition(Vec2 const&);
         
+        //! Overlead of process event
+        virtual void    processEvent(Event::Event const&);
     private:
-        Event::Listener     _event;
+        Event::Listener*    _eventListener;
         Label               _label;
-        ITextEditDelegate   *_delegate;
+        ITextEditDelegate*  _delegate;
     };
 };
 

@@ -5,20 +5,29 @@
 //  Created by Franck Lavisse on 26/12/12.
 //
 //
-
+#include "../Graphic/Renderer.h"
 #include "Widget.h"
 #include "Label.h"
 #include "TextEdit.h"
 
 Widget::TextEdit::TextEdit(Graphic::Scene* scene,
+                           ITextEditDelegate* delegate,
                            Widget* parent) :
-    Widget(scene, parent), _event(NULL), _label(scene, parent) {
+    Widget(scene, parent),
+    _eventListener(NULL),
+    _label(scene, parent),
+    _delegate(delegate) {
 }
 
 Widget::TextEdit::TextEdit(Graphic::Scene* scene,
+                           ITextEditDelegate* delegate,
                            std::string const& text,
                            Widget* parent) :
-    Widget(scene, parent), _event(NULL), _label(scene, parent) {
+    Widget(scene, parent),
+    _eventListener(NULL),
+    _label(scene, parent),
+    _delegate(delegate) {
+
 }
 
 Widget::TextEdit::~TextEdit() {
@@ -31,6 +40,12 @@ std::string const&  Widget::TextEdit::getText() const {
 void    Widget::TextEdit::setText(std::string const& text) {
     _label.setText(text);
     update();
+    _eventListener = new Event::Listener(
+                                         Event::PointerPushed
+                                         | Event::TextEntered,
+                                         _element.getRect(),
+                                         this);
+    Event::Manager::getInstance().addEventListener(_eventListener);
 }
 
 void    Widget::TextEdit::update() {
@@ -60,4 +75,18 @@ void    Widget::TextEdit::setPosition(Vec2 const& v) {
 
 void    Widget::TextEdit::clear() {
     _label.clear();
+}
+
+void    Widget::TextEdit::processEvent(Event::Event const& event) {
+    std::cout << "event" << std::endl;
+    if (event.type == Event::PointerPushed) {
+        setFocus(true);
+        update();
+        _delegate->textClicked(*this);
+    } else if (hasFocus() && event.type == Event::TextEntered) {
+        *this << (char)event.value;
+        _delegate->textHasChanged(*this);
+    }
+    Event::Manager::getInstance().processEvents();
+    Graphic::Renderer::getInstance().render();
 }
