@@ -7,11 +7,13 @@
 //
 
 #include "Debug.h"
+#include "Application.h"
 #include "Event/Manager.h"
 #include "Event/Listener.h"
 #include "Event/IListenerDelegate.h"
 #include "Graphic/Renderer.h"
 #include "Graphic/Scene.h"
+#include "Graphic/Image.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -25,13 +27,13 @@ public:
         Graphic::Renderer::getInstance().setScene(&_scene);
 
         // Setup scene
-        sf::Image image;
+        Graphic::Image image;
         
         Graphic::Scenery* scenery;
         Graphic::Texture* texture;
         
         // Create sceneries
-        image.loadFromFile("background.png");
+        image.loadFromResource("background.png");
         texture = new Graphic::Texture();
         texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
         scenery = new Graphic::Scenery();
@@ -42,7 +44,7 @@ public:
         scenery->setDepth(0.999);
         _scene.addScenery(scenery);
         
-        image.loadFromFile("stars-deep.png");
+        image.loadFromResource("stars-deep.png");
         texture = new Graphic::Texture();
         texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
         scenery = new Graphic::Scenery();
@@ -53,7 +55,7 @@ public:
         scenery->setDepth(0.998);
         _scene.addScenery(scenery);
         
-        image.loadFromFile("stars-blue.png");
+        image.loadFromResource("stars-blue.png");
         texture = new Graphic::Texture();
         texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
         scenery = new Graphic::Scenery();
@@ -64,7 +66,7 @@ public:
         scenery->setDepth(0.997);
         _scene.addScenery(scenery);
 
-        image.loadFromFile("stars-red.png");
+        image.loadFromResource("stars-red.png");
         texture = new Graphic::Texture();
         texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
         scenery = new Graphic::Scenery();
@@ -75,7 +77,7 @@ public:
         scenery->setDepth(0.996);
         _scene.addScenery(scenery);
                 
-        image.loadFromFile("planets.png");
+        image.loadFromResource("planets.png");
         texture = new Graphic::Texture();
         texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
         scenery = new Graphic::Scenery();
@@ -104,9 +106,7 @@ public:
             _scene.setViewportPosition(Vec2(xPos, 0));
             
             xPos += 0.02;
-            
-            Log(xPos);
-            
+                        
             usleep(10000);
         }
     }
@@ -126,6 +126,9 @@ private:
 
 int	main(int argc, char *argv[]) {
     try {
+        // Setup application
+        Application::getInstance().init(argc, argv);
+        
         Test client;
     } catch (std::exception* e) {
         std::cerr << e->what() << std::endl;
