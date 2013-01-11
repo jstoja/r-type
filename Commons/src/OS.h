@@ -35,6 +35,7 @@
 #    define COMMON_EXPORT_IMPORT_REMOVED
 #  endif
 # else
+#  define COMMON_EXPORT_IMPORT_REMOVED
 #  define COMMON_EXPORT_IMPORT
 # endif
 
