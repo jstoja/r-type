@@ -35,13 +35,13 @@ public:
         
          // Add event listeners
          Event::Manager::getInstance().addEventListener(new Event::Listener(Event::Close, this));
-         Event::Manager::getInstance().addEventListener(new Event::Listener(Event::PointerIn
+/*         Event::Manager::getInstance().addEventListener(new Event::Listener(Event::PointerIn
          | Event::PointerOut
          | Event::PointerMove
          | Event::PointerPushed
          | Event::PointerReleased,
          _box->getElement()->getRect(),
-         this));
+         this)); */
          
         while (!_close) {
             // Process events
@@ -57,7 +57,7 @@ public:
     virtual void processEvent(Event::Event const& event) {
         if (event.type == Event::Close) {
             _close = true;
-        } else if (event.type & Event::PointerIn) {
+        } /*else if (event.type & Event::PointerIn) {
             std::cerr << "Pointer in" << std::endl;
         } else if (event.type & Event::PointerOut) {
             std::cerr << "Pointer out " << std::endl;
@@ -67,7 +67,7 @@ public:
             std::cerr << "Pointer pushed" << std::endl;
         } else if (event.type & Event::PointerReleased) {
             std::cerr << "Pointer released" << std::endl;
-        }
+        }*/
     }
     
 private:

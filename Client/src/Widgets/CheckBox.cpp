@@ -80,5 +80,5 @@ void    Widget::CheckBox::setPosition(Vec2 const& v) {
 }
 
 void    Widget::CheckBox::processEvent(Event::Event const& event) {
-
+    
 }

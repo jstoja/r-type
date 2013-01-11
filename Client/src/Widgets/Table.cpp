@@ -30,11 +30,9 @@ void    Widget::Table::addColumn(Label* label) {
 }
 
 void    Widget::Table::addWidget(Label* label, Widget* widget) {
-    widget->setPosition(Vec2(label->getPosition().x
-                             + _widgets[label].size()
-                             + 5,
-                             label->getPosition().y + _widgets[label].size()));
     _widgets[label].push_back(widget);
+    widget->setPosition(Vec2(label->getPosition().x,
+                             label->getPosition().y - _widgets[label].size()));
 }
 
 std::vector<Widget::Widget*> const& Widget::Table::getColumn(Label* label){
