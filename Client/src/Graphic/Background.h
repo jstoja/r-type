@@ -29,6 +29,12 @@ namespace Graphic {
         //! Destruct the Background
         virtual ~Background();
         
+        //! Set the background texture
+        void    setTexture(Texture* texture);
+        
+        //! Get the background texture
+        Texture*    getTexture(void) const;
+        
         //! Return the range used for the Background
         Vec2 const& getRange(void) const;
         //! Set the range of the background
