@@ -13,6 +13,7 @@ namespace Menu {
       //! This method is called when the welcome screen is over
       virtual void welcomeCompleted() = 0;
 
+      /*
       //! Login Menu Delegation
       //! This method is called when the Login screen is over
       virtual void loginCompleted() = 0; 
@@ -22,6 +23,7 @@ namespace Menu {
       virtual void MapCompleted() = 0;
       //! This method is called when the map screen is canceled
       virtual void MapNotCompleted() = 0; 
+      */
   };
 }
 
