@@ -221,7 +221,7 @@ void Graphic::Renderer::_renderSceneries(void) {
 
 void Graphic::Renderer::_renderScenery(Scenery* scenery) {
     // Get the x position of the scenery, relative to time
-    float sceneryWidth = scenery->getWidth() * _scene->getViewport().x;
+    float sceneryWidth = scenery->getWidth();
     float xPos = _scene->getViewportPosition().x * scenery->getSpeed() / sceneryWidth;
     xPos = xPos - (int)xPos;
     xPos = sceneryWidth * (1 - xPos);
