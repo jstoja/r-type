@@ -18,7 +18,7 @@ Widget::Button::Button(Graphic::Scene* scene,
     loadImage("button.png");
     setPosition(Vec2(1.0, 1.0));
     setSize(Vec2(1.0, 1.0));
-    _element.getSprite()->setAutoFrames(2, Graphic::Sprite::VERTICAL);
+    _element.getSprite()->setAutoFrames(3, Graphic::Sprite::VERTICAL);
     _element.setCurrentFrame(0);
     addElement();
 
@@ -43,7 +43,7 @@ Widget::Button::Button(Graphic::Scene* scene,
     setPosition(position);
     setSize(size);
     loadImage(image);
-    _element.getSprite()->setAutoFrames(2, Graphic::Sprite::VERTICAL);
+    _element.getSprite()->setAutoFrames(3, Graphic::Sprite::VERTICAL);
     _element.setCurrentFrame(0);
     addElement();
     _eventListener = new Event::Listener(
