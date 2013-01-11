@@ -19,15 +19,10 @@
 
 namespace Widget {
     class Widget;
+    class IButtonDelegate;
 
     class Button : public Widget, public Event::IListenerDelegate {
         public:
-
-            enum framesOrientation {
-                VERTICAL,
-                HORIZONTAL
-            };
-
             //! Create the Button
             Button(Graphic::Scene*, IButtonDelegate *delegate, Widget* parent = NULL);
 
@@ -42,16 +37,7 @@ namespace Widget {
             //! Destruct the Button
             ~Button(void);
 
-            // We know the size of the Image, so if we know the orientation and the number of frames, we can split the Image correctly.
-            // This will be private but it can be nice to export it to the other classes imo
-            uint32  setAutoFrames(uint32 framesNumber, framesOrientation orientation);
-            uint32  setManualFrame(const Graphic::Sprite::Frame &frame);
-
             void    setCurrentFrame(uint32);
-
-            void    draw() {};
-
-            void    update() {};
 
             // Event Listener Virtual Methods
             virtual void processEvent(Event::Event const& event);
