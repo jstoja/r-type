@@ -44,13 +44,10 @@ namespace Widget {
         //! Get state
         bool    isChecked() const;
         
+        void    update();
+
         //! Set state
         void    setChecked(bool);
-        
-        void    draw() {}
-        
-        //! Update when state button change
-        void    update();
         
         void    setPosition(Vec2 const&);
         

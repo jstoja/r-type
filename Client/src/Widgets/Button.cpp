@@ -66,13 +66,15 @@ void    Widget::Button::setCurrentFrame(uint32 nb) {
 }
 
 void    Widget::Button::processEvent(Event::Event const& event) {
+    std::cout << "event fired" << std::endl;
   if (event.type == Event::PointerReleased) {
+      _element.setCurrentFrame(2);
     _delegate->buttonReleased(*this);
   } else if (event.type == Event::PointerPushed) {
-      _element.setCurrentFrame(2);
+      _element.setCurrentFrame(1);
       _delegate->buttonPushed(*this);
   } else if (event.type == Event::PointerIn) {
-      _element.setCurrentFrame(1);
+      _element.setCurrentFrame(2);
       _delegate->buttonHovered(*this);
   } else if (event.type == Event::PointerOut) {
       _element.setCurrentFrame(0);

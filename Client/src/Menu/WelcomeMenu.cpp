@@ -8,7 +8,6 @@ Menu::WelcomeMenu::WelcomeMenu(Graphic::Scene *scene, IMenuDelegate* delegate)
       sprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.0), Vec2(1.0, 1.0)));
       sprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.0), Vec2(1.0, 1.0)));
       sprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.0), Vec2(1.0, 1.0)));
-
 }
 
 Menu::WelcomeMenu::~WelcomeMenu() {

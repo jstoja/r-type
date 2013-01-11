@@ -54,24 +54,6 @@ void Graphic::Texture::setData(uint32 width, uint32 height, const uint8* data) {
     Graphic::Exception::checkOpenGLError();
 }
 
-void Graphic::Texture::setDataFromFile(std::string const& fileName) {
-    uint32        width;
-    uint32        height;
-    const uint8   *data;
-
-    #ifndef OS_IOS
-        sf::Image image;
-        image.loadFromFile(fileName.c_str());
-        width = image.getSize().x;
-        height = image.getSize().y;
-        data = image.getPixelsPtr();
-    #endif
-    #ifdef OS_IOS
-    #endif
-    
-    setData(width, height, data);
-}
-
 uint32 Graphic::Texture::getGLID() const {
     return _glID;
 }

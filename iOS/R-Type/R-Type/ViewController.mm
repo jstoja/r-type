@@ -8,18 +8,20 @@
 
 #import "ViewController.h"
 
+#include "Application.h"
 #include "Debug.h"
 #include "Event/Manager.h"
 #include "Event/IListenerDelegate.h"
 #include "Graphic/Renderer.h"
 #include "Graphic/Scene.h"
+#include "Graphic/Image.h"
 
 #include <stack>
 
 class Test : public Event::IListenerDelegate, public Event::IProvider {
 public:
     Test(GLKView* view)
-    : _close(false), _scene(), _button() {
+    : _close(false), _scene(), _button(), _xPos(0) {
         
         
         // Register this class as an event provider, so it can pass events
@@ -31,94 +33,82 @@ public:
         Graphic::Renderer::getInstance().setScene(&_scene);
         
         // Setup scene
-        _button.setPosition(Vec2(8, 4.5));
-        _button.setSize(Vec2(9, 3));
+        Graphic::Image image;
         
-        //        Graphic::Element* button2 = new Graphic::Element();
-        //        button2->setPosition(Vec2(2, 2));
-        //        button2->setSize(Vec2(3, 1));
+        Graphic::Scenery* scenery;
+        Graphic::Texture* texture;
         
-//        sf::Image image;
-//        image.loadFromFile("button.png");
+        // Create sceneries
+        image.loadFromResource("background.png");
+        texture = new Graphic::Texture();
+        texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
+        scenery = new Graphic::Scenery();
+        scenery->setTexture(texture);
+        scenery->setRange(Vec2(0, 1000));
+        scenery->setWidth(1);
+        scenery->setSpeed(0);
+        scenery->setDepth(0.999);
+        _scene.addScenery(scenery);
         
-        Graphic::Texture* buttonTexture = new Graphic::Texture();
+        image.loadFromResource("stars-deep.png");
+        texture = new Graphic::Texture();
+        texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
+        scenery = new Graphic::Scenery();
+        scenery->setTexture(texture);
+        scenery->setRange(Vec2(0, 1000));
+        scenery->setWidth(1);
+        scenery->setSpeed(0.2);
+        scenery->setDepth(0.998);
+        scenery->setOpacity(0.33);
+        _scene.addScenery(scenery);
         
-        NSString* imagePath = [[[NSBundle mainBundle] URLForResource:@"button" withExtension:@"png"] path];
-        UIImage* image = [[UIImage alloc] initWithContentsOfFile:imagePath];
-        if (image) {
-            uint8* imageData = getImageData(image);
-            if (imageData) {
-                buttonTexture->setData(image.size.width,
-                                       image.size.height,
-                                       imageData);     
-                free(imageData);
-            }
-            [image release];
-        }
+        image.loadFromResource("stars-blue.png");
+        texture = new Graphic::Texture();
+        texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
+        scenery = new Graphic::Scenery();
+        scenery->setTexture(texture);
+        scenery->setRange(Vec2(0, 1000));
+        scenery->setWidth(1);
+        scenery->setSpeed(0.8);
+        scenery->setDepth(0.997);
+        _scene.addScenery(scenery);
+        
+        image.loadFromResource("stars-red.png");
+        texture = new Graphic::Texture();
+        texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
+        scenery = new Graphic::Scenery();
+        scenery->setTexture(texture);
+        scenery->setRange(Vec2(0, 1000));
+        scenery->setWidth(1);
+        scenery->setSpeed(1.2);
+        scenery->setDepth(0.996);
+        _scene.addScenery(scenery);
+        
+        image.loadFromResource("planets.png");
+        texture = new Graphic::Texture();
+        texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
+        scenery = new Graphic::Scenery();
+        scenery->setTexture(texture);
+        scenery->setRange(Vec2(0, 1000));
+        scenery->setWidth(3);
+        scenery->setSpeed(0.5);
+        scenery->setDepth(0.995);
+        scenery->setOpacity(0.8);
+        _scene.addScenery(scenery);
 
-        Graphic::Sprite* buttonSprite = new Graphic::Sprite();
-        buttonSprite->setTexture(buttonTexture);
-        buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.0),      Vec2(1.0,  0.333333)));
-        buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.333333), Vec2(1.0, 0.666666)));
-        buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.666666), Vec2(1.0, 1)));
-        
-        _button.setSprite(buttonSprite);
-        _button.setCurrentFrame(0);
-        
-        //        button2->setSprite(buttonSprite);
-        //        _scene.addElement(button2);
-        
-        _scene.addElement(&_button);
-        
-        // Add event listeners
-        Event::Manager::getInstance()
-        .addEventListener(new Event::Listener(Event::Close, this));
-        Event::Manager::getInstance()
-        .addEventListener(new Event::Listener(Event::PointerIn
-                                              | Event::PointerOut
-                                              | Event::PointerMove
-                                              | Event::PointerPushed
-                                              | Event::PointerReleased,
-                                              _button.getRect(),
-                                              this));
-        
-//        while (!_close) {
-//            // Process events
-//            Event::Manager::getInstance().processEvents();
-//
-//            // Render
-//            _renderer.render();
-//        }
     }
     
     void render() {
         Event::Manager::getInstance().processEvents();
         Graphic::Renderer::getInstance().render();
+        
+        _scene.setViewportPosition(Vec2(_xPos, 0));
+        
+        _xPos += 0.05;
     }
     
     ~Test() {}
-    
-    uint8* getImageData(UIImage* image) {
-        CGImageRef imageRef = [image CGImage];
         
-        NSUInteger width = CGImageGetWidth(imageRef);
-        NSUInteger height = CGImageGetHeight(imageRef);
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-        uint8* rawData = (uint8*)malloc(height * width * 4);
-        NSUInteger bytesPerPixel = 4;
-        NSUInteger bytesPerRow = bytesPerPixel * width;
-        NSUInteger bitsPerComponent = 8;
-        CGContextRef context = CGBitmapContextCreate(rawData, width, height,
-                                                     bitsPerComponent, bytesPerRow, colorSpace,
-                                                     kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-        CGColorSpaceRelease(colorSpace);
-        
-        CGContextDrawImage(context, CGRectMake(0, 0, width, height), imageRef);
-        CGContextRelease(context);
-        
-        return rawData;
-    }
-    
     virtual void processEvent(Event::Event const& event) {
         if (event.type == Event::Close) {
             _close = true;
@@ -149,6 +139,7 @@ private:
     Graphic::Scene              _scene;
     Graphic::Element            _button;
     std::stack<Event::Event>    _events;
+    float                       _xPos;    
 };
 
 

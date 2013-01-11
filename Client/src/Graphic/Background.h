@@ -45,10 +45,17 @@ namespace Graphic {
         //! Set the repeat ratio of the Background
         void        setRepeat(float32 repeat);
         
+        //! Set the background opacity
+        void        setOpacity(float32 opacity);
+        
+        //! Get the background opacity
+        float32     getOpacity(void);
+        
     private:
         Graphic::Texture*    _texture;
         Vec2                _range;
         float32             _repeat;
+        float32             _opacity;
     };
     
 }

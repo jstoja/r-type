@@ -13,10 +13,12 @@
 #include "Graphic/Renderer.h"
 #include "Graphic/Scene.h"
 #include "Widgets/Button.h"
+#include "Application.h"
 
 #include <SFML/Graphics.hpp>
 
-class Test : public Event::IListenerDelegate {
+class Test : public Event::IListenerDelegate,
+             public Widget::IButtonDelegate {
 public:
     Test()
     : _close(false), _scene() {
@@ -25,21 +27,18 @@ public:
         Graphic::Renderer::getInstance().init();
         Graphic::Renderer::getInstance().setScene(&_scene);
         
-        _button = new Widget::Button(&_scene, NULL);
+        _button = new Widget::Button(&_scene,
+                                     this,
+                                     _scene.getViewport()/10,
+                                     _scene.getViewport()/2,
+                                     "button.png",
+                                     NULL);
 
         // Setup scene
       
-        /*
         // Add event listeners
         Event::Manager::getInstance().addEventListener(new Event::Listener(Event::Close, this));
-        Event::Manager::getInstance().addEventListener(new Event::Listener(Event::PointerIn
-                                              | Event::PointerOut
-                                              | Event::PointerMove
-                                              | Event::PointerPushed
-                                              | Event::PointerReleased,
-                                              _button.getElement()->getRect(),
-                                              this));
-         */
+
         while (!_close) {
             // Process events
             Event::Manager::getInstance().processEvents();
@@ -54,16 +53,13 @@ public:
     virtual void processEvent(Event::Event const& event) {
         if (event.type == Event::Close) {
             _close = true;
-        } /*else if (event.type & Event::PointerIn) {
-            _button.setCurrentFrame(2);
-        } else if (event.type & Event::PointerOut) {
-            _button.setCurrentFrame(0);
-        } else if (event.type & Event::PointerPushed) {
-            _button.setCurrentFrame(1);
-        } else if (event.type & Event::PointerReleased) {
-            _button.setCurrentFrame(2);
-        }*/
+        } 
     }
+
+    virtual void buttonHovered(Widget::Button &instance) {}
+    virtual void buttonUnHovered(Widget::Button &instance) {}
+    virtual void buttonPushed(Widget::Button &instance) {}
+    virtual void buttonReleased(Widget::Button &instance) {}
 
 private:
     bool                _close;
@@ -74,6 +70,7 @@ private:
 
 int	main(int argc, char *argv[]) {
     try {
+        Application::getInstance().init(argc, argv);
         Test client;
     } catch (std::exception* e) {
         std::cerr << e->what() << std::endl;
