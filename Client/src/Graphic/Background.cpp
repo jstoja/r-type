@@ -42,11 +42,3 @@ float32 Graphic::Background::getRepeat(void) const {
 void Graphic::Background::setRepeat(float32 repeat) {
     _repeat = repeat;
 }
-
-Graphic::Texture const *Graphic::Background::getTexture(void) const {
-  return _texture;
-}
-
-void Graphic::Background::setTexture(Graphic::Texture *texture) {
-  _texture = texture;
-}

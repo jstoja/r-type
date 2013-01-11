@@ -45,10 +45,6 @@ namespace Graphic {
         //! Set the repeat ratio of the Background
         void        setRepeat(float32 repeat);
         
-        //! Return the Texture of the Background
-        Graphic::Texture const*  getTexture(void) const;
-        //! Set the Texture Background
-        void            setTexture(Graphic::Texture *texture);
     private:
         Graphic::Texture*    _texture;
         Vec2        _range;

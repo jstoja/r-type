@@ -43,10 +43,9 @@ Widget::CheckBox::CheckBox(Graphic::Scene* scene,
 void    Widget::CheckBox::init() {
   _button.loadImage(_imagePath.c_str());
   _element = *_button.getElement();
-  _element.getSprite()->addFrame(Graphic::Sprite::Frame(Vec2(0,0.5),
-        Vec2(1,1)));
-  _element.getSprite()->addFrame(Graphic::Sprite::Frame(Vec2(0,0),
-        Vec2(1,0.5)));
+  _element.getSprite()->setAutoFrames(2, Graphic::Sprite::VERTICAL);
+  //_element.getSprite()->addFrame(Graphic::Sprite::Frame(Vec2(0,0.5), Vec2(1,1)));
+  //_element.getSprite()->addFrame(Graphic::Sprite::Frame(Vec2(0,0), Vec2(1,0.5)));
   _element.setCurrentFrame(1);
   addElement();
 }

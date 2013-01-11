@@ -75,7 +75,8 @@ bool    Widget::Widget::loadImage(const std::string &image_path) {
     //buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0,0), Vec2(0.5, 0.5)));
     //buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.5, 0.5), Vec2(1,1)));
     // THIS SECTION HAS TO MOVE OUT AFTER
-    buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0,0), Vec2(1,1)));
+    //buttonSprite->setAutoFrames(2, Graphic::Sprite::VERTICAL);
+    //buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0,0), Vec2(1,1)));
     /*buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0, 0.5),
                                                   Vec2(1, 1)));
     buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.0),
