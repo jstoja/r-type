@@ -28,7 +28,7 @@ public:
             Event::Manager::getInstance().processEvents();
             // Render
             Graphic::Renderer::getInstance().render();
-            usleep(10000);
+            //usleep(10000);
         }
     }
     

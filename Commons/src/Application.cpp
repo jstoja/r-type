@@ -7,8 +7,10 @@
 // Started on  mer. déc. 19 12:19:09 2012 Samuel Olivier
 //
 
-#include <unistd.h>
 #include "OS.h"
+#ifndef OS_WINDOWS
+# include <unistd.h>
+#endif
 #include "Application.h"
 #include "Exception.h"
 #include "Debug.h"
@@ -30,7 +32,7 @@ void Application::init(int32 ac, char **av) {
 
 void Application::_getBinaryPath(void) {
 # if defined OS_WINDOWS
-    _binaryPath = av[0];
+    _binaryPath = _argv[0];
     _binaryPath = _binaryPath.substr(0, _binaryPath.find_last_of('\\'));
     _binaryPath += '\\';
 # endif
