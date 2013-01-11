@@ -9,11 +9,11 @@
 #include "Background.h"
 
 Graphic::Background::Background(void)
-: Object(), _texture(NULL), _range(), _repeat(1) {
+: Object(), _texture(NULL), _range(), _repeat(1), _opacity(1) {
 }
 
 Graphic::Background::Background(uint32 id)
-: Object(id), _texture(NULL), _range(), _repeat(1) {
+: Object(id), _texture(NULL), _range(), _repeat(1), _opacity(1) {
 }
 
 Graphic::Background::~Background() {
@@ -41,4 +41,12 @@ float32 Graphic::Background::getRepeat(void) const {
 
 void Graphic::Background::setRepeat(float32 repeat) {
     _repeat = repeat;
+}
+
+void Graphic::Background::setOpacity(float32 opacity) {
+    _opacity = opacity;
+}
+
+float32 Graphic::Background::getOpacity(void) {
+    return _opacity;
 }

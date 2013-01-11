@@ -131,6 +131,7 @@ namespace Graphic {
         uint32                  _worldMatrixLocation;
         uint32                  _transformationMatrixLocation;
         uint32                  _textureSamplerLocation;
+        uint32                  _opacityLocation;
         
 # if defined (GRAPHIC_RENDERER_SFML)
 #  include "SfmlRendererMembers.h"

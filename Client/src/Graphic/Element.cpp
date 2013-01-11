@@ -12,13 +12,13 @@
 
 Graphic::Element::Element(void) :
 Object(),
-_type(Dynamic), _position(), _rotation(0), _size(),
+_type(Dynamic), _position(), _rotation(0), _opacity(1), _size(),
 _sprite(NULL), _currentFrame(0),
 _updateTransformationMatrix(true) {
 }
 
 Graphic::Element::Element(uint32 id) :
-Object(id), _position(), _rotation(0), _size(),
+Object(id), _position(), _rotation(0), _opacity(1), _size(),
 _sprite(NULL), _currentFrame(0),
 _updateTransformationMatrix(true) {
 }
@@ -48,6 +48,14 @@ float32 Graphic::Element::getRotation(void) const {
 
 void Graphic::Element::setRotation(float32 rotation) {
     _rotation = rotation;
+}
+
+void Graphic::Element::setOpacity(float32 opacity) {
+    _opacity = opacity;
+}
+
+float32 Graphic::Element::getOpacity(void) {
+    return _opacity;
 }
 
 Vec2 const& Graphic::Element::getSize(void) const {

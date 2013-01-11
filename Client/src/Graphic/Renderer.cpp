@@ -33,9 +33,12 @@ static const char* fragmentShader =
     "precision mediump float;\n"
 # endif
     "varying vec2       vTextureCoords;\n"
+    "\n"
     "uniform sampler2D  textureSampler;\n"
+    "uniform float      opacity;\n"
     "void main(){\n"
         "gl_FragColor = texture2D(textureSampler, vec2(vTextureCoords.s, -vTextureCoords.t));\n"
+        "gl_FragColor.a *= opacity;\n"
     "}\n"
 ;
 
@@ -89,7 +92,6 @@ void Graphic::Renderer::init(Settings const& settings) {
     
     // Background color
     glClearColor(0.f, 0.f, 0.f, 1.f);
-    glClearDepth(1.0);
     
     // Update the OpenGL viewport (platform-specific)
     updateViewport();
@@ -114,6 +116,7 @@ void Graphic::Renderer::init(Settings const& settings) {
     _worldMatrixLocation = _shaderProgram->getUniformLocation("worldMatrix");
     _transformationMatrixLocation = _shaderProgram->getUniformLocation("transformationMatrix");
     _textureSamplerLocation = _shaderProgram->getUniformLocation("textureSampler");
+    _opacityLocation = _shaderProgram->getUniformLocation("opacity");
 }
 
 void Graphic::Renderer::destruct() {
@@ -143,7 +146,6 @@ void Graphic::Renderer::render(void) {
     glVertexAttribPointer(_vertexPositionLocation, 3, GL_FLOAT,
                           GL_FALSE, 0, (void*)0);
     _indexesBuffer->bind();
-
     
     // Start by drawing background components
     _renderSceneries();
@@ -161,8 +163,11 @@ void Graphic::Renderer::render(void) {
         if (!(element->getType() == Element::Static
               || element->getType() == Element::Dynamic))
             continue;
+        // Set element transformation matrix
         glUniformMatrix4fv(_transformationMatrixLocation, 1, GL_FALSE,
                            (const float32*)element->getTransformationMatrix());
+        // And opacity
+        glUniform1f(_opacityLocation, element->getOpacity());
         
         _setupElementTexture(element);
 
@@ -179,8 +184,11 @@ void Graphic::Renderer::render(void) {
         Element* element = *it;
         if (!(element->getType() == Element::Floating))
             continue;
+        // Set element transformation matrix
         glUniformMatrix4fv(_transformationMatrixLocation, 1, GL_FALSE,
                            (const float32*)element->getTransformationMatrix());
+        // And opacity
+        glUniform1f(_opacityLocation, element->getOpacity());
         
         _setupElementTexture(element);
         
@@ -213,7 +221,7 @@ void Graphic::Renderer::_renderSceneries(void) {
 
 void Graphic::Renderer::_renderScenery(Scenery* scenery) {
     // Get the x position of the scenery, relative to time
-    float sceneryWidth = scenery->getWidth() * _scene->getViewport().x;
+    float sceneryWidth = scenery->getWidth();
     float xPos = _scene->getViewportPosition().x * scenery->getSpeed() / sceneryWidth;
     xPos = xPos - (int)xPos;
     xPos = sceneryWidth * (1 - xPos);
@@ -227,6 +235,9 @@ void Graphic::Renderer::_renderScenery(Scenery* scenery) {
     // Send it to the GPU
     glUniformMatrix4fv(_transformationMatrixLocation, 1, GL_FALSE,
                        (const float32*)transformationMatrix);
+    
+    // Set the scenery opacity
+    glUniform1f(_opacityLocation, scenery->getOpacity());
     
     glActiveTexture(GL_TEXTURE0);
     scenery->getTexture()->bind();

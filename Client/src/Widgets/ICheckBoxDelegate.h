@@ -1,7 +1,6 @@
 #ifndef ICHECKBOX_DELEGATE_H
 # define ICHECKBOX_DELEGATE_H
 
-# include "Widget.h"
 # include "CheckBox.h"
 
 namespace Widget {
