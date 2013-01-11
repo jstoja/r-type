@@ -28,9 +28,6 @@ public:
         _button = new Widget::Button(&_scene, NULL);
 
         // Setup scene
-        _button->setPosition(Vec2(4,4));
-        _button->setSize(Vec2(9, 3));
-        _button->loadImage("button.png");
       
         /*
         // Add event listeners

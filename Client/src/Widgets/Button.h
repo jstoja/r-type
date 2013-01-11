@@ -11,6 +11,7 @@
 
 # include <iostream>
 # include <string>
+# include "Vec2.h"
 # include "Event/Manager.h"
 # include "Event/Listener.h"
 # include "Event/IListenerDelegate.h"
@@ -39,11 +40,13 @@ namespace Widget {
 
             void    setCurrentFrame(uint32);
 
+            Graphic::Sprite     *getSprite() const;
+
             // Event Listener Virtual Methods
             virtual void processEvent(Event::Event const& event);
 
         private:
-            Graphic::Element    _element;
+            //Graphic::Element    _element;
             IButtonDelegate     *_delegate;
             Event::Listener     *_eventListener;
 

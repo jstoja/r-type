@@ -35,13 +35,17 @@ void    Graphic::Sprite::setAutoFrames(uint32 framesNumber,
         float32 begin = i/framesNumber;
         float32 end = (((i+1.0) < framesNumber) ? ((i + 1)/framesNumber) : (1.0));
         if (orientation == Sprite::VERTICAL) {
-            _frames.push_back(Sprite::Frame(Vec2(0.0, begin),
-                                            Vec2(1.0, end)));
+            _frames.push_back(Sprite::Frame(Vec2(0.0, begin), Vec2(1.0, end)));
+            std::cout << "Frame Added" << std::endl;;
         } else if (orientation == Sprite::HORIZONTAL) {
             _frames.push_back(Sprite::Frame(Vec2(begin, 0.0),
                                             Vec2(end, 1.0)));
         }
     }
+}
+
+void    Graphic::Sprite::clearFrames() {
+    _frames.clear();
 }
 
 Graphic::Texture* Graphic::Sprite::getTexture() const {
