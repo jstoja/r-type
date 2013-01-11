@@ -112,7 +112,7 @@ public:
             
             Log(xPos);
             
-            usleep(10000);
+            //usleep(10000);
         }
     }
     
