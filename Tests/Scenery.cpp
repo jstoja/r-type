@@ -53,6 +53,7 @@ public:
         scenery->setWidth(1);
         scenery->setSpeed(0.2);
         scenery->setDepth(0.998);
+        scenery->setOpacity(0.2);
         _scene.addScenery(scenery);
         
         image.loadFromResource("stars-blue.png");
@@ -86,6 +87,7 @@ public:
         scenery->setWidth(3);
         scenery->setSpeed(0.5);
         scenery->setDepth(0.995);
+        scenery->setOpacity(0.8);
         _scene.addScenery(scenery);
 
         

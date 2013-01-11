@@ -39,6 +39,8 @@ class Application : public Singleton<Application> {
     private:
     //! Construct the object
     Application();
+    
+    void _getBinaryPath(void);
 
     char**		_argv;
     int32		_argc;

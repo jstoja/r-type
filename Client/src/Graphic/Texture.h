@@ -9,6 +9,7 @@
 #ifndef __RType__Texture__
 # define __RType__Texture__
 
+# include <string>
 # include "OS.h"
 
 # ifndef OS_IOS
@@ -45,9 +46,6 @@ namespace Graphic {
          Data must contain width * height pixels encoded in RGBA, 32bpp
          */
         void    setData(uint32 width, uint32 height, const uint8* data);
-
-        //! Set the data of the texture from an image file
-        void    setDataFromFile(std::string const& fileName);
         
         //! Return the internal OpenGL id of the texture
         uint32  getGLID() const;

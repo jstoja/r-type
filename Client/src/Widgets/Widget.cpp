@@ -67,7 +67,7 @@ Graphic::Element *Widget::Widget::getElement() {
 bool    Widget::Widget::loadImage(const std::string &image_path) {
 
     Graphic::Texture* buttonTexture = new Graphic::Texture();
-    buttonTexture->setDataFromFile(image_path);
+    //buttonTexture->setDataFromFile(image_path);
     
     Graphic::Sprite* buttonSprite = new Graphic::Sprite();
     buttonSprite->setTexture(buttonTexture);
