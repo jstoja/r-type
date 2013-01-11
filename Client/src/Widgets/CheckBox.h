@@ -10,14 +10,15 @@
 # define __R_Type__CheckBox__
 
 # include <iostream>
-# include "ICheckBoxDelegate.h"
 # include "Event/Manager.h"
 # include "Event/Listener.h"
 # include "Event/IListenerDelegate.h"
+# include "Widget.h"
+# include "Button.h"
+# include "ICheckBoxDelegate.h"
 
 namespace Widget {
     class Widget;
-    class Button;
     
     class CheckBox : public Widget, public Event::IListenerDelegate {
     public:

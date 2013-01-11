@@ -5,8 +5,8 @@
 //  Created by Julien Bordellier on 25/12/12.
 //
 //
-#include "../Graphic/Scene.h"
-#include "../Graphic/Sprite.h"
+
+#include "Widget.h"
 #include "Button.h"
 #include "IButtonDelegate.h"
 

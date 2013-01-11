@@ -6,9 +6,9 @@
 //
 //
 
-#include <SFML/Graphics.hpp>
 #include "Vec2.h"
-#include "../Graphic/Scene.h"
+#include "Graphic/Scene.h"
+#include "Graphic/Texture.h"
 #include "Widget.h"
 
 Widget::Widget::Widget(Graphic::Scene* scene, Widget* parent)
@@ -65,11 +65,10 @@ Graphic::Element *Widget::Widget::getElement() {
 }
 
 bool    Widget::Widget::loadImage(const std::string &image_path) {
-    sf::Image image;
-    image.loadFromFile(image_path.c_str());
-    
+
     Graphic::Texture* buttonTexture = new Graphic::Texture();
-    buttonTexture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
+    buttonTexture->setDataFromFile(image_path);
+    
     Graphic::Sprite* buttonSprite = new Graphic::Sprite();
     buttonSprite->setTexture(buttonTexture);
     

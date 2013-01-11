@@ -5,9 +5,7 @@
 //  Created by Franck Lavisse on 27/12/12.
 //
 //
-#include "../Graphic/Sprite.h"
-#include "../Graphic/Scene.h"
-#include "Widget.h"
+
 #include "Button.h"
 #include "CheckBox.h"
 

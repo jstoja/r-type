@@ -10,14 +10,12 @@
 # define __R_Type__TextEdit__
 
 # include <iostream>
+# include "Graphic/FreetypeFont.h"
+# include "Event/Manager.h"
+# include "Event/Listener.h"
+# include "Event/IListenerDelegate.h"
+# include "Widget.h"
 # include "ITextEditDelegate.h"
-
-class Graphic::Element;
-class Event::Listener;
-
-namespace Graphic {
-    class Scene;
-};
 
 namespace Widget {
     class Widget;
