@@ -22,7 +22,7 @@ void Application::init(int32 ac, char **av) {
     _argc = ac;
     _argv = av;
 # if defined OS_WINDOWS
-    _binaryPath = _av[0];
+    _binaryPath = av[0];
     _binaryPath = _binaryPath.substr(0, _binaryPath.find_last_of('\\'));
     _binaryPath += '\\';
 # else

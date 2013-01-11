@@ -10,6 +10,8 @@
 #ifndef _IPROXY_DELEGATE_H_
 # define _IPROXY_DELEGATE_H_
 
+# include <OS.h>
+
 namespace Network {
 
   template <typename T>

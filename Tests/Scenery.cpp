@@ -106,8 +106,8 @@ public:
             _scene.setViewportPosition(Vec2(xPos, 0));
             
             xPos += 0.02;
-                        
-            usleep(10000);
+
+            //usleep(10000);
         }
     }
     

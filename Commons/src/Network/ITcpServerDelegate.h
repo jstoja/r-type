@@ -10,6 +10,8 @@
 #ifndef _ITCP_SERVER_DELEGATE_H_
 # define _ITCP_SERVER_DELEGATE_H_
 
+# include <OS.h>
+
 namespace Network {
   
   class COMMON_EXPORT_IMPORT ITcpServerDelegate {

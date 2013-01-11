@@ -6,7 +6,7 @@ namespace Menu {
   class IMenuDelegate {
 
     public:
-      virtual ~IMenuDelegate() {}
+      inline virtual ~IMenuDelegate() {}
 
 
       //! Welcome Menu Delegation
