@@ -48,8 +48,11 @@ namespace Graphic {
         
         //! Return the transformation matrix for viewport space
         Matrix4f        getViewportMatrix(void) const;
+        
+        //! Set the viewport size of the Scene
+        void setViewport(Vec2 const& size);
 
-        //! Return the viewport Vector of the Scene
+        //! Return the viewport size of the Scene
         Vec2 const& getViewport(void) const;
         
         //! Return the viewport position ('camera' position)

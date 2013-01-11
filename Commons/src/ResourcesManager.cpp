@@ -10,6 +10,7 @@
 #include "Resource.h"
 #include "ResourcesManager.h"
 #include "Exception.h"
+#include "Debug.h"
 
 ResourcesManager::ResourcesManager() {
 }

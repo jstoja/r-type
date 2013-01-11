@@ -39,7 +39,7 @@ public:
         scenery = new Graphic::Scenery();
         scenery->setTexture(texture);
         scenery->setRange(Vec2(0, 1000));
-        scenery->setWidth(1);
+        scenery->setWidth(16);
         scenery->setSpeed(0);
         scenery->setDepth(0.999);
         _scene.addScenery(scenery);
@@ -50,9 +50,10 @@ public:
         scenery = new Graphic::Scenery();
         scenery->setTexture(texture);
         scenery->setRange(Vec2(0, 1000));
-        scenery->setWidth(1);
+        scenery->setWidth(16);
         scenery->setSpeed(0.2);
         scenery->setDepth(0.998);
+        scenery->setOpacity(0.2);
         _scene.addScenery(scenery);
         
         image.loadFromResource("stars-blue.png");
@@ -61,7 +62,7 @@ public:
         scenery = new Graphic::Scenery();
         scenery->setTexture(texture);
         scenery->setRange(Vec2(0, 1000));
-        scenery->setWidth(1);
+        scenery->setWidth(16);
         scenery->setSpeed(0.8);
         scenery->setDepth(0.997);
         _scene.addScenery(scenery);
@@ -72,7 +73,7 @@ public:
         scenery = new Graphic::Scenery();
         scenery->setTexture(texture);
         scenery->setRange(Vec2(0, 1000));
-        scenery->setWidth(1);
+        scenery->setWidth(16);
         scenery->setSpeed(1.2);
         scenery->setDepth(0.996);
         _scene.addScenery(scenery);
@@ -83,9 +84,10 @@ public:
         scenery = new Graphic::Scenery();
         scenery->setTexture(texture);
         scenery->setRange(Vec2(0, 1000));
-        scenery->setWidth(3);
+        scenery->setWidth(3 * 16);
         scenery->setSpeed(0.5);
         scenery->setDepth(0.995);
+        scenery->setOpacity(0.8);
         _scene.addScenery(scenery);
 
         

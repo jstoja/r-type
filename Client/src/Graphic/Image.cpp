@@ -9,6 +9,7 @@
 #include "Image.h"
 #include "ResourcesManager.h"
 #include "Resource.h"
+#include "Debug.h"
 
 Graphic::Image::Image(std::string const& resourceName)
 : _pixels(NULL), _width(0), _height(0) {

@@ -6,6 +6,7 @@
 //
 //
 
+#include "Graphic/Image.h"
 #include "Vec2.h"
 #include "Graphic/Scene.h"
 #include "Graphic/Texture.h"
@@ -66,8 +67,9 @@ Graphic::Element *Widget::Widget::getElement() {
 
 bool    Widget::Widget::loadImage(const std::string &image_path) {
 
+    Graphic::Image *img = new Graphic::Image(image_path);
     Graphic::Texture* buttonTexture = new Graphic::Texture();
-    buttonTexture->setDataFromFile(image_path);
+    buttonTexture->setData(img->getWidth(), img->getHeight(), img->getPixelsPtr());
     
     Graphic::Sprite* buttonSprite = new Graphic::Sprite();
     buttonSprite->setTexture(buttonTexture);

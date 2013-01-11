@@ -47,6 +47,11 @@ Graphic::Matrix4f Graphic::Scene::getViewportMatrix(void) const {
     return matrix;
 }
 
+void Graphic::Scene::setViewport(Vec2 const& size) {
+    _viewport = size;
+    _initWorldMatrix();
+}
+
 Vec2 const& Graphic::Scene::getViewport(void) const {
     return _viewport;
 }
@@ -60,6 +65,7 @@ void Graphic::Scene::setViewportPosition(const Vec2 &pos) {
 }
 
 void Graphic::Scene::_initWorldMatrix(void) {
+    _worldMatrix.identity();
     _worldMatrix.translate(-1, -1);
     _worldMatrix.scale(2.0/_viewport.x, 2.0/_viewport.y);
 }

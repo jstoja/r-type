@@ -65,6 +65,12 @@ namespace Graphic {
          \param rotation Rotation ratio
          */
         void        setRotation(float32 rotation);
+        
+        //! Set the element opacity
+        void        setOpacity(float32 opacity);
+        
+        //! Get the element opacity
+        float32     getOpacity(void);
        
        	//! Return the size of the Element
         Vec2 const& getSize(void) const;
@@ -110,6 +116,7 @@ namespace Graphic {
         Type        _type;
         Vec2        _position;
         float32     _rotation;
+        float       _opacity;
         Vec2        _size;
         Sprite*     _sprite;
         uint16      _currentFrame;

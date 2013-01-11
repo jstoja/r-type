@@ -50,6 +50,8 @@ namespace Graphic {
         //! we can set automatically all frames.
         void    setAutoFrames(uint32 framesNumber, Sprite::FramesOrientation orientation);
 
+        void    clearFrames();
+
         //! Return the Sprite's Texture
         Texture*    getTexture() const;
 
