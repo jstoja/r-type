@@ -12,6 +12,10 @@
 # include <iostream>
 # include <vector>
 # include <string>
+# include "Event/Manager.h"
+# include "Event/Listener.h"
+# include "Event/IListenerDelegate.h"
+# include "Widget.h"
 # include "IComboBoxDelegate.h"
 
 namespace Event {

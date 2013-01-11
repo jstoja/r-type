@@ -29,6 +29,21 @@ _textureCoords(NULL), _needRebuildTextureCoords(true) {
 Graphic::Sprite::~Sprite() {
 }
 
+void    Graphic::Sprite::setAutoFrames(uint32 framesNumber,
+                                       Sprite::FramesOrientation orientation) {
+    for (float32 i = 0; i < framesNumber; ++i) {
+        float32 begin = i/framesNumber;
+        float32 end = (((i+1.0) < framesNumber) ? ((i + 1)/framesNumber) : (1.0));
+        if (orientation == Sprite::VERTICAL) {
+            _frames.push_back(Sprite::Frame(Vec2(0.0, begin),
+                                            Vec2(1.0, end)));
+        } else if (orientation == Sprite::HORIZONTAL) {
+            _frames.push_back(Sprite::Frame(Vec2(begin, 0.0),
+                                            Vec2(end, 1.0)));
+        }
+    }
+}
+
 Graphic::Texture* Graphic::Sprite::getTexture() const {
     return _texture;
 }

@@ -4,7 +4,7 @@
 #include <Exception.h>
 #include <Application.h>
 #include "Types.h"
-#include "Font.h"
+#include "FreetypeFont.h"
 
 Graphic::FreetypeFont::FreetypeFont(uint8 size, const std::string &path)
 : _fontLoaded(false), _fontPath(path), _fontSize(size) {

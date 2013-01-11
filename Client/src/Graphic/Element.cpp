@@ -11,7 +11,8 @@
 #include "Debug.h"
 
 Graphic::Element::Element(void) :
-Object(), _position(), _rotation(0), _size(),
+Object(),
+_type(Dynamic), _position(), _rotation(0), _size(),
 _sprite(NULL), _currentFrame(0),
 _updateTransformationMatrix(true) {
 }
@@ -23,6 +24,14 @@ _updateTransformationMatrix(true) {
 }
 
 Graphic::Element::~Element(void) {
+}
+
+Graphic::Element::Type Graphic::Element::getType(void) const {
+    return _type;
+}
+
+void Graphic::Element::setType(Graphic::Element::Type type) {
+    _type = type;
 }
 
 Vec2 const&Graphic::Element::getPosition(void) const {

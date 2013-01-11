@@ -6,9 +6,9 @@
 //
 //
 
-#include <SFML/Graphics.hpp>
 #include "Vec2.h"
-#include "../Graphic/Scene.h"
+#include "Graphic/Scene.h"
+#include "Graphic/Texture.h"
 #include "Widget.h"
 
 Widget::Widget::Widget(Graphic::Scene* scene, Widget* parent)
@@ -65,18 +65,18 @@ Graphic::Element *Widget::Widget::getElement() {
 }
 
 bool    Widget::Widget::loadImage(const std::string &image_path) {
-    sf::Image image;
-    image.loadFromFile(image_path.c_str());
-    
+
     Graphic::Texture* buttonTexture = new Graphic::Texture();
-    buttonTexture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
+    buttonTexture->setDataFromFile(image_path);
+    
     Graphic::Sprite* buttonSprite = new Graphic::Sprite();
     buttonSprite->setTexture(buttonTexture);
     
     //buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0,0), Vec2(0.5, 0.5)));
     //buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.5, 0.5), Vec2(1,1)));
     // THIS SECTION HAS TO MOVE OUT AFTER
-    buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0,0), Vec2(1,1)));
+    //buttonSprite->setAutoFrames(2, Graphic::Sprite::VERTICAL);
+    //buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0,0), Vec2(1,1)));
     /*buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0, 0.5),
                                                   Vec2(1, 1)));
     buttonSprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.0),

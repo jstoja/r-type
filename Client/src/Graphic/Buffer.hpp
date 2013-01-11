@@ -12,6 +12,7 @@
 # include "OpenGL.h"
 # include "GraphicException.h"
 # include "Types.h"
+# include "Debug.h"
 
 namespace Graphic {
     

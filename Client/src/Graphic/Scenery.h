@@ -38,9 +38,16 @@ namespace Graphic {
 		//! Set the depth of the Scenery
         void	setDepth(float32 depth);
         
+		//! Set the width of the Scenery
+        void	setWidth(float32 width);
+        
+        //! Get the width of the Scenery
+        float32	getWidth(void) const;
+        
     private:
         float32 _speed;
         float32 _depth;
+        float32 _width;
     };
     
 }

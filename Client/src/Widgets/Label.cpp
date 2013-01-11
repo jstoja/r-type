@@ -5,20 +5,10 @@
 //  Created by Franck Lavisse on 26/12/12.
 //
 //
-#include <SFML/Graphics.hpp>
-#include <stdexcept>
-#include <ft2build.h>
-#include FT_FREETYPE_H
-#include <freetype/freetype.h>
-#include <freetype/ftglyph.h>
-#include <freetype/ftoutln.h>
-#include <freetype/fttrigon.h>
 
 #include "Types.h"
 #include "Widget.h"
-#include "../Graphic/Texture.h"
-#include "../Graphic/Sprite.h"
-#include "../Graphic/Font.h"
+#include "Graphic/FreetypeFont.h"
 #include "Label.h"
 
 Graphic::FreetypeFont   *Widget::Label::_font = NULL;
