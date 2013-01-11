@@ -18,62 +18,62 @@
 #include <SFML/Graphics.hpp>
 
 class Test : public Event::IListenerDelegate {
-public:
-    Test()
-    : _close(false), _scene() {
-        
-        // Setup renderer
-        Graphic::Renderer::getInstance().init();
-        Graphic::Renderer::getInstance().setScene(&_scene);
-        
-		_box = new Widget::CheckBox(&_scene,
-		                    NULL,
-                                    Vec2(1,1),
-                                    Vec2(5,5),
-                                    std::string("checkbox.png"));
-        _box->init();
-        
-         // Add event listeners
-         Event::Manager::getInstance().addEventListener(new Event::Listener(Event::Close, this));
-         Event::Manager::getInstance().addEventListener(new Event::Listener(Event::PointerIn
-         | Event::PointerOut
-         | Event::PointerMove
-         | Event::PointerPushed
-         | Event::PointerReleased,
-         _box->getElement()->getRect(),
-         this));
-         
-        while (!_close) {
-            // Process events
-            Event::Manager::getInstance().processEvents();
-            
-            // Render
-            Graphic::Renderer::getInstance().render();
+    public:
+        Test()
+            : _close(false), _scene() {
+
+                // Setup renderer
+                Graphic::Renderer::getInstance().init();
+                Graphic::Renderer::getInstance().setScene(&_scene);
+
+                _box = new Widget::CheckBox(&_scene,
+                        NULL,
+                        Vec2(1,1),
+                        Vec2(5,5),
+                        std::string("checkbox.png"));
+                _box->init();
+
+                // Add event listeners
+                Event::Manager::getInstance().addEventListener(new Event::Listener(Event::Close, this));
+                Event::Manager::getInstance().addEventListener(new Event::Listener(Event::PointerIn
+                            | Event::PointerOut
+                            | Event::PointerMove
+                            | Event::PointerPushed
+                            | Event::PointerReleased,
+                            _box->getElement()->getRect(),
+                            this));
+
+                while (!_close) {
+                    // Process events
+                    Event::Manager::getInstance().processEvents();
+
+                    // Render
+                    Graphic::Renderer::getInstance().render();
+                }
+            }
+
+        ~Test() {}
+
+        virtual void processEvent(Event::Event const& event) {
+            if (event.type == Event::Close) {
+                _close = true;
+            } else if (event.type & Event::PointerIn) {
+                std::cerr << "Pointer in" << std::endl;
+            } else if (event.type & Event::PointerOut) {
+                std::cerr << "Pointer out " << std::endl;
+            } else if (event.type & Event::PointerPushed) {
+                _box->setChecked(!_box->isChecked());
+                _box->update();
+                std::cerr << "Pointer pushed" << std::endl;
+            } else if (event.type & Event::PointerReleased) {
+                std::cerr << "Pointer released" << std::endl;
+            }
         }
-    }
-    
-    ~Test() {}
-    
-    virtual void processEvent(Event::Event const& event) {
-        if (event.type == Event::Close) {
-            _close = true;
-        } else if (event.type & Event::PointerIn) {
-            std::cerr << "Pointer in" << std::endl;
-        } else if (event.type & Event::PointerOut) {
-            std::cerr << "Pointer out " << std::endl;
-        } else if (event.type & Event::PointerPushed) {
-            _box->setChecked(!_box->isChecked());
-            _box->update();
-            std::cerr << "Pointer pushed" << std::endl;
-        } else if (event.type & Event::PointerReleased) {
-            std::cerr << "Pointer released" << std::endl;
-        }
-    }
-    
-private:
-    bool                _close;
-    Graphic::Scene      _scene;
-    Widget::CheckBox    *_box;
+
+    private:
+        bool                _close;
+        Graphic::Scene      _scene;
+        Widget::CheckBox    *_box;
 };
 
 int	main(int argc, char *argv[]) {
@@ -82,6 +82,6 @@ int	main(int argc, char *argv[]) {
     } catch (std::exception* e) {
         std::cerr << e->what() << std::endl;
     }
-	return (0);
+    return (0);
 }
 

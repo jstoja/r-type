@@ -14,13 +14,14 @@
 # include "Event/Listener.h"
 # include "Event/IListenerDelegate.h"
 # include "Widget.h"
-# include "Button.h"
 # include "ICheckBoxDelegate.h"
 
 namespace Widget {
     class Widget;
+    class IButtonDelegate;
     
-    class CheckBox : public Widget, public Event::IListenerDelegate {
+    class CheckBox : public Widget,
+                     public Event::IListenerDelegate {
     public:
         //! Constructor
         CheckBox(Graphic::Scene*,
@@ -40,10 +41,10 @@ namespace Widget {
         //! Destructor
         ~CheckBox();
         
-        //! Getter state
+        //! Get state
         bool    isChecked() const;
         
-        //! Setter state
+        //! Set state
         void    setChecked(bool);
         
         void    draw() {}
@@ -59,10 +60,10 @@ namespace Widget {
 
         // IListenerDelegate Virtual Methods
         virtual void processEvent(Event::Event const& event);
+
     private:
         std::string         _imagePath;
         bool                _checked;
-        Button              _button;
         ICheckBoxDelegate   *_delegate;
         Event::Listener     *_eventListener;
     };

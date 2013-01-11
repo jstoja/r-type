@@ -89,6 +89,7 @@ void Graphic::Renderer::init(Settings const& settings) {
     
     // Background color
     glClearColor(0.f, 0.f, 0.f, 1.f);
+    glClearDepth(1.0);
     
     // Update the OpenGL viewport (platform-specific)
     updateViewport();
@@ -98,7 +99,8 @@ void Graphic::Renderer::init(Settings const& settings) {
     _textureCoordsBuffer = new Bufferf(Bufferf::VertexArray);
     _indexesBuffer = new Bufferui(Bufferui::ElementArray);
     _fillVertexesBuffer();
-    _fillTextureCoordsBuffer();
+    // Fill the texture coords buffer, used to draw sceneries
+    _fillTextureCoordsBuffer(2, 1);
     _fillIndexesBuffer();
     
     // Create the shader
@@ -193,6 +195,13 @@ void Graphic::Renderer::render(void) {
 }
 
 void Graphic::Renderer::_renderSceneries(void) {
+    // Setup the world matrix and texture coords, common to all sceneries
+    glUniformMatrix4fv(_worldMatrixLocation, 1, GL_FALSE,
+                       (const float32*)_scene->getWorldMatrix());
+    _textureCoordsBuffer->bind();
+    glVertexAttribPointer(_vertexTextureCoordsLocation, 2, GL_FLOAT,
+                          GL_FALSE, 0, (void*)0);
+
     std::vector<Graphic::Scenery*> const& sceneries = _scene->getSceneries();
     for (std::vector<Graphic::Scenery*>::const_iterator it = sceneries.begin(),
          end = sceneries.end(); it != end; ++it) {
@@ -211,22 +220,14 @@ void Graphic::Renderer::_renderScenery(Scenery* scenery) {
 
     // Create the scenery rect with a transformation matrix
     Matrix4f transformationMatrix;
-    transformationMatrix.translate(xPos, 4.5);
+    transformationMatrix.translate(xPos, 4.5, 0);
     transformationMatrix.scale(sceneryWidth * 2,
                                _scene->getViewport().y);
+    transformationMatrix.translate(0, 0, scenery->getDepth());
     // Send it to the GPU
-    glUniformMatrix4fv(_worldMatrixLocation, 1, GL_FALSE,
-                       (const float32*)_scene->getWorldMatrix());
     glUniformMatrix4fv(_transformationMatrixLocation, 1, GL_FALSE,
                        (const float32*)transformationMatrix);
-
-    // Use the texture coords buffer to place the texture
-    _fillTextureCoordsBuffer(2, 1);
     
-    // Setup the texture
-    _textureCoordsBuffer->bind();
-    glVertexAttribPointer(_vertexTextureCoordsLocation, 2, GL_FLOAT,
-                          GL_FALSE, 0, (void*)0);
     glActiveTexture(GL_TEXTURE0);
     scenery->getTexture()->bind();
     glUniform1i(_textureSamplerLocation, 0);
@@ -299,18 +300,18 @@ Rect2 Graphic::Renderer::sceneToViewport(Rect2 const& rect) const {
     return newRect;
 }
 
-void Graphic::Renderer::_fillVertexesBuffer(float32 x, float32 y) {
+void Graphic::Renderer::_fillVertexesBuffer(float32 x, float32 y, float32 z) {
     // Make a rectangle of size 2*x / 2*y , with origin on its center
     float32 vertexes[] = {
         // Triangle 1
-        -x,     -y, 0.0f,
-         x,     -y, 0.0f,
-        -x,      y, 0.0f,
+        -x,     -y, z,
+         x,     -y, z,
+        -x,      y, z,
         
         // Triangle 2
-        -x,     y, 0.0f,
-         x,    -y, 0.0f,
-         x,     y, 0.0f
+        -x,     y, z,
+         x,    -y, z,
+         x,     y, z
     };
     _vertexesBuffer->setData(vertexes, sizeof(vertexes)/sizeof(float32));
 }

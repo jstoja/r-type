@@ -35,6 +35,7 @@ Widget::Button::Button(Graphic::Scene* scene,
     setPosition(position);
     setSize(size);
     loadImage(image);
+    _element.getSprite()->setAutoFrames(2, Graphic::Sprite::VERTICAL);
     addElement();
     _eventListener = new Event::Listener(
         Event::PointerIn
@@ -49,15 +50,6 @@ Widget::Button::Button(Graphic::Scene* scene,
 }
 
 Widget::Button::~Button() {
-}
-
-uint32  Widget::Button::setAutoFrames(uint32 framesNumber, framesOrientation orientation) {
-    return 0;
-}
-
-uint32  Widget::Button::setManualFrame(const Graphic::Sprite::Frame &frame) {
-    _element.getSprite()->addFrame(frame);
-    return 0;
 }
 
 void    Widget::Button::setCurrentFrame(uint32 nb) {

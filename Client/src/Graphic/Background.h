@@ -47,8 +47,8 @@ namespace Graphic {
         
     private:
         Graphic::Texture*    _texture;
-        Vec2        _range;
-        float32     _repeat;
+        Vec2                _range;
+        float32             _repeat;
     };
     
 }

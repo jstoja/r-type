@@ -43,14 +43,14 @@ class COMMON_EXPORT_IMPORT Resource : public Object {
         void	setName(std::string const&);
 
         //! File getter
-        ByteArray const&	getFile() const;
+        ByteArray const&	getData() const;
 
     private:
         //! Read file and put in into a ByteArray
         void	_readFile();
 
         //! Array setter
-        void	setArray(ByteArray const&);
+        void	setData(ByteArray const&);
 
         ByteArray	_data;
         std::string	_name;

@@ -6,7 +6,6 @@
 //
 //
 
-#include "Button.h"
 #include "CheckBox.h"
 
 Widget::CheckBox::CheckBox(Graphic::Scene* scene,
@@ -14,11 +13,9 @@ Widget::CheckBox::CheckBox(Graphic::Scene* scene,
                            bool checked,
                            Widget* parent)
 : Widget(scene, parent),
-  _checked(checked),
-  _button(scene, (IButtonDelegate *) delegate, parent) {
-
+  _checked(checked) {
     _imagePath = std::string("checkbox.png");
-  }
+}
 
 Widget::CheckBox::~CheckBox() {
 }
@@ -33,21 +30,28 @@ Widget::CheckBox::CheckBox(Graphic::Scene* scene,
 :  Widget(scene, parent),
   _imagePath(image),
   _checked(checked),
-  _button(scene, (IButtonDelegate *) delegate, parent),
   _delegate(delegate) {
 
     setSize(size);
     setPosition(position);
-  }
+    _eventListener = new Event::Listener(
+            Event::PointerReleased,
+            _element.getRect(),
+            this);
+}
 
 void    Widget::CheckBox::init() {
-  _button.loadImage(_imagePath.c_str());
-  _element = *_button.getElement();
-  _element.getSprite()->setAutoFrames(2, Graphic::Sprite::VERTICAL);
-  //_element.getSprite()->addFrame(Graphic::Sprite::Frame(Vec2(0,0.5), Vec2(1,1)));
-  //_element.getSprite()->addFrame(Graphic::Sprite::Frame(Vec2(0,0), Vec2(1,0.5)));
-  _element.setCurrentFrame(1);
-  addElement();
+    loadImage(_imagePath);
+    _element.setSize(_size);
+    _element.setPosition(_position);
+    _element.getSprite()->setAutoFrames(2, Graphic::Sprite::VERTICAL);
+    if (_checked == true) {
+        _element.setCurrentFrame(1);
+    } else {
+        _element.setCurrentFrame(0);
+    }
+    Event::Manager::getInstance().addEventListener(_eventListener);
+    addElement();
 }
 
 bool    Widget::CheckBox::isChecked() const {
@@ -60,22 +64,24 @@ void    Widget::CheckBox::setChecked(bool checked) {
 
 void    Widget::CheckBox::update() {
   if (_checked) {
-    _element.setCurrentFrame(2);
-  } else {
     _element.setCurrentFrame(1);
+  } else {
+    _element.setCurrentFrame(0);
   }
 }
 
 void    Widget::CheckBox::setSize(Vec2 const& v) {
-  _button.setSize(v);
+  _element.setSize(_size);
   _size = v;
 }
 
 void    Widget::CheckBox::setPosition(Vec2 const& v) {
-  _button.setPosition(v);
+  _element.setPosition(_position);
   _position = v;
 }
 
 void    Widget::CheckBox::processEvent(Event::Event const& event) {
-
+    if (event.type == Event::PointerReleased) {
+        update();
+    }
 }

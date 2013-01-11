@@ -12,7 +12,7 @@ Graphic::Scenery::Scenery(void) : Background(), _speed(1), _depth(0), _width(1) 
     
 }
 
-Graphic::Scenery::Scenery(uint32 id) : Background(id), _speed(1), _depth(0) {
+Graphic::Scenery::Scenery(uint32 id) : Background(id), _speed(1), _depth(0), _width(1) {
     
 }
 

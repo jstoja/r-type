@@ -17,5 +17,5 @@ Event::Event::Event(Type type, Vec2 const& pos, IProvider* sender)
 }
 
 Event::Event::Event(Type type, uint8 value, IProvider* sender)
-: type(type), sender(sender), pos(pos), value(value) {
+: type(type), sender(sender), pos(), value(value) {
 }

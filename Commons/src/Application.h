@@ -20,26 +20,30 @@ class COMMON_EXPORT_IMPORT_REMOVED Application : public Singleton<Application> {
 
     public:
     
-        //! Destruct the object
-        ~Application();
+    //! Destruct the object
+    ~Application();
 
-        //! Init with argc/argv of main
-        void init(int32 ac, char **av);
+    //! Init with argc/argv of main
+    /*!
+     At init, the Application will find full path of its binary in order to
+     locate its resources later.
+     */
+    void init(int32 ac, char **av);
 
-        //! Get the resources path
-        std::string getResourcesPath() const;
-    
-        // Set the resources path, relative to the binary
-        void        setRelativeResourcesPath(std::string const& path);
+    //! Get the resources path
+    std::string getResourcesPath() const;
+
+    // Set the resources path, relative to the binary
+    void        setRelativeResourcesPath(std::string const& path);
 
     private:
-        //! Construct the object
-        Application();
+    //! Construct the object
+    Application();
 
-		char**		_av;
-        int32		_ac;
-        std::string	_binaryPath;
-        std::string	_resourcesPath;
+    char**		_argv;
+    int32		_argc;
+    std::string	_binaryPath;
+    std::string	_resourcesPath;
 };
 
 #endif
