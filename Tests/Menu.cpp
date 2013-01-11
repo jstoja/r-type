@@ -6,6 +6,7 @@
 #include "Graphic/Scene.h"
 #include "Menu/WelcomeMenu.h"
 #include "Menu/IMenuDelegate.h"
+#include "Application.h"
 
 class Test : public Event::IListenerDelegate,
              public Menu::IMenuDelegate {
@@ -51,6 +52,7 @@ private:
 
 int	main(int argc, char *argv[]) {
     try {
+        Application::getInstance().init(argc, argv);
         Test client;
     } catch (std::exception* e) {
         std::cerr << e->what() << std::endl;

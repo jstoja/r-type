@@ -30,6 +30,10 @@ Rect2 const& Event::Listener::getRect() const {
     return _rect;
 }
 
+void        Event::Listener::setRect(Rect2 const& rect) {
+    _rect = rect;
+}
+
 bool Event::Listener::hasRect() const {
     return _hasRect;
 }
