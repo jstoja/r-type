@@ -39,6 +39,7 @@ public:
         scenery->setRange(Vec2(0, 1000));
         scenery->setWidth(1);
         scenery->setSpeed(0);
+        scenery->setDepth(0.999);
         _scene.addScenery(scenery);
         
         image.loadFromFile("stars-deep.png");
@@ -49,6 +50,7 @@ public:
         scenery->setRange(Vec2(0, 1000));
         scenery->setWidth(1);
         scenery->setSpeed(0.2);
+        scenery->setDepth(0.998);
         _scene.addScenery(scenery);
         
         image.loadFromFile("stars-blue.png");
@@ -56,21 +58,11 @@ public:
         texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
         scenery = new Graphic::Scenery();
         scenery->setTexture(texture);
-        scenery->setRange(Vec2(0, 10));
+        scenery->setRange(Vec2(0, 1000));
         scenery->setWidth(1);
         scenery->setSpeed(0.8);
+        scenery->setDepth(0.997);
         _scene.addScenery(scenery);
-        
-        image.loadFromFile("stars-green.png");
-        texture = new Graphic::Texture();
-        texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
-        scenery = new Graphic::Scenery();
-        scenery->setTexture(texture);
-        scenery->setRange(Vec2(10, 1000));
-        scenery->setWidth(1);
-        scenery->setSpeed(0.8);
-        _scene.addScenery(scenery);
-
 
         image.loadFromFile("stars-red.png");
         texture = new Graphic::Texture();
@@ -80,6 +72,7 @@ public:
         scenery->setRange(Vec2(0, 1000));
         scenery->setWidth(1);
         scenery->setSpeed(1.2);
+        scenery->setDepth(0.996);
         _scene.addScenery(scenery);
                 
         image.loadFromFile("planets.png");
@@ -90,6 +83,7 @@ public:
         scenery->setRange(Vec2(0, 1000));
         scenery->setWidth(3);
         scenery->setSpeed(0.5);
+        scenery->setDepth(0.995);
         _scene.addScenery(scenery);
 
         
@@ -106,6 +100,7 @@ public:
             // Render
             Graphic::Renderer::getInstance().render();
             
+            //_scene.setViewportPosition(Vec2(100 + sin(xPos)*10, 0));
             _scene.setViewportPosition(Vec2(xPos, 0));
             
             xPos += 0.02;

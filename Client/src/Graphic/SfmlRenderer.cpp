@@ -18,6 +18,7 @@ void Graphic::Renderer::createContext(Settings const& settings) {
     contextSettings.antialiasingLevel = settings.antialiasingLevel;
     contextSettings.majorVersion = 2;
     contextSettings.minorVersion = 1;
+    contextSettings.depthBits = 24;
     
     // Create the SFML Window
     _window = new sf::Window(sf::VideoMode(settings.size.x, settings.size.y),

@@ -114,7 +114,7 @@ namespace Graphic {
         void _setupElementTexture(Element* element);
         
         //! OpenGL stuff
-        void _fillVertexesBuffer(float32 x=0.5, float32 y=0.5);
+        void _fillVertexesBuffer(float32 x=0.5, float32 y=0.5, float32 z=0.0);
         void _fillTextureCoordsBuffer(float32 repeatX=1, float32 repeatY=1);
         void _fillIndexesBuffer(void);
         
