@@ -7,6 +7,7 @@
 //
 
 #include "Debug.h"
+
 #include "Event/Manager.h"
 #include "Event/Listener.h"
 #include "Event/IListenerDelegate.h"
@@ -16,6 +17,8 @@
 #include "Graphic/Element.h"
 #include "Graphic/Sprite.h"
 #include "Graphic/Texture.h"
+#include "Widgets/Widget.h"
+#include "Widgets/GraphicWidget.h"
 #include "Exception.h"
 #include "Application.h"
 

@@ -11,6 +11,7 @@
 #include "Event/IListenerDelegate.h"
 #include "Graphic/Renderer.h"
 #include "Widgets/Widget.h"
+#include "Widgets/GraphicWidget.h"
 #include "Widgets/Button.h"
 #include "Widgets/CheckBox.h"
 #include "Widgets/Label.h"
@@ -28,13 +29,21 @@ public:
         Widget::Label*  c1 = new Widget::Label(&_scene, "test1");
         Widget::Label*  c2 = new Widget::Label(&_scene, "test2");
         Widget::Label*  c3 = new Widget::Label(&_scene, "lol");
-        Widget::Label*  l1 = new Widget::Label(&_scene, "ab");
-        Widget::Label*  l2 = new Widget::Label(&_scene, "line2");
-        Widget::Label*  l3 = new Widget::Label(&_scene, "line3");
-        Widget::Button* b1 = new Widget::Button(&_scene, NULL);
+        Widget::Label*  l11 = new Widget::Label(&_scene, "ab");
+        Widget::Label*  l21 = new Widget::Label(&_scene, "line2");
+        Widget::Label*  l31 = new Widget::Label(&_scene, "molotov");
+        
+        Widget::Label*  l12 = new Widget::Label(&_scene, "ab");
+        Widget::Label*  l22 = new Widget::Label(&_scene, "toto");
+        Widget::Label*  l32 = new Widget::Label(&_scene, "bcd");
+        
+        Widget::Label*  l13 = new Widget::Label(&_scene, "ab");
+        Widget::Label*  l23 = new Widget::Label(&_scene, "lulz");
+        Widget::Label*  l33 = new Widget::Label(&_scene, "CACA");
+    //    Widget::Button* b1 = new Widget::Button(&_scene, NULL);
 
-        b1->setSize(Vec2(1,1));
-        b1->loadImage("click.png");
+  //      b1->setSize(Vec2(1,1));
+//        b1->loadImage("click.png");
         
         
         c1->setSize(Vec2(4,1));
@@ -43,21 +52,46 @@ public:
         c2->init();
         c3->setSize(Vec2(2,1));
         c3->init();
-        l1->setSize(Vec2(1,1));
-        l1->init();
-        l2->setSize(Vec2(4,1));
-        l2->init();
-        l3->setSize(Vec2(4,1));
-        l3->init();
-        _table = new Widget::Table(&_scene);
+        
+        l11->setSize(Vec2(1,1));
+        l11->init();
+        l21->setSize(Vec2(4,1));
+        l21->init();
+        l31->setSize(Vec2(4,1));
+        l31->init();
+        
+        l12->setSize(Vec2(2,1));
+        l12->init();
+        l22->setSize(Vec2(4,1));
+        l22->init();
+        l32->setSize(Vec2(3,1));
+        l32->init();
+        
+        l13->setSize(Vec2(2,1));
+        l13->init();
+        l23->setSize(Vec2(4,1));
+        l23->init();
+        l33->setSize(Vec2(4,1));
+        l33->init();
+        
+        
+        _table = new Widget::Table();
         _table->setPosition(Vec2(2,6));
         _table->addColumn(c1);
         _table->addColumn(c2);
         _table->addColumn(c3);
-        _table->addWidget(c1,l1);
-        _table->addWidget(c2,b1);
-        _table->addWidget(c2,l2);
-        _table->addWidget(c3,l3);
+        _table->addWidget(c1,l11);
+        _table->addWidget(c1,l12);
+        _table->addWidget(c1,l13);
+        _table->addWidget(c2,l21);
+        _table->addWidget(c2,l22);
+        _table->addWidget(c2,l23);
+        _table->addWidget(c3,l31);
+        _table->addWidget(c3,l32);
+        _table->addWidget(c3,l33);
+        _table->align(Widget::Table::LEFT, c1);
+        _table->align(Widget::Table::LEFT, c2);
+        _table->align(Widget::Table::LEFT, c3);
          // Add event listeners
          Event::Manager::getInstance().addEventListener(new Event::Listener(Event::Close, this));
 /*         Event::Manager::getInstance().addEventListener(new Event::Listener(Event::PointerIn

@@ -7,13 +7,14 @@
 //
 #include "../Graphic/Renderer.h"
 #include "Widget.h"
+#include "GraphicWidget.h"
 #include "Label.h"
 #include "TextEdit.h"
 
 Widget::TextEdit::TextEdit(Graphic::Scene* scene,
                            ITextEditDelegate* delegate,
                            Widget* parent) :
-    Widget(scene, parent),
+    GraphicWidget(scene, parent),
     _eventListener(NULL),
     _label(scene, parent),
     _delegate(delegate) {
@@ -23,7 +24,7 @@ Widget::TextEdit::TextEdit(Graphic::Scene* scene,
                            ITextEditDelegate* delegate,
                            std::string const& text,
                            Widget* parent) :
-    Widget(scene, parent),
+    GraphicWidget(scene, parent),
     _eventListener(NULL),
     _label(scene, parent),
     _delegate(delegate) {
@@ -43,14 +44,14 @@ void    Widget::TextEdit::setText(std::string const& text) {
     _eventListener = new Event::Listener(
                                          Event::PointerPushed
                                          | Event::TextEntered,
-                                         _element.getRect(),
+                                         getRect(),
                                          this);
     Event::Manager::getInstance().addEventListener(_eventListener);
 }
 
 void    Widget::TextEdit::update() {
     _label.update();
-    _element = *_label.getElement();
+    setElement(_label.getElement());
 }
 
 void    Widget::TextEdit::operator<<(char c) {
@@ -68,7 +69,7 @@ void    Widget::TextEdit::init() {
 }
 
 void    Widget::TextEdit::setPosition(Vec2 const& v) {
-    _position = v;
+    GraphicWidget::setPosition(v);
     _label.setPosition(v);
     update();
 }

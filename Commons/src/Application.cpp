@@ -3,13 +3,15 @@
 //
 // Made by Samuel Olivier
 // Login   <olivie_a@epitech.net>
-// 
+//
 // Started on  mer. déc. 19 12:19:09 2012 Samuel Olivier
 //
 
 #include "OS.h"
 #ifndef OS_WINDOWS
 # include <unistd.h>
+# include <string.h>
+# include <stdlib.h>
 #endif
 #include "Application.h"
 #include "Exception.h"

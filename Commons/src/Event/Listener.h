@@ -26,7 +26,8 @@ namespace Event {
 		virtual ~Listener();
         
         Type            getType() const;
-        Rect2 const&	getRect() const;
+        Rect2 const&    getRect() const;
+        void            setRect(Rect2 const& rect);
         bool            hasRect() const;
         void            processEvent(Event const& event);
         

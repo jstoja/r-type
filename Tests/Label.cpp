@@ -13,6 +13,7 @@
 #include "Graphic/Renderer.h"
 #include "Graphic/Scene.h"
 #include "Widgets/Widget.h"
+#include "Widgets/GraphicWidget.h"
 
 #include "Types.h"
 #include "Graphic/Texture.h"
@@ -35,7 +36,7 @@ public:
         
         //
         
-        std::string str("Coucou_Karina");
+        std::string str("test label");
 		_label = new Widget::Label(&_scene, str);
     
         // Setup scene
@@ -63,7 +64,6 @@ public:
     
     virtual void processEvent(Event::Event const& event) {
         if (event.type == Event::Close) {
-            std::cerr << "marseille close" << std::endl;
             _close = true;
         }
     }

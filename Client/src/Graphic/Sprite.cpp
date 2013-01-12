@@ -34,10 +34,8 @@ void    Graphic::Sprite::setAutoFrames(uint32 framesNumber,
     for (float32 i = 0; i < framesNumber; ++i) {
         float32 begin = i/framesNumber;
         float32 end = (((i+1.0) < framesNumber) ? ((i + 1)/framesNumber) : (1.0));
-        std::cout << "begin: " << begin << " end: " << end << std::endl;
         if (orientation == Sprite::VERTICAL) {
             _frames.push_back(Sprite::Frame(Vec2(0.0, begin), Vec2(1.0, end)));
-            std::cout << "Frame Added" << std::endl;;
         } else if (orientation == Sprite::HORIZONTAL) {
             _frames.push_back(Sprite::Frame(Vec2(begin, 0.0),
                                             Vec2(end, 1.0)));

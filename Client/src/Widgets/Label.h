@@ -15,9 +15,9 @@
 # include "Widget.h"
 
 namespace   Widget {
-    class   Widget;
+    class   GraphicWidget;
     
-    class   Label : public Widget {
+    class   Label : public GraphicWidget {
     public:
         //! Constructor
         Label(Graphic::Scene*,
@@ -51,6 +51,7 @@ namespace   Widget {
         void    update();
         
         void    draw() {}
+        
     private:
         static Graphic::FreetypeFont   *_font;
         std::string             _text;

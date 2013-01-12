@@ -5,16 +5,23 @@
 //  Created by Franck Lavisse on 27/12/12.
 //
 //
+#include "Application.h"
 
+#include "../Graphic/Scene.h"
+#include "../Graphic/Sprite.h"
+#include "../Graphic/Element.h"
+#include "Widget.h"
+#include "GraphicWidget.h"
 #include "CheckBox.h"
 
 Widget::CheckBox::CheckBox(Graphic::Scene* scene,
                            ICheckBoxDelegate *delegate, 
                            bool checked,
                            Widget* parent)
-: Widget(scene, parent),
+: GraphicWidget(scene, parent),
   _checked(checked) {
-    _imagePath = std::string("checkbox.png");
+        _imagePath = "./checkbox.png";
+//      _imagePath = Application::getInstance().getResourcesPath() + std::string("checkbox.png");
 }
 
 Widget::CheckBox::~CheckBox() {
@@ -27,7 +34,7 @@ Widget::CheckBox::CheckBox(Graphic::Scene* scene,
                            std::string const& image,
                            bool checked,
                            Widget* parent)
-:  Widget(scene, parent),
+:  GraphicWidget(scene, parent),
   _imagePath(image),
   _checked(checked),
   _delegate(delegate) {
@@ -36,19 +43,17 @@ Widget::CheckBox::CheckBox(Graphic::Scene* scene,
     setPosition(position);
     _eventListener = new Event::Listener(
             Event::PointerReleased,
-            _element.getRect(),
+            getRect(),
             this);
 }
 
 void    Widget::CheckBox::init() {
     loadImage(_imagePath);
-    _element.setSize(_size);
-    _element.setPosition(_position);
-    _element.getSprite()->setAutoFrames(2, Graphic::Sprite::VERTICAL);
+    getSprite()->setAutoFrames(2, Graphic::Sprite::VERTICAL);
     if (_checked == true) {
-        _element.setCurrentFrame(1);
+        setCurrentFrame(1);
     } else {
-        _element.setCurrentFrame(0);
+        setCurrentFrame(0);
     }
     Event::Manager::getInstance().addEventListener(_eventListener);
     addElement();
@@ -64,20 +69,18 @@ void    Widget::CheckBox::setChecked(bool checked) {
 
 void    Widget::CheckBox::update() {
   if (_checked) {
-    _element.setCurrentFrame(1);
+    setCurrentFrame(1);
   } else {
-    _element.setCurrentFrame(0);
+    setCurrentFrame(0);
   }
 }
 
 void    Widget::CheckBox::setSize(Vec2 const& v) {
-  _element.setSize(_size);
-  _size = v;
+    GraphicWidget::setSize(v);
 }
 
 void    Widget::CheckBox::setPosition(Vec2 const& v) {
-  _element.setPosition(_position);
-  _position = v;
+    GraphicWidget::setPosition(v);
 }
 
 void    Widget::CheckBox::processEvent(Event::Event const& event) {
@@ -92,3 +95,4 @@ void    Widget::CheckBox::processEvent(Event::Event const& event) {
         update();
     }
 }
+
