@@ -23,6 +23,13 @@ namespace Widget {
     
     class Table : public Widget {
     public:
+        enum    Align
+        {
+            LEFT,
+            RIGHT,
+            CENTER
+        };
+        
         //! Constructor
         Table(Widget* parent = NULL);
 
@@ -41,6 +48,8 @@ namespace Widget {
         void    draw() {}
         
         void    update() {}
+        
+        void    align(Align, Label*);
     private:
         std::map<Label*, std::vector<Widget*> >    _widgets;
     };
