@@ -26,14 +26,14 @@ public:
         
         // Setup scene
         _button.setPosition(Vec2(8, 4.5));
-        _button.setSize(Vec2(9, 3));
+        _button.setSize(Vec2(8, 1.5));
         
 //        Graphic::Element* button2 = new Graphic::Element();
 //        button2->setPosition(Vec2(2, 2));
 //        button2->setSize(Vec2(3, 1));
         
         sf::Image image;
-        image.loadFromFile("button.png");
+        image.loadFromFile("button-connection.png");
         
         Graphic::Texture* buttonTexture = new Graphic::Texture();
         buttonTexture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
@@ -87,13 +87,13 @@ public:
         if (event.type == Event::Close) {
             _close = true;
         } else if (event.type & Event::PointerIn) {
-            _button.setCurrentFrame(2);
-        } else if (event.type & Event::PointerOut) {
-            _button.setCurrentFrame(0);
-        } else if (event.type & Event::PointerPushed) {
             _button.setCurrentFrame(1);
-        } else if (event.type & Event::PointerReleased) {
+        } else if (event.type & Event::PointerOut) {
             _button.setCurrentFrame(2);
+        } else if (event.type & Event::PointerPushed) {
+            _button.setCurrentFrame(0);
+        } else if (event.type & Event::PointerReleased) {
+            _button.setCurrentFrame(1);
         }
     }
 

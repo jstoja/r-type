@@ -100,7 +100,6 @@ public:
         scenery->setDepth(0.995);
         scenery->setOpacity(0.8);
         _scene.addScenery(scenery);
-
     }
     
     void render() {
