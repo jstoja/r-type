@@ -17,6 +17,10 @@
 #include "Widgets/Button.h"
 #include "Application.h"
 
+#ifndef OS_WINDOWS
+# include <unistd.h>
+#endif
+
 #include <SFML/Graphics.hpp>
 
 class Test : public Event::IListenerDelegate,
@@ -24,11 +28,11 @@ class Test : public Event::IListenerDelegate,
 public:
     Test()
     : _close(false), _scene() {
-        
+
         // Setup renderer
         Graphic::Renderer::getInstance().init();
         Graphic::Renderer::getInstance().setScene(&_scene);
-        
+
         _button = new Widget::Button(&_scene,
                                      this,
                                      _scene.getViewport()/10,
@@ -37,27 +41,27 @@ public:
                                      NULL);
 
         // Setup scene
-      
+
         // Add event listeners
         Event::Manager::getInstance().addEventListener(new Event::Listener(Event::Close, this));
 
         while (!_close) {
             // Process events
             Event::Manager::getInstance().processEvents();
-            
+
             // Render
             Graphic::Renderer::getInstance().render();
             sleep(1);
             _button->setSize(_button->getSize()+0.1);
         }
     }
-    
+
     ~Test() {}
-    
+
     virtual void processEvent(Event::Event const& event) {
         if (event.type == Event::Close) {
             _close = true;
-        } 
+        }
     }
 
     virtual void buttonHovered(Widget::Button &instance) {}

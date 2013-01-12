@@ -38,3 +38,47 @@ void    Widget::Table::addWidget(Label* label, Widget* widget) {
 std::vector<Widget::Widget*> const& Widget::Table::getColumn(Label* label){
     return _widgets[label];
 }
+
+void    Widget::Table::align(Align a, Label* column) {
+    std::vector<Widget*>&   v = _widgets[column];
+    uint32 i = 1;
+    uint32 minsize = v[0]->getSize().x;
+    uint32 maxsize = v[0]->getSize().x;
+    uint32 sp = 0;
+    
+    for (std::vector<Widget*>::iterator it = v.begin();
+         it != v.end(); ++it){
+        if (minsize > (*it)->getSize().x)
+            minsize = (*it)->getSize().x;
+        if (maxsize < (*it)->getSize().x)
+            maxsize = (*it)->getSize().x;
+    }
+    std::cout << "maxsize " << maxsize << std::endl;
+    for (std::vector<Widget*>::iterator it = v.begin();
+         it != v.end(); ++it) {
+        if (a == CENTER) {
+            (*it)->setPosition(Vec2((*it)->getPosition().x,
+                                getPosition().y - i));
+        } else if (a == LEFT) {
+            std::cout << "before move" << std::endl;
+            std::cout << (*it)->getPosition().x << ' '
+                      << (*it)->getPosition().y << ' '
+                      << (*it)->getSize().x << ' ' << (*it)->getSize().y
+            << std::endl;
+            std::cout << ((*it)->getSize().x / 2) - (maxsize / 2) << std::endl;
+            (*it)->setPosition(Vec2((*it)->getPosition().x -
+                                ((maxsize /2) - ((*it)->getSize().x / 2)),
+                                getPosition().y - i));
+            std::cout << "after move" << std::endl;
+            std::cout << (*it)->getPosition().x << ' '
+                      << (*it)->getPosition().y << ' '
+                      << (*it)->getSize().x << ' ' << (*it)->getSize().y
+                      << std::endl;
+        } else {
+            (*it)->setPosition(Vec2((*it)->getPosition().x
+                                    + (maxsize / 2),
+                                getPosition().y - i));
+        }
+        i++;
+    }
+}
