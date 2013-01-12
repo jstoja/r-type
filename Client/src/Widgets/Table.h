@@ -24,7 +24,7 @@ namespace Widget {
     class Table : public Widget {
     public:
         //! Constructor
-        Table(Graphic::Scene*, Widget* parent = NULL);
+        Table(Widget* parent = NULL);
 
         //! Destructor
         ~Table();
@@ -32,7 +32,6 @@ namespace Widget {
         //! Add column
         void    addColumn(Label*);
         
-
         //! Add widget
         void    addWidget(Label*, Widget*);
         

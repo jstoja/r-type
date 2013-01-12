@@ -4,6 +4,8 @@
 #include "Event/IListenerDelegate.h"
 #include "Graphic/Renderer.h"
 #include "Graphic/Scene.h"
+#include "Widgets/Widget.h"
+#include "Widgets/GraphicWidget.h"
 #include "Menu/WelcomeMenu.h"
 #include "Menu/IMenuDelegate.h"
 #include "Application.h"

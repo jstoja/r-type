@@ -28,19 +28,10 @@ namespace Widget {
 
         public:
             //! Constructor
-            Widget(Graphic::Scene*, Widget* parent = NULL);
+            Widget(Widget* parent = NULL);
 
             //! Destructor
             virtual ~Widget();
-        
-            //! Scene setter
-            void    setScene(Graphic::Scene*);
-        
-            //! Add element in scene
-            void    addElement();
-        
-            //! Scene getter
-            Graphic::Scene*     getScene() const;
         
             //! Pos getter
             Vec2 const&         getPosition() const;
@@ -48,12 +39,10 @@ namespace Widget {
             //! Get Widget size
             Vec2 const&         getSize() const;
         
-            //! Get element size
-            Vec2 const&         getElementSize() const;
         
             //! Set Widget position
             virtual void        setPosition(Vec2 const&);
-            
+        
             //! Set Widget size
             virtual void        setSize(Vec2 const&);
             
@@ -63,22 +52,14 @@ namespace Widget {
             //! Get focus
             bool                hasFocus() const;
             
-            //! Get Element
-            Graphic::Element    *getElement();
-        
-            //! Load image of the Element with the image specified in the image_path parameter
-            bool                loadImage(const std::string &image_path);
-        
             //! Parent widget getter
             Widget* getParent() const;
-    protected:
-            Graphic::Scene*     _scene;
+    private:
             Widget*             _parent;
-            Graphic::Element    _element;
             Vec2                _size;
             Vec2                _position;
             bool                _focus;
     };
-}
+};
 
 #endif /* defined(__R_Type__Widget__) */

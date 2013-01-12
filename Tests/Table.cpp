@@ -11,6 +11,7 @@
 #include "Event/IListenerDelegate.h"
 #include "Graphic/Renderer.h"
 #include "Widgets/Widget.h"
+#include "Widgets/GraphicWidget.h"
 #include "Widgets/Button.h"
 #include "Widgets/CheckBox.h"
 #include "Widgets/Label.h"
@@ -30,11 +31,11 @@ public:
         Widget::Label*  c3 = new Widget::Label(&_scene, "lol");
         Widget::Label*  l1 = new Widget::Label(&_scene, "ab");
         Widget::Label*  l2 = new Widget::Label(&_scene, "line2");
-        Widget::Label*  l3 = new Widget::Label(&_scene, "line3");
-        Widget::Button* b1 = new Widget::Button(&_scene, NULL);
+        Widget::Label*  l3 = new Widget::Label(&_scene, "molotov");
+    //    Widget::Button* b1 = new Widget::Button(&_scene, NULL);
 
-        b1->setSize(Vec2(1,1));
-        b1->loadImage("click.png");
+  //      b1->setSize(Vec2(1,1));
+//        b1->loadImage("click.png");
         
         
         c1->setSize(Vec2(4,1));
@@ -49,13 +50,13 @@ public:
         l2->init();
         l3->setSize(Vec2(4,1));
         l3->init();
-        _table = new Widget::Table(&_scene);
+        _table = new Widget::Table();
         _table->setPosition(Vec2(2,6));
         _table->addColumn(c1);
         _table->addColumn(c2);
         _table->addColumn(c3);
         _table->addWidget(c1,l1);
-        _table->addWidget(c2,b1);
+      //  _table->addWidget(c2,b1);
         _table->addWidget(c2,l2);
         _table->addWidget(c3,l3);
          // Add event listeners

@@ -16,11 +16,13 @@
 # include "Widget.h"
 # include "ICheckBoxDelegate.h"
 
+class Graphic::Element;
+
 namespace Widget {
-    class Widget;
+    class GraphicWidget;
     class IButtonDelegate;
     
-    class CheckBox : public Widget,
+    class CheckBox : public GraphicWidget,
                      public Event::IListenerDelegate {
     public:
         //! Constructor
@@ -41,6 +43,7 @@ namespace Widget {
         //! Destructor
         ~CheckBox();
         
+                         
         //! Get state
         bool    isChecked() const;
         

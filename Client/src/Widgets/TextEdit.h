@@ -24,11 +24,11 @@ namespace Event {
 };
 
 namespace Widget {
-    class Widget;
+    class GraphicWidget;
     class Label;
     class ITextEditDelegate;
     
-    class TextEdit : public Widget,
+    class TextEdit : public GraphicWidget,
                      public Event::IListenerDelegate {
     public:
         //! Constructor

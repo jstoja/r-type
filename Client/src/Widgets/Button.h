@@ -19,13 +19,15 @@
 # include "IButtonDelegate.h"
 
 namespace Widget {
-    class Widget;
+    class GraphicWidget;
     class IButtonDelegate;
 
-    class Button : public Widget, public Event::IListenerDelegate {
+    class Button : public GraphicWidget, public Event::IListenerDelegate {
         public:
             //! Create the Button
-            Button(Graphic::Scene*, IButtonDelegate *delegate, Widget* parent = NULL);
+            Button(Graphic::Scene*,
+                   IButtonDelegate *delegate,
+                   Widget* parent = NULL);
 
             //! Create a button with position/size and image
             Button(Graphic::Scene*,
@@ -40,16 +42,14 @@ namespace Widget {
 
             void    setCurrentFrame(uint32);
 
-            Graphic::Sprite     *getSprite() const;
-
+        
             virtual void setPosition(Vec2 const &pos);
             virtual void setSize(Vec2 const &size);
-
+        
             // Event Listener Virtual Methods
             virtual void processEvent(Event::Event const& event);
 
         private:
-            //Graphic::Element    _element;
             IButtonDelegate     *_delegate;
             Event::Listener     *_eventListener;
 

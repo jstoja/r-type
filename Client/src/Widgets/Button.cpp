@@ -5,22 +5,26 @@
 //  Created by Julien Bordellier on 25/12/12.
 //
 //
-
+#include "../Graphic/Scene.h"
+#include "../Graphic/Sprite.h"
+#include "../Graphic/Element.h"
+#include "../Graphic/Image.h"
 #include "Widget.h"
+#include "GraphicWidget.h"
 #include "Button.h"
 #include "IButtonDelegate.h"
 
 Widget::Button::Button(Graphic::Scene* scene,
                        IButtonDelegate *delegate,
                        Widget* parent)
-: Widget(scene, parent), _delegate(delegate) {
+: GraphicWidget(scene, parent), _delegate(delegate) {
 
-    loadImage("button.png");
+    loadImage("./button.png");
     setPosition(Vec2(1.0, 1.0));
     setSize(Vec2(1.0, 1.0));
-    if (_element.getSprite() != NULL) {
-        _element.getSprite()->setAutoFrames(3, Graphic::Sprite::VERTICAL);
-        _element.setCurrentFrame(0);
+    if (getSprite() != NULL) {
+        getSprite()->setAutoFrames(3, Graphic::Sprite::VERTICAL);
+        setCurrentFrame(0);
     }
     
     addElement();
@@ -29,7 +33,7 @@ Widget::Button::Button(Graphic::Scene* scene,
       | Event::PointerOut
       | Event::PointerPushed
       | Event::PointerReleased,
-      _element.getRect(),
+        getRect(),
       this);
 
    Event::Manager::getInstance().addEventListener(_eventListener);
@@ -41,13 +45,13 @@ Widget::Button::Button(Graphic::Scene* scene,
                        Vec2 const& position,
                        std::string const& image,
                        Widget* parent) :
-    Widget(scene, parent), _delegate(delegate) {
+    GraphicWidget(scene, parent), _delegate(delegate) {
     loadImage(image);
     setPosition(position);
     setSize(size);
-    if (_element.getSprite()) {
-        _element.getSprite()->setAutoFrames(3, Graphic::Sprite::VERTICAL);
-        _element.setCurrentFrame(0);
+    if (getSprite()) {
+        getSprite()->setAutoFrames(3, Graphic::Sprite::VERTICAL);
+        setCurrentFrame(0);
     }
     addElement();
     _eventListener = new Event::Listener(
@@ -55,7 +59,7 @@ Widget::Button::Button(Graphic::Scene* scene,
       | Event::PointerOut
       | Event::PointerPushed
       | Event::PointerReleased,
-      _element.getRect(),
+      getRect(),
       this);
   Event::Manager::getInstance().addEventListener(_eventListener);
   addElement();
@@ -66,36 +70,33 @@ Widget::Button::~Button() {
 }
 
 void    Widget::Button::setCurrentFrame(uint32 nb) {
-    _element.setCurrentFrame(nb);
+    setCurrentFrame(nb);
 }
 
 void    Widget::Button::processEvent(Event::Event const& event) {
     std::cout << "event fired" << std::endl;
   if (event.type == Event::PointerReleased) {
-      _element.setCurrentFrame(2);
-    _delegate->buttonReleased(*this);
+      setCurrentFrame(2);
+      _delegate->buttonReleased(*this);
   } else if (event.type == Event::PointerPushed) {
-      _element.setCurrentFrame(1);
+      setCurrentFrame(1);
       _delegate->buttonPushed(*this);
   } else if (event.type == Event::PointerIn) {
-      _element.setCurrentFrame(2);
+      setCurrentFrame(2);
       _delegate->buttonHovered(*this);
   } else if (event.type == Event::PointerOut) {
-      _element.setCurrentFrame(0);
+      setCurrentFrame(0);
       _delegate->buttonUnHovered(*this);
   }
 }
 
-Graphic::Sprite *Widget::Button::getSprite() const {
-    return _element.getSprite();
-}
-
 void            Widget::Button::setPosition(Vec2 const &pos) {
-    Widget::Widget::setPosition(pos);
-    _eventListener->setRect(_element.getRect());
+    GraphicWidget::setPosition(pos);
+    _eventListener->setRect(getRect());
 }
 
 void            Widget::Button::setSize(Vec2 const& size) {
-    Widget::Widget::setSize(size);
-    _eventListener->setRect(_element.getRect());
+    GraphicWidget::setSize(size);
+    _eventListener->setRect(getRect());
 }
+
