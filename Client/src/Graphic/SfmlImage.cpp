@@ -6,7 +6,12 @@
 //
 //
 
+#include "OS.h"
 #ifndef OS_IOS
+
+# ifndef OS_WINDOWS
+#  include <string.h>
+# endif
 
 # include "Graphic/Image.h"
 # include "Graphic/GraphicException.h"
@@ -14,7 +19,7 @@
 
 void Graphic::Image::loadFromData(ByteArray const& data) {
     sf::Image image;
-    
+
     if (!image.loadFromMemory((void*)data.getData(), data.getSize())) {
         throw new Graphic::Exception("Cannot load image from data");
     }
