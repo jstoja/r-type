@@ -6,30 +6,30 @@
 #ifndef _GAME_H_
 # define _GAME_H_
 # include <string>
-# include "Commons/IGame.h"
-#include "Commons/Object.h"
-# include "Network/TcpServer.h"
+# include "IGame.h"
+# include "Object.h"
+# include "Network/TcpPacket.h"
+
+class Player;
 
 class Game : public IGame, public Object
 {
 public:
-    Game(NNetwork::TcpPacket* packet);
+    Game(Network::TcpPacket* packet);
     ~Game();
 
     std::string const&     getName(void);
 
-    virtual addPhysicElement();
-    virtual addGraphicElement();
-    virtual playSound();
-    virtual loadRessource();
+    void     join(Player* player);
+    bool     canJoin();
+    void     quit(Player* player);
 
-    bool     join(Player* player);
-    bool     canjoin();
-    bool     quit(Player* player);
+    virtual void                addGraphicElement(IGraphicElement* element);
+    virtual IGraphicElement*    createGraphicElement();
 
 private:
   std::vector<Player*>  _players;
-  int                   _nbSlots;
+  uint32                _nbSlots;
   std::string           _name;
 };
 

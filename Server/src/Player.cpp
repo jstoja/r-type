@@ -53,10 +53,10 @@ void Player::connection(Network::TcpPacket* packet) {
 
 
 void Player::createGame(Network::TcpPacket* packet) {
-    Game game = new Game(packet);
-    bool gameCreated = _server->CreateGame(game, this) == false;
+    Game *game = new Game(packet);
+    bool gameCreated = _server->createGame(game, this);
 
-    if (gameCreated === false) {
+    if (gameCreated == false) {
         delete game;
     }
 

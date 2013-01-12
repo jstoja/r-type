@@ -4,12 +4,11 @@
 //
 
 #include <algorithm>
-#include "Network/TcpServer.h"
 #include "Game.h"
 
 Game::Game(Network::TcpPacket* packet) {
     *packet >> _name;
-    *packet >> (unint32)_nbSlots;
+    *packet >> _nbSlots;
 }
 
 Game::~Game() {}
@@ -29,5 +28,10 @@ void     Game::join(Player* player) {
 }
 
 void     Game::quit(Player* player) {
-    _players = std::remove(_players->begin(), _players->end(), player);
+    _players.erase(std::remove(_players.begin(), _players.end(), player), _players.end());
 }
+
+
+// TODO
+void                Game::addGraphicElement(IGraphicElement* element) {} ;
+IGraphicElement*    Game::createGraphicElement() {} ;

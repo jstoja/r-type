@@ -16,6 +16,7 @@
 # include "Network/TcpServer.h"
 # include "Game.h"
 # include "Player.h"
+# include "IServerDelegate.h"
 
 class Server : public Network::ITcpServerDelegate, public IServerDelegate {
 public:
@@ -26,13 +27,13 @@ public:
 
   virtual bool  createGame(Game* game, Player* player);
   //virtual void  listGame(Network::ASocket* socket);
-  virtual int   joinGame(std::string const& gameName, Player* player);
+  virtual int   joinGame(uint32 gameId, Player* player);
   virtual void  quitGame(uint32 gameId, Player* player);
 
 private:
-  Network::TcpServer	_tcpServer;
-  std::vector<Player*>  _players;
-  std::map<std::string, IGame*>	_games;
+  Network::TcpServer        _tcpServer;
+  std::vector<Player*>      _players;
+  std::map<uint32, Game*>  _games;
 };
 
 #endif

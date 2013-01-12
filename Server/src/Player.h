@@ -14,10 +14,12 @@
 # include "Network/ASocket.h"
 # include "Network/Proxy.hpp"
 # include "Network/TcpPacket.h"
+# include "Game.h"
+# include "IServerDelegate.h"
 
 class Player : public Network::IProxyDelegate<Network::TcpPacket> {
  public:
-  Player(Network::ASocket*);
+  Player(Network::ASocket*, IServerDelegate* server);
   ~Player();
 
   void	newPacket(Network::TcpPacket*);
