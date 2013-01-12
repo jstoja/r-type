@@ -33,7 +33,7 @@ public:
         Widget::Label*  l21 = new Widget::Label(&_scene, "line2");
         Widget::Label*  l31 = new Widget::Label(&_scene, "molotov");
         
-        Widget::Label*  l12 = new Widget::Label(&_scene, "ab");
+        Widget::Label*  l12 = new Widget::Label(&_scene, "abjj");
         Widget::Label*  l22 = new Widget::Label(&_scene, "toto");
         Widget::Label*  l32 = new Widget::Label(&_scene, "bcd");
         
@@ -89,9 +89,9 @@ public:
         _table->addWidget(c3,l31);
         _table->addWidget(c3,l32);
         _table->addWidget(c3,l33);
-        _table->align(Widget::Table::LEFT, c1);
-        _table->align(Widget::Table::LEFT, c2);
-        _table->align(Widget::Table::LEFT, c3);
+        _table->align(Widget::Table::RIGHT, c1);
+        _table->align(Widget::Table::RIGHT, c2);
+        _table->align(Widget::Table::RIGHT, c3);
          // Add event listeners
          Event::Manager::getInstance().addEventListener(new Event::Listener(Event::Close, this));
 /*         Event::Manager::getInstance().addEventListener(new Event::Listener(Event::PointerIn
