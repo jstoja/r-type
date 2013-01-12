@@ -13,12 +13,14 @@
 # include "Library.h"
 
 bool	Library::load() {
-    _load = false;
-    if ((_handle = dlopen(_fileName.c_str(), RTLD_LAZY)) == NULL)
-        _errorString = dlerror();
-    else
-        _load = true;
-    return _load;
+	if (isLoaded() == false) {
+		_load = false;
+		if ((_handle = dlopen(_fileName.c_str(), RTLD_LAZY)) == NULL)
+			_errorString = dlerror();
+		else
+			_load = true;
+	}
+    return isLoaded();
 }
 
 void*	Library::resolve(const char *name) {

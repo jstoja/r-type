@@ -18,13 +18,14 @@ class IGraphicElement;
 
 class Block : public IPlugin {
 public:
-	Block(IGame* game);
+	Block();
 
-	void	update();
+	virtual void	init(IGame* game, ByteArray const& params);
+	virtual void	update();
 
 private:
 	IGame*				_game;
-	IGraphicElement*	_graphicElement;
+	IGraphicElement*	_block;
 };
 
 #endif

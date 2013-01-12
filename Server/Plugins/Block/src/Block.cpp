@@ -12,14 +12,17 @@
 #include <IGame.h>
 #include <IGraphicElement.h>
 
-Block::Block(IGame *game) : _game(game) {
-	IGraphicElement	*elem = game->createGraphicElement();
+Block::Block() : _game(NULL), _block(NULL) {
 }
 
 void	Block::update() {
-
+	std::cout << "BOUYAKAAAA" << std::endl;
 }
 
-extern "C" PLUGIN_EXPORT IPlugin	*newPlugin(IGame *game) {
-	return (new Block(game));
+void	Block::init(IGame* game, ByteArray const& params) {
+	_game = game;
+}
+
+RTYPE_PLUGIN_CREATE {
+	return (new Block());
 }

@@ -11,17 +11,24 @@
 # define _I_PLUGIN_H_
 
 # include <OS.h>
+# include <ByteArray.h>
 
 # ifdef OS_WINDOWS
 #  define PLUGIN_EXPORT __declspec(dllexport)
 # else
 #  define PLUGIN_EXPORT
-#endif
+# endif
+
+# define RTYPE_PLUGIN_CREATE extern "C" PLUGIN_EXPORT IPlugin	*newPlugin()
+
+class IGame;
 
 class IPlugin {
 public:
+	typedef IPlugin	*(*CreatorPrototype)();
 	~IPlugin() {}
 
+	virtual void	init(IGame* game, ByteArray const& params) = 0;
 	virtual void	update() = 0;
 };
 
