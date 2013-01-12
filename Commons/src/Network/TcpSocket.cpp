@@ -1,9 +1,9 @@
 //
 // TcpSocket.cpp for r-type in /home/michar_l//r-type
-// 
+//
 // Made by loick michard
 // Login   <michar_l@epitech.net>
-// 
+//
 // Started on  Mon Dec 17 22:30:18 2012 loick michard
 //
 
@@ -23,7 +23,7 @@ typedef int socklen_t;
 #include "TcpSocket.h"
 
 Network::TcpSocket::TcpSocket() : _hostAddress(HostAddress::AnyAddress), _hostPort(0),
-				  _toRead(0), _bufferToRead(NULL), 
+				  _toRead(0), _bufferToRead(NULL),
 				  _bufferToWrite(NULL), _writePosition(0) {
   _fd = socket(AF_INET, SOCK_STREAM, 0); //  | SOCK_NONBLOCK
   if (_fd == -1)
@@ -31,7 +31,7 @@ Network::TcpSocket::TcpSocket() : _hostAddress(HostAddress::AnyAddress), _hostPo
 }
 
 Network::TcpSocket::TcpSocket(int fd) : _hostAddress(HostAddress::AnyAddress), _hostPort(0),
-					_toRead(0), _bufferToRead(NULL), 
+					_toRead(0), _bufferToRead(NULL),
 					_bufferToWrite(NULL), _writePosition(0) {
   _fd = fd;
   _reading = true;
@@ -92,7 +92,7 @@ void Network::TcpSocket::write(ByteArray& biteArray, const HostAddress& hostAddr
 
 void Network::TcpSocket::read(ByteArray& biteArray, bool all, uint32 start) {
   uint32 size = biteArray.getSize() - start;
-  
+
   _bufferToReadMutex.lock();
   _bufferMutex.lock();
   if (_buffer.getSize() >= size) {
@@ -152,7 +152,7 @@ void Network::TcpSocket::canRead() {
     }
   }
   else if (_reading) {
-    { 
+    {
       Threading::MutexLocker locker(&_bufferMutex);
       unsigned int size = _buffer.getSize();
       _buffer.resize(size + (_toRead) ? _toRead : readSize);
