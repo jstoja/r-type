@@ -42,6 +42,9 @@ namespace Widget {
 
             Graphic::Sprite     *getSprite() const;
 
+            virtual void setPosition(Vec2 const &pos);
+            virtual void setSize(Vec2 const &size);
+
             // Event Listener Virtual Methods
             virtual void processEvent(Event::Event const& event);
 

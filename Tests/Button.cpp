@@ -45,6 +45,8 @@ public:
             
             // Render
             Graphic::Renderer::getInstance().render();
+            sleep(1);
+            _button->setSize(_button->getSize()+0.1);
         }
     }
     
