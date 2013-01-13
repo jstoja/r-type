@@ -31,10 +31,10 @@ Texture*	Sprite::getTexture() const {
 }
 
 void	Sprite::addFrame(Rect2 const& frame) {
-	_frames.push_back(frame);
+	_frames.push_back(Frame(frame.pos, frame.pos + frame.size));
 }
 
-std::list<Rect2> const&	Sprite::getFrames() const {
+std::list<Frame> const&	Sprite::getFrames() const {
 	return (_frames);
 }
 

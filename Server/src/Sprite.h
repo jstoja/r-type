@@ -16,6 +16,7 @@
 # include <Object.h>
 # include <Network/TcpPacket.h>
 # include <Rect2.h>
+# include "Frame.h"
 
 class Texture;
 
@@ -29,11 +30,11 @@ public:
 	Texture*		getTexture() const;
 
 	virtual void				addFrame(Rect2 const& frame);
-	std::list<Rect2> const&	getFrames() const;
+	std::list<Frame> const&	getFrames() const;
 
 private:
 	Texture*			_texture;
-	std::list<Rect2>	_frames;
+	std::list<Frame>	_frames;
 };
 
 Network::TcpPacket&		operator<<(Network::TcpPacket& packet, Sprite const& sprite);
