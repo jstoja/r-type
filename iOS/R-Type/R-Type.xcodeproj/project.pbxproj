@@ -7,16 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2613B28C16A2EF6000CF84AA /* space-sceneries in Resources */ = {isa = PBXBuildFile; fileRef = 2613B28B16A2EF6000CF84AA /* space-sceneries */; };
 		261F248216A06A63006C1CF4 /* iOSApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 261F248116A06A63006C1CF4 /* iOSApplication.mm */; };
 		261F248616A06B34006C1CF4 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261F248416A06B34006C1CF4 /* Image.cpp */; };
 		261F248916A06B64006C1CF4 /* iOSImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 261F248716A06B64006C1CF4 /* iOSImage.mm */; };
-		265290AC16A2197600066E38 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 265290A516A2197600066E38 /* background.png */; };
-		265290AD16A2197600066E38 /* planets.png in Resources */ = {isa = PBXBuildFile; fileRef = 265290A616A2197600066E38 /* planets.png */; };
-		265290AE16A2197600066E38 /* stars-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 265290A716A2197600066E38 /* stars-blue.png */; };
-		265290AF16A2197600066E38 /* stars-deep.png in Resources */ = {isa = PBXBuildFile; fileRef = 265290A816A2197600066E38 /* stars-deep.png */; };
-		265290B016A2197600066E38 /* stars-green.png in Resources */ = {isa = PBXBuildFile; fileRef = 265290A916A2197600066E38 /* stars-green.png */; };
-		265290B116A2197600066E38 /* stars-purple.png in Resources */ = {isa = PBXBuildFile; fileRef = 265290AA16A2197600066E38 /* stars-purple.png */; };
-		265290B216A2197600066E38 /* stars-red.png in Resources */ = {isa = PBXBuildFile; fileRef = 265290AB16A2197600066E38 /* stars-red.png */; };
 		2658303E1685DE1300BFB900 /* iOSRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2658303C1685DE1300BFB900 /* iOSRenderer.mm */; };
 		2699A9E11684AD400092AC40 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E01684AD400092AC40 /* UIKit.framework */; };
 		2699A9E31684AD400092AC40 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E21684AD400092AC40 /* Foundation.framework */; };
@@ -79,17 +73,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2613B28B16A2EF6000CF84AA /* space-sceneries */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "space-sceneries"; path = "../../../Client/Resources/space-sceneries"; sourceTree = "<group>"; };
 		261F248116A06A63006C1CF4 /* iOSApplication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iOSApplication.mm; path = ../../src/Graphic/iOSApplication.mm; sourceTree = "<group>"; };
 		261F248416A06B34006C1CF4 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Image.cpp; sourceTree = "<group>"; };
 		261F248516A06B34006C1CF4 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
 		261F248716A06B64006C1CF4 /* iOSImage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iOSImage.mm; path = ../../../iOS/src/Graphic/iOSImage.mm; sourceTree = "<group>"; };
-		265290A516A2197600066E38 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
-		265290A616A2197600066E38 /* planets.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = planets.png; sourceTree = "<group>"; };
-		265290A716A2197600066E38 /* stars-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stars-blue.png"; sourceTree = "<group>"; };
-		265290A816A2197600066E38 /* stars-deep.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stars-deep.png"; sourceTree = "<group>"; };
-		265290A916A2197600066E38 /* stars-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stars-green.png"; sourceTree = "<group>"; };
-		265290AA16A2197600066E38 /* stars-purple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stars-purple.png"; sourceTree = "<group>"; };
-		265290AB16A2197600066E38 /* stars-red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stars-red.png"; sourceTree = "<group>"; };
 		2658303C1685DE1300BFB900 /* iOSRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iOSRenderer.mm; path = ../../../iOS/src/Graphic/iOSRenderer.mm; sourceTree = "<group>"; };
 		2658303D1685DE1300BFB900 /* iOSRendererMembers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iOSRendererMembers.h; path = ../../../iOS/src/Graphic/iOSRendererMembers.h; sourceTree = "<group>"; };
 		2699A9DC1684AD400092AC40 /* R-Type.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "R-Type.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,24 +202,9 @@
 		261F248A16A07203006C1CF4 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				265290A416A2197600066E38 /* space-sceneries */,
+				2613B28B16A2EF6000CF84AA /* space-sceneries */,
 			);
 			name = images;
-			sourceTree = "<group>";
-		};
-		265290A416A2197600066E38 /* space-sceneries */ = {
-			isa = PBXGroup;
-			children = (
-				265290A516A2197600066E38 /* background.png */,
-				265290A616A2197600066E38 /* planets.png */,
-				265290A716A2197600066E38 /* stars-blue.png */,
-				265290A816A2197600066E38 /* stars-deep.png */,
-				265290A916A2197600066E38 /* stars-green.png */,
-				265290AA16A2197600066E38 /* stars-purple.png */,
-				265290AB16A2197600066E38 /* stars-red.png */,
-			);
-			name = "space-sceneries";
-			path = "../../../Client/Resources/space-sceneries";
 			sourceTree = "<group>";
 		};
 		2699A9D11684AD400092AC40 = {
@@ -509,13 +482,7 @@
 				2699AAC7168510C90092AC40 /* button.png in Resources */,
 				26B59C4B1685E67200BC64D7 /* icon@2x.png in Resources */,
 				26B59C4E1685E6D500BC64D7 /* icon.png in Resources */,
-				265290AC16A2197600066E38 /* background.png in Resources */,
-				265290AD16A2197600066E38 /* planets.png in Resources */,
-				265290AE16A2197600066E38 /* stars-blue.png in Resources */,
-				265290AF16A2197600066E38 /* stars-deep.png in Resources */,
-				265290B016A2197600066E38 /* stars-green.png in Resources */,
-				265290B116A2197600066E38 /* stars-purple.png in Resources */,
-				265290B216A2197600066E38 /* stars-red.png in Resources */,
+				2613B28C16A2EF6000CF84AA /* space-sceneries in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
