@@ -26,7 +26,7 @@ namespace Threading {
 	*/
 	class COMMON_EXPORT_IMPORT Mutex {
 	public:
-		class Condition {
+		class COMMON_EXPORT_IMPORT Condition {
 		public:
 		  Condition(Mutex* mutex);
 		  ~Condition();
