@@ -130,6 +130,9 @@ public:
     virtual void welcomeCompleted() {
         _close = true;
     }
+    virtual void newGameCallGeneralMenu() {}
+    virtual void serverListCallGeneralMenu() {}
+    virtual void optionsCallGeneralMenu() {}
 
 private:
     Menu::WelcomeMenu   *_wmenu;

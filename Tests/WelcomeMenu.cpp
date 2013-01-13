@@ -46,6 +46,10 @@ public:
         }
     }
 
+    virtual void newGameCallGeneralMenu() {}
+    virtual void serverListCallGeneralMenu() {}
+    virtual void optionsCallGeneralMenu() {}
+
 private:
     bool                _close;
     Graphic::Scene      _scene;

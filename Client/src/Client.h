@@ -18,8 +18,8 @@
 
 # include "Menu/IMenuDelegate.h"
 
-class Client : public Network::IProxyDelegate<Network::TcpPacket>,
-               public Menu::IMenuDelegate {
+class Client : public Network::IProxyDelegate<Network::TcpPacket>/*,
+               public Menu::IMenuDelegate*/ {
  public:
   Client(const std::string& ip, uint16 port);
   ~Client();
