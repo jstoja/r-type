@@ -68,6 +68,10 @@ namespace Threading {
 			WaitForSingleObject(_thread, INFINITE);
 		}
 
+		void stop(void) {
+		  TerminateThread(_thread, -1);
+		}
+
 	private:
 		T*		_obj;
 		HANDLE	_thread;
