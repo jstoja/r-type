@@ -12,17 +12,26 @@
 
 # include <string>
 
+# include <ByteArray.h>
+# include <Object.h>
+# include <Types.h>
+
 class IPlugin;
 class IGame;
 
-class GameObject {
+class GameObject : public Object{
 public:
 	GameObject(std::string const& name);
 	~GameObject();
 	
-	void	init(IGame* game, ByteArray const& params);
+	void	init(IGame* game, ByteArray const& params, float32 xStart);
 	void	update();
+	float32	getXStart() const;
+
 private:
+	void		_loadPlugin();
+
+	std::string	_pluginName;
 	IPlugin*	_plugin;
 };
 

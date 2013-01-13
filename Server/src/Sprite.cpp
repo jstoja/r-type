@@ -14,6 +14,10 @@ Sprite::Sprite() {
 
 }
 
+Sprite::Sprite(ITexture *texture) {
+	setTexture(texture);
+}
+
 Sprite::~Sprite() {
 
 }

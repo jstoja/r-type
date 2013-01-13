@@ -22,6 +22,7 @@ class Texture;
 class Sprite : public ISprite, public Object {
 public:
 	Sprite();
+	Sprite(ITexture *texture);
 	virtual ~Sprite();
 
 	virtual void	setTexture(ITexture* texture);

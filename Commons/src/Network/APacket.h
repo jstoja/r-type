@@ -43,23 +43,25 @@ namespace Network {
     APacket&		operator<<(Rect2 const&);
 
     template <typename T>
-    inline APacket&		operator<<(std::list<T*>const& elements) {
-		typename std::list<T*>::const_iterator it;
+    APacket&		operator<<(std::list<T*>const& elements) {
+		std::list<T*>::const_iterator it;
 
 		*this << elements.size();
 		for (it = elements.begin(); it != elements.end(); ++it) {
-		*this << *(*it);
+			*this << *(*it);
 		}
+		return (*this);
 	}
 
     template <typename T>
-    inline APacket&		operator<<(std::list<T> const& elements) {
-		typename std::list<T*>::const_iterator it;
+    APacket&		operator<<(std::list<T> const& elements) {
+		std::list<T>::const_iterator it;
 
 		*this << elements.size();
 		for (it = elements.begin(); it != elements.end(); ++it) {
 		  *this << (*it);
 		}
+		return (*this);
 	}
     APacket&		operator>>(uint32&);
     APacket&		operator>>(float32&);

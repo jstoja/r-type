@@ -20,12 +20,15 @@ class Block : public IPlugin {
 public:
 	Block();
 
-	virtual void	init(IGame* game, ByteArray const& params);
+	virtual void	init(IGame* game, ByteArray const& params, float32 xStart);
 	virtual void	update();
+	virtual float32	getXStart() const;
 
 private:
 	IGame*				_game;
 	IGraphicElement*	_block;
+	float32				_xStart;
+	IGraphicElement*	_graphicElement;
 };
 
 #endif

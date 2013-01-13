@@ -80,7 +80,7 @@ char	GraphicElement::getSpriteFrameIndex() const {
 	return (_spriteIndex);
 }
 
-Network::UdpPacket&		operator<<(Network::UdpPacket & packet, GraphicElement& element) {
+Network::UdpPacket&		operator<<(Network::UdpPacket& packet, GraphicElement& element) {
 	element.setChanged(false);
 	packet << element.getId() << element.getPosition() << element.getRotation() << element.getSize() << element.getSprite()->getId() << element.getSpriteFrameIndex();
 	return (packet);

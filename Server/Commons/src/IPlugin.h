@@ -28,8 +28,9 @@ public:
 	typedef IPlugin	*(*CreatorPrototype)();
 	~IPlugin() {}
 
-	virtual void	init(IGame* game, ByteArray const& params) = 0;
+	virtual void	init(IGame* game, ByteArray const& params, float32 xStart) = 0;
 	virtual void	update() = 0;
+	virtual float32	getXStart() const = 0;
 };
 
 #endif
