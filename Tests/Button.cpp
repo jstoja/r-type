@@ -36,7 +36,7 @@ public:
         _button = new Widget::Button(&_scene,
                                      this,
                                      _scene.getViewport()/10,
-                                     _scene.getViewport()/2,
+                                     Vec3(_scene.getViewport().x, _scene.getViewport().y)/2,
                                      "ui/button-ready.png",
                                      NULL);
 

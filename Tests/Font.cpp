@@ -46,7 +46,7 @@ public:
 											   Vec2(1.0,  1.0)));
 		elem.setSprite(&sprite);
 		elem.setCurrentFrame(0);
-		elem.setPosition(Vec2(8, 4));
+		elem.setPosition(Vec3(8, 4));
 		elem.setSize(Vec2(str.size()-1, 1.0));
 		_scene.addElement(&elem);
     	while (!_close) {

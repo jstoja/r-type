@@ -49,7 +49,7 @@ void    Widget::GraphicWidget::addElement() {
     _scene->addElement(&_element);
 }
 
-void    Widget::GraphicWidget::setPosition(Vec2 const& pos) {
+void    Widget::GraphicWidget::setPosition(Vec3 const& pos) {
     _element.setPosition(pos);
     Widget::setPosition(pos);
 }

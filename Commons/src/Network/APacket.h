@@ -44,9 +44,9 @@ namespace Network {
 
     template <typename T>
     APacket&		operator<<(std::list<T*>const& elements) {
-		std::list<T*>::const_iterator it;
+		typename std::list<T*>::const_iterator it;
 
-		*this << elements.size();
+		*this << (uint32)elements.size();
 		for (it = elements.begin(); it != elements.end(); ++it) {
 			*this << *(*it);
 		}
@@ -55,9 +55,9 @@ namespace Network {
 
     template <typename T>
     APacket&		operator<<(std::list<T> const& elements) {
-		std::list<T>::const_iterator it;
+		typename std::list<T>::const_iterator it;
 
-		*this << elements.size();
+		*this << (uint32)elements.size();
 		for (it = elements.begin(); it != elements.end(); ++it) {
 		  *this << (*it);
 		}

@@ -34,14 +34,14 @@ namespace Widget {
             virtual ~Widget();
         
             //! Pos getter
-            Vec2 const&         getPosition() const;
+            Vec3 const&         getPosition() const;
             
             //! Get Widget size
             Vec2 const&         getSize() const;
         
         
             //! Set Widget position
-            virtual void        setPosition(Vec2 const&);
+            virtual void        setPosition(Vec3 const&);
         
             //! Set Widget size
             virtual void        setSize(Vec2 const&);
@@ -57,7 +57,7 @@ namespace Widget {
     private:
             Widget*             _parent;
             Vec2                _size;
-            Vec2                _position;
+            Vec3                _position;
             bool                _focus;
     };
 };

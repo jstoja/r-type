@@ -40,7 +40,6 @@ void	Application::_initBinaryPath() {
 # elif defined (OS_UNIX)
     if (!(_argc > 0 && strlen(_argv[0]) > 0))
         throw new Exception("Application cannot find the binary directory");
-    std::cout << "The _argv[0] has value: " << _argv[0] << std::endl;
     std::string cmd = _argv[0];
     if (cmd[0] == '/') {
         // If the binary has been launched from the root, we have the full path

@@ -33,14 +33,14 @@ namespace Widget {
             Button(Graphic::Scene*,
                     IButtonDelegate *delegate,
                     Vec2 const&,
-                    Vec2 const&,
+                    Vec3 const&,
                     std::string const&,
                     Widget* parent = NULL);
 
             //! Destruct the Button
             ~Button(void);
 
-            virtual void setPosition(Vec2 const &pos);
+            virtual void setPosition(Vec3 const &pos);
             virtual void setSize(Vec2 const &size);
         
             // Event Listener Virtual Methods

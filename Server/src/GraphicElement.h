@@ -49,6 +49,6 @@ private:
 	char	_spriteIndex;
 };
 
-Network::UdpPacket&		operator<<(Network::UdpPacket & packet, GraphicElement & element);
+Network::APacket&		operator<<(Network::APacket & packet, GraphicElement & element);
 
 #endif
