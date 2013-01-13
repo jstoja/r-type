@@ -26,6 +26,20 @@ namespace Threading {
 	*/
 	class COMMON_EXPORT_IMPORT Mutex {
 	public:
+		class Condition {
+		public:
+		  Condition(Mutex* mutex);
+		  ~Condition();
+		  void signal();
+		  void wait();
+		private:
+		# if defined (OS_WINDOWS)
+		  
+		# elif defined (OS_UNIX)
+		  pthread_cond_t*	_cond;
+		# endif
+		  Mutex*		_mutex;
+		};
 
 		//! Constructor
 		/*!
