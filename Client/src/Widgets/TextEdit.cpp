@@ -68,7 +68,7 @@ void    Widget::TextEdit::init() {
     _label.init();
 }
 
-void    Widget::TextEdit::setPosition(Vec2 const& v) {
+void    Widget::TextEdit::setPosition(Vec3 const& v) {
     GraphicWidget::setPosition(v);
     _label.setPosition(v);
     update();

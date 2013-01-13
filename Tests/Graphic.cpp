@@ -25,7 +25,7 @@ public:
         Graphic::Renderer::getInstance().setScene(&_scene);
         
         // Setup scene
-        _button.setPosition(Vec2(8, 4.5));
+        _button.setPosition(Vec3(8, 4.5));
         _button.setSize(Vec2(8, 1.5));
         
 //        Graphic::Element* button2 = new Graphic::Element();

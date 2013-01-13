@@ -70,7 +70,7 @@ namespace Widget {
         void    clear();
         
         //! Set position
-        void    setPosition(Vec2 const&);
+        void    setPosition(Vec3 const&);
         
         //! Overlead of process event
         virtual void    processEvent(Event::Event const&);

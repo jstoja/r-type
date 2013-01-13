@@ -43,6 +43,6 @@ Library* LibraryFactory::load(std::string const& dir, std::string const& name) {
 void	LibraryFactory::clear() {
 	for (std::map<std::string, Library*>::iterator it = _libraries.begin(); it != _libraries.end();) {
 		delete it->second;
-		it = _libraries.erase(it);
 	}
+    _libraries.clear();
 }

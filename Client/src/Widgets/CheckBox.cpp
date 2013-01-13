@@ -30,7 +30,7 @@ Widget::CheckBox::~CheckBox() {
 Widget::CheckBox::CheckBox(Graphic::Scene* scene,
                            ICheckBoxDelegate *delegate, 
                            Vec2 const& size,
-                           Vec2 const& position,
+                           Vec3 const& position,
                            std::string const& image,
                            bool checked,
                            Widget* parent)
@@ -79,7 +79,7 @@ void    Widget::CheckBox::setSize(Vec2 const& v) {
     GraphicWidget::setSize(v);
 }
 
-void    Widget::CheckBox::setPosition(Vec2 const& v) {
+void    Widget::CheckBox::setPosition(Vec3 const& v) {
     GraphicWidget::setPosition(v);
 }
 
