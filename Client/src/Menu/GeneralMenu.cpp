@@ -7,6 +7,14 @@ static const char* buttonsImages[] = {
     NULL
 };
 
+typedef void (Menu::IMenuDelegate::*delegateFunc)(void);
+static const delegateFunc ptrDelegate[] = {
+    &Menu::IMenuDelegate::newGameCallGeneralMenu,
+    &Menu::IMenuDelegate::newGameCallGeneralMenu,
+    &Menu::IMenuDelegate::newGameCallGeneralMenu,
+    NULL
+};
+
 Menu::GeneralMenu::GeneralMenu(Graphic::Scene *scene, Menu::IMenuDelegate *delegate)
 :   _delegate(delegate) {
 
@@ -37,6 +45,7 @@ Menu::GeneralMenu::GeneralMenu(Graphic::Scene *scene, Menu::IMenuDelegate *deleg
     }
 
 }
+
 Menu::GeneralMenu::~GeneralMenu() {
 }
 
@@ -50,4 +59,17 @@ void Menu::GeneralMenu::buttonPushed(Widget::Button &instance) {
 }
 
 void Menu::GeneralMenu::buttonReleased(Widget::Button &instance){
+    uint32 i = 0;
+    for (std::vector<Widget::Button*>::iterator it = _buttons.begin();
+            it != _buttons.end();
+            ++it, ++i) {
+        if (*it == &instance) {
+            //Free or not ?
+            for (it = _buttons.begin(); it != _buttons.end(); ++it) {
+                delete *it;
+            }
+            //
+            return (*_delegate.*ptrDelegate[i])();
+        }
+    }
 }
