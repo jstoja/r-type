@@ -10,8 +10,13 @@
 
 namespace Menu {
     class GeneralMenu: public Widget::IButtonDelegate {
-
         public:
+            typedef void (Menu::IMenuDelegate::*delegateFunc)(void);
+            typedef struct      s_buttons {
+                const char*     image;
+                delegateFunc    delegation;
+            }                   t_buttons;
+
             GeneralMenu(Graphic::Scene *scene, Menu::IMenuDelegate *delegate);
             ~GeneralMenu();
 
@@ -25,8 +30,8 @@ namespace Menu {
             Menu::IMenuDelegate             *_delegate;
             std::vector<Widget::Button*>    _buttons;
             /*Widget::Button              _newGame;
-            Widget::Button              _serverList;
-            Widget::Button              _options;*/
+              Widget::Button              _serverList;
+              Widget::Button              _options;*/
     };
 }
 
