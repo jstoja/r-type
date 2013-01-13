@@ -34,4 +34,20 @@ bool Threading::Mutex::tryLock() {
 	return (true);
 }
 
+Threading::Mutex::Condition::Condition(Mutex* mutex) {
+
+}
+
+Threading::Mutex::Condition::~Condition() {
+
+}
+
+void Threading::Mutex::Condition::signal() {
+
+}
+
+void Threading::Mutex::Condition::wait() {
+
+}
+
 #endif
