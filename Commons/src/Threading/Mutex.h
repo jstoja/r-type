@@ -26,7 +26,7 @@ namespace Threading {
 	*/
 	class COMMON_EXPORT_IMPORT Mutex {
 	public:
-		class Condition {
+		class COMMON_EXPORT_IMPORT Condition {
 		public:
 		  Condition(Mutex* mutex);
 		  ~Condition();
@@ -34,9 +34,9 @@ namespace Threading {
 		  void wait();
 		private:
 		# if defined (OS_WINDOWS)
-		  
+		  CONDITION_VARIABLE*	_cond;
 		# elif defined (OS_UNIX)
-		  pthread_cond_t*	_cond;
+		  pthread_cond_t*		_cond;
 		# endif
 		  Mutex*		_mutex;
 		};
@@ -72,11 +72,11 @@ namespace Threading {
 		
 			If the lock was obtained, the mutex must be unlocked with unlock() before another thread can successfully lock it.
 		*/
-		bool tryLock();
+		//bool tryLock();
 
 	private:
 # if defined (OS_WINDOWS)
-		HANDLE	_mutex;
+		CRITICAL_SECTION	_mutex;
 # elif defined (OS_UNIX)
 		pthread_mutex_t *_mutex;
 # endif

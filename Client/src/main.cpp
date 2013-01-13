@@ -6,19 +6,18 @@
 //
 //
 
-#ifndef WIN32_LEAN_AND_MEAN
-# define WIN32_LEAN_AND_MEAN
-#endif
-#include <cstdlib>
-#include <cstdio>
-#include "Debug.h"
+#include <iostream>
+#include <exception>
+#include "Application.h"
 #include "Client.h"
 
 int	main(int argc, char *argv[]) {
-  if (argc == 3) {
-      Client client(argv[1], atoi(argv[2]));
-
-      getchar();
+    try {
+        Application::getInstance().init(argc, argv);
+        Client client;
     }
-  return (0);
+    catch (std::exception* e) {
+        std::cerr << e->what() << std::endl;
+    }
+    return (0);
 }

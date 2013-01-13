@@ -31,9 +31,9 @@ void Threading::Mutex::unlock() {
 	pthread_mutex_unlock(_mutex);
 }
 
-bool Threading::Mutex::tryLock() {
+/*bool Threading::Mutex::tryLock() {
 	return pthread_mutex_trylock(_mutex);
-}
+}*/
 
 Threading::Mutex::Condition::Condition(Mutex* mutex) :
   _mutex(mutex) {
@@ -46,7 +46,7 @@ Threading::Mutex::Condition::~Condition() {
 }
 
 void Threading::Mutex::Condition::signal() {
-  pthread_cond_signal(_cond);  
+  pthread_cond_signal(_cond);
 }
 
 void Threading::Mutex::Condition::wait() {

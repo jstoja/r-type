@@ -17,7 +17,7 @@
 
 namespace Threading {
 
-  class ThreadPool {
+  class COMMON_EXPORT_IMPORT ThreadPool {
   public:
     class ITask {
     public:
