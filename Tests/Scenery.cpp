@@ -15,9 +15,12 @@
 #include "Graphic/Scene.h"
 #include "Graphic/Image.h"
 
+#include "Menu/WelcomeMenu.h"
+#include "Menu/IMenuDelegate.h"
+
 #include <SFML/Graphics.hpp>
 
-class Test : public Event::IListenerDelegate {
+class Test : public Event::IListenerDelegate, public Menu::IMenuDelegate {
 public:
     Test()
     : _close(false), _scene() {
@@ -90,12 +93,14 @@ public:
         scenery->setOpacity(0.8);
         _scene.addScenery(scenery);
 
-        
+        _wmenu = new Menu::WelcomeMenu(&_scene, this);
+
         // Add event listeners
         Event::Manager::getInstance()
         .addEventListener(new Event::Listener(Event::Close, this));
         
         float32 xPos = 0;
+        float32 coef = 0;
         
         while (!_close) {
             // Process events
@@ -107,7 +112,8 @@ public:
             //_scene.setViewportPosition(Vec2(100 + sin(xPos)*10, 0));
             _scene.setViewportPosition(Vec2(xPos, 0));
             
-            xPos += 0.02;
+            xPos += 0.01 + (sin(coef) + 1)/100;
+            coef += 0.01;
 
             //usleep(10000);
         }
@@ -121,7 +127,12 @@ public:
         }
     }
 
+    virtual void welcomeCompleted() {
+        _close = true;
+    }
+
 private:
+    Menu::WelcomeMenu   *_wmenu;
     bool                _close;
     Graphic::Scene      _scene;
 };

@@ -45,6 +45,7 @@ bool    Widget::GraphicWidget::loadImage(const std::string &image_path) {
 }
 
 void    Widget::GraphicWidget::addElement() {
+    _element.setType(Graphic::Element::Floating);
     _scene->addElement(&_element);
 }
 
