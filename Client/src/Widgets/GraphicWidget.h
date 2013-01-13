@@ -44,7 +44,7 @@ namespace Widget {
         void    setSprite(Graphic::Sprite*);
         
         //! Set Widget position
-        virtual void        setPosition(Vec2 const&);
+        virtual void        setPosition(Vec3 const&);
         
         //! Set Widget size
         virtual void        setSize(Vec2 const&);

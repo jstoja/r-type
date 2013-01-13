@@ -20,7 +20,7 @@ Widget::Button::Button(Graphic::Scene* scene,
 : GraphicWidget(scene, parent), _delegate(delegate) {
 
     loadImage("./button.png");
-    GraphicWidget::setPosition(Vec2(1.0, 1.0));
+    GraphicWidget::setPosition(Vec3(1.0, 1.0));
     GraphicWidget::setSize(Vec2(1.0, 1.0));
     if (getSprite() != NULL) {
         getSprite()->setAutoFrames(3, Graphic::Sprite::VERTICAL);
@@ -40,7 +40,7 @@ Widget::Button::Button(Graphic::Scene* scene,
 Widget::Button::Button(Graphic::Scene* scene,
                        IButtonDelegate *delegate,
                        Vec2 const& size,
-                       Vec2 const& position,
+                       Vec3 const& position,
                        std::string const& image,
                        Widget* parent) :
     GraphicWidget(scene, parent), _delegate(delegate) {
@@ -83,7 +83,7 @@ void    Widget::Button::processEvent(Event::Event const& event) {
   }
 }
 
-void            Widget::Button::setPosition(Vec2 const &pos) {
+void            Widget::Button::setPosition(Vec3 const &pos) {
     GraphicWidget::setPosition(pos);
     _eventListener->setRect(getRect());
 }

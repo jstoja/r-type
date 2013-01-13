@@ -34,11 +34,11 @@ void Graphic::Element::setType(Graphic::Element::Type type) {
     _type = type;
 }
 
-Vec2 const&Graphic::Element::getPosition(void) const {
+Vec3 const&Graphic::Element::getPosition(void) const {
     return _position;
 }
 
-void Graphic::Element::setPosition(Vec2 const& position) {
+void Graphic::Element::setPosition(Vec3 const& position) {
     _position = position;
 }
 
@@ -86,7 +86,7 @@ Graphic::Matrix4f const& Graphic::Element::getTransformationMatrix(void) {
     if (_updateTransformationMatrix)
         _updateTransformationMatrix = false;
     _transformationMatrix.identity();
-    _transformationMatrix.translate(_position.x, _position.y);
+    _transformationMatrix.translate(_position.x, _position.y, _position.z);
     if (_size.x != 0 || _size.y != 0)
         _transformationMatrix.scale(_size.x, _size.y);
     if (_rotation != 0)
@@ -95,5 +95,5 @@ Graphic::Matrix4f const& Graphic::Element::getTransformationMatrix(void) {
 }
 
 Rect2 Graphic::Element::getRect() const {
-    return Rect2(_position - _size / 2, _size);
+    return Rect2(Vec2(_position) - _size / 2, _size);
 }

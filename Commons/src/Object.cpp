@@ -7,17 +7,19 @@
 //
 
 #include "Object.h"
-
+#include "ObjectManager.h"
 #include "UUIDGenerator.h"
 
-Object::Object() : _id(0) {
-    _id = UUIDGenerator::getInstance().getUUID();
+Object::Object() : _id(UUIDGenerator::getInstance().getUUID()) {
+	ObjectManager::getInstance().addObject(this);
 }
 
 Object::Object(uint32 id) : _id(id) {
+	ObjectManager::getInstance().addObject(this);
 }
 
 Object::~Object() {
+	ObjectManager::getInstance().removeObject(this);
 }
 
 uint32 Object::getId() const {

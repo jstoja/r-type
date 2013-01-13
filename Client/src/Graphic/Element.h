@@ -12,7 +12,7 @@
 # include "Object.h"
 # include "Sprite.h"
 # include "Types.h"
-# include "Vec2.h"
+# include "Vec3.h"
 # include "Rect2.h"
 # include "Matrix.hpp"
 
@@ -49,13 +49,13 @@ namespace Graphic {
         void        setType(Type type);
         
         //! Return the position of the Element
-        Vec2 const& getPosition(void) const;
+        Vec3 const& getPosition(void) const;
 
         //! Set the position of the Element
         /*!
          \param position Position vector
          */
-        void        setPosition(Vec2 const& position);
+        void        setPosition(Vec3 const& position);
         
         //! Return the rotation ratio of the Element
         float32     getRotation(void) const;
@@ -114,7 +114,7 @@ namespace Graphic {
         
     private:
         Type        _type;
-        Vec2        _position;
+        Vec3        _position;
         float32     _rotation;
         float       _opacity;
         Vec2        _size;

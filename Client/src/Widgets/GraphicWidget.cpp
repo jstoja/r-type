@@ -45,17 +45,18 @@ bool    Widget::GraphicWidget::loadImage(const std::string &image_path) {
 }
 
 void    Widget::GraphicWidget::addElement() {
+    _element.setType(Graphic::Element::Floating);
     _scene->addElement(&_element);
 }
 
-void    Widget::GraphicWidget::setPosition(Vec2 const& pos) {
+void    Widget::GraphicWidget::setPosition(Vec3 const& pos) {
     _element.setPosition(pos);
-    Widget::Widget::setPosition(pos);
+    Widget::setPosition(pos);
 }
 
 void    Widget::GraphicWidget::setSize(Vec2 const& size) {
     _element.setSize(size);
-    Widget::Widget::setSize(size);
+    Widget::setSize(size);
 }
 
 void    Widget::GraphicWidget::setScene(Graphic::Scene* scene) {

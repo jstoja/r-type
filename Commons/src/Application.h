@@ -18,7 +18,7 @@
 class COMMON_EXPORT_IMPORT_REMOVED Application : public Singleton<Application> {
     friend class Singleton<Application>;
 
-    public:
+public:
     
     //! Destruct the object
     ~Application();
@@ -36,11 +36,14 @@ class COMMON_EXPORT_IMPORT_REMOVED Application : public Singleton<Application> {
     // Set the resources path, relative to the binary
     void        setRelativeResourcesPath(std::string const& path);
 
-    private:
+	std::string getRelativePath(std::string const& path) const;
+	char		getDirectorySeparator() const;
+
+private:
     //! Construct the object
     Application();
+	void	_initBinaryPath();
     
-    void _getBinaryPath(void);
 
     char**		_argv;
     int32		_argc;

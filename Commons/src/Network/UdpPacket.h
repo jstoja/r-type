@@ -14,15 +14,14 @@
 
 namespace Network {
 
-  class COMMON_EXPORT_IMPORT UdpPacket : public APacket {
+  class COMMON_EXPORT_IMPORT_REMOVED UdpPacket : public APacket {
   public:
     UdpPacket();
     ~UdpPacket();
 
     void	read(ASocket*);
     void	update();
-    bool        isComplete() const;
-
+    bool    isComplete() const;
   };
 
 }

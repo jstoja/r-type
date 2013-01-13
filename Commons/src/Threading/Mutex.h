@@ -10,7 +10,7 @@
 #ifndef _MUTEX_H_
 # define _MUTEX_H_
 
-# include "../OS.h"
+# include <OS.h>
 
 # if defined (OS_WINDOWS)
 #  include <windows.h>

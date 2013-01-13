@@ -4,6 +4,7 @@
 # include <iostream>
 # include <string>
 # include <vector>
+
 # include "Types.h"
 
 class COMMON_EXPORT_IMPORT ByteArray {

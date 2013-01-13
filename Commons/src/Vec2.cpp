@@ -11,6 +11,9 @@
 Vec2::Vec2(float32 x, float32 y) : x(x), y(y) {
 }
 
+Vec2::Vec2(Vec3 const& v) : x(v.x), y(v.y) {
+}
+
 bool Vec2::operator>=(Vec2 const& v2) const{
     return x >= v2.x && y >= v2.y;
 }
@@ -49,4 +52,8 @@ std::ostream& operator<<(std::ostream& stream, Vec2 const& v) {
 
 bool    Vec2::operator==(Vec2 const& v) const {
     return (x == v.x && y == v.y);
+}
+
+bool    Vec2::operator!=(Vec2 const& v) const {
+    return !(*this == v);
 }

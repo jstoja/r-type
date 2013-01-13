@@ -12,11 +12,13 @@
 #endif
 
 #include <cstdio>
+#include <Application.h>
+
 #include "Server.h"
-
 int	main(int argc, char *argv[]) {
-  Server server;
+	Application::getInstance().init(argc, argv);
+	Server server;
 
-  getchar();
-  return (0);
+	getchar();
+	return (0);
 }

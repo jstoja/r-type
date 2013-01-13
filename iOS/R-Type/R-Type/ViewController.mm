@@ -44,7 +44,7 @@ public:
         Graphic::Texture* texture;
         
         // Create sceneries
-        image.loadFromResource("background.png");
+        image.loadFromResource("space-sceneries/background.png");
         texture = new Graphic::Texture();
         texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
         scenery = new Graphic::Scenery();
@@ -55,7 +55,7 @@ public:
         scenery->setDepth(0.999);
         _scene.addScenery(scenery);
         
-        image.loadFromResource("stars-deep.png");
+        image.loadFromResource("space-sceneries/stars-deep.png");
         texture = new Graphic::Texture();
         texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
         scenery = new Graphic::Scenery();
@@ -67,7 +67,7 @@ public:
         scenery->setOpacity(0.33);
         _scene.addScenery(scenery);
         
-        image.loadFromResource("stars-blue.png");
+        image.loadFromResource("space-sceneries/stars-blue.png");
         texture = new Graphic::Texture();
         texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
         scenery = new Graphic::Scenery();
@@ -89,7 +89,7 @@ public:
         scenery->setDepth(0.996);
         _scene.addScenery(scenery);
         
-        image.loadFromResource("planets.png");
+        image.loadFromResource("space-sceneries/planets.png");
         texture = new Graphic::Texture();
         texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
         scenery = new Graphic::Scenery();
@@ -153,11 +153,17 @@ private:
 {
     [super viewDidLoad];
     
+    //[NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(goText:) userInfo:nil repeats:NO];
+    
     try {
         _test = new Test((GLKView *)self.view);
     } catch (Exception* e) {
         Log("Error: " << e->getMessage());
     }
+}
+
+-(void)goText:(id)sender {
+    [self performSegueWithIdentifier:@"TextInputController" sender:self];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

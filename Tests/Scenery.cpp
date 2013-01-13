@@ -100,6 +100,7 @@ public:
         .addEventListener(new Event::Listener(Event::Close, this));
         
         float32 xPos = 0;
+        float32 coef = 0;
         
         while (!_close) {
             // Process events
@@ -111,7 +112,8 @@ public:
             //_scene.setViewportPosition(Vec2(100 + sin(xPos)*10, 0));
             _scene.setViewportPosition(Vec2(xPos, 0));
             
-            xPos += 0.02;
+            xPos += 0.01;// + (sin(coef) + 1)/100;
+            coef += 0.01;
 
             //usleep(10000);
         }

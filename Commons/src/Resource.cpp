@@ -8,10 +8,12 @@
 //
 
 #include <fstream>
+
 #include "UUIDGenerator.h"
 #include "Resource.h"
 #include "Application.h"
 #include "Exception.h"
+#include "ResourcesManager.h"
 
 Resource::Resource() : Object() {
 }
@@ -22,6 +24,7 @@ Resource::Resource(std::string const& name) : Object() {
 }
 
 Resource::~Resource() {
+	ResourcesManager::getInstance().removeResource(getName());
 }
 
 Resource::Resource(Resource const& cpy) : Object(cpy.getId()) {

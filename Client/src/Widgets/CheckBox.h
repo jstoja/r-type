@@ -35,7 +35,7 @@ namespace Widget {
         CheckBox(Graphic::Scene*,
                  ICheckBoxDelegate *delegate,
                  Vec2 const&,
-                 Vec2 const&,
+                 Vec3 const&,
                  std::string const& = std::string("checkbox.png"),
                  bool checked = false,
                  Widget* parent = NULL);
@@ -52,7 +52,7 @@ namespace Widget {
         //! Set state
         void    setChecked(bool);
         
-        void    setPosition(Vec2 const&);
+        void    setPosition(Vec3 const&);
         
         void    setSize(Vec2 const&);
         

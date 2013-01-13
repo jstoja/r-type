@@ -76,7 +76,7 @@ public:
         
         
         _table = new Widget::Table();
-        _table->setPosition(Vec2(2,6));
+        _table->setPosition(Vec3(2,6));
         _table->addColumn(c1);
         _table->addColumn(c2);
         _table->addColumn(c3);

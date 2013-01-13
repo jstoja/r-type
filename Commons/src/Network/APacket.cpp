@@ -26,9 +26,16 @@ uint32 Network::APacket::getSize() const {
 }
 
 Network::APacket& Network::APacket::operator<<(uint32 integer) {
-  _size += 4;
-  _data.resize(_data.getSize() + 4);
-  *((int*)(&((char*)_data)[_data.getSize() - 4])) = integer;
+  _size += sizeof(uint32);
+  _data.resize(_data.getSize() + sizeof(uint32));
+  *((int*)(&((char*)_data)[_data.getSize() - sizeof(uint32)])) = integer;
+  return *this;
+}
+
+Network::APacket& Network::APacket::operator<<(float32 val) {
+  _size += sizeof(float32);
+  _data.resize(_data.getSize() + sizeof(float32));
+  *((float32*)(&((char*)_data)[_data.getSize() - sizeof(float32)])) = val;
   return *this;
 }
 
@@ -48,9 +55,36 @@ Network::APacket& Network::APacket::operator<<(const std::string& str) {
   return *this;
 }
 
+Network::APacket& Network::APacket::operator<<(Vec2 const& pos) {
+  _size += 8;
+  _data.resize(_data.getSize() + 8);
+  *((int*)(&((char*)_data)[_data.getSize() - 8])) = pos.x;
+  *((int*)(&((char*)_data)[_data.getSize() - 4])) = pos.y;
+  return *this;
+}
+
+Network::APacket& Network::APacket::operator<<(Vec3 const& pos) {
+  _size += 12;
+  _data.resize(_data.getSize() + 12);
+  *((int*)(&((char*)_data)[_data.getSize() - 12])) = pos.x;
+  *((int*)(&((char*)_data)[_data.getSize() - 8])) = pos.y;
+  *((int*)(&((char*)_data)[_data.getSize() - 4])) = pos.z;
+  return *this;
+}
+
+Network::APacket& Network::APacket::operator<<(Rect2 const& pos) {
+	return *this << pos.pos << pos.size;
+}
+
 Network::APacket& Network::APacket::operator>>(uint32& integer) {
-  integer = *((int*)(&((char*)_data)[_curser]));
-  _curser += 4;
+  integer = *((uint32*)(&((char*)_data)[_curser]));
+  _curser += sizeof(uint32);
+  return *this;
+}
+
+Network::APacket& Network::APacket::operator>>(float32& val) {
+  val = *((float32*)(&((char*)_data)[_curser]));
+  _curser += sizeof(float32);
   return *this;
 }
 
@@ -71,46 +105,25 @@ Network::APacket& Network::APacket::operator>>(std::string& str) {
   return *this;
 }
 
-template <typename T>
-Network::APacket& Network::APacket::operator<<(const std::list<T*>& elements) {
-  typename std::list<T*>::const_iterator it;
 
-  *this << elements.size();
-  for (it = elements.begin(); it != elements.end(); ++it) {
-    *this << *(*it);
-  }
+Network::APacket& Network::APacket::operator>>(Vec2& pos) {
+  pos.x = *((uint32*)(&((char*)_data)[_curser]));
+  _curser += sizeof(uint32);
+  pos.y = *((uint32*)(&((char*)_data)[_curser]));
+  _curser += sizeof(uint32);
+  return *this;
 }
 
-template <typename T>
-Network::APacket& Network::APacket::operator<<(const std::list<T>& elements) {
-  typename std::list<T*>::const_iterator it;
-
-  *this << elements.size();
-  for (it = elements.begin(); it != elements.end(); ++it) {
-    *this << (*it);
-  }
+Network::APacket& Network::APacket::operator>>(Vec3& pos) {
+  pos.x = *((uint32*)(&((char*)_data)[_curser]));
+  _curser += sizeof(uint32);
+  pos.y = *((uint32*)(&((char*)_data)[_curser]));
+  _curser += sizeof(uint32);
+  pos.y = *((uint32*)(&((char*)_data)[_curser]));
+  _curser += sizeof(uint32);
+  return *this;
 }
 
-template <typename T>
-Network::APacket& Network::APacket::operator>>(std::list<T*>& elements) {
-  uint32 size;
-
-  *this >> size;
-  for (uint32 i = 0; i < size; ++i) {
-    T* element = new T;
-    *this >> *element;
-    elements.push_front(element);
-  }
-}
-
-template <typename T>
-Network::APacket& Network::APacket::operator>>(std::list<T>& elements) {
-  uint32 size;
-
-  *this >> size;
-  for (uint32 i = 0; i < size; ++i) {
-    T element;
-    *this >> element;
-    elements.push_front(element);
-  }  
+Network::APacket& Network::APacket::operator>>(Rect2& pos) {
+	return *this >> pos.pos >> pos.size;
 }

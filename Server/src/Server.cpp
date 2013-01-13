@@ -8,9 +8,15 @@
 //
 
 #include "Game.h"
+#include <Application.h>
+
 #include "Server.h"
+#include "GameObject.h"
+
+std::string	Server::_pluginDirectory = "Plugins";
 
 Server::Server() {
+	Application::getInstance().setRelativeResourcesPath("Resources");
   _tcpServer.setDelegate(this);
   if (_tcpServer.listen())
     std::cout << "Server started on port : " << _tcpServer.getLocalPort() << std::endl;
@@ -54,4 +60,12 @@ void Server::quitGame(uint32 gameId, Player* player) {
     if (_games.find(gameId) != _games.end()) {
         _games[gameId]->quit(player);
     }
+}
+
+std::string const&	Server::getPluginDirectory() {
+	return (_pluginDirectory);
+}
+
+void				Server::setPluginDirectory(std::string const& dir) {
+	_pluginDirectory = dir;
 }
