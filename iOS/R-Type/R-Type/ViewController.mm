@@ -153,11 +153,17 @@ private:
 {
     [super viewDidLoad];
     
+    //[NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(goText:) userInfo:nil repeats:NO];
+    
     try {
         _test = new Test((GLKView *)self.view);
     } catch (Exception* e) {
         Log("Error: " << e->getMessage());
     }
+}
+
+-(void)goText:(id)sender {
+    [self performSegueWithIdentifier:@"TextInputController" sender:self];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

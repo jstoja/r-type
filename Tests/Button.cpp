@@ -37,7 +37,7 @@ public:
                                      this,
                                      _scene.getViewport()/10,
                                      _scene.getViewport()/2,
-                                     "button.png",
+                                     "ui/button-ready.png",
                                      NULL);
 
         // Setup scene
@@ -52,7 +52,7 @@ public:
             // Render
             Graphic::Renderer::getInstance().render();
             //sleep(1);
-            _button->setSize(_button->getSize()+0.1);
+            //_button->setSize(_button->getSize()+0.1);
         }
     }
 
