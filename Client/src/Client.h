@@ -18,7 +18,18 @@ class Client {
     Client(void);
     ~Client(void);
     
+    //! Main loop of the application
+    /*!
+     The main loop call the update() and render() methods and limit the framerate
+     of the application. On iOS, this functions does nothing, cause the mainloop
+     is handled by the iOS framework.
+     */
     void mainLoop(void);
+    
+    void update(void);
+    void render(void);
+    
+    uint32  getFramerateLimit(void) const;
     
     private:
     Graphic::Scene  _scene;

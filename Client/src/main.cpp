@@ -13,6 +13,9 @@
 
 int	main(int argc, char *argv[]) {
     try {
+#if defined OS_MAC
+        Application::getInstance().setRelativeResourcesPath("../Resources");
+#endif
         Application::getInstance().init(argc, argv);
         Client client;
     }

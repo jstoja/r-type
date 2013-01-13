@@ -32,8 +32,8 @@ namespace Graphic {
         };
 
         enum FramesOrientation {
-            VERTICAL,
-            HORIZONTAL
+            Vertical,
+            Horizontal
         };
         
         //! Create a Sprite
@@ -48,7 +48,7 @@ namespace Graphic {
         //! We know the size of the Image,
         //! so if we know the orientation and the number of frames,
         //! we can set automatically all frames.
-        void    setAutoFrames(uint32 framesNumber, Sprite::FramesOrientation orientation);
+        void    setAutoFrames(uint32 framesNumber, Sprite::FramesOrientation orientation=Vertical);
 
         void    clearFrames();
 
