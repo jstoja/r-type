@@ -12,42 +12,45 @@
 #if defined (OS_WINDOWS)
 # include "Mutex.h"
 
-Threading::Mutex::Mutex() : _mutex(CreateMutex(NULL, FALSE, NULL)) {
+Threading::Mutex::Mutex() {
+	::InitializeCriticalSection(&_mutex);
 }
 
 Threading::Mutex::~Mutex(void) {
-	CloseHandle(_mutex);
+	::DeleteCriticalSection(&_mutex);
 }
 
 void Threading::Mutex::lock() {
-	WaitForSingleObject(_mutex, INFINITE);
+	::EnterCriticalSection(&_mutex);
 }
 
 void Threading::Mutex::unlock() {
-	ReleaseMutex(_mutex);
+	::LeaveCriticalSection(&_mutex);
 }
 
-bool Threading::Mutex::tryLock() {
-	DWORD ret = WaitForSingleObject(_mutex, 0);
-	if (ret == WAIT_TIMEOUT)
-		return (false);
-	return (true);
-}
+/*bool Threading::Mutex::tryLock() {
+	//DWORD ret = WaitForSingleObject(_mutex, 0);
+	//if (ret == WAIT_TIMEOUT)
+		//return (false);
+	return (TryLock(&_mutex));
+}*/
 
-Threading::Mutex::Condition::Condition(Mutex* mutex) {
-
+Threading::Mutex::Condition::Condition(Mutex* mutex) :
+	_mutex(mutex) {
+	_cond = new CONDITION_VARIABLE;
+	InitializeConditionVariable(_cond);
 }
 
 Threading::Mutex::Condition::~Condition() {
-
+	delete _cond;
 }
 
 void Threading::Mutex::Condition::signal() {
-
+	WakeConditionVariable(_cond);
 }
 
 void Threading::Mutex::Condition::wait() {
-
+	SleepConditionVariableCS(_cond, &(_mutex->_mutex), INFINITE);
 }
 
 #endif
