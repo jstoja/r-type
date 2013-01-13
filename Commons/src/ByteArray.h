@@ -7,65 +7,65 @@
 
 # include "Types.h"
 
-class COMMON_EXPORT_IMPORT ByteArray {
+class ByteArray {
     public:
         //! Constructor
-        ByteArray();
+        COMMON_EXPORT_IMPORT inline ByteArray();
     
         //! Construct with size only
-        ByteArray(uint32);
+        COMMON_EXPORT_IMPORT inline ByteArray(uint32);
     
         //! Constructor with buffer and size
-        ByteArray(const char *,  uint32);
+        COMMON_EXPORT_IMPORT inline ByteArray(const char *,  uint32);
     
         //! Copy constructor
-        ByteArray(ByteArray const&);
+        COMMON_EXPORT_IMPORT inline ByteArray(ByteArray const&);
     
         //! Destructor
-        ~ByteArray();
+        COMMON_EXPORT_IMPORT inline ~ByteArray();
     
 
         //! Assignation
-        ByteArray&	operator=(ByteArray const&);
+        COMMON_EXPORT_IMPORT inline ByteArray&	operator=(ByteArray const&);
 
         //! Comparaison
-        bool		operator==(ByteArray const&);
+        COMMON_EXPORT_IMPORT inline bool		operator==(ByteArray const&);
 
         //! Comparaison
-        bool		operator!=(ByteArray const&);
+        COMMON_EXPORT_IMPORT inline bool		operator!=(ByteArray const&);
 
         //! Append
-        ByteArray&	operator<<(ByteArray const&);
+        COMMON_EXPORT_IMPORT inline ByteArray&	operator<<(ByteArray const&);
 
         //! Buffer getter
-        std::vector<char> const& getBuffer() const;
+        COMMON_EXPORT_IMPORT inline std::vector<char> const& getBuffer() const;
 
         //! Size getter
-        uint32		getSize() const;
+        COMMON_EXPORT_IMPORT inline uint32		getSize() const;
     
         //! Append ByteArray
-        void		append(ByteArray const&);
+        COMMON_EXPORT_IMPORT inline void		append(ByteArray const&);
 
         //! Append char * / uint32
-        void		append(char *, uint32);
+        COMMON_EXPORT_IMPORT inline void		append(char *, uint32);
 
         //! Copy buffer with char * + size
-        void		bufcopy(const char *, uint32);
+        COMMON_EXPORT_IMPORT inline void		bufcopy(const char *, uint32);
     
         //! Copy vector
-        void		bufcopy(std::vector<char> const&);
+        COMMON_EXPORT_IMPORT inline void		bufcopy(std::vector<char> const&);
 
         //! Get char buffer
-        char const*       getData() const;
+        COMMON_EXPORT_IMPORT inline char const*       getData() const;
     
         // Return pointer to buffer data
-        operator char*();
+        COMMON_EXPORT_IMPORT inline operator char*();
     
-        operator const char*() const;
+        COMMON_EXPORT_IMPORT inline operator const char*() const;
     
-        void        resize(uint32);
+        COMMON_EXPORT_IMPORT inline void        resize(uint32);
     
-        void		debug() const;
+        COMMON_EXPORT_IMPORT inline void		debug() const;
   private:
         std::vector<char>	_buffer;
 };

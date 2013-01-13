@@ -33,7 +33,6 @@ bool	Map::load(std::string const& mapName) {
 	for (; nbr > 0 && file.good(); --nbr) {
 		Object obj;
 		int32	size;
-		float32	xStart;
 		char	*data;
 
 		file >> size;

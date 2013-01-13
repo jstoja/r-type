@@ -11,29 +11,31 @@
 # define _NETWORK_MANAGER_H_
 
 # include <vector>
-# include "Singleton.hpp"
+
+# include <OS.h>
+# include <Singleton.hpp>
+
 # include "ASocket.h"
 # include "Threading/Thread.h"
 # include "Threading/Mutex.h"
 # include "Threading/MutexLocker.h"
-
 namespace Network {
   
-	class COMMON_EXPORT_IMPORT NetworkManager : public Singleton<NetworkManager> {
+	class NetworkManager : public Singleton<NetworkManager> {
     
     friend class Singleton<NetworkManager>;
     friend class Threading::Thread<NetworkManager>;
     
 	public:
-		void	registerSocket(ASocket*);
-		void	unregisterSocket(ASocket*);
+		COMMON_EXPORT_IMPORT inline void	registerSocket(ASocket*);
+		COMMON_EXPORT_IMPORT inline void	unregisterSocket(ASocket*);
 
-		void	operator()();
+		COMMON_EXPORT_IMPORT inline void	operator()();
 
 	private:
 
-		NetworkManager();
-		~NetworkManager();
+		COMMON_EXPORT_IMPORT inline NetworkManager();
+		COMMON_EXPORT_IMPORT inline ~NetworkManager();
 
 		std::vector<ASocket*>			_sockets;
 		Threading::Mutex				_socketsMutex;

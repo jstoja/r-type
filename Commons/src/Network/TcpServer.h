@@ -18,22 +18,22 @@
 
 namespace Network {
 
-  class COMMON_EXPORT_IMPORT TcpServer : public ISocketDelegate {
+  class TcpServer : public ISocketDelegate {
  public:
 
-  TcpServer();
-  ~TcpServer();
+  COMMON_EXPORT_IMPORT inline TcpServer();
+  COMMON_EXPORT_IMPORT inline ~TcpServer();
 
-  void		setDelegate(ITcpServerDelegate*);
-  bool		listen(const HostAddress& address = HostAddress::AnyAddress, uint16 port = 0);
-  uint16	getLocalPort() const;
+  COMMON_EXPORT_IMPORT inline void		setDelegate(ITcpServerDelegate*);
+  COMMON_EXPORT_IMPORT inline bool		listen(const HostAddress& address = HostAddress::AnyAddress, uint16 port = 0);
+  COMMON_EXPORT_IMPORT inline uint16	getLocalPort() const;
 
-  void	newConnection(ASocket*);
-  void	readFinished(ASocket*, ByteArray&, const HostAddress&, uint16) {}
-  void	dataReceived(ASocket*, ByteArray&, uint32) {}
-  void	dataSent(ASocket*, ByteArray&, uint32) {}
-  void	writeFinished(ASocket*, ByteArray&) {}
-  void	disconnection(ASocket*) {}
+  COMMON_EXPORT_IMPORT inline void	newConnection(ASocket*);
+  COMMON_EXPORT_IMPORT inline void	readFinished(ASocket*, ByteArray&, const HostAddress&, uint16) {}
+  COMMON_EXPORT_IMPORT inline void	dataReceived(ASocket*, ByteArray&, uint32) {}
+  COMMON_EXPORT_IMPORT inline void	dataSent(ASocket*, ByteArray&, uint32) {}
+  COMMON_EXPORT_IMPORT inline void	writeFinished(ASocket*, ByteArray&) {}
+  COMMON_EXPORT_IMPORT inline void	disconnection(ASocket*) {}
 
  private:
   TcpSocket		_socket;
