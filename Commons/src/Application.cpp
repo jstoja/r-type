@@ -27,18 +27,17 @@ Application::~Application() {
 void Application::init(int32 ac, char **av) {
     _argc = ac;
     _argv = av;
-    _getBinaryPath();
+	_initBinaryPath();
 }
 
 #ifndef OS_IOS
 
-void Application::_getBinaryPath(void) {
+void	Application::_initBinaryPath() {
 # if defined OS_WINDOWS
     _binaryPath = _argv[0];
     _binaryPath = _binaryPath.substr(0, _binaryPath.find_last_of('\\'));
     _binaryPath += '\\';
-# endif
-# if (defined OS_UNIX)
+# elif defined (OS_UNIX)
     if (!(_argc > 0 && strlen(_argv[0]) > 0))
         throw new Exception("Application cannot find the binary directory");
     std::cout << "The _argv[0] has value: " << _argv[0] << std::endl;
@@ -64,14 +63,25 @@ void Application::_getBinaryPath(void) {
     _binaryPath += '/';
 # endif
 }
-
 #endif
 
-
+std::string Application::getRelativePath(std::string const& path) const {
+	std::string tmp = _binaryPath + path;
+	return (tmp);
+}
+	
 std::string Application::getResourcesPath() const {
-    return _binaryPath + _resourcesPath + "/";
+    return _binaryPath + _resourcesPath + getDirectorySeparator();
 }
 
 void Application::setRelativeResourcesPath(std::string const& path) {
     _resourcesPath = path;
+}
+
+char Application::getDirectorySeparator() const {
+# if defined OS_WINDOWS
+	return ('\\');
+# else
+	return ('/');
+#endif
 }

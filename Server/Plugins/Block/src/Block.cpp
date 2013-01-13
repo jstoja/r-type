@@ -7,19 +7,32 @@
 // Started on  jeu. janv. 10 14:06:26 2013 Samuel Olivier
 //
 
+#include <sstream>
+
 #include "Block.h"
 
 #include <IGame.h>
 #include <IGraphicElement.h>
 
-Block::Block(IGame *game) : _game(game) {
-	IGraphicElement	*elem = game->createGraphicElement();
+Block::Block() : _game(NULL), _block(NULL) {
 }
 
 void	Block::update() {
-
 }
 
-extern "C" PLUGIN_EXPORT IPlugin	*newPlugin(IGame *game) {
-	return (new Block(game));
+void	Block::init(IGame* game, ByteArray const& params, float32 xStart) {
+	_game = game;
+	_xStart = xStart;
+	_graphicElement = game->createGraphicElement();
+	std::stringstream	data(std::stringstream::in);
+	data.write(params.getData(), params.getSize());
+	game->addGraphicElement(_graphicElement);
+}
+
+float32	Block::getXStart() const {
+	return _xStart;
+}
+
+RTYPE_PLUGIN_CREATE {
+	return (new Block());
 }

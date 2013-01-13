@@ -10,14 +10,20 @@
 #ifndef _I_GAME_H_
 # define _I_GAME_H_
 
+# include <string>
+
 class IGraphicElement;
+class ITexture;
+class ISprite;
 
 class IGame {
 public:
 	~IGame() {}
 	virtual void	addGraphicElement(IGraphicElement* element) = 0;
 
-	virtual IGraphicElement*	createGraphicElement() = 0;
+	virtual IGraphicElement*	createGraphicElement() const = 0;
+	virtual ITexture*			createTexture(std::string const& filename, std::string const& pluginName) const = 0;
+	virtual ISprite*			createSprite(ITexture *texture) const = 0;
 };
 
 #endif

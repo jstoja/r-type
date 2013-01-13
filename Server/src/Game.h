@@ -5,12 +5,20 @@
 
 #ifndef _GAME_H_
 # define _GAME_H_
+
 # include <string>
+# include <list>
+
+# include "GraphicElement.h"
+
+# include <Object.h>
+# include <Network/TcpPacket.h>
+# include <Network/UdpPacket.h>
+
 # include "IGame.h"
-# include "Object.h"
-# include "Network/TcpPacket.h"
 
 class Player;
+class GameObject;
 
 class Game : public IGame, public Object
 {
@@ -25,12 +33,19 @@ public:
     void     quit(Player* player);
 
     virtual void                addGraphicElement(IGraphicElement* element);
-    virtual IGraphicElement*    createGraphicElement();
+    virtual IGraphicElement*    createGraphicElement() const;
+	virtual ITexture*			createTexture(std::string const& filename, std::string const& pluginName) const;
+	virtual ISprite*			createSprite(ITexture *texture) const;
+	void						loadMap(std::string const& fileName);
 
 private:
-  std::vector<Player*>  _players;
-  uint32                _nbSlots;
-  std::string           _name;
+	void						_sendGraphicElements(Network::UdpPacket &packet);
+
+	std::vector<Player*>  _players;
+	uint32                _nbSlots;
+	std::string           _name;
+	std::list<GameObject*>		_objects;
+	std::list<GraphicElement*>	_graphicElements;
 };
 
 #endif

@@ -30,9 +30,13 @@ public:
   virtual int   joinGame(uint32 gameId, Player* player);
   virtual void  quitGame(uint32 gameId, Player* player);
 
+  static std::string const&	getPluginDirectory();
+  static void				setPluginDirectory(std::string const& dir);
+
 private:
-  Network::TcpServer        _tcpServer;
-  std::vector<Player*>      _players;
+	static std::string	_pluginDirectory;
+	Network::TcpServer	_tcpServer;
+	std::vector<Player*>	_players;
   std::map<uint32, Game*>  _games;
 };
 

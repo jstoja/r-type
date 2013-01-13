@@ -51,12 +51,12 @@ void    Widget::GraphicWidget::addElement() {
 
 void    Widget::GraphicWidget::setPosition(Vec2 const& pos) {
     _element.setPosition(pos);
-    Widget::Widget::setPosition(pos);
+    Widget::setPosition(pos);
 }
 
 void    Widget::GraphicWidget::setSize(Vec2 const& size) {
     _element.setSize(size);
-    Widget::Widget::setSize(size);
+    Widget::setSize(size);
 }
 
 void    Widget::GraphicWidget::setScene(Graphic::Scene* scene) {
