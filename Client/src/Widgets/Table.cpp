@@ -24,14 +24,14 @@ void    Widget::Table::addColumn(Label* label) {
     
     for (std::map<Label*, std::vector<Widget*> >::iterator it = _widgets.begin(); it != _widgets.end(); ++it)
         sizeColumn += (*it).first->getText().size();
-    label->setPosition(Vec2(getPosition().x + sizeColumn,
+    label->setPosition(Vec3(getPosition().x + sizeColumn,
                             getPosition().y));
     _widgets[label] = std::vector<Widget*>();
 }
 
 void    Widget::Table::addWidget(Label* label, Widget* widget) {
     _widgets[label].push_back(widget);
-    widget->setPosition(Vec2(label->getPosition().x,
+    widget->setPosition(Vec3(label->getPosition().x,
                              getPosition().y - _widgets[label].size()));
 }
 
@@ -55,14 +55,14 @@ void    Widget::Table::align(Align a, Label* column) {
     for (std::vector<Widget*>::iterator it = v.begin();
          it != v.end(); ++it) {
         if (a == CENTER) {
-            (*it)->setPosition(Vec2((*it)->getPosition().x,
+            (*it)->setPosition(Vec3((*it)->getPosition().x,
                                 getPosition().y - i));
         } else if (a == LEFT) {
-            (*it)->setPosition(Vec2((*it)->getPosition().x -
+            (*it)->setPosition(Vec3((*it)->getPosition().x -
                                 ((maxsize /2) - ((*it)->getSize().x / 2)),
                                     getPosition().y - i));
         } else {
-            (*it)->setPosition(Vec2((*it)->getPosition().x +
+            (*it)->setPosition(Vec3((*it)->getPosition().x +
                                 ((maxsize /2) - ((*it)->getSize().x / 2)),
                                     getPosition().y - i));
         }

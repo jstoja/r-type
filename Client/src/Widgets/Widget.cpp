@@ -27,7 +27,7 @@ bool    Widget::Widget::hasFocus() const {
     return _focus;
 }
 
-void    Widget::Widget::setPosition(Vec2 const& v) {
+void    Widget::Widget::setPosition(Vec3 const& v) {
     _position = v;
 }
 
@@ -39,7 +39,7 @@ Vec2 const&   Widget::Widget::getSize() const {
     return _size;
 }
 
-Vec2 const&   Widget::Widget::getPosition() const {
+Vec3 const&   Widget::Widget::getPosition() const {
     return _position;
 }
 

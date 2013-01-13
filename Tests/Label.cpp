@@ -40,7 +40,7 @@ public:
 		_label = new Widget::Label(&_scene, str);
     
         // Setup scene
-        _label->setPosition(Vec2(7,7));
+        _label->setPosition(Vec3(7,7));
         _label->setSize(Vec2(str.length(),1));
         _label->init();
         //_label << "marseille";

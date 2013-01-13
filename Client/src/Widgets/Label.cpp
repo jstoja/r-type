@@ -72,7 +72,7 @@ void    Widget::Label::update() {
 }
 
 void    Widget::Label::operator<<(char c) {
-    setPosition(Vec2(getPosition().x + 0.5, getPosition().y));
+    setPosition(Vec3(getPosition().x + 0.5, getPosition().y));
     _text.push_back(c);
     update();
 }
