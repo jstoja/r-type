@@ -63,7 +63,6 @@ Widget::Button::Button(Graphic::Scene* scene,
       this);
   Event::Manager::getInstance().addEventListener(_eventListener);
   addElement();
-
 }
 
 Widget::Button::~Button() {
@@ -99,4 +98,3 @@ void            Widget::Button::setSize(Vec2 const& size) {
     GraphicWidget::setSize(size);
     _eventListener->setRect(getRect());
 }
-

@@ -39,7 +39,7 @@ std::string const&  Widget::TextEdit::getText() const {
 }
 
 void    Widget::TextEdit::setText(std::string const& text) {
-    _label.setText(text);
+    _label.setText(text);o
     update();
     _eventListener = new Event::Listener(
                                          Event::PointerPushed
