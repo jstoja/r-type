@@ -20,14 +20,12 @@ Widget::Button::Button(Graphic::Scene* scene,
 : GraphicWidget(scene, parent), _delegate(delegate) {
 
     loadImage("./button.png");
-    setPosition(Vec2(1.0, 1.0));
-    setSize(Vec2(1.0, 1.0));
+    GraphicWidget::setPosition(Vec2(1.0, 1.0));
+    GraphicWidget::setSize(Vec2(1.0, 1.0));
     if (getSprite() != NULL) {
         getSprite()->setAutoFrames(3, Graphic::Sprite::VERTICAL);
         setCurrentFrame(0);
     }
-    
-    addElement();
     _eventListener = new Event::Listener(
         Event::PointerIn
       | Event::PointerOut
@@ -35,8 +33,8 @@ Widget::Button::Button(Graphic::Scene* scene,
       | Event::PointerReleased,
         getRect(),
       this);
-
    Event::Manager::getInstance().addEventListener(_eventListener);
+   addElement();
 }
 
 Widget::Button::Button(Graphic::Scene* scene,
@@ -47,13 +45,12 @@ Widget::Button::Button(Graphic::Scene* scene,
                        Widget* parent) :
     GraphicWidget(scene, parent), _delegate(delegate) {
     loadImage(image);
-    setPosition(position);
-    setSize(size);
+    GraphicWidget::setPosition(position);
+    GraphicWidget::setSize(size);
     if (getSprite()) {
         getSprite()->setAutoFrames(3, Graphic::Sprite::VERTICAL);
         setCurrentFrame(0);
     }
-    addElement();
     _eventListener = new Event::Listener(
         Event::PointerIn
       | Event::PointerOut
@@ -67,10 +64,6 @@ Widget::Button::Button(Graphic::Scene* scene,
 }
 
 Widget::Button::~Button() {
-}
-
-void    Widget::Button::setCurrentFrame(uint32 nb) {
-    setCurrentFrame(nb);
 }
 
 void    Widget::Button::processEvent(Event::Event const& event) {

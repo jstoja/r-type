@@ -8,8 +8,6 @@
 # include "Widgets/Button.h"
 # include "Widgets/IButtonDelegate.h"
 
-# define WELCOME_MENU_BACKGROUND "background_menu.png"
-
 namespace Menu {
   class WelcomeMenu: public Widget::IButtonDelegate {
     public:

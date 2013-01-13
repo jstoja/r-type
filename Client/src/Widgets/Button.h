@@ -40,9 +40,6 @@ namespace Widget {
             //! Destruct the Button
             ~Button(void);
 
-            void    setCurrentFrame(uint32);
-
-        
             virtual void setPosition(Vec2 const &pos);
             virtual void setSize(Vec2 const &size);
         
