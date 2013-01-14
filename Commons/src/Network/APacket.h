@@ -37,6 +37,7 @@ namespace Network {
 
 
     APacket&		operator<<(uint32);
+    APacket&		operator<<(int32);
     APacket&		operator<<(float32);
     APacket&		operator<<(char);
     APacket&		operator<<(const std::string&);
@@ -68,6 +69,7 @@ namespace Network {
 		return (*this);
 	}
     APacket&		operator>>(uint32&);
+    APacket&		operator>>(int32&);
     APacket&		operator>>(float32&);
     APacket&		operator>>(char&);
     APacket&		operator>>(std::string&);

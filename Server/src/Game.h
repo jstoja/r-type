@@ -15,14 +15,15 @@
 # include <Network/TcpPacket.h>
 # include <Network/UdpPacket.h>
 # include <Threading/ThreadPool.hpp>
+# include <IGame.h>
 
 # include "GraphicScene.h"
 # include "GraphicElement.h"
 # include "PhysicScene.h"
 # include "PhysicElement.h"
-# include <IGame.h>
 # include "Texture.h"
 # include "Sound.h"
+# include "Scenery.h"
 # include "Map.h"
 
 class Player;
@@ -52,24 +53,27 @@ public:
 	virtual ISound*				loadSound(std::string const& name, std::string const& pluginName);
 	virtual ISound*				loadSound(std::string const& name);
 
+	virtual IScenery*			addScenery();
+
 	void						loadMap(std::string const& fileName);
 
 private:
 	void						_sendResources(Network::TcpPacket &packet);
 	void						_update();
 
-	std::vector<Player*>  _players;
-	uint32                _nbSlots;
-	std::string           _name;
+	std::vector<Player*>	_players;
+	uint32					_nbSlots;
+	std::string				_name;
 	Map						_currentLevel;
-	std::list<GameObject*>		_objects;
-	std::list<Texture*>			_gameTextures;
-	std::map<std::string, Sprite*>		_levelSprites;
-	std::list<Sprite*>					_gameSprites;
-	std::list<Sound*>					_gameSounds;
-	GraphicScene						_graphicScene;
-	PhysicScene							_physicScene;
-	Threading::ThreadPool*				_updatePool;
+	std::list<GameObject*>	_objects;
+	std::list<Texture*>		_gameTextures;
+	std::map<std::string, Sprite*>	_levelSprites;
+	std::list<Sprite*>				_gameSprites;
+	std::list<Scenery*>				_gameSceneries;
+	std::list<Sound*>				_gameSounds;
+	GraphicScene					_graphicScene;
+	PhysicScene						_physicScene;
+	Threading::ThreadPool*			_updatePool;
 
 #ifdef OS_MAC
 	static const int					_updateThreadNumber = 7;

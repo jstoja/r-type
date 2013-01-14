@@ -87,6 +87,12 @@ ISound*			Game::loadSound(std::string const& name) {
 	return res;
 }
 
+IScenery*		Game::addScenery() {
+	Scenery	*res = new Scenery();
+	_gameSceneries.push_back(res);
+	return (res);
+}
+
 void		Game::loadMap(std::string const& fileName) {
 	if (_currentLevel.load(fileName) == false)
 		throw new Exception("Cannot load map: " + _currentLevel.getError());
@@ -121,6 +127,7 @@ void	Game::_sendResources(Network::TcpPacket &packet) {
 	packet << resources << _gameTextures << _gameSprites;
 	_graphicScene.sendStaticElements(packet);
 	_physicScene.sendStaticElements(packet);
+	packet << _gameSceneries << _gameSounds;
 }
 
 void	Game::_update() {

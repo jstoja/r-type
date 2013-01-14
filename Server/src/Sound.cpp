@@ -51,7 +51,7 @@ void	Sound::setChanged(bool val) {
 	_changed = val;
 }
 
-Network::APacket&		operator<<(Network::APacket& packet, Sound const& texture) {
-	packet << texture.getId() << texture.getSound()->getId();
+Network::APacket&		operator<<(Network::APacket& packet, Sound const& sound) {
+	packet << sound.getId() << sound.getSound()->getId() << sound.getRepeat();
 	return (packet);
 }

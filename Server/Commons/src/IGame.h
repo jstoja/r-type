@@ -15,7 +15,9 @@
 class IGraphicElement;
 class ITexture;
 class ISprite;
+class IPhysicElement;
 class ISound;
+class IScenery;
 
 class IGame {
 public:
@@ -32,6 +34,8 @@ public:
 
 	virtual ISound*				loadSound(std::string const& name, std::string const& pluginName) = 0;
 	virtual ISound*				loadSound(std::string const& name) = 0;
+
+	virtual IScenery*			addScenery() = 0;
 };
 
 #endif

@@ -18,49 +18,45 @@ Network::APacket::~APacket() {
 }
 
 ByteArray& Network::APacket::getData() {
-  return _data;
+	return _data;
 }
 
 uint32 Network::APacket::getSize() const {
-  return _size;
+	return _size;
 }
 
 Network::APacket& Network::APacket::operator<<(uint32 integer) {
-  _size += sizeof(uint32);
-  _data.resize(_data.getSize() + sizeof(uint32));
-  *((int*)(&((char*)_data)[_data.getSize() - sizeof(uint32)])) = integer;
-  return *this;
+	write(&integer, sizeof(integer));
+	return *this;
+}
+
+Network::APacket& Network::APacket::operator<<(int32 integer) {
+	write(&integer, sizeof(integer));
+	return *this;
 }
 
 Network::APacket& Network::APacket::operator<<(float32 val) {
-  _size += sizeof(float32);
-  _data.resize(_data.getSize() + sizeof(float32));
-  *((float32*)(&((char*)_data)[_data.getSize() - sizeof(float32)])) = val;
-  return *this;
+	write(&val, sizeof(val));
+	return *this;
 }
 
 Network::APacket& Network::APacket::operator<<(char character) {
-  _size += 1;
-  _data.resize(_data.getSize() + 1);
-  *((char*)(&((char*)_data)[_data.getSize() - 1])) = character;
-  return *this;
+	write(&character, sizeof(character));
+	return *this;
 }
 
 Network::APacket& Network::APacket::operator<<(const std::string& str) {
-  *this << (uint32)str.size();
-  _size += str.size();
-  _data.resize(_data.getSize() + str.size());
-  for (unsigned int i = 0; i < str.size(); ++i)
-    _data[_data.getSize() - str.size() + i] = str[i];
-  return *this;
+	*this << (uint32)str.size();
+	write(str.c_str(), str.size());
+	return *this;
 }
 
 Network::APacket& Network::APacket::operator<<(Vec2 const& pos) {
-  return *this << pos.x << pos.y;
+	return *this << pos.x << pos.y;
 }
 
 Network::APacket& Network::APacket::operator<<(Vec3 const& pos) {
-  return *this << pos.x << pos.y << pos.z;
+	return *this << pos.x << pos.y << pos.z;
 }
 
 Network::APacket& Network::APacket::operator<<(Rect2 const& pos) {
@@ -78,22 +74,24 @@ Network::APacket& Network::APacket::operator<<(ByteArray const& data) {
 	return *this;
 }
 
-Network::APacket& Network::APacket::operator>>(uint32& integer) {
-  integer = *((uint32*)(&((char*)_data)[_curser]));
-  _curser += sizeof(uint32);
-  return *this;
+Network::APacket& Network::APacket::operator>>(uint32& val) {
+	read(&val, sizeof(val));
+	return *this;
+}
+
+Network::APacket& Network::APacket::operator>>(int32& val) {
+	read(&val, sizeof(val));
+	return *this;
 }
 
 Network::APacket& Network::APacket::operator>>(float32& val) {
-  val = *((float32*)(&((char*)_data)[_curser]));
-  _curser += sizeof(float32);
-  return *this;
+	read(&val, sizeof(val));
+	return *this;
 }
 
-Network::APacket& Network::APacket::operator>>(char& character) {
-  character = *((char*)(&((char*)_data)[_curser]));
-  _curser += 1;
-  return *this;
+Network::APacket& Network::APacket::operator>>(char& val) {
+	read(&val, sizeof(val));
+	return *this;
 }
 
 Network::APacket& Network::APacket::operator>>(std::string& str) {
