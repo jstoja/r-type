@@ -1,6 +1,6 @@
 #include "WelcomeMenu.h"
 
-static const char* backgroundImage = "ui/welcome-screen.png";
+static const char* backgroundImage = "welcome-screen.png";
 
 Menu::WelcomeMenu::WelcomeMenu(Graphic::Scene *scene, IMenuDelegate* delegate)
 : _delegate(delegate),

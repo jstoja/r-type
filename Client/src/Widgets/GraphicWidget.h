@@ -62,11 +62,15 @@ namespace Widget {
 
         Graphic::Sprite     *getSprite() const;
         
-        
         Rect2  getRect() const;
+        
+        void    createBackground(std::string const&);
+        
+        void    setBackgroundSize(Vec2 const&);
     private:
         Graphic::Scene*     _scene;
         Graphic::Element    _element;
+        Graphic::Element    _background;
     };
 };
 

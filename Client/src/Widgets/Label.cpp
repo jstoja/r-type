@@ -33,7 +33,8 @@ Widget::Label::Label(Graphic::Scene* scene,
 }
 
 Widget::Label::~Label() {
-    delete getSprite()->getTexture();
+    if (getSprite())
+        delete getSprite()->getTexture();
     delete getSprite();
 }
 

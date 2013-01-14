@@ -14,12 +14,14 @@
 
 Widget::Table::Table(Widget *parent) :
     Widget(parent) {
+    _space = 0.0;
 }
 
 Widget::Table::~Table() {
 }
 
 void    Widget::Table::addLine() {
+    _space += 1;
     _widgets.push_back(std::vector<GraphicWidget*>());
 }
 
@@ -34,12 +36,14 @@ Widget::GraphicWidget*  Widget::Table::getWidget(uint32 x,
 
 void    Widget::Table::addWidget(GraphicWidget* widget,
                                  uint32 pos) {
-    if (pos < _widgets.size()) {
-        _widgets[pos].push_back(widget);
-        widget->setPosition(Vec3(getPosition().x + pos,
-                                 getPosition().y + _widgets[pos].size(),
-                                 0.990));
-    }
+    uint32 sizeLine = getSizeLine(pos);
+    _widgets[pos].push_back(widget);
+    std::cout << "put widget in " << getPosition().x
+                  << " " << getPosition().y + _widgets[pos].size()
+        << std::endl;
+    widget->setPosition(Vec3(getPosition().x + sizeLine,
+                             getPosition().y - pos - _space,
+                        0.990));
 }
 
 void    Widget::Table::align(Align alignement, uint32 pos) {
@@ -64,25 +68,29 @@ void    Widget::Table::align(Align alignement, uint32 pos) {
     }
 }
 
-/*
-void    Widget::Table::addColumn(Label* label) {
-    uint32 sizeColumn = 0;
+uint32  Widget::Table::getSizeLine(uint32 pos) const {
+    std::vector<GraphicWidget*>::const_iterator it;
+    uint32  ret = 0;
     
-    for (std::map<Label*, std::vector<GraphicWidget*> >::iterator it = _widgets.begin(); it != _widgets.end(); ++it)
-        sizeColumn += (*it).first->getText().size();
-    label->setPosition(Vec3(getPosition().x + sizeColumn,
-                            getPosition().y));
-    _widgets[label] = std::vector<GraphicWidget*>();
-    limit += 0.5;
+    for (it = _widgets[pos].begin(); it != _widgets[pos].end(); ++it) {
+        ret += (*it)->getSize().x;
+    }
+    return ret;
 }
 
-void    Widget::Table::addWidget(Label* label, GraphicWidget* widget) {
-    _widgets[label].push_back(widget);
-    widget->setPosition(Vec3(label->getPosition().x,
-                             getPosition().y - _widgets[label].size() - limit,
-                             0.990));
+void    Widget::Table::setLineBackground(uint32 pos,
+                                         std::string const& name) {
+    GraphicWidget*  w = _widgets[pos][0];
+    uint32  sizeLine = getSizeLine(pos);
+    
+    w->createBackground(name);
+    w->setBackgroundSize(Vec3(sizeLine,
+                              w->getSize().y,
+                              0.995));
+    (void)name;
 }
 
+/*
 void    Widget::Table::lineBackground(std::string const& name) {
     uint32 size = getMaxLine();
    _widgets.begin()->first->createBackground(name);
@@ -95,59 +103,5 @@ void    Widget::Table::lineBackground(std::string const& name) {
     }
 }
 
-std::vector<Widget::GraphicWidget*> const& Widget::Table::getColumn(Label* label) {
-    return _widgets[label];
-}
 
-uint32  Widget::Table::getMaxLine() const {
-    std::map<Label*, std::vector<GraphicWidget*> >::const_iterator it;
-    uint32   max = 0;
-    uint32   ret = 0;
-    
-    for (it = _widgets.begin(); it != _widgets.end(); ++it) {
-        if (max < (*it).first->getSize().x)
-            max = (*it).first->getSize().x;
-        for (std::vector<GraphicWidget*>::const_iterator ite = (*it).second.begin();
-            ite != (*it).second.end(); ++ite) {
-            if (max < (*ite)->getSize().x)
-                max = (*ite)->getSize().x;
-        }
-        std::cout << max << std::endl;
-        ret += max + 1;
-        max = 0;
-    }
-    std::cout << ret << std::endl;
-    return ret;
-}
-
-void    Widget::Table::align(Align a, Label* column) {
-    std::vector<GraphicWidget*>&   v = _widgets[column];
-    uint32 i = 1;
-    uint32 minsize = v[0]->getSize().x;
-    uint32 maxsize = v[0]->getSize().x;
-    
-    for (std::vector<GraphicWidget*>::iterator it = v.begin();
-         it != v.end(); ++it){
-        if (minsize > (*it)->getSize().x)
-            minsize = (*it)->getSize().x;
-        if (maxsize < (*it)->getSize().x)
-            maxsize = (*it)->getSize().x;
-    }
-    for (std::vector<GraphicWidget*>::iterator it = v.begin();
-         it != v.end(); ++it) {
-        if (a == CENTER) {
-            (*it)->setPosition(Vec3((*it)->getPosition().x,
-                                getPosition().y - i));
-        } else if (a == LEFT) {
-            (*it)->setPosition(Vec3((*it)->getPosition().x -
-                                ((maxsize /2) - ((*it)->getSize().x / 2)),
-                                    getPosition().y - i));
-        } else {
-            (*it)->setPosition(Vec3((*it)->getPosition().x +
-                                ((maxsize /2) - ((*it)->getSize().x / 2)),
-                                    getPosition().y - i));
-        }
-        i++;
-    }
-}
 */

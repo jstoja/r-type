@@ -51,7 +51,12 @@ namespace Widget {
         void    update() {}
         
         void    align(Align, uint32);
+        
+        void    setLineBackground(uint32, std::string const&);
+        
     private:
+        float   _space;
+        uint32  getSizeLine(uint32) const;
         std::vector<std::vector<GraphicWidget*> >   _widgets;
         
         

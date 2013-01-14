@@ -2,9 +2,9 @@
 
 // IMAGE_PATH - DELEGATION
 static const Menu::GeneralMenu::t_buttons buttonsAssets[] = {
-    {"ui/button-auto-join.png", &Menu::IMenuDelegate::newGameCallGeneralMenu},
-    {"ui/button-create-game.png", &Menu::IMenuDelegate::newGameCallGeneralMenu},
-    {"ui/button-ready.png", &Menu::IMenuDelegate::newGameCallGeneralMenu},
+    {"button-auto-join.png", &Menu::IMenuDelegate::newGameCallGeneralMenu},
+    {"button-create-game.png", &Menu::IMenuDelegate::newGameCallGeneralMenu},
+    {"button-ready.png", &Menu::IMenuDelegate::newGameCallGeneralMenu},
     {NULL, NULL}
 };
 
