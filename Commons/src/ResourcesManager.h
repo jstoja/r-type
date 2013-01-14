@@ -18,7 +18,7 @@
 
 class Resource;
 
-class ResourcesManager : public Singleton<ResourcesManager> {
+class COMMON_EXPORT_IMPORT ResourcesManager : public Singleton<ResourcesManager> {
     friend class Singleton<ResourcesManager>;
 
     public:
