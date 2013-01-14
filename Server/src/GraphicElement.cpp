@@ -80,8 +80,18 @@ char	GraphicElement::getSpriteFrameIndex() const {
 	return (_spriteIndex);
 }
 
+void	GraphicElement::setType(Type c) {
+	_type = c;
+}
+
+IGraphicElement::Type	GraphicElement::getType() const {
+	return ((Type)_type);
+}
+
 Network::APacket&		operator<<(Network::APacket& packet, GraphicElement& element) {
 	element.setChanged(false);
-	packet << element.getId() << element.getPosition() << element.getRotation() << element.getSize() << element.getSprite()->getId() << element.getSpriteFrameIndex();
+	packet << element.getId() << element.getPosition() << element.getRotation()
+		   << element.getSize() << element.getSprite()->getId() << element.getSpriteFrameIndex()
+		   << (char)element.getType();
 	return (packet);
 }

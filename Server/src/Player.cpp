@@ -82,7 +82,6 @@ void Player::joinGame(Network::TcpPacket* packet) {
 
 void Player::quitGame(Network::TcpPacket* packet) {
     uint32 id;
-    int code;
 
     *packet >> id;
     _server->quitGame(id, this);

@@ -24,8 +24,8 @@ public:
 	GameObject(std::string const& name);
 	~GameObject();
 	
-	void	init(IGame* game, ByteArray const& params, float32 xStart);
-	void	update();
+	bool	init(IGame* game, ByteArray const& params, float32 xStart);
+	void	update(void *params);
 	float32	getXStart() const;
 
 private:

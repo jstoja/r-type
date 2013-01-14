@@ -10,8 +10,10 @@
 #include <fstream>
 
 #include <Types.h>
+#include <Application.h>
 
 #include "Map.h"
+#include "Texture.h"
 
 Map::Map() {
 }
@@ -21,19 +23,129 @@ Map::~Map() {
 
 bool	Map::load(std::string const& mapName) {
 	std::ifstream	file(mapName.c_str(), std::ifstream::binary);
+
+	if (file.is_open() == false) {
+		_error = "Cannot open " + mapName;
+		return false;
+	}
+	if (!_getFilename(mapName) || !_checkMagic(file) || !_getName(file) || !_loadSprites(file) || !_loadObject(file)) {
+		file.close();
+		return false;
+	}
+	return true;
+}
+
+std::string const&				Map::getError() const {
+	return (_error);
+}
+
+std::list<Map::Object> const&	Map::getObjects() const {
+	return (_objects);
+}
+
+std::map<std::string, Sprite*> const&	Map::getSprites() const {
+	return (_sprites);
+}
+
+std::map<std::string, Texture*> const&	Map::getTextures() const {
+	return (_textures);
+}
+
+std::string const&				Map::getName() const {
+	return (_name);
+}
+
+std::string const&				Map::getFilename() const {
+	return (_filename);
+}
+
+bool	Map::_getFilename(std::string const& filePath) {
+	_filename = filePath.substr(filePath.find_last_of(Application::getInstance().getDirectorySeparator()));
+	_filename = _filename.substr(0, _filename.find_last_of(".lvl"));
+	return (true);
+}
+
+bool	Map::_checkMagic(std::ifstream& file) {
 	uint32			nbr;
 
 	file >> nbr;
 	if (nbr != MapMagic) {
-		_error = mapName + " is not a RType Map";
+		_error = _filename + " is not a RType Map";
 		file.close();
 		return false;
 	}
+	return (true);
+}
+
+bool	Map::_getName(std::ifstream& file) {
+	uint32	size;
+	char	*data;
+
+	file >> size;
+	data = new char[size];
+	file.read(data, size);
+	_name.assign(data, size);
+	delete []data;
+	return (true);
+}
+
+bool	Map::_loadSprites(std::ifstream& file) {
+	uint32	nbr;
+
+	file >> nbr;
+	for (; nbr > 0 && file.good(); --nbr) {
+		std::string	spriteName, imageName;
+		uint32	size;
+		char	*data;
+
+		file >> size;
+		data = new char[size];
+		file.read(data, size);
+		spriteName.assign(data, size);
+		delete []data;
+		file >> size;
+		data = new char[size];
+		file.read(data, size);
+		imageName.assign(data, size);
+		delete []data;
+		Texture*	texture = _textures[imageName];
+		if (texture == NULL) {
+			texture = new Texture("Levels" +
+			Application::getInstance().getDirectorySeparator() + _filename +
+			Application::getInstance().getDirectorySeparator() + imageName);
+			_textures[imageName] = texture;
+		}
+		if (_sprites[spriteName] != NULL) {
+			_error = "Multiple Definition of Sprite " + spriteName;
+			return false;
+		}
+		Sprite*		sprite = new Sprite(texture);
+		_sprites[spriteName] = sprite;
+		if (_loadFrames(file, sprite) == false)
+			return false;
+	}
+	return true;
+}
+
+bool	Map::_loadFrames(std::ifstream& file, Sprite *sprite) {
+	uint32	nbr;
+
+	file >> nbr;
+	for (; nbr > 0 && file.good(); --nbr) {
+		Vec2	p1, p2;
+		file >> p1.x >> p1.y >> p2.x >> p2.y;
+		sprite->addFrame(p1, p2);
+	}
+	return true;
+}
+
+bool	Map::_loadObject(std::ifstream& file) {
+	uint32	nbr;
+
 	file >> nbr;
 	for (; nbr > 0 && file.good(); --nbr) {
 		Object obj;
 		int32	size;
-		float32	xStart;
 		char	*data;
 
 		file >> size;
@@ -49,13 +161,5 @@ bool	Map::load(std::string const& mapName) {
 		delete []data;
 		_objects.push_back(obj);
 	}
-	return true;
-}
-
-std::list<Map::Object> const&	Map::getObjects() const {
-	return (_objects);
-}
-
-std::string const&				Map::getError() const {
-	return (_error);
+	return (true);
 }

@@ -25,12 +25,13 @@ GameObject::~GameObject() {
 	delete _plugin;
 }
 
-void	GameObject::init(IGame* game, ByteArray const& params, float32 xStart) {
+bool	GameObject::init(IGame* game, ByteArray const& params, float32 xStart) {
 	if (_plugin)
-		_plugin->init(game, params, xStart);
+		return _plugin->init(game, params, xStart);
+	return false;
 }
 
-void	GameObject::update() {
+void	GameObject::update(void *params) {
 	if (_plugin)
 		_plugin->update();
 }
@@ -49,7 +50,7 @@ void	GameObject::_loadPlugin() {
 	IPlugin::CreatorPrototype	creator = (IPlugin::CreatorPrototype)lib->resolve("newPlugin");
 	if (creator == NULL)
 		throw new Exception("The plugin " + _pluginName + " is not valid");
-	_plugin = creator();
+	_plugin = creator(_pluginName);
 	if (_plugin == NULL)
 		throw new Exception("The plugin " + _pluginName + " is not valid");
 }

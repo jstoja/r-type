@@ -67,6 +67,10 @@ namespace Threading {
 			pthread_join(&_thread, NULL);
 		}
 
+		void stop(void) {
+		  pthread_cancel(_thread);
+		}
+
 	private:
 		T*			_obj;
 		pthread_t		_thread;

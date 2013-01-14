@@ -19,7 +19,13 @@ class ISprite;
 
 class IGraphicElement {
 public:
-	~IGraphicElement() {}
+	enum Type {
+		Static = 0,
+		Dynamic = 1,
+		Floating = 2,
+	};
+
+	virtual ~IGraphicElement() {}
 
 	virtual void	setPosition(Vec3 const& pos) = 0;
 	virtual void	move(Vec3 const& pos) = 0;
@@ -38,6 +44,9 @@ public:
 
 	virtual void	setSpriteFrameIndex(char idx) = 0;
 	virtual char	getSpriteFrameIndex() const = 0;
+
+	virtual void	setType(Type c) = 0;
+	virtual Type	getType() const = 0;
 };
 
 #endif

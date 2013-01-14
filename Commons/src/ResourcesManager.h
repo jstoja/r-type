@@ -18,28 +18,28 @@
 
 class Resource;
 
-class COMMON_EXPORT_IMPORT_REMOVED ResourcesManager : public Singleton<ResourcesManager> {
+class ResourcesManager : public Singleton<ResourcesManager> {
     friend class Singleton<ResourcesManager>;
 
     public:
         //! Destructor
-        ~ResourcesManager();
+        COMMON_EXPORT_IMPORT inline ~ResourcesManager();
     
         //! Load a resource and return a pointer to it
-        Resource* loadResource(std::string const&);
+        COMMON_EXPORT_IMPORT inline Resource* loadResource(std::string const&);
 
         //! Remove resource from map
-        void removeResource(std::string const&);
+        COMMON_EXPORT_IMPORT inline void removeResource(std::string const&);
 
         //! Get a resource by name
-        Resource*	getResource(std::string const&);
+        COMMON_EXPORT_IMPORT inline Resource*	getResource(std::string const&);
 
         //! Get a resource by id
-        Resource*	getResource(uint32) const;
+        COMMON_EXPORT_IMPORT inline Resource*	getResource(uint32) const;
 
     private:
         //! Constructor
-        ResourcesManager();
+        COMMON_EXPORT_IMPORT inline ResourcesManager();
     
         std::map<uint32, Resource*>		_resourcesId;
         std::map<std::string, Resource*>	_resourcesName;

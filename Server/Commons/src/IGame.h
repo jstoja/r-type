@@ -15,15 +15,23 @@
 class IGraphicElement;
 class ITexture;
 class ISprite;
+class ISound;
 
 class IGame {
 public:
 	~IGame() {}
-	virtual void	addGraphicElement(IGraphicElement* element) = 0;
 
+	virtual void				addGraphicElement(IGraphicElement* element) = 0;
 	virtual IGraphicElement*	createGraphicElement() const = 0;
-	virtual ITexture*			createTexture(std::string const& filename, std::string const& pluginName) const = 0;
-	virtual ISprite*			createSprite(ITexture *texture) const = 0;
+	virtual ITexture*			createTexture(std::string const& filename, std::string const& pluginName) = 0;
+	virtual ISprite*			createSprite(ITexture *texture) = 0;
+	virtual ISprite*			getLevelSprite(std::string const& name) = 0;
+
+	virtual void				addPhysicElement(IPhysicElement* element) = 0;
+	virtual IPhysicElement*		createPhysicElement() const = 0;
+
+	virtual ISound*				loadSound(std::string const& name, std::string const& pluginName) = 0;
+	virtual ISound*				loadSound(std::string const& name) = 0;
 };
 
 #endif

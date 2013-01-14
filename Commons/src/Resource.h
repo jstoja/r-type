@@ -15,42 +15,42 @@
 # include "ByteArray.h"
 # include "Object.h"
 
-class COMMON_EXPORT_IMPORT Resource : public Object {
+class Resource : public Object {
     public:
     
         //! Constructor
-        Resource();
+        COMMON_EXPORT_IMPORT inline Resource();
 
         //! Constructor with name
-        Resource(std::string const&);
+        COMMON_EXPORT_IMPORT inline Resource(std::string const&);
     
         //! Copy constructor
-        Resource(Resource const&);
+        COMMON_EXPORT_IMPORT inline Resource(Resource const&);
 
         //! Destructor
-        ~Resource();
+        COMMON_EXPORT_IMPORT inline ~Resource();
     
         //! Assignation operator
-        Resource&	operator=(Resource const&);
+        COMMON_EXPORT_IMPORT inline Resource&	operator=(Resource const&);
     
         //! Comparaison operator
-        bool		operator==(Resource const&);
+        COMMON_EXPORT_IMPORT inline bool		operator==(Resource const&);
     
         //! Name getter
-        std::string const& getName() const;
+        COMMON_EXPORT_IMPORT inline std::string const& getName() const;
 
         //! Name setter
-        void	setName(std::string const&);
+        COMMON_EXPORT_IMPORT inline void	setName(std::string const&);
 
         //! File getter
-        ByteArray const&	getData() const;
+        COMMON_EXPORT_IMPORT inline ByteArray const&	getData() const;
+
+        //! Array setter
+        COMMON_EXPORT_IMPORT inline void	setData(ByteArray const&);
 
     private:
         //! Read file and put in into a ByteArray
-        void	_readFile();
-
-        //! Array setter
-        void	setData(ByteArray const&);
+        COMMON_EXPORT_IMPORT inline void	_readFile();
 
         ByteArray	_data;
         std::string	_name;

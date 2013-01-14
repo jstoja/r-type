@@ -11,7 +11,7 @@
 
 # if defined OS_IOS
 
-void Application::_getBinaryPath(void) {
+void Application::_initBinaryPath(void) {
     _binaryPath = [[[NSBundle mainBundle] resourcePath] UTF8String];
 }
 

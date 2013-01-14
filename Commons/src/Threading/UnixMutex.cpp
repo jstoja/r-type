@@ -31,8 +31,26 @@ void Threading::Mutex::unlock() {
 	pthread_mutex_unlock(_mutex);
 }
 
-bool Threading::Mutex::tryLock() {
+/*bool Threading::Mutex::tryLock() {
 	return pthread_mutex_trylock(_mutex);
+}*/
+
+Threading::Mutex::Condition::Condition(Mutex* mutex) :
+  _mutex(mutex) {
+  _cond = new pthread_cond_t;
+  pthread_cond_init(_cond, NULL);
+}
+
+Threading::Mutex::Condition::~Condition() {
+  delete _cond;
+}
+
+void Threading::Mutex::Condition::signal() {
+  pthread_cond_signal(_cond);
+}
+
+void Threading::Mutex::Condition::wait() {
+  pthread_cond_wait(_cond, _mutex->_mutex);
 }
 
 #endif

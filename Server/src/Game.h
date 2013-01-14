@@ -8,14 +8,22 @@
 
 # include <string>
 # include <list>
+# include <map>
 
-# include "GraphicElement.h"
-
+# include <OS.h>
 # include <Object.h>
 # include <Network/TcpPacket.h>
 # include <Network/UdpPacket.h>
+# include <Threading/ThreadPool.hpp>
 
-# include "IGame.h"
+# include "GraphicScene.h"
+# include "GraphicElement.h"
+# include "PhysicScene.h"
+# include "PhysicElement.h"
+# include <IGame.h>
+# include "Texture.h"
+# include "Sound.h"
+# include "Map.h"
 
 class Player;
 class GameObject;
@@ -34,18 +42,40 @@ public:
 
     virtual void                addGraphicElement(IGraphicElement* element);
     virtual IGraphicElement*    createGraphicElement() const;
-	virtual ITexture*			createTexture(std::string const& filename, std::string const& pluginName) const;
-	virtual ISprite*			createSprite(ITexture *texture) const;
+	virtual ITexture*			createTexture(std::string const& filename, std::string const& pluginName);
+	virtual ISprite*			createSprite(ITexture *texture);
+	virtual ISprite*			getLevelSprite(std::string const& name);
+
+	virtual void	addPhysicElement(IPhysicElement* element);
+	virtual IPhysicElement*	createPhysicElement() const;
+
+	virtual ISound*				loadSound(std::string const& name, std::string const& pluginName);
+	virtual ISound*				loadSound(std::string const& name);
+
 	void						loadMap(std::string const& fileName);
 
 private:
-	void						_sendGraphicElements(Network::UdpPacket &packet);
+	void						_sendResources(Network::TcpPacket &packet);
+	void						_update();
 
 	std::vector<Player*>  _players;
 	uint32                _nbSlots;
 	std::string           _name;
+	Map						_currentLevel;
 	std::list<GameObject*>		_objects;
-	std::list<GraphicElement*>	_graphicElements;
+	std::list<Texture*>			_gameTextures;
+	std::map<std::string, Sprite*>		_levelSprites;
+	std::list<Sprite*>					_gameSprites;
+	std::list<Sound*>					_gameSounds;
+	GraphicScene						_graphicScene;
+	PhysicScene							_physicScene;
+	Threading::ThreadPool*				_updatePool;
+
+#ifdef OS_MAC
+	static const int					_updateThreadNumber = 7;
+#else
+	static const int					_updateThreadNumber = 3;
+#endif
 };
 
 #endif
