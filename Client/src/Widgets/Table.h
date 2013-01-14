@@ -12,6 +12,7 @@
 # include <iostream>
 # include <map>
 # include <vector>
+# include <list>
 
 namespace Graphic {
     class Scene;
@@ -36,22 +37,46 @@ namespace Widget {
         //! Destructor
         ~Table();
         
+        //! Add a line in the vector
+        void    addLine();
+        
+        void    addWidget(GraphicWidget*, uint32);
+        
+        std::vector<GraphicWidget*> getLine(uint32);
+        
+        GraphicWidget*  getWidget(uint32, uint32);
+
+        void    draw() {}
+        
+        void    update() {}
+        
+        void    align(Align, uint32);
+    private:
+        std::vector<std::vector<GraphicWidget*> >   _widgets;
+        
+        
+        /*
         //! Add column
         void    addColumn(Label*);
         
         //! Add widget
-        void    addWidget(Label*, Widget*);
+        void    addWidget(Label*, GraphicWidget*);
         
         //! Get column
-        std::vector<Widget*> const&   getColumn(Label*);
+        std::vector<GraphicWidget*> const&   getColumn(Label*);
         
         void    draw() {}
         
         void    update() {}
         
         void    align(Align, Label*);
+        
+        void    lineBackground(std::string const&);
     private:
-        std::map<Label*, std::vector<Widget*> >    _widgets;
+        float limit;
+        uint32  getMaxLine() const;
+        std::map<Label*, std::vector<GraphicWidget*> >    _widgets;
+         */
     };
 };
 

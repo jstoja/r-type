@@ -12,7 +12,6 @@
 #include "Graphic/Renderer.h"
 #include "Event/Manager.h"
 #include "Application.h"
-#include "Clock.h"
 
 #include "Graphic/Image.h"
 
@@ -137,9 +136,7 @@ void Client::mainLoop(void) {
 void Client::update(void) {
     Event::Manager::getInstance().processEvents();
     
-    static float x = 0.0;
-    _scene.setViewportPosition(Vec2(x));
-    x += 0.1;
+    _scene.setViewportPosition(Vec2((float32)_time.getEllapsedTime() / 500));
 }
 
 void Client::render(void) {

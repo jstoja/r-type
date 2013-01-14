@@ -3,7 +3,7 @@
 //
 // Made by Samuel Olivier
 // Login   <olivie_a@epitech.net>
-// 
+//
 // Started on  mer. déc. 19 12:19:34 2012 Samuel Olivier
 //
 
@@ -28,7 +28,7 @@ namespace Threading {
 	}
 
 	//! Unix Thread Class Implementation
-	/*!  
+	/*!
 		Provide an implementation of the AThread class for the Unix Operating System
 	*/
 	template<class T>
@@ -36,7 +36,7 @@ namespace Threading {
 	{
 	public:
 		//! Constructor
-		/*!  
+		/*!
 			Construct the thread and save the object that will be used to launch the thread
 		*/
 		Thread(T *obj) : _obj(obj) {
@@ -52,7 +52,7 @@ namespace Threading {
 		}
 
 		//! Launch the thread
-		/*!  
+		/*!
 			Launch the thread by calling the operator() of the object given in the constructor
 		*/
 		void run(void) {
@@ -60,11 +60,11 @@ namespace Threading {
 		}
 
 		//! Wait for the thread
-		/*!  
+		/*!
 			Wait for the thread end
 		*/
 		void join(void) {
-			pthread_join(&_thread, NULL);
+			pthread_join(_thread, NULL);
 		}
 
 		void stop(void) {
