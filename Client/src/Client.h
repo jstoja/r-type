@@ -11,6 +11,7 @@
 # define _CLIENT_H_
 
 # include "Graphic/Scene.h"
+# include "Clock.h"
 
 class Client {
     public:
@@ -34,6 +35,7 @@ class Client {
     private:
     Graphic::Scene  _scene;
     uint32          _framerateLimit;
+    Clock           _time;
 };
 
 #endif
