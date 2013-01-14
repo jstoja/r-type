@@ -40,6 +40,9 @@ public:
 	virtual void	setSpriteFrameIndex(char idx);
 	virtual char	getSpriteFrameIndex() const;
 
+	virtual void	setType(Type c);
+	virtual Type	getType() const;
+
 private:
 	Vec3	_pos;
 	Vec2	_size;
@@ -47,6 +50,7 @@ private:
 	bool	_hasChanged;
 	Sprite	*_sprite;
 	char	_spriteIndex;
+	char	_type;
 };
 
 Network::APacket&		operator<<(Network::APacket & packet, GraphicElement & element);

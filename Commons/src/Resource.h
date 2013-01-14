@@ -45,12 +45,12 @@ class Resource : public Object {
         //! File getter
         COMMON_EXPORT_IMPORT inline ByteArray const&	getData() const;
 
+        //! Array setter
+        COMMON_EXPORT_IMPORT inline void	setData(ByteArray const&);
+
     private:
         //! Read file and put in into a ByteArray
         COMMON_EXPORT_IMPORT inline void	_readFile();
-
-        //! Array setter
-        COMMON_EXPORT_IMPORT inline void	setData(ByteArray const&);
 
         ByteArray	_data;
         std::string	_name;

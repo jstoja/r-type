@@ -28,6 +28,6 @@ private:
 	Resource*	_img;
 };
 
-Network::TcpPacket&		operator<<(Network::TcpPacket& packet, Texture const& texture);
+Network::APacket&		operator<<(Network::APacket& packet, Texture const& texture);
 
 #endif

@@ -13,18 +13,17 @@
 # include <string>
 # include <sstream>
 # include <list>
+# include <map>
 
 # include <Types.h>
 
 # include "GameObject.h"
+# include "Sprite.h"
 
 class Map {
 public:
 	Map();
 	~Map();
-
-	bool	load(std::string const& mapName);
-	std::string const&	getError() const;
 
 	static const uint32	MapMagic = 4242;
 	struct Object {
@@ -33,11 +32,29 @@ public:
 		ByteArray	params;
 	};
 
+	bool	load(std::string const& mapName);
+
+	std::string const&			getError() const;
 	std::list<Object> const&	getObjects() const;
+	std::map<std::string, Sprite*> const&	getSprites() const;
+	std::map<std::string, Texture*> const&	getTextures() const;
+	std::string const&			getName() const;
+	std::string const&			getFilename() const;
 
 private:
-	std::list<Object>	_objects;
+	bool					_getFilename(std::string const& filePath);
+	bool					_checkMagic(std::ifstream& file);
+	bool					_getName(std::ifstream& file);
+	bool					_loadSprites(std::ifstream& file);
+	bool					_loadObject(std::ifstream& file);
+	bool					_loadFrames(std::ifstream& file, Sprite *sprite);
+
 	std::string				_error;
+	std::list<Object>		_objects;
+	std::map<std::string, Texture*>		_textures;
+	std::map<std::string, Sprite*>		_sprites;
+	std::string				_name;
+	std::string				_filename;
 };
 
 #endif

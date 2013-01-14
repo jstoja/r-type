@@ -15,6 +15,8 @@
 # include <Vec2.h>
 # include <Vec3.h>
 # include <Rect2.h>
+# include <Resource.h>
+
 # include "ByteArray.h"
 # include "ASocket.h"
 # include "HostAddress.h"
@@ -41,6 +43,8 @@ namespace Network {
     APacket&		operator<<(Vec2 const&);
     APacket&		operator<<(Vec3 const&);
     APacket&		operator<<(Rect2 const&);
+    APacket&		operator<<(Resource const&);
+    APacket&		operator<<(ByteArray const&);
 
     template <typename T>
     APacket&		operator<<(std::list<T*>const& elements) {
@@ -94,8 +98,13 @@ namespace Network {
     APacket&		operator>>(Vec2&);
     APacket&		operator>>(Vec3&);
     APacket&		operator>>(Rect2&);
+    APacket&		operator>>(Resource&);
+    APacket&		operator>>(ByteArray&);
 
   protected:
+	void	write(void const* data, uint32 size);
+	void	read(void* data, uint32 size);
+
     ByteArray	_data;
     uint32      _size;
     uint32	_curser;

@@ -19,18 +19,20 @@
 #  define PLUGIN_EXPORT
 # endif
 
-# define RTYPE_PLUGIN_CREATE extern "C" PLUGIN_EXPORT IPlugin	*newPlugin()
+# define RTYPE_PLUGIN_PARAMS std::string const& name
+# define RTYPE_PLUGIN_CREATE extern "C" PLUGIN_EXPORT IPlugin	*newPlugin(RTYPE_PLUGIN_PARAMS)
 
 class IGame;
 
 class IPlugin {
 public:
-	typedef IPlugin	*(*CreatorPrototype)();
+	typedef IPlugin	*(*CreatorPrototype)(RTYPE_PLUGIN_PARAMS);
 	~IPlugin() {}
 
-	virtual void	init(IGame* game, ByteArray const& params, float32 xStart) = 0;
+	virtual bool	init(IGame* game, ByteArray const& params, float32 xStart) = 0;
 	virtual void	update() = 0;
 	virtual float32	getXStart() const = 0;
+	virtual std::string const&	getName() const = 0;
 };
 
 #endif

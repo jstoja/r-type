@@ -13,19 +13,19 @@
 #include "Texture.h"
 
 Texture::Texture(std::string const& filepath) {
-	std::string tmp = Application::getInstance().getResourcesPath();
-	_img = ResourcesManager::getInstance().loadResource(filepath);
+	std::string tmp = Application::getInstance().getResourcesPath() + filepath;
+	_img = ResourcesManager::getInstance().loadResource(tmp);
 }
 
 Texture::~Texture() {
 	delete _img;
 }
 
-Network::TcpPacket&		operator<<(Network::TcpPacket & packet, Texture const& texture) {
-	packet << texture.getId() << texture.getImg()->getId();
-	return (packet);
-}
-
 Resource*	Texture::getImg() const {
 	return (_img);
+}
+
+Network::APacket&		operator<<(Network::APacket& packet, Texture const& texture) {
+	packet << texture.getId() << texture.getImg()->getId();
+	return (packet);
 }
