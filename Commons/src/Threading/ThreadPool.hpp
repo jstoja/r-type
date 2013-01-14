@@ -51,6 +51,7 @@ namespace Threading {
     
     void operator()(void);
 	void run();
+	void wait();
   private:
     std::vector<Thread<ThreadPool>*>	_threads;
     std::queue<ITask*>					_tasks;

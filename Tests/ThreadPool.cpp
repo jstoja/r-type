@@ -28,12 +28,12 @@ private:
 
 int main() {
   Test test("Classe de test");
-  Threading::ThreadPool* tp = new Threading::ThreadPool(3, false);
+  Threading::ThreadPool* tp = new Threading::ThreadPool(3);
 
   getchar();
   for (int i = 0; i < 10000; ++i)
     tp->addTask(&test, &Test::update, NULL);
-  tp->run();
+  tp->wait();
   std::cout << "After run" << std::endl;
   getchar();
   delete tp;

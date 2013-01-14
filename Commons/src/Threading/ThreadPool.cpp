@@ -40,12 +40,21 @@ void Threading::ThreadPool::run() {
 	}
 }
 
+void Threading::ThreadPool::wait() {
+	_tasksMutex.lock();
+	while (_tasks.size() > 0) {
+		_tasksCondition->wait();
+	}
+	_tasksMutex.unlock();
+}
+
 void Threading::ThreadPool::operator()(void) {
   while (1) {
     _tasksMutex.lock();
     while (_tasks.size() > 0) {
 		ITask* task = _tasks.front();
 		_tasks.pop();
+		_tasksCondition->signal();
 		_tasksMutex.unlock();
 		task->call();
 		_tasksMutex.lock();
