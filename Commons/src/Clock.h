@@ -10,10 +10,12 @@
 # define __R_Type__Clock__
 
 # include <time.h>
+
+# include "OS.h"
 # include "Types.h"
 
 //! Utility class for mesuring time ellapsed during a certain period
-class Clock {
+class COMMON_EXPORT_IMPORT Clock {
 public:
     
     //! Get the current time in milliseconds
