@@ -4,9 +4,9 @@
 #include "Event/IListenerDelegate.h"
 #include "Graphic/Renderer.h"
 #include "Graphic/Scene.h"
-#include "Widgets/Widget.h"
-#include "Widgets/GraphicWidget.h"
-#include "Menu/LoginMenu.h"
+#include "Widget/Widget.h"
+#include "Widget/GraphicWidget.h"
+#include "Menu/Login.h"
 #include "Menu/IMenuDelegate.h"
 #include "Application.h"
 
@@ -20,7 +20,7 @@ public:
         Graphic::Renderer::getInstance().init();
         Graphic::Renderer::getInstance().setScene(&_scene);
         
-        Menu::LoginMenu lmenu(&_scene, this);
+        Menu::Login lmenu(&_scene, this);
         
         // Add event listeners
         Event::Manager::getInstance()

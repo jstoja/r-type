@@ -39,6 +39,8 @@ namespace Graphic {
 
         int     getStringHeight(std::string const& str);
         int     getStringWidth(std::string const& str);
+
+        void	setColor(uint8 r, uint8 g, uint8 b);
         
     private:
         
@@ -58,6 +60,9 @@ namespace Graphic {
         std::vector<int>        _height;
         std::vector<int>        _bearingLeft;
         std::vector<int>        _bearingTop;
+        uint8					_colorRed;
+        uint8					_colorGreen;
+        uint8					_colorBlue;
     };
 }
 

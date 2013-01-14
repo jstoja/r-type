@@ -12,14 +12,14 @@
 #include "Event/IListenerDelegate.h"
 #include "Graphic/Renderer.h"
 #include "Graphic/Scene.h"
-#include "Widgets/Widget.h"
-#include "Widgets/GraphicWidget.h"
+#include "Widget/Widget.h"
+#include "Widget/GraphicWidget.h"
 
 #include "Types.h"
 #include "Graphic/Texture.h"
 #include "Graphic/Sprite.h"
 #include "Graphic/FreetypeFont.h"
-#include "Widgets/Label.h"
+#include "Widget/Label.h"
 
 #include <SFML/Graphics.hpp>
 
