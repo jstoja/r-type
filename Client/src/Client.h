@@ -10,46 +10,30 @@
 #ifndef _CLIENT_H_
 # define _CLIENT_H_
 
-# include <map>
-# include "Network/TcpSocket.h"
-# include "Network/Proxy.hpp"
-# include "Network/IProxyDelegate.h"
-# include "Network/TcpPacket.h"
+# include "Graphic/Scene.h"
 
-# include "Menu/IMenuDelegate.h"
-
-class Client : public Network::IProxyDelegate<Network::TcpPacket>,
-               public Menu::IMenuDelegate {
- public:
-  Client(const std::string& ip, uint16 port);
-  ~Client();
-
-  void	newPacket(Network::TcpPacket* packet);
-  void	packetWrited(Network::TcpPacket* packet);
-
-  void	connection(const std::string& name);
-
-  typedef void (Client::* commandPointer)(Network::TcpPacket*);
-
-  // All protocol functions
-  void	connectionSuccess(Network::TcpPacket*);
-
-  
-  // All IMenuDelegate functions
-  
-  virtual void welcomeCompleted();
-
-  /*
-  virtual void loginCompleted();
-  
-  virtual void MapCompleted();
-  virtual void MapNotCompleted();
-  */
-
- private:
-  Network::TcpSocket                    _tcpSocket;
-  Network::Proxy<Network::TcpPacket>*	_proxy;
-  std::map<int, commandPointer>         _commands;
+class Client {
+    public:
+    
+    Client(void);
+    ~Client(void);
+    
+    //! Main loop of the application
+    /*!
+     The main loop call the update() and render() methods and limit the framerate
+     of the application. On iOS, this functions does nothing, cause the mainloop
+     is handled by the iOS framework.
+     */
+    void mainLoop(void);
+    
+    void update(void);
+    void render(void);
+    
+    uint32  getFramerateLimit(void) const;
+    
+    private:
+    Graphic::Scene  _scene;
+    uint32          _framerateLimit;
 };
 
 #endif

@@ -17,7 +17,7 @@ namespace Network {
   class COMMON_EXPORT_IMPORT TcpPacket : public APacket {
   public:
     TcpPacket();
-    ~TcpPacket();
+    virtual ~TcpPacket();
 
     void	read(ASocket*);
     void	update();

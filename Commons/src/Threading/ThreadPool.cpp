@@ -31,6 +31,7 @@ Threading::ThreadPool::~ThreadPool() {
 void Threading::ThreadPool::operator()(void) {
   while (1) {
     _tasksMutex.lock();
+	std::cout << "TEST"<< std::endl;
     while (_tasks.size() > 0) {
       ITask* task = _tasks.front();
       _tasks.pop();

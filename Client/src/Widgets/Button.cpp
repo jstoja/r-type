@@ -23,7 +23,7 @@ Widget::Button::Button(Graphic::Scene* scene,
     GraphicWidget::setPosition(Vec3(1.0, 1.0));
     GraphicWidget::setSize(Vec2(1.0, 1.0));
     if (getSprite() != NULL) {
-        getSprite()->setAutoFrames(3, Graphic::Sprite::VERTICAL);
+        getSprite()->setAutoFrames(3, Graphic::Sprite::Vertical);
         setCurrentFrame(0);
     }
     _eventListener = new Event::Listener(
@@ -48,7 +48,7 @@ Widget::Button::Button(Graphic::Scene* scene,
     GraphicWidget::setPosition(position);
     GraphicWidget::setSize(size);
     if (getSprite()) {
-        getSprite()->setAutoFrames(3, Graphic::Sprite::VERTICAL);
+        getSprite()->setAutoFrames(3, Graphic::Sprite::Vertical);
         setCurrentFrame(0);
     }
     _eventListener = new Event::Listener(

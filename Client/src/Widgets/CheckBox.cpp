@@ -49,7 +49,7 @@ Widget::CheckBox::CheckBox(Graphic::Scene* scene,
 
 void    Widget::CheckBox::init() {
     loadImage(_imagePath);
-    getSprite()->setAutoFrames(2, Graphic::Sprite::VERTICAL);
+    getSprite()->setAutoFrames(2, Graphic::Sprite::Vertical);
     if (_checked == true) {
         setCurrentFrame(1);
     } else {
