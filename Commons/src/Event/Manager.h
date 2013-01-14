@@ -27,12 +27,12 @@ namespace Event {
         void registerProvider(IProvider* provider);
         void addEventListener(Listener* listener);
         
-        void processEvents();
+        void processEvents(void);
         void fire(Event const& event);
         
     private:
-        Manager();
-        ~Manager();
+        Manager(void);
+        ~Manager(void);
         
         std::vector<IProvider*> _providers;
         std::vector<Listener*>  _listeners;

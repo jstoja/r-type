@@ -10,7 +10,6 @@
 # define __R_Type__TextEdit__
 
 # include <iostream>
-# include "Graphic/FreetypeFont.h"
 # include "Event/Manager.h"
 # include "Event/Listener.h"
 # include "Event/IListenerDelegate.h"

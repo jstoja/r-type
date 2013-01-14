@@ -67,7 +67,6 @@ Widget::Button::~Button() {
 }
 
 void    Widget::Button::processEvent(Event::Event const& event) {
-    std::cout << "event fired" << std::endl;
   if (event.type == Event::PointerReleased) {
       setCurrentFrame(2);
       _delegate->buttonReleased(*this);

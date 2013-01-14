@@ -19,17 +19,14 @@ class COMMON_EXPORT_IMPORT Singleton {
 class Singleton {
 # endif
 public:
-  static T& getInstance() {
+  static T& getInstance(void) {
     return _instance;
   }
 
 private:
-  //T& operator= (const T&) {
-	 // return *this;
-  //}
-
   static T _instance;
 };
 
 template <class T> T Singleton<T>::_instance = T();
+
 #endif

@@ -12,12 +12,13 @@
 
 # include "Graphic/Scene.h"
 # include "Clock.h"
+# include "UserInterface.h"
 
-class Client {
+class Client : public IUserInterfaceDelegate {
     public:
     
     Client(void);
-    ~Client(void);
+    virtual ~Client(void);
     
     //! Main loop of the application
     /*!
@@ -32,10 +33,14 @@ class Client {
     
     uint32  getFramerateLimit(void) const;
     
+    // User interface delegate methods
+    Graphic::Scene* getScene(void);
+    
     private:
     Graphic::Scene  _scene;
     uint32          _framerateLimit;
     Clock           _time;
+    UserInterface*   _ui;
 };
 
 #endif

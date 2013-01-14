@@ -65,7 +65,6 @@ void    Widget::TextEdit::operator<<(std::string const& str) {
 }
 
 void    Widget::TextEdit::init() {
-    _label.init();
 }
 
 void    Widget::TextEdit::setPosition(Vec3 const& v) {

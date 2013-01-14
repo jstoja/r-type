@@ -5,11 +5,11 @@
 //  Created by Franck Lavisse on 10/01/13.
 //
 //
-#include <SFML/Graphics.hpp>
+
 #include "Widget.h"
 #include "GraphicWidget.h"
 #include "Label.h"
-#include "../Graphic/Scene.h"
+#include "Graphic/Scene.h"
 #include "Table.h"
 
 Widget::Table::Table(Widget *parent) :

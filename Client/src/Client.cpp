@@ -16,7 +16,7 @@
 #include "Graphic/Image.h"
 
 Client::Client(void) :
-_scene(), _framerateLimit(30) {
+_scene(), _framerateLimit(30), _time(), _ui() {
     
     Graphic::Renderer::getInstance().init();
     Graphic::Renderer::getInstance().setScene(&_scene);
@@ -27,85 +27,8 @@ _scene(), _framerateLimit(30) {
     viewport.x = viewport.y * (screen.x / screen.y);
     _scene.setViewport(viewport);
     
-    // Just for debug. This is a full multi-platform welcome screen !
-    Graphic::Image image;
-    
-    Graphic::Scenery* scenery;
-    Graphic::Texture* texture;
-    
-    image.loadFromResource("background.png");
-    texture = new Graphic::Texture();
-    texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
-    scenery = new Graphic::Scenery();
-    scenery->setTexture(texture);
-    scenery->setRange(Vec2(0, 1000));
-    scenery->setWidth(16);
-    scenery->setSpeed(0);
-    scenery->setDepth(0.999);
-    _scene.addScenery(scenery);
-    
-    image.loadFromResource("stars-deep.png");
-    texture = new Graphic::Texture();
-    texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
-    scenery = new Graphic::Scenery();
-    scenery->setTexture(texture);
-    scenery->setRange(Vec2(0, 1000));
-    scenery->setWidth(16);
-    scenery->setSpeed(0.2);
-    scenery->setDepth(0.998);
-    scenery->setOpacity(0.2);
-    _scene.addScenery(scenery);
-    
-    image.loadFromResource("stars-blue.png");
-    texture = new Graphic::Texture();
-    texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
-    scenery = new Graphic::Scenery();
-    scenery->setTexture(texture);
-    scenery->setRange(Vec2(0, 1000));
-    scenery->setWidth(16);
-    scenery->setSpeed(0.8);
-    scenery->setDepth(0.997);
-    _scene.addScenery(scenery);
-    
-    image.loadFromResource("stars-red.png");
-    texture = new Graphic::Texture();
-    texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
-    scenery = new Graphic::Scenery();
-    scenery->setTexture(texture);
-    scenery->setRange(Vec2(0, 1000));
-    scenery->setWidth(16);
-    scenery->setSpeed(1.2);
-    scenery->setDepth(0.996);
-    _scene.addScenery(scenery);
-    
-    image.loadFromResource("planets.png");
-    texture = new Graphic::Texture();
-    texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
-    scenery = new Graphic::Scenery();
-    scenery->setTexture(texture);
-    scenery->setRange(Vec2(0, 1000));
-    scenery->setWidth(3 * 16);
-    scenery->setSpeed(0.5);
-    scenery->setDepth(0.995);
-    scenery->setOpacity(0.8);
-    _scene.addScenery(scenery);
-    
-    Graphic::Element* welcomeImg = new Graphic::Element();
-    Graphic::Sprite* welcomeSprite = new Graphic::Sprite();
-#ifdef OS_IOS
-    image.loadFromResource("welcome-screen-ios.png");
-#else
-    image.loadFromResource("welcome-screen.png");
-#endif
-    texture = new Graphic::Texture();
-    texture->setData(image.getSize().x, image.getSize().y, image.getPixelsPtr());
-    welcomeSprite->setTexture(texture);
-    welcomeSprite->setAutoFrames(1, Graphic::Sprite::Vertical);
-    welcomeImg->setPosition(Vec3(_scene.getViewport().x, _scene.getViewport().y)/2);
-    welcomeImg->setSprite(welcomeSprite);
-    welcomeImg->setSize(_scene.getViewport());
-    welcomeImg->setType(Graphic::Element::Floating);
-    _scene.addElement(welcomeImg);
+    // Create the ui
+    _ui = new UserInterface(this);
     
     mainLoop();
 }
@@ -135,8 +58,7 @@ void Client::mainLoop(void) {
 
 void Client::update(void) {
     Event::Manager::getInstance().processEvents();
-    
-    _scene.setViewportPosition(Vec2((float32)_time.getEllapsedTime() / 500));
+    _ui->update();
 }
 
 void Client::render(void) {
@@ -145,4 +67,8 @@ void Client::render(void) {
 
 uint32 Client::getFramerateLimit(void) const {
     return _framerateLimit;
+}
+
+Graphic::Scene* Client::getScene(void) {
+    return &_scene;
 }
