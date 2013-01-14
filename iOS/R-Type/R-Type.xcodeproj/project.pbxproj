@@ -53,6 +53,7 @@
 		261F248616A06B34006C1CF4 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261F248416A06B34006C1CF4 /* Image.cpp */; };
 		261F248916A06B64006C1CF4 /* iOSImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 261F248716A06B64006C1CF4 /* iOSImage.mm */; };
 		2658303E1685DE1300BFB900 /* iOSRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2658303C1685DE1300BFB900 /* iOSRenderer.mm */; };
+		266F06C716A41579004F5554 /* UserInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F06C516A41579004F5554 /* UserInterface.cpp */; };
 		2699A9E11684AD400092AC40 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E01684AD400092AC40 /* UIKit.framework */; };
 		2699A9E31684AD400092AC40 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E21684AD400092AC40 /* Foundation.framework */; };
 		2699A9E51684AD400092AC40 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E41684AD400092AC40 /* CoreGraphics.framework */; };
@@ -165,6 +166,8 @@
 		261F248716A06B64006C1CF4 /* iOSImage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iOSImage.mm; path = ../../../iOS/src/Graphic/iOSImage.mm; sourceTree = "<group>"; };
 		2658303C1685DE1300BFB900 /* iOSRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iOSRenderer.mm; path = ../../../iOS/src/Graphic/iOSRenderer.mm; sourceTree = "<group>"; };
 		2658303D1685DE1300BFB900 /* iOSRendererMembers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iOSRendererMembers.h; path = ../../../iOS/src/Graphic/iOSRendererMembers.h; sourceTree = "<group>"; };
+		266F06C516A41579004F5554 /* UserInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UserInterface.cpp; path = ../../../Client/src/UserInterface.cpp; sourceTree = "<group>"; };
+		266F06C616A41579004F5554 /* UserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInterface.h; path = ../../../Client/src/UserInterface.h; sourceTree = "<group>"; };
 		2699A9DC1684AD400092AC40 /* R-Type.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "R-Type.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2699A9E01684AD400092AC40 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2699A9E21684AD400092AC40 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -284,6 +287,8 @@
 			isa = PBXGroup;
 			children = (
 				2613B35816A358AB00CF84AA /* Client.cpp */,
+				266F06C516A41579004F5554 /* UserInterface.cpp */,
+				266F06C616A41579004F5554 /* UserInterface.h */,
 				2613B35916A358AB00CF84AA /* Client.h */,
 			);
 			name = Client;
@@ -721,6 +726,7 @@
 				2613B35616A3337700CF84AA /* WinLibrary.cpp in Sources */,
 				2613B35A16A358AB00CF84AA /* Client.cpp in Sources */,
 				2613B35E16A35A5000CF84AA /* iOSMainViewController.mm in Sources */,
+				266F06C716A41579004F5554 /* UserInterface.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
