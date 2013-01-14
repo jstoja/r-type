@@ -39,7 +39,7 @@ namespace Threading {
       void*	_param;
     };
     
-    ThreadPool(int nbThreads = 10);
+    ThreadPool(int nbThreads = 10, bool run = true);
     ~ThreadPool();
     template <typename T>
     void addTask(T* object, void (T::* function)(void*), void* param) {
@@ -50,11 +50,13 @@ namespace Threading {
     }
     
     void operator()(void);
+	void run();
   private:
     std::vector<Thread<ThreadPool>*>	_threads;
-    std::queue<ITask*>			_tasks;
-    Mutex				_tasksMutex;
-    Mutex::Condition*			_tasksCondition;
+    std::queue<ITask*>					_tasks;
+    Mutex								_tasksMutex;
+    Mutex::Condition*					_tasksCondition;
+	bool								_run;
   };
 
 }

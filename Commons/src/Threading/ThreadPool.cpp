@@ -10,12 +10,13 @@
 #include <iostream>
 #include "ThreadPool.hpp"
 
-Threading::ThreadPool::ThreadPool(int nbThreads) {
+Threading::ThreadPool::ThreadPool(int nbThreads, bool run) : _run(run) {
  _tasksCondition = new Mutex::Condition(&_tasksMutex);
   for (int i = 0; i < nbThreads; ++i) {
     Thread<ThreadPool>* thread = new Thread<ThreadPool>(this);
-    _threads.push_back(thread);
-    thread->run();
+	_threads.push_back(thread);
+	if (_run)
+	    thread->run();
   }
 }
 
@@ -28,17 +29,31 @@ Threading::ThreadPool::~ThreadPool() {
   delete _tasksCondition;
 }
 
+void Threading::ThreadPool::run() {
+	if (!_run) {
+		for (int i = 0; i < _threads.size(); ++i) {
+		    _threads[i]->run();
+		}
+		for (int i = 0; i < _threads.size(); ++i) {
+		    _threads[i]->join();
+		}
+	}
+}
+
 void Threading::ThreadPool::operator()(void) {
   while (1) {
     _tasksMutex.lock();
-	std::cout << "TEST"<< std::endl;
     while (_tasks.size() > 0) {
-      ITask* task = _tasks.front();
-      _tasks.pop();
-    _tasksMutex.unlock();
-    task->call();
-    _tasksMutex.lock();
+		ITask* task = _tasks.front();
+		_tasks.pop();
+		_tasksMutex.unlock();
+		task->call();
+		_tasksMutex.lock();
     }
+	if (!_run) {
+		_tasksMutex.unlock();
+		return;
+	}
     _tasksCondition->wait();
     _tasksMutex.unlock();
   }
