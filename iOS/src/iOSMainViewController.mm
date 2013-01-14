@@ -7,10 +7,10 @@
 //
 
 #include "iOSMainViewController.h"
+#include "Debug.h"
 
 iOSMainViewController::iOSMainViewController(void) :
 _viewController(NULL), _events() {
-    Event::Manager::getInstance().registerProvider(this);
 }
 
 iOSMainViewController::~iOSMainViewController(void) {
@@ -22,10 +22,23 @@ void iOSMainViewController::setViewController(ViewController* viewController) {
 }
 
 void iOSMainViewController::processEvents(Event::Manager* manager) {
-    
+    while (_events.size() > 0) {
+        manager->fire(_events.top());
+        _events.pop();
+    }
 }
 
 void iOSMainViewController::pushEvent(Event::Event& event) {
+    // Register to the event manager
+    // This can't be done in constructor because iOSMainViewController and
+    // event manager both are singleton, so they can't use each other in their
+    // constructors...
+    static bool registered = false;
+    if (!registered) {
+        Event::Manager::getInstance().registerProvider(this);
+        registered = true;
+    }
+    
     event.sender = this;
     _events.push(event);
 }

@@ -20,8 +20,8 @@ Widget::CheckBox::CheckBox(Graphic::Scene* scene,
                            Widget* parent)
 : GraphicWidget(scene, parent),
   _checked(checked) {
-        _imagePath = "./checkbox.png";
-//      _imagePath = Application::getInstance().getResourcesPath() + std::string("checkbox.png");
+      //  _imagePath = "./checkbox.png";
+      _imagePath = Application::getInstance().getResourcesPath() + std::string("button.png");
 }
 
 Widget::CheckBox::~CheckBox() {

@@ -42,7 +42,7 @@ public:
         // Setup scene
         _label->setPosition(Vec3(7,7));
         _label->setSize(Vec2(str.length(),1));
-        _label->init();
+        //_label->init();
         //_label << "marseille";
         //_label.setText("molotov");
         

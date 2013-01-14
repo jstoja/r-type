@@ -21,27 +21,27 @@
 
 namespace Network {
 
-  class TcpSocket : public ASocket  {
+  class COMMON_EXPORT_IMPORT TcpSocket : public ASocket  {
 
 public:
     const static uint32 readSize = 4096;
     const static uint32 writeSize = 32768;
 
-  COMMON_EXPORT_IMPORT inline TcpSocket();
-  COMMON_EXPORT_IMPORT inline TcpSocket(int fd);
-  COMMON_EXPORT_IMPORT inline ~TcpSocket();
+  TcpSocket();
+  TcpSocket(int fd);
+  ~TcpSocket();
 
-  COMMON_EXPORT_IMPORT inline int	getId() const;
+  int	getId() const;
 
-  COMMON_EXPORT_IMPORT inline bool		connect(const HostAddress& address, uint16 port);
-  COMMON_EXPORT_IMPORT inline bool		listen(const HostAddress& address, uint16 port);
-  COMMON_EXPORT_IMPORT inline void		read(ByteArray&, bool all = true, uint32 start = 0);
-  COMMON_EXPORT_IMPORT inline void		write(ByteArray&, const HostAddress& hostAddress = HostAddress::AnyAddress, uint16 port = 0);
-  COMMON_EXPORT_IMPORT inline void		close();
-  COMMON_EXPORT_IMPORT inline uint16       	getLocalPort() const;
+  bool		connect(const HostAddress& address, uint16 port);
+  bool		listen(const HostAddress& address, uint16 port);
+  void		read(ByteArray&, bool all = true, uint32 start = 0);
+  void		write(ByteArray&, const HostAddress& hostAddress = HostAddress::AnyAddress, uint16 port = 0);
+  void		close();
+  uint16       	getLocalPort() const;
 
-  COMMON_EXPORT_IMPORT inline void	canRead();
-  COMMON_EXPORT_IMPORT inline void	canWrite();
+  void	canRead();
+  void	canWrite();
   
 private:
   int			_fd;

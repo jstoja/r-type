@@ -9,14 +9,39 @@
 #ifndef __R_Type__UserInterface__
 # define __R_Type__UserInterface__
 
-class UserInterface {
+# include <string>
+# include "IUserInterfaceDelegate.h"
+# include "Clock.h"
+# include "Menu/IMenuDelegate.h"
+# include "Menu/WelcomeMenu.h"
+
+class UserInterface : public Menu::IMenuDelegate {
 public:
     
-    UserInterface(void);
+    UserInterface(IUserInterfaceDelegate* delegate);
     ~UserInterface(void);
     
-private:
+    void update(void);
     
+    // IMenuDelegate implementation
+    virtual void welcomeCompleted(void);
+    virtual void loginCompleted(std::string const& login,
+								std::string const& ipAdress,
+								std::string const& port);
+    virtual void newGameCallGeneralMenu(void);
+    virtual void serverListCallGeneralMenu(void);
+    virtual void optionsCallGeneralMenu(void);
+
+    
+private:
+    static const float32 _maxViewportX;
+    void _createSceneries(void);
+    
+    IUserInterfaceDelegate* _delegate;
+    Clock                   _time;
+    Menu::WelcomeMenu*      _welcomeMenu;
+    
+    std::vector<Graphic::Scenery*>  _sceneries;
 };
 
 #endif /* defined(__R_Type__UserInterface__) */

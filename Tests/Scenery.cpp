@@ -130,6 +130,9 @@ public:
     virtual void welcomeCompleted() {
         _close = true;
     }
+    virtual void loginCompleted(std::string const&,
+								std::string const&,
+								std::string const&) {}
     virtual void newGameCallGeneralMenu() {}
     virtual void serverListCallGeneralMenu() {}
     virtual void optionsCallGeneralMenu() {}

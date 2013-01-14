@@ -1,34 +1,43 @@
+//
+//  IMenuDelegate.h
+//  R-Type
+//
+//  Copyright (c) 2013 EPITECH. All rights reserved.
+//
+
 #ifndef IMENU_DELEGATE_H
 # define IMENU_DELEGATE_H
+
+# include <string>
 
 namespace Menu {
 
     class IMenuDelegate {
 
         public:
-            inline virtual ~IMenuDelegate() {}
+            inline virtual ~IMenuDelegate(void) {}
 
 
-            //! Welcome Menu Delegation
-            //! This method is called when the welcome screen is over
-            virtual void welcomeCompleted() = 0;
+            //! welcome menu delegation
+            //! this method is called when the welcome screen is over
+            virtual void welcomeCompleted(void) = 0;
 
-            //! Genral Menu Delegation
+            //! login menu delegation
+            //! this method is called when the welcome screen is over
+            virtual void loginCompleted(std::string const& login,
+										std::string const& ipAdress,
+										std::string const& port) = 0;
+
+            //! General Menu Delegation
             //! This method is called when the newgame button is pushed
-            virtual void newGameCallGeneralMenu() = 0;
-            virtual void serverListCallGeneralMenu() = 0;
-            virtual void optionsCallGeneralMenu() = 0;
+            virtual void newGameCallGeneralMenu(void) = 0;
+            virtual void serverListCallGeneralMenu(void) = 0;
+            virtual void optionsCallGeneralMenu(void) = 0;
 
             /*
             //! Login Menu Delegation
             //! This method is called when the Login screen is over
             virtual void loginCompleted() = 0; 
-
-            //! Map Menu Delegation
-            //! This method is called when the map is choosen
-            virtual void MapCompleted() = 0;
-            //! This method is called when the map screen is canceled
-            virtual void MapNotCompleted() = 0; 
             */
     };
 }

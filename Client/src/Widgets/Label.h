@@ -11,8 +11,14 @@
 
 # include <iostream>
 # include <string>
-# include "Graphic/FreetypeFont.h"
 # include "Widget.h"
+# include "GraphicWidget.h"
+
+# ifdef OS_IOS
+
+# else
+#  include "Graphic/FreetypeFont.h"
+# endif
 
 namespace   Widget {
     class   GraphicWidget;
@@ -36,25 +42,29 @@ namespace   Widget {
 
         //! Text setter
         void    setText(std::string const&);
-        
-        //! Init label, load alphabet image
-        void    init();
-        
+                
         //! Add a letter in wod
         void    operator<<(char);
         
-        //! Contact
+        //! Concat
         void    operator<<(std::string const&);
      
         void    clear();
         
+        //! Platform specific update of the label with its actual text
         void    update();
         
-        void    draw() {}
-        
     private:
-        static Graphic::FreetypeFont   *_font;
-        std::string             _text;
+        
+        //! Platform specific initialisation of the label
+        void _init(void);
+        
+# ifdef OS_IOS
+        
+# else
+        static Graphic::FreetypeFont*   _font;
+# endif
+        std::string                     _text;
     };
 };
 

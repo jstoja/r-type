@@ -10,11 +10,12 @@
 # define __R_Type__TextEdit__
 
 # include <iostream>
-# include "Graphic/FreetypeFont.h"
 # include "Event/Manager.h"
 # include "Event/Listener.h"
 # include "Event/IListenerDelegate.h"
 # include "Widget.h"
+# include "GraphicWidget.h"
+# include "Widgets/Label.h"
 # include "ITextEditDelegate.h"
 
 namespace Event {
@@ -76,7 +77,7 @@ namespace Widget {
         virtual void    processEvent(Event::Event const&);
     private:
         Event::Listener*    _eventListener;
-        Label               _label;
+        Label       _label;
         ITextEditDelegate*  _delegate;
     };
 };

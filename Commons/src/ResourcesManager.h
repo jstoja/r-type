@@ -4,7 +4,7 @@
 // Made by Samuel Olivier
 // Login   <olivie_a@epitech.net>
 // 
-// Started on  mer. déc. 19 12:20:12 2012 Samuel Olivier
+// Started on  mer. dï¿½c. 19 12:20:12 2012 Samuel Olivier
 //
 
 #ifndef _RESSOURCESMANAGER_H_
@@ -46,3 +46,4 @@ class COMMON_EXPORT_IMPORT_REMOVED ResourcesManager : public Singleton<Resources
 };
 
 #endif
+
