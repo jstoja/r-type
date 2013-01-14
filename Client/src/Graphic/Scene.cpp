@@ -29,6 +29,13 @@ void Graphic::Scene::addElement(Element* element) {
     _elements.push_back(element);
 }
 
+void Graphic::Scene::removeElement(Element* element) {
+    std::vector<Element*>::iterator it =
+        find(_elements.begin(), _elements.end(), element);
+    if (it != _elements.end())
+        _elements.erase(it);
+}
+
 std::vector<Graphic::Scenery*> const & Graphic::Scene::getSceneries(void) const {
     return _sceneries;
 }

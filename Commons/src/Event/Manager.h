@@ -26,6 +26,7 @@ namespace Event {
     public:
         void registerProvider(IProvider* provider);
         void addEventListener(Listener* listener);
+        void removeEventListener(Listener* listener);
         
         void processEvents(void);
         void fire(Event const& event);

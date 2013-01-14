@@ -30,7 +30,6 @@
 		2613B46E16A36E7500CF84AA /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B45116A36E7500CF84AA /* icon@2x.png */; };
 		2613B46F16A36E7500CF84AA /* icon_base.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B45216A36E7500CF84AA /* icon_base.png */; };
 		2613B47016A36E7500CF84AA /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B45316A36E7500CF84AA /* logo.png */; };
-		2613B47116A36E7500CF84AA /* Marion.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 2613B45416A36E7500CF84AA /* Marion.ttc */; };
 		2613B47216A36E7500CF84AA /* number-field.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B45516A36E7500CF84AA /* number-field.png */; };
 		2613B47316A36E7500CF84AA /* planets.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B45616A36E7500CF84AA /* planets.png */; };
 		2613B47416A36E7500CF84AA /* progress-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B45716A36E7500CF84AA /* progress-bar.png */; };
@@ -53,16 +52,18 @@
 		2658303E1685DE1300BFB900 /* iOSRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2658303C1685DE1300BFB900 /* iOSRenderer.mm */; };
 		266F06C716A41579004F5554 /* UserInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F06C516A41579004F5554 /* UserInterface.cpp */; };
 		266F071E16A43519004F5554 /* GeneralMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F070316A43519004F5554 /* GeneralMenu.cpp */; };
-		266F071F16A43519004F5554 /* LoginMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F070616A43519004F5554 /* LoginMenu.cpp */; };
 		266F072016A43519004F5554 /* MapMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F070816A43519004F5554 /* MapMenu.cpp */; };
-		266F072116A43519004F5554 /* WelcomeMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F070A16A43519004F5554 /* WelcomeMenu.cpp */; };
-		266F072216A43519004F5554 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F070D16A43519004F5554 /* Button.cpp */; };
-		266F072316A43519004F5554 /* CheckBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F070F16A43519004F5554 /* CheckBox.cpp */; };
-		266F072416A43519004F5554 /* GraphicWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F071116A43519004F5554 /* GraphicWidget.cpp */; };
-		266F072516A43519004F5554 /* Label.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F071616A43519004F5554 /* Label.cpp */; };
-		266F072616A43519004F5554 /* Table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F071816A43519004F5554 /* Table.cpp */; };
-		266F072716A43519004F5554 /* TextEdit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F071A16A43519004F5554 /* TextEdit.cpp */; };
-		266F072816A43519004F5554 /* Widget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F071C16A43519004F5554 /* Widget.cpp */; };
+		266F075F16A4884D004F5554 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F074E16A4884D004F5554 /* Button.cpp */; };
+		266F076016A4884D004F5554 /* CheckBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F075016A4884D004F5554 /* CheckBox.cpp */; };
+		266F076116A4884D004F5554 /* GraphicWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F075216A4884D004F5554 /* GraphicWidget.cpp */; };
+		266F076216A4884D004F5554 /* Label.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F075716A4884D004F5554 /* Label.cpp */; };
+		266F076316A4884D004F5554 /* Table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F075916A4884D004F5554 /* Table.cpp */; };
+		266F076416A4884D004F5554 /* TextEdit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F075B16A4884D004F5554 /* TextEdit.cpp */; };
+		266F076516A4884D004F5554 /* Widget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F075D16A4884D004F5554 /* Widget.cpp */; };
+		266F076A16A48872004F5554 /* Login.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F076616A48872004F5554 /* Login.cpp */; };
+		266F076B16A48872004F5554 /* Welcome.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F076816A48872004F5554 /* Welcome.cpp */; };
+		266F076D16A48889004F5554 /* transformers-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 266F076C16A48889004F5554 /* transformers-font.ttf */; };
+		266F076F16A48910004F5554 /* iOSLabel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 266F076E16A48910004F5554 /* iOSLabel.mm */; };
 		2699A9E11684AD400092AC40 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E01684AD400092AC40 /* UIKit.framework */; };
 		2699A9E31684AD400092AC40 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E21684AD400092AC40 /* Foundation.framework */; };
 		2699A9E51684AD400092AC40 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E41684AD400092AC40 /* CoreGraphics.framework */; };
@@ -150,7 +151,6 @@
 		2613B45116A36E7500CF84AA /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		2613B45216A36E7500CF84AA /* icon_base.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_base.png; sourceTree = "<group>"; };
 		2613B45316A36E7500CF84AA /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
-		2613B45416A36E7500CF84AA /* Marion.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Marion.ttc; sourceTree = "<group>"; };
 		2613B45516A36E7500CF84AA /* number-field.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "number-field.png"; sourceTree = "<group>"; };
 		2613B45616A36E7500CF84AA /* planets.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = planets.png; sourceTree = "<group>"; };
 		2613B45716A36E7500CF84AA /* progress-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress-bar.png"; sourceTree = "<group>"; };
@@ -179,29 +179,31 @@
 		266F070316A43519004F5554 /* GeneralMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GeneralMenu.cpp; sourceTree = "<group>"; };
 		266F070416A43519004F5554 /* GeneralMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralMenu.h; sourceTree = "<group>"; };
 		266F070516A43519004F5554 /* IMenuDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMenuDelegate.h; sourceTree = "<group>"; };
-		266F070616A43519004F5554 /* LoginMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoginMenu.cpp; sourceTree = "<group>"; };
-		266F070716A43519004F5554 /* LoginMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginMenu.h; sourceTree = "<group>"; };
 		266F070816A43519004F5554 /* MapMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapMenu.cpp; sourceTree = "<group>"; };
 		266F070916A43519004F5554 /* MapMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapMenu.h; sourceTree = "<group>"; };
-		266F070A16A43519004F5554 /* WelcomeMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WelcomeMenu.cpp; sourceTree = "<group>"; };
-		266F070B16A43519004F5554 /* WelcomeMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeMenu.h; sourceTree = "<group>"; };
-		266F070D16A43519004F5554 /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
-		266F070E16A43519004F5554 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
-		266F070F16A43519004F5554 /* CheckBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheckBox.cpp; sourceTree = "<group>"; };
-		266F071016A43519004F5554 /* CheckBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckBox.h; sourceTree = "<group>"; };
-		266F071116A43519004F5554 /* GraphicWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicWidget.cpp; sourceTree = "<group>"; };
-		266F071216A43519004F5554 /* GraphicWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphicWidget.h; sourceTree = "<group>"; };
-		266F071316A43519004F5554 /* IButtonDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IButtonDelegate.h; sourceTree = "<group>"; };
-		266F071416A43519004F5554 /* ICheckBoxDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICheckBoxDelegate.h; sourceTree = "<group>"; };
-		266F071516A43519004F5554 /* ITextEditDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITextEditDelegate.h; sourceTree = "<group>"; };
-		266F071616A43519004F5554 /* Label.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Label.cpp; sourceTree = "<group>"; };
-		266F071716A43519004F5554 /* Label.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Label.h; sourceTree = "<group>"; };
-		266F071816A43519004F5554 /* Table.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Table.cpp; sourceTree = "<group>"; };
-		266F071916A43519004F5554 /* Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Table.h; sourceTree = "<group>"; };
-		266F071A16A43519004F5554 /* TextEdit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextEdit.cpp; sourceTree = "<group>"; };
-		266F071B16A43519004F5554 /* TextEdit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextEdit.h; sourceTree = "<group>"; };
-		266F071C16A43519004F5554 /* Widget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Widget.cpp; sourceTree = "<group>"; };
-		266F071D16A43519004F5554 /* Widget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Widget.h; sourceTree = "<group>"; };
+		266F074E16A4884D004F5554 /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
+		266F074F16A4884D004F5554 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
+		266F075016A4884D004F5554 /* CheckBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheckBox.cpp; sourceTree = "<group>"; };
+		266F075116A4884D004F5554 /* CheckBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckBox.h; sourceTree = "<group>"; };
+		266F075216A4884D004F5554 /* GraphicWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicWidget.cpp; sourceTree = "<group>"; };
+		266F075316A4884D004F5554 /* GraphicWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphicWidget.h; sourceTree = "<group>"; };
+		266F075416A4884D004F5554 /* IButtonDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IButtonDelegate.h; sourceTree = "<group>"; };
+		266F075516A4884D004F5554 /* ICheckBoxDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICheckBoxDelegate.h; sourceTree = "<group>"; };
+		266F075616A4884D004F5554 /* ITextEditDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITextEditDelegate.h; sourceTree = "<group>"; };
+		266F075716A4884D004F5554 /* Label.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Label.cpp; sourceTree = "<group>"; };
+		266F075816A4884D004F5554 /* Label.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Label.h; sourceTree = "<group>"; };
+		266F075916A4884D004F5554 /* Table.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Table.cpp; sourceTree = "<group>"; };
+		266F075A16A4884D004F5554 /* Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Table.h; sourceTree = "<group>"; };
+		266F075B16A4884D004F5554 /* TextEdit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextEdit.cpp; sourceTree = "<group>"; };
+		266F075C16A4884D004F5554 /* TextEdit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextEdit.h; sourceTree = "<group>"; };
+		266F075D16A4884D004F5554 /* Widget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Widget.cpp; sourceTree = "<group>"; };
+		266F075E16A4884D004F5554 /* Widget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Widget.h; sourceTree = "<group>"; };
+		266F076616A48872004F5554 /* Login.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Login.cpp; sourceTree = "<group>"; };
+		266F076716A48872004F5554 /* Login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Login.h; sourceTree = "<group>"; };
+		266F076816A48872004F5554 /* Welcome.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Welcome.cpp; sourceTree = "<group>"; };
+		266F076916A48872004F5554 /* Welcome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Welcome.h; sourceTree = "<group>"; };
+		266F076C16A48889004F5554 /* transformers-font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "transformers-font.ttf"; sourceTree = "<group>"; };
+		266F076E16A48910004F5554 /* iOSLabel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iOSLabel.mm; path = ../../../iOS/src/Widget/iOSLabel.mm; sourceTree = "<group>"; };
 		2699A9DC1684AD400092AC40 /* R-Type.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "R-Type.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2699A9E01684AD400092AC40 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2699A9E21684AD400092AC40 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -242,7 +244,7 @@
 		2699AA361684AE670092AC40 /* SfmlRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SfmlRenderer.cpp; sourceTree = "<group>"; };
 		2699AA371684AE670092AC40 /* ShaderProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderProgram.cpp; sourceTree = "<group>"; };
 		2699AA381684AE670092AC40 /* ShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderProgram.h; sourceTree = "<group>"; };
-		2699AA391684AE670092AC40 /* Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Sprite.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		2699AA391684AE670092AC40 /* Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Sprite.cpp; sourceTree = "<group>"; };
 		2699AA3A1684AE670092AC40 /* Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprite.h; sourceTree = "<group>"; };
 		2699AA3B1684AE670092AC40 /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
 		2699AA3C1684AE670092AC40 /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 				2613B35816A358AB00CF84AA /* Client.cpp */,
 				266F06C516A41579004F5554 /* UserInterface.cpp */,
 				266F06C616A41579004F5554 /* UserInterface.h */,
+				266F070116A43519004F5554 /* IUserInterfaceDelegate.h */,
 				2613B35916A358AB00CF84AA /* Client.h */,
 			);
 			name = Client;
@@ -331,6 +334,7 @@
 		2613B44516A36E7500CF84AA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				266F076C16A48889004F5554 /* transformers-font.ttf */,
 				2613B44616A36E7500CF84AA /* background.png */,
 				2613B44716A36E7500CF84AA /* background_menu.png */,
 				2613B44816A36E7500CF84AA /* button-auto-join.png */,
@@ -345,7 +349,6 @@
 				2613B45116A36E7500CF84AA /* icon@2x.png */,
 				2613B45216A36E7500CF84AA /* icon_base.png */,
 				2613B45316A36E7500CF84AA /* logo.png */,
-				2613B45416A36E7500CF84AA /* Marion.ttc */,
 				2613B45516A36E7500CF84AA /* number-field.png */,
 				2613B45616A36E7500CF84AA /* planets.png */,
 				2613B45716A36E7500CF84AA /* progress-bar.png */,
@@ -368,43 +371,44 @@
 		266F070216A43519004F5554 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				266F076616A48872004F5554 /* Login.cpp */,
+				266F076716A48872004F5554 /* Login.h */,
+				266F076816A48872004F5554 /* Welcome.cpp */,
+				266F076916A48872004F5554 /* Welcome.h */,
 				266F070316A43519004F5554 /* GeneralMenu.cpp */,
 				266F070416A43519004F5554 /* GeneralMenu.h */,
 				266F070516A43519004F5554 /* IMenuDelegate.h */,
-				266F070616A43519004F5554 /* LoginMenu.cpp */,
-				266F070716A43519004F5554 /* LoginMenu.h */,
 				266F070816A43519004F5554 /* MapMenu.cpp */,
 				266F070916A43519004F5554 /* MapMenu.h */,
-				266F070A16A43519004F5554 /* WelcomeMenu.cpp */,
-				266F070B16A43519004F5554 /* WelcomeMenu.h */,
 			);
 			name = Menu;
 			path = ../../../Client/src/Menu;
 			sourceTree = "<group>";
 		};
-		266F070C16A43519004F5554 /* Widgets */ = {
+		266F074D16A4884D004F5554 /* Widget */ = {
 			isa = PBXGroup;
 			children = (
-				266F070D16A43519004F5554 /* Button.cpp */,
-				266F070E16A43519004F5554 /* Button.h */,
-				266F070F16A43519004F5554 /* CheckBox.cpp */,
-				266F071016A43519004F5554 /* CheckBox.h */,
-				266F071116A43519004F5554 /* GraphicWidget.cpp */,
-				266F071216A43519004F5554 /* GraphicWidget.h */,
-				266F071316A43519004F5554 /* IButtonDelegate.h */,
-				266F071416A43519004F5554 /* ICheckBoxDelegate.h */,
-				266F071516A43519004F5554 /* ITextEditDelegate.h */,
-				266F071616A43519004F5554 /* Label.cpp */,
-				266F071716A43519004F5554 /* Label.h */,
-				266F071816A43519004F5554 /* Table.cpp */,
-				266F071916A43519004F5554 /* Table.h */,
-				266F071A16A43519004F5554 /* TextEdit.cpp */,
-				266F071B16A43519004F5554 /* TextEdit.h */,
-				266F071C16A43519004F5554 /* Widget.cpp */,
-				266F071D16A43519004F5554 /* Widget.h */,
+				266F074E16A4884D004F5554 /* Button.cpp */,
+				266F074F16A4884D004F5554 /* Button.h */,
+				266F075016A4884D004F5554 /* CheckBox.cpp */,
+				266F075116A4884D004F5554 /* CheckBox.h */,
+				266F075216A4884D004F5554 /* GraphicWidget.cpp */,
+				266F075316A4884D004F5554 /* GraphicWidget.h */,
+				266F075416A4884D004F5554 /* IButtonDelegate.h */,
+				266F075516A4884D004F5554 /* ICheckBoxDelegate.h */,
+				266F075616A4884D004F5554 /* ITextEditDelegate.h */,
+				266F076E16A48910004F5554 /* iOSLabel.mm */,
+				266F075716A4884D004F5554 /* Label.cpp */,
+				266F075816A4884D004F5554 /* Label.h */,
+				266F075916A4884D004F5554 /* Table.cpp */,
+				266F075A16A4884D004F5554 /* Table.h */,
+				266F075B16A4884D004F5554 /* TextEdit.cpp */,
+				266F075C16A4884D004F5554 /* TextEdit.h */,
+				266F075D16A4884D004F5554 /* Widget.cpp */,
+				266F075E16A4884D004F5554 /* Widget.h */,
 			);
-			name = Widgets;
-			path = ../../../Client/src/Widgets;
+			name = Widget;
+			path = ../../../Client/src/Widget;
 			sourceTree = "<group>";
 		};
 		2699A9D11684AD400092AC40 = {
@@ -442,9 +446,8 @@
 		2699A9EA1684AD400092AC40 /* R-Type */ = {
 			isa = PBXGroup;
 			children = (
-				266F070116A43519004F5554 /* IUserInterfaceDelegate.h */,
+				266F074D16A4884D004F5554 /* Widget */,
 				266F070216A43519004F5554 /* Menu */,
-				266F070C16A43519004F5554 /* Widgets */,
 				2613B35B16A358B400CF84AA /* Client */,
 				2699AA821684AEDC0092AC40 /* Commons */,
 				2699AA261684AE670092AC40 /* Graphic */,
@@ -708,7 +711,6 @@
 				2613B46E16A36E7500CF84AA /* icon@2x.png in Resources */,
 				2613B46F16A36E7500CF84AA /* icon_base.png in Resources */,
 				2613B47016A36E7500CF84AA /* logo.png in Resources */,
-				2613B47116A36E7500CF84AA /* Marion.ttc in Resources */,
 				2613B47216A36E7500CF84AA /* number-field.png in Resources */,
 				2613B47316A36E7500CF84AA /* planets.png in Resources */,
 				2613B47416A36E7500CF84AA /* progress-bar.png in Resources */,
@@ -725,6 +727,7 @@
 				2613B47F16A36E7500CF84AA /* welcome-screen.png in Resources */,
 				2613B48816A3760900CF84AA /* Default@x2.png in Resources */,
 				2613B48A16A3763600CF84AA /* Default.png in Resources */,
+				266F076D16A48889004F5554 /* transformers-font.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -803,16 +806,17 @@
 				2613B35E16A35A5000CF84AA /* iOSMainViewController.mm in Sources */,
 				266F06C716A41579004F5554 /* UserInterface.cpp in Sources */,
 				266F071E16A43519004F5554 /* GeneralMenu.cpp in Sources */,
-				266F071F16A43519004F5554 /* LoginMenu.cpp in Sources */,
 				266F072016A43519004F5554 /* MapMenu.cpp in Sources */,
-				266F072116A43519004F5554 /* WelcomeMenu.cpp in Sources */,
-				266F072216A43519004F5554 /* Button.cpp in Sources */,
-				266F072316A43519004F5554 /* CheckBox.cpp in Sources */,
-				266F072416A43519004F5554 /* GraphicWidget.cpp in Sources */,
-				266F072516A43519004F5554 /* Label.cpp in Sources */,
-				266F072616A43519004F5554 /* Table.cpp in Sources */,
-				266F072716A43519004F5554 /* TextEdit.cpp in Sources */,
-				266F072816A43519004F5554 /* Widget.cpp in Sources */,
+				266F075F16A4884D004F5554 /* Button.cpp in Sources */,
+				266F076016A4884D004F5554 /* CheckBox.cpp in Sources */,
+				266F076116A4884D004F5554 /* GraphicWidget.cpp in Sources */,
+				266F076216A4884D004F5554 /* Label.cpp in Sources */,
+				266F076316A4884D004F5554 /* Table.cpp in Sources */,
+				266F076416A4884D004F5554 /* TextEdit.cpp in Sources */,
+				266F076516A4884D004F5554 /* Widget.cpp in Sources */,
+				266F076A16A48872004F5554 /* Login.cpp in Sources */,
+				266F076B16A48872004F5554 /* Welcome.cpp in Sources */,
+				266F076F16A48910004F5554 /* iOSLabel.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -4,10 +4,10 @@
 # include <vector>
 # include "IMenuDelegate.h"
 # include "Graphic/Scene.h"
-# include "Widgets/Widget.h"
-# include "Widgets/GraphicWidget.h"
-# include "Widgets/Button.h"
-# include "Widgets/IButtonDelegate.h"
+# include "Widget/Widget.h"
+# include "Widget/GraphicWidget.h"
+# include "Widget/Button.h"
+# include "Widget/IButtonDelegate.h"
 
 namespace Menu {
     class GeneralMenu: public Widget::IButtonDelegate {

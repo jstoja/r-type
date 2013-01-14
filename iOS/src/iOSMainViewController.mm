@@ -21,6 +21,10 @@ void iOSMainViewController::setViewController(ViewController* viewController) {
     _viewController = viewController;
 }
 
+ViewController* iOSMainViewController::getViewController(void) const {
+    return _viewController;
+}
+
 void iOSMainViewController::processEvents(Event::Manager* manager) {
     while (_events.size() > 0) {
         manager->fire(_events.top());

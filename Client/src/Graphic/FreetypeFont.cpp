@@ -1,42 +1,65 @@
+//
+//  FreetypeFont.cpp
+//  R-Type
+//
+//  Copyright (c) 2013 EPITECH. All rights reserved.
+//
+
 #include <iostream>
 #include <string>
 
-#include <Exception.h>
-#include <Application.h>
-#include "Types.h"
 #include "FreetypeFont.h"
+#include "Exception.h"
+#include "ResourcesManager.h"
+#include "Resource.h"
+#include "Types.h"
+#include "Debug.h"
 
-Graphic::FreetypeFont::FreetypeFont(uint8 size, const std::string &path)
-: _fontLoaded(false), _fontPath(path), _fontSize(size) {
-	if (_fontPath.empty()) {
-		_fontPath = Application::getInstance().getResourcesPath() + "./Marion.ttc";
-	}
-    int         error;
+FT_Library  Graphic::FreetypeFont::_library;
+bool        Graphic::FreetypeFont::_libraryLoaded = false;
 
-    error = FT_Init_FreeType(&_library);
-    if (error)
-        throw new Exception("An error occurred during Freetype library initialization.");
-    changeFont(_fontPath, _fontSize);
+Graphic::FreetypeFont::FreetypeFont(const std::string &resourceName, uint8 size)
+: _fontSize(size) {
+    
+    if (!_libraryLoaded) {
+        int error;
+
+        error = FT_Init_FreeType(&_library);
+        if (error)
+            throw new Exception("An error occurred during Freetype library initialization.");
+        _libraryLoaded = true;
+    }
+    
+    loadFont(resourceName);
 }
 
-void Graphic::FreetypeFont::changeFont(const std::string &fontPath, uint8 size) {
-    _fontLoaded = false;
-    _fontSize = size;
-    _fontPath = fontPath;
+Graphic::FreetypeFont::~FreetypeFont(void) {
+    for(unsigned char ch = 0; ch < _characterTab.size(); ++ch) {
+        delete[] _characterTab[ch];
+    }
+    if (_face)
+        FT_Done_Face(_face);
+}
+
+void Graphic::FreetypeFont::loadFont(const std::string &resourceName) {
     
-    int         error;
-    error = FT_New_Face(_library, fontPath.c_str(), 0, &_face);
-    if ( error == FT_Err_Unknown_File_Format )
-        throw new Exception("The font file could be opened and read, but it appears that its font format is unsupported.");
-    else if (error)
-		throw new Exception("The font file \"" + fontPath + "\"could not be opened or read, or simply that it is broken.");
-    FT_Set_Char_Size(_face, 0, size * 64, 600, 600);
+    Resource* fontResource = ResourcesManager::getInstance().getResource(resourceName);
+    
+    int error;
+    error = FT_New_Memory_Face(_library,
+                               (const FT_Byte*)fontResource->getData().getData(),
+                               fontResource->getData().getSize(), 0, &_face);
+    
+    if (error)
+		throw new Exception("Cannot load font " + resourceName);
+    
+    FT_Set_Char_Size(_face, 0, _fontSize * 64, 600, 600);
     
     FT_GlyphSlot slot;
     for (unsigned char ch = 0; ch < 128; ch++) {
         error = FT_Load_Glyph(_face, FT_Get_Char_Index(_face, ch), FT_LOAD_RENDER);
         if (error) {
-            throw new Exception("FT_Load_Glyph failed");
+            throw new Exception("Failed to load glyph from font " + resourceName);
         }
         slot = _face->glyph;
         
@@ -47,38 +70,18 @@ void Graphic::FreetypeFont::changeFont(const std::string &fontPath, uint8 size) 
         else
             _bearingLeft.push_back(slot->advance.x/64);
         _bearingTop.push_back(slot->bitmap_top);
-        _characterTab.push_back(_returnRGBA(slot->bitmap.buffer, slot->bitmap.width * slot->bitmap.rows * 4));
+        _characterTab.push_back(_alphaToRGBA(slot->bitmap));
     }
-    _fontLoaded = true;
 }
 
-Graphic::FreetypeFont::~FreetypeFont(void) {
-    if (_fontLoaded == true) {
-        for(unsigned char ch = 0; ch < _characterTab.size(); ++ch) {
-            delete[] _characterTab[ch];
-        }
-        FT_Done_Face(_face);
-    }
-    FT_Done_FreeType(_library);
-}
-
-
-uint8 *Graphic::FreetypeFont::_returnRGBA(uint8* bitmap, int size) {
-    uint8 *data = new uint8[size];
-    int i, j;
+uint8 *Graphic::FreetypeFont::_alphaToRGBA(FT_Bitmap bitmap) {
+    uint8 *data = new uint8[bitmap.width * bitmap.rows * 4];
     
-    for (i = 0, j = 0; i < size; i += 4, j++) {
-        if (bitmap[j] != 0) {
-            data[i] = 255;
-            data[i+1] = 255;
-            data[i+2] = 255;
-            data[i+3] = bitmap[j];
-        } else {
-            data[i] = 0;
-            data[i+1] = 0;
-            data[i+2] = 0;
-            data[i+3] = bitmap[j];
-        }
+    for (int i = 0; i < bitmap.width * bitmap.rows; ++i) {
+        data[i * 4 + 0] = 255;
+        data[i * 4 + 1] = 255;
+        data[i * 4 + 2] = 255;
+        data[i * 4 + 3] = bitmap.buffer[i];
     }
     return data;
 }
@@ -115,7 +118,7 @@ uint8 *Graphic::FreetypeFont::stringData(std::string const& str) const {
     int maxY = YMax + YMin;
 
     uint8 *data = new uint8[maxLineWidth * maxY];
-    int YChar = 0;
+    memset(data, 0, maxLineWidth * maxY);
     int saveX = 0;
     int lineWidth = 0;
     int debugColor = 0;
@@ -124,7 +127,7 @@ uint8 *Graphic::FreetypeFont::stringData(std::string const& str) const {
         c = str[ci];
         if (ci > 0 && str[ci-1] != ' ') {
             saveX += lineWidth;
-            if (_bearingLeft[c] > 0) {//space left between chars
+            if (_bearingLeft[c] > 0) { //space left between chars
                 for (int y = 0; y < maxY; ++y) {
                     memset(data + ((y * maxLineWidth) + saveX), debugColor, _bearingLeft[c] * 4);
                 }
@@ -134,14 +137,14 @@ uint8 *Graphic::FreetypeFont::stringData(std::string const& str) const {
         lineWidth = _width[c] * 4;
         // Iterate over all the lines of one char an copy the line in the Texture
         for (int y = 0, YChar = 0; y < maxY; ++y) {
-            if (y < (YMax - _bearingTop[c])) {//top of the char
+            if (y < (YMax - _bearingTop[c])) { //top of the char
                 memset(data + ((y * maxLineWidth) + saveX), debugColor, lineWidth);
             } else if (y < (YMax - _bearingTop[c] + _height[c]) && YChar < _height[c]) { //the char
                 memcpy(data + ((y * maxLineWidth) + saveX),
                        _characterTab[c] + ((YChar * lineWidth)),
                        lineWidth);
                 ++YChar;
-            } else if (y < maxY) {//bottom of the char
+            } else if (y < maxY) { //bottom of the char
                 memset(data + ((y * maxLineWidth) + saveX), debugColor, lineWidth);
             }
         }

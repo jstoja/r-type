@@ -1,3 +1,10 @@
+//
+//  FreetypeFont.h
+//  R-Type
+//
+//  Copyright (c) 2013 EPITECH. All rights reserved.
+//
+
 #ifndef _FONT_H_
 # define _FONT_H_
 
@@ -12,39 +19,45 @@
 # include "Object.h"
 # include "Texture.h"
 
-
 namespace Graphic {
     class FreetypeFont {
-        public:
-        FreetypeFont(uint8 size = 14, const std::string &str = "");
+    public:
 
-            void changeFont(const std::string &font_path, uint8 size);
-        
-            ~FreetypeFont();
-        
-            Graphic::Texture *getStringTexture(std::string &str);
-        
-            uint8   *letterData(char c) const;
-            uint8   *stringData(std::string const& str) const;
+        FreetypeFont(const std::string &resourceName, uint8 size = 24);
 
-            int     getWidth(char c) const;
-            int     getHeight(char c) const;
+        void loadFont(const std::string &resourceName);
+
+        ~FreetypeFont(void);
+
+        Graphic::Texture *getStringTexture(std::string &str);
+
+        uint8   *letterData(char c) const;
+        uint8   *stringData(std::string const& str) const;
+
+        int     getWidth(char c) const;
+        int     getHeight(char c) const;
+
+        int     getStringHeight(std::string const& str);
+        int     getStringWidth(std::string const& str);
         
-            int     getStringHeight(std::string const& str);
-            int     getStringWidth(std::string const& str);
     private:
-            uint8                   *_returnRGBA(uint8* bitmap, int size);
+        
+        //! Return an rgba image from a FreeType bitmap
+        /*!
+         Only handle FT_PIXEL_MODE_GRAY bitmaps.
+         */
+        uint8                   *_alphaToRGBA(FT_Bitmap bitmap);
 
-            bool                    _fontLoaded;
-            FT_Library              _library;
-            FT_Face                 _face;
-            std::string             _fontPath;
-            int                     _fontSize;
-            std::vector<uint8*>     _characterTab;
-            std::vector<int>        _width;
-            std::vector<int>        _height;
-            std::vector<int>        _bearingLeft;
-            std::vector<int>        _bearingTop;
+        static FT_Library       _library;
+        static bool             _libraryLoaded;
+
+        int                     _fontSize;
+        FT_Face                 _face;
+        std::vector<uint8*>     _characterTab;
+        std::vector<int>        _width;
+        std::vector<int>        _height;
+        std::vector<int>        _bearingLeft;
+        std::vector<int>        _bearingTop;
     };
 }
 

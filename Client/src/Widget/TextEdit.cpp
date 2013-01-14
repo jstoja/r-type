@@ -16,7 +16,7 @@ Widget::TextEdit::TextEdit(Graphic::Scene* scene,
                            Widget* parent) :
     GraphicWidget(scene, parent),
     _eventListener(NULL),
-    _label(scene, parent),
+    _label(scene, ""),
     _delegate(delegate) {
 }
 
@@ -26,7 +26,7 @@ Widget::TextEdit::TextEdit(Graphic::Scene* scene,
                            Widget* parent) :
     GraphicWidget(scene, parent),
     _eventListener(NULL),
-    _label(scene, parent),
+    _label(scene, ""),
     _delegate(delegate) {
 
 }
@@ -55,12 +55,12 @@ void    Widget::TextEdit::update() {
 }
 
 void    Widget::TextEdit::operator<<(char c) {
-    _label << c;
+    _label.setText(_label.getText() + c);
     update();
 }
 
 void    Widget::TextEdit::operator<<(std::string const& str) {
-    _label << str;
+    _label.setText(_label.getText() + str);
     update();
 }
 
@@ -74,7 +74,7 @@ void    Widget::TextEdit::setPosition(Vec3 const& v) {
 }
 
 void    Widget::TextEdit::clear() {
-    _label.clear();
+    _label.setText("");
 }
 
 void    Widget::TextEdit::processEvent(Event::Event const& event) {

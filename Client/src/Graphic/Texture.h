@@ -18,6 +18,7 @@
 # include "OpenGL.h"
 # include "Types.h"
 # include "Object.h"
+# include "Vec2.h"
 
 namespace Graphic {
     
@@ -48,10 +49,13 @@ namespace Graphic {
         void    setData(uint32 width, uint32 height, const uint8* data);
         
         //! Return the internal OpenGL id of the texture
-        uint32  getGLID() const;
+        uint32      getGLID(void) const;
+        
+        Vec2 const& getSize(void) const;
         
     private:
         GLuint  _glID;
+        Vec2    _size;
     };
     
 }

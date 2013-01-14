@@ -13,7 +13,8 @@
 # include "IUserInterfaceDelegate.h"
 # include "Clock.h"
 # include "Menu/IMenuDelegate.h"
-# include "Menu/WelcomeMenu.h"
+# include "Menu/Welcome.h"
+# include "Menu/Login.h"
 
 class UserInterface : public Menu::IMenuDelegate {
 public:
@@ -39,9 +40,12 @@ private:
     
     IUserInterfaceDelegate* _delegate;
     Clock                   _time;
-    Menu::WelcomeMenu*      _welcomeMenu;
     
     std::vector<Graphic::Scenery*>  _sceneries;
+    
+    // Menus
+    Menu::Welcome*                  _welcomeMenu;
+    Menu::Login*                    _loginMenu;
 };
 
 #endif /* defined(__R_Type__UserInterface__) */

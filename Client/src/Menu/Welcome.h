@@ -9,21 +9,18 @@
 # define WELCOME_MENU_H
 
 # include "IMenuDelegate.h"
-# include "Graphic/Scene.h"
-# include "Widgets/Widget.h"
-# include "Widgets/GraphicWidget.h"
-# include "Widgets/Button.h"
-# include "Widgets/IButtonDelegate.h"
+# include "Widget/Button.h"
+# include "Widget/IButtonDelegate.h"
 
 namespace Menu {
     
-    class WelcomeMenu: public Widget::IButtonDelegate {
+    class Welcome: public Widget::IButtonDelegate {
     public:
         
         static const std::string backgroundImage;
         
-        WelcomeMenu(Graphic::Scene *scene, IMenuDelegate* delegate);
-        ~WelcomeMenu();
+        Welcome(Graphic::Scene *scene, IMenuDelegate* delegate);
+        ~Welcome();
 
         //! IButtonDelegate Methods
         virtual void buttonHovered(Widget::Button &instance);

@@ -8,18 +8,20 @@
 #include "Types.h"
 #include "Vec2.h"
 #include "Widget.h"
-#include "../Graphic/Image.h"
-#include "../Graphic/Scene.h"
-#include "../Graphic/Element.h"
+#include "Graphic/Image.h"
+#include "Graphic/Scene.h"
+#include "Graphic/Element.h"
 #include "GraphicWidget.h"
 
 Widget::GraphicWidget::GraphicWidget(Graphic::Scene* scene,
                                      Widget* parent) :
     Widget(parent), _scene(scene) {
-    
+    _element.setType(Graphic::Element::Floating);
+    _scene->addElement(&_element);        
 }
 
 Widget::GraphicWidget::~GraphicWidget() {
+    _scene->removeElement(&_element);
     if (_element.getSprite()) {
         if (_element.getSprite()->getTexture())
             delete _element.getSprite()->getTexture();
@@ -52,11 +54,6 @@ bool    Widget::GraphicWidget::loadImage(const std::string &image_path) {
     buttonSprite->setTexture(buttonTexture);
     _element.setSprite(buttonSprite);
     return true;
-}
-
-void    Widget::GraphicWidget::addElement() {
-    _element.setType(Graphic::Element::Floating);
-    _scene->addElement(&_element);
 }
 
 void    Widget::GraphicWidget::setPosition(Vec3 const& pos) {

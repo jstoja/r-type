@@ -37,6 +37,9 @@ namespace Graphic {
         //! Add an Element to the Scene
         void addElement(Element* element);
         
+        //! Remove an element from the scene
+        void removeElement(Element* element);
+        
         //! Return all the sceneries of the scene
         std::vector<Scenery*> const &   getSceneries(void) const;
         

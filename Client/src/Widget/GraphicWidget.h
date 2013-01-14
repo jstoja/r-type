@@ -7,20 +7,14 @@
 //
 
 #ifndef __R_Type__GraphicWidget__
-#define __R_Type__GraphicWidget__
+# define __R_Type__GraphicWidget__
 
-# include <iostream>
-
-struct Vec2;
-
-namespace Graphic {
-    class Element;
-    class Scene;
-    class Sprite;
-};
+# include "Vec2.h"
+# include "Graphic/Element.h"
+# include "Widget.h"
 
 namespace Widget {
-    class Widget;
+    
     class GraphicWidget : public Widget {
     public:
         //! Constructor
@@ -28,9 +22,6 @@ namespace Widget {
         
         //! Destructor
         virtual ~GraphicWidget();
-        
-        //! Add element in scene
-        virtual void    addElement();
         
         //! Scene setter
         void    setScene(Graphic::Scene*);
@@ -58,7 +49,7 @@ namespace Widget {
         //! Load image of the Element with the image specified in the image_path parameter
         bool                loadImage(const std::string &image_path);
         
-        void    setCurrentFrame(uint32);
+        void                setCurrentFrame(uint32);
 
         Graphic::Sprite     *getSprite() const;
         

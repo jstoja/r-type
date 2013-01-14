@@ -1,19 +1,21 @@
 //
-//  WelcomeMenu.cpp
+//  Welcome.cpp
 //  R-Type
 //
 //  Copyright (c) 2013 EPITECH. All rights reserved.
 //
 
-#include "WelcomeMenu.h"
+#include "Welcome.h"
+
+#include "Graphic/Scene.h"
 
 #ifdef OS_IOS
-const std::string Menu::WelcomeMenu::backgroundImage = "welcome-screen-ios.png";
+const std::string Menu::Welcome::backgroundImage = "welcome-screen-ios.png";
 #else
-const std::string Menu::WelcomeMenu::backgroundImage = "welcome-screen.png";
+const std::string Menu::Welcome::backgroundImage = "welcome-screen.png";
 #endif
 
-Menu::WelcomeMenu::WelcomeMenu(Graphic::Scene *scene, IMenuDelegate* delegate)
+Menu::Welcome::Welcome(Graphic::Scene *scene, IMenuDelegate* delegate)
 : _delegate(delegate),
   _button(scene, this, scene->getViewport(),
           Vec3(scene->getViewport().x,
@@ -27,17 +29,17 @@ Menu::WelcomeMenu::WelcomeMenu(Graphic::Scene *scene, IMenuDelegate* delegate)
       sprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.0), Vec2(1.0, 1.0)));
 }
 
-Menu::WelcomeMenu::~WelcomeMenu() {
+Menu::Welcome::~Welcome() {    
 }
 
-void Menu::WelcomeMenu::buttonHovered(Widget::Button &instance) {
+void Menu::Welcome::buttonHovered(Widget::Button &instance) {
 }
 
-void Menu::WelcomeMenu::buttonUnHovered(Widget::Button &instance) {
+void Menu::Welcome::buttonUnHovered(Widget::Button &instance) {
 }
-void Menu::WelcomeMenu::buttonPushed(Widget::Button &instance) {
+void Menu::Welcome::buttonPushed(Widget::Button &instance) {
 
 }
-void Menu::WelcomeMenu::buttonReleased(Widget::Button &instance) {
+void Menu::Welcome::buttonReleased(Widget::Button &instance) {
     _delegate->welcomeCompleted();
 }

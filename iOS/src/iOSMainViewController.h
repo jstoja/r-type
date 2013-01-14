@@ -28,6 +28,9 @@ public:
     //! Set the main view controller of the application
     void setViewController(ViewController* viewController);
     
+    //! Return the main view controller of the application
+    ViewController* getViewController(void) const;
+    
     //! Implementation of the IProvider interface
     virtual void processEvents(Event::Manager* manager);
     
