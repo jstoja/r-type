@@ -21,21 +21,21 @@
 # include "Threading/MutexLocker.h"
 namespace Network {
   
-	class NetworkManager : public Singleton<NetworkManager> {
+	class COMMON_EXPORT_IMPORT_REMOVED NetworkManager : public Singleton<NetworkManager> {
     
     friend class Singleton<NetworkManager>;
     friend class Threading::Thread<NetworkManager>;
     
 	public:
-		COMMON_EXPORT_IMPORT inline void	registerSocket(ASocket*);
-		COMMON_EXPORT_IMPORT inline void	unregisterSocket(ASocket*);
+		void	registerSocket(ASocket*);
+		void	unregisterSocket(ASocket*);
 
-		COMMON_EXPORT_IMPORT inline void	operator()();
+		void	operator()();
 
 	private:
 
-		COMMON_EXPORT_IMPORT inline NetworkManager();
-		COMMON_EXPORT_IMPORT inline ~NetworkManager();
+		NetworkManager();
+		~NetworkManager();
 
 		std::vector<ASocket*>			_sockets;
 		Threading::Mutex				_socketsMutex;
