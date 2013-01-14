@@ -1,6 +1,7 @@
 #ifndef GENERAL_MENU_H
 # define GENERAL_MENU_H
 
+# include <vector>
 # include "IMenuDelegate.h"
 # include "Graphic/Scene.h"
 # include "Widgets/Widget.h"
@@ -12,10 +13,10 @@ namespace Menu {
     class GeneralMenu: public Widget::IButtonDelegate {
         public:
             typedef void (Menu::IMenuDelegate::*delegateFunc)(void);
-            typedef struct      s_buttons {
+            struct      t_buttons {
                 const char*     image;
                 delegateFunc    delegation;
-            }                   t_buttons;
+            };
 
             GeneralMenu(Graphic::Scene *scene, Menu::IMenuDelegate *delegate);
             ~GeneralMenu();

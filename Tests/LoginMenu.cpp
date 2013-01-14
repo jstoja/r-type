@@ -6,7 +6,7 @@
 #include "Graphic/Scene.h"
 #include "Widgets/Widget.h"
 #include "Widgets/GraphicWidget.h"
-#include "Menu/GeneralMenu.h"
+#include "Menu/LoginMenu.h"
 #include "Menu/IMenuDelegate.h"
 #include "Application.h"
 
@@ -20,7 +20,7 @@ public:
         Graphic::Renderer::getInstance().init();
         Graphic::Renderer::getInstance().setScene(&_scene);
         
-        Menu::GeneralMenu gmenu(&_scene, this);
+        Menu::LoginMenu lmenu(&_scene, this);
         
         // Add event listeners
         Event::Manager::getInstance()
@@ -36,27 +36,22 @@ public:
     }
     
     ~Test() {}
-
     virtual void welcomeCompleted() {}
-    virtual void loginCompleted(std::string const&, std::string const&, std::string const&) {}
 
-    virtual void newGameCallGeneralMenu() {
+    virtual void loginCompleted(std::string const& login, std::string const& ipAddress, std::string const& port) {
+		std::cout << "Connection from " << login << " to " << ipAddress << " " << port << std::endl;
         _close = true;
     }
     
-
-    virtual void serverListCallGeneralMenu() {
-    }
-
-
-    virtual void optionsCallGeneralMenu() {
-    }
-
     virtual void processEvent(Event::Event const& event) {
         if (event.type == Event::Close) {
             _close = true;
         }
     }
+
+    virtual void newGameCallGeneralMenu() {}
+    virtual void serverListCallGeneralMenu() {}
+    virtual void optionsCallGeneralMenu() {}
 
 private:
     bool                _close;

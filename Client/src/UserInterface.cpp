@@ -36,6 +36,12 @@ void UserInterface::welcomeCompleted(void) {
     Log("Welcome !");
 }
 
+void UserInterface::loginCompleted(std::string const& login,
+								   std::string const& ipAdress,
+								   std::string const& port) {
+    Log("Login Completed !");
+}
+
 void UserInterface::newGameCallGeneralMenu(void) {
     
 }

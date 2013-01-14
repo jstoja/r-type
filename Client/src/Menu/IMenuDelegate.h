@@ -8,6 +8,8 @@
 #ifndef IMENU_DELEGATE_H
 # define IMENU_DELEGATE_H
 
+# include <string>
+
 namespace Menu {
 
     class IMenuDelegate {
@@ -16,9 +18,15 @@ namespace Menu {
             inline virtual ~IMenuDelegate(void) {}
 
 
-            //! Welcome Menu Delegation
-            //! This method is called when the welcome screen is over
+            //! welcome menu delegation
+            //! this method is called when the welcome screen is over
             virtual void welcomeCompleted(void) = 0;
+
+            //! login menu delegation
+            //! this method is called when the welcome screen is over
+            virtual void loginCompleted(std::string const& login,
+										std::string const& ipAdress,
+										std::string const& port) = 0;
 
             //! General Menu Delegation
             //! This method is called when the newgame button is pushed

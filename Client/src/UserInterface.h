@@ -9,6 +9,7 @@
 #ifndef __R_Type__UserInterface__
 # define __R_Type__UserInterface__
 
+# include <string>
 # include "IUserInterfaceDelegate.h"
 # include "Clock.h"
 # include "Menu/IMenuDelegate.h"
@@ -24,6 +25,9 @@ public:
     
     // IMenuDelegate implementation
     virtual void welcomeCompleted(void);
+    virtual void loginCompleted(std::string const& login,
+								std::string const& ipAdress,
+								std::string const& port);
     virtual void newGameCallGeneralMenu(void);
     virtual void serverListCallGeneralMenu(void);
     virtual void optionsCallGeneralMenu(void);

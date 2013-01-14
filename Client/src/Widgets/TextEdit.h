@@ -14,6 +14,8 @@
 # include "Event/Listener.h"
 # include "Event/IListenerDelegate.h"
 # include "Widget.h"
+# include "GraphicWidget.h"
+# include "Widgets/Label.h"
 # include "ITextEditDelegate.h"
 
 namespace Event {
@@ -75,7 +77,7 @@ namespace Widget {
         virtual void    processEvent(Event::Event const&);
     private:
         Event::Listener*    _eventListener;
-        Label               _label;
+        Label       _label;
         ITextEditDelegate*  _delegate;
     };
 };
