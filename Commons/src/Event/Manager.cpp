@@ -12,11 +12,10 @@
 #include "Manager.h"
 #include "Event.h"
 
-Event::Manager::Manager() : _providers(), _listeners(), _lastPointerPos() {
+Event::Manager::Manager(void) : _providers(), _listeners(), _lastPointerPos() {
 }
 
-Event::Manager::~Manager() {
-    
+Event::Manager::~Manager(void) {
 }
 
 void Event::Manager::registerProvider(IProvider *provider) {
@@ -31,7 +30,7 @@ void Event::Manager::addEventListener(Listener *listener) {
     }
 }
 
-void Event::Manager::processEvents() {
+void Event::Manager::processEvents(void) {
     for (std::vector<IProvider*>::iterator it = _providers.begin(),
          end = _providers.end(); it != end; ++it) {
         (*it)->processEvents(this);

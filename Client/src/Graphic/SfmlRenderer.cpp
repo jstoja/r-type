@@ -13,7 +13,7 @@
 
 #ifdef GRAPHIC_RENDERER_SFML
 
-void Graphic::Renderer::createContext(Settings const& settings) {    
+void Graphic::Renderer::createContext(Settings const& settings) {
     sf::ContextSettings contextSettings;
     contextSettings.antialiasingLevel = settings.antialiasingLevel;
     contextSettings.majorVersion = 2;

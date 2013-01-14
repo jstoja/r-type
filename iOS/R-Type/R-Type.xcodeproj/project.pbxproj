@@ -45,15 +45,24 @@
 		2613B47D16A36E7500CF84AA /* text-field.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B46016A36E7500CF84AA /* text-field.png */; };
 		2613B47E16A36E7500CF84AA /* welcome-screen-ios.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B46116A36E7500CF84AA /* welcome-screen-ios.png */; };
 		2613B47F16A36E7500CF84AA /* welcome-screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B46216A36E7500CF84AA /* welcome-screen.png */; };
-		2613B48616A3755700CF84AA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B48516A3755700CF84AA /* Default.png */; };
 		2613B48816A3760900CF84AA /* Default@x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B48716A3760900CF84AA /* Default@x2.png */; };
 		2613B48A16A3763600CF84AA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B48916A3763600CF84AA /* Default.png */; };
-		2613B48C16A3764200CF84AA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B48B16A3764100CF84AA /* Default@2x.png */; };
 		261F248216A06A63006C1CF4 /* iOSApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 261F248116A06A63006C1CF4 /* iOSApplication.mm */; };
 		261F248616A06B34006C1CF4 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 261F248416A06B34006C1CF4 /* Image.cpp */; };
 		261F248916A06B64006C1CF4 /* iOSImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 261F248716A06B64006C1CF4 /* iOSImage.mm */; };
 		2658303E1685DE1300BFB900 /* iOSRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2658303C1685DE1300BFB900 /* iOSRenderer.mm */; };
 		266F06C716A41579004F5554 /* UserInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F06C516A41579004F5554 /* UserInterface.cpp */; };
+		266F071E16A43519004F5554 /* GeneralMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F070316A43519004F5554 /* GeneralMenu.cpp */; };
+		266F071F16A43519004F5554 /* LoginMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F070616A43519004F5554 /* LoginMenu.cpp */; };
+		266F072016A43519004F5554 /* MapMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F070816A43519004F5554 /* MapMenu.cpp */; };
+		266F072116A43519004F5554 /* WelcomeMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F070A16A43519004F5554 /* WelcomeMenu.cpp */; };
+		266F072216A43519004F5554 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F070D16A43519004F5554 /* Button.cpp */; };
+		266F072316A43519004F5554 /* CheckBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F070F16A43519004F5554 /* CheckBox.cpp */; };
+		266F072416A43519004F5554 /* GraphicWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F071116A43519004F5554 /* GraphicWidget.cpp */; };
+		266F072516A43519004F5554 /* Label.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F071616A43519004F5554 /* Label.cpp */; };
+		266F072616A43519004F5554 /* Table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F071816A43519004F5554 /* Table.cpp */; };
+		266F072716A43519004F5554 /* TextEdit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F071A16A43519004F5554 /* TextEdit.cpp */; };
+		266F072816A43519004F5554 /* Widget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F071C16A43519004F5554 /* Widget.cpp */; };
 		2699A9E11684AD400092AC40 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E01684AD400092AC40 /* UIKit.framework */; };
 		2699A9E31684AD400092AC40 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E21684AD400092AC40 /* Foundation.framework */; };
 		2699A9E51684AD400092AC40 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E41684AD400092AC40 /* CoreGraphics.framework */; };
@@ -156,10 +165,8 @@
 		2613B46016A36E7500CF84AA /* text-field.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "text-field.png"; sourceTree = "<group>"; };
 		2613B46116A36E7500CF84AA /* welcome-screen-ios.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-screen-ios.png"; sourceTree = "<group>"; };
 		2613B46216A36E7500CF84AA /* welcome-screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-screen.png"; sourceTree = "<group>"; };
-		2613B48516A3755700CF84AA /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		2613B48716A3760900CF84AA /* Default@x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@x2.png"; sourceTree = "<group>"; };
 		2613B48916A3763600CF84AA /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		2613B48B16A3764100CF84AA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		261F248116A06A63006C1CF4 /* iOSApplication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iOSApplication.mm; path = ../../src/Graphic/iOSApplication.mm; sourceTree = "<group>"; };
 		261F248416A06B34006C1CF4 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Image.cpp; sourceTree = "<group>"; };
 		261F248516A06B34006C1CF4 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
@@ -168,6 +175,33 @@
 		2658303D1685DE1300BFB900 /* iOSRendererMembers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iOSRendererMembers.h; path = ../../../iOS/src/Graphic/iOSRendererMembers.h; sourceTree = "<group>"; };
 		266F06C516A41579004F5554 /* UserInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UserInterface.cpp; path = ../../../Client/src/UserInterface.cpp; sourceTree = "<group>"; };
 		266F06C616A41579004F5554 /* UserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInterface.h; path = ../../../Client/src/UserInterface.h; sourceTree = "<group>"; };
+		266F070116A43519004F5554 /* IUserInterfaceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IUserInterfaceDelegate.h; path = ../../../Client/src/IUserInterfaceDelegate.h; sourceTree = "<group>"; };
+		266F070316A43519004F5554 /* GeneralMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GeneralMenu.cpp; sourceTree = "<group>"; };
+		266F070416A43519004F5554 /* GeneralMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralMenu.h; sourceTree = "<group>"; };
+		266F070516A43519004F5554 /* IMenuDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMenuDelegate.h; sourceTree = "<group>"; };
+		266F070616A43519004F5554 /* LoginMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoginMenu.cpp; sourceTree = "<group>"; };
+		266F070716A43519004F5554 /* LoginMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginMenu.h; sourceTree = "<group>"; };
+		266F070816A43519004F5554 /* MapMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapMenu.cpp; sourceTree = "<group>"; };
+		266F070916A43519004F5554 /* MapMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapMenu.h; sourceTree = "<group>"; };
+		266F070A16A43519004F5554 /* WelcomeMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WelcomeMenu.cpp; sourceTree = "<group>"; };
+		266F070B16A43519004F5554 /* WelcomeMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeMenu.h; sourceTree = "<group>"; };
+		266F070D16A43519004F5554 /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
+		266F070E16A43519004F5554 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
+		266F070F16A43519004F5554 /* CheckBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheckBox.cpp; sourceTree = "<group>"; };
+		266F071016A43519004F5554 /* CheckBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckBox.h; sourceTree = "<group>"; };
+		266F071116A43519004F5554 /* GraphicWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicWidget.cpp; sourceTree = "<group>"; };
+		266F071216A43519004F5554 /* GraphicWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphicWidget.h; sourceTree = "<group>"; };
+		266F071316A43519004F5554 /* IButtonDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IButtonDelegate.h; sourceTree = "<group>"; };
+		266F071416A43519004F5554 /* ICheckBoxDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICheckBoxDelegate.h; sourceTree = "<group>"; };
+		266F071516A43519004F5554 /* ITextEditDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITextEditDelegate.h; sourceTree = "<group>"; };
+		266F071616A43519004F5554 /* Label.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Label.cpp; sourceTree = "<group>"; };
+		266F071716A43519004F5554 /* Label.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Label.h; sourceTree = "<group>"; };
+		266F071816A43519004F5554 /* Table.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Table.cpp; sourceTree = "<group>"; };
+		266F071916A43519004F5554 /* Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Table.h; sourceTree = "<group>"; };
+		266F071A16A43519004F5554 /* TextEdit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextEdit.cpp; sourceTree = "<group>"; };
+		266F071B16A43519004F5554 /* TextEdit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextEdit.h; sourceTree = "<group>"; };
+		266F071C16A43519004F5554 /* Widget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Widget.cpp; sourceTree = "<group>"; };
+		266F071D16A43519004F5554 /* Widget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Widget.h; sourceTree = "<group>"; };
 		2699A9DC1684AD400092AC40 /* R-Type.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "R-Type.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2699A9E01684AD400092AC40 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2699A9E21684AD400092AC40 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -331,11 +365,51 @@
 			path = ../../../Client/Resources;
 			sourceTree = "<group>";
 		};
+		266F070216A43519004F5554 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				266F070316A43519004F5554 /* GeneralMenu.cpp */,
+				266F070416A43519004F5554 /* GeneralMenu.h */,
+				266F070516A43519004F5554 /* IMenuDelegate.h */,
+				266F070616A43519004F5554 /* LoginMenu.cpp */,
+				266F070716A43519004F5554 /* LoginMenu.h */,
+				266F070816A43519004F5554 /* MapMenu.cpp */,
+				266F070916A43519004F5554 /* MapMenu.h */,
+				266F070A16A43519004F5554 /* WelcomeMenu.cpp */,
+				266F070B16A43519004F5554 /* WelcomeMenu.h */,
+			);
+			name = Menu;
+			path = ../../../Client/src/Menu;
+			sourceTree = "<group>";
+		};
+		266F070C16A43519004F5554 /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				266F070D16A43519004F5554 /* Button.cpp */,
+				266F070E16A43519004F5554 /* Button.h */,
+				266F070F16A43519004F5554 /* CheckBox.cpp */,
+				266F071016A43519004F5554 /* CheckBox.h */,
+				266F071116A43519004F5554 /* GraphicWidget.cpp */,
+				266F071216A43519004F5554 /* GraphicWidget.h */,
+				266F071316A43519004F5554 /* IButtonDelegate.h */,
+				266F071416A43519004F5554 /* ICheckBoxDelegate.h */,
+				266F071516A43519004F5554 /* ITextEditDelegate.h */,
+				266F071616A43519004F5554 /* Label.cpp */,
+				266F071716A43519004F5554 /* Label.h */,
+				266F071816A43519004F5554 /* Table.cpp */,
+				266F071916A43519004F5554 /* Table.h */,
+				266F071A16A43519004F5554 /* TextEdit.cpp */,
+				266F071B16A43519004F5554 /* TextEdit.h */,
+				266F071C16A43519004F5554 /* Widget.cpp */,
+				266F071D16A43519004F5554 /* Widget.h */,
+			);
+			name = Widgets;
+			path = ../../../Client/src/Widgets;
+			sourceTree = "<group>";
+		};
 		2699A9D11684AD400092AC40 = {
 			isa = PBXGroup;
 			children = (
-				2613B48B16A3764100CF84AA /* Default@2x.png */,
-				2613B48516A3755700CF84AA /* Default.png */,
 				2699A9EA1684AD400092AC40 /* R-Type */,
 				2699AA151684AD400092AC40 /* R-TypeTests */,
 				2699A9DF1684AD400092AC40 /* Frameworks */,
@@ -368,6 +442,9 @@
 		2699A9EA1684AD400092AC40 /* R-Type */ = {
 			isa = PBXGroup;
 			children = (
+				266F070116A43519004F5554 /* IUserInterfaceDelegate.h */,
+				266F070216A43519004F5554 /* Menu */,
+				266F070C16A43519004F5554 /* Widgets */,
 				2613B35B16A358B400CF84AA /* Client */,
 				2699AA821684AEDC0092AC40 /* Commons */,
 				2699AA261684AE670092AC40 /* Graphic */,
@@ -646,10 +723,8 @@
 				2613B47D16A36E7500CF84AA /* text-field.png in Resources */,
 				2613B47E16A36E7500CF84AA /* welcome-screen-ios.png in Resources */,
 				2613B47F16A36E7500CF84AA /* welcome-screen.png in Resources */,
-				2613B48616A3755700CF84AA /* Default.png in Resources */,
 				2613B48816A3760900CF84AA /* Default@x2.png in Resources */,
 				2613B48A16A3763600CF84AA /* Default.png in Resources */,
-				2613B48C16A3764200CF84AA /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -727,6 +802,17 @@
 				2613B35A16A358AB00CF84AA /* Client.cpp in Sources */,
 				2613B35E16A35A5000CF84AA /* iOSMainViewController.mm in Sources */,
 				266F06C716A41579004F5554 /* UserInterface.cpp in Sources */,
+				266F071E16A43519004F5554 /* GeneralMenu.cpp in Sources */,
+				266F071F16A43519004F5554 /* LoginMenu.cpp in Sources */,
+				266F072016A43519004F5554 /* MapMenu.cpp in Sources */,
+				266F072116A43519004F5554 /* WelcomeMenu.cpp in Sources */,
+				266F072216A43519004F5554 /* Button.cpp in Sources */,
+				266F072316A43519004F5554 /* CheckBox.cpp in Sources */,
+				266F072416A43519004F5554 /* GraphicWidget.cpp in Sources */,
+				266F072516A43519004F5554 /* Label.cpp in Sources */,
+				266F072616A43519004F5554 /* Table.cpp in Sources */,
+				266F072716A43519004F5554 /* TextEdit.cpp in Sources */,
+				266F072816A43519004F5554 /* Widget.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
