@@ -1,9 +1,9 @@
 /*
 ** APacket.h for r-type in /home/michar_l//r-type/Commons/src/Network
-** 
+**
 ** Made by loick michard
 ** Login   <michar_l@epitech.net>
-** 
+**
 ** Started on  Sun Dec 23 09:02:01 2012 loick michard
 */
 
@@ -12,6 +12,7 @@
 
 # include <list>
 # include <string>
+# include <vector>
 # include <Vec2.h>
 # include <Vec3.h>
 # include <Rect2.h>
@@ -85,7 +86,7 @@ namespace Network {
 		  elements.push_front(element);
 		}
 	}
-    
+
 	template <typename T>
     APacket&		operator>>(std::list<T>& elements) {
 		uint32 size;
@@ -95,7 +96,7 @@ namespace Network {
 		  T element;
 		  *this >> element;
 		  elements.push_front(element);
-		}  
+		}
 	}
     APacket&		operator>>(Vec2&);
     APacket&		operator>>(Vec3&);

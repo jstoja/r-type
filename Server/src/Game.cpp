@@ -9,21 +9,45 @@
 #include <Exception.h>
 #include <Resource.h>
 
+#include "Network/Proxy.hpp"
 #include "Game.h"
 #include "GraphicElement.h"
+#include "Player.h"
 #include "Texture.h"
 #include "Sprite.h"
 #include "GameObject.h"
 
-Game::Game(Network::TcpPacket* packet) : _updatePool(new Threading::ThreadPool(_updateThreadNumber)) {
+Game::Game(Network::TcpPacket* packet) : _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::State::WAITING) {
     *packet >> _name;
     *packet >> _nbSlots;
 }
 
 Game::~Game() {}
 
-std::string const&     Game::getName(void) {
+std::string const&     Game::getName(void) const {
     return _name;
+}
+
+Game::State     Game::getState(void) const {
+    return _state;
+}
+
+uint32                 Game::getNbPlayers(void) const {
+    return _players.size();
+}
+
+uint32                 Game::getNbSlots(void) const {
+    return _nbSlots;
+}
+
+void     Game::start(void) {
+    for (int i=0; i < _players.size(); i++) {
+        Network::Proxy<Network::TcpPacket>::ToSend toSend(new Network::TcpPacket(), Network::HostAddress::AnyAddress, 0);
+        toSend.packet->setCode(0x01020100);
+        *toSend.packet << _id;
+        _players[i]->sendPacket(toSend);
+    }
+    _state = Game::State::STARTED;
 }
 
 bool     Game::canJoin(void) {
@@ -31,9 +55,30 @@ bool     Game::canJoin(void) {
 }
 
 void     Game::join(Player* player) {
-   if (canJoin()) {
-    _players.push_back(player);
-   }
+    if (canJoin()) {
+        _players.push_back(player);
+
+        for (int i=0; i < _players.size(); i++) {
+            if (_players[i] != player) {
+                Network::Proxy<Network::TcpPacket>::ToSend toSend(new Network::TcpPacket(), Network::HostAddress::AnyAddress, 0);
+                toSend.packet->setCode(0x01020400);
+                *toSend.packet << *player;
+                _players[i]->sendPacket(toSend);
+            }
+        }
+    }
+}
+
+void     Game::playerReady(Player* player) {
+    Network::Proxy<Network::TcpPacket>::ToSend toSend(new Network::TcpPacket(), Network::HostAddress::AnyAddress, 0);
+    toSend.packet->setCode(0x01020500);
+    *toSend.packet << (uint32)player->getId();
+
+    for (int i=0; i < _players.size(); i++) {
+        if (_players[i] != player) {
+            _players[i]->sendPacket(toSend);
+        }
+    }
 }
 
 void     Game::quit(Player* player) {
@@ -62,7 +107,7 @@ ISprite*	Game::createSprite(ITexture *texture) {
 }
 
 ISprite*	Game::getLevelSprite(std::string const& name) {
-	return (_levelSprites[name]);	
+	return (_levelSprites[name]);
 }
 
 void		Game::addPhysicElement(IPhysicElement* element) {
@@ -118,7 +163,7 @@ void		Game::loadMap(std::string const& fileName) {
 	}
 }
 
-void	Game::_sendResources(Network::TcpPacket &packet) {
+void	Game::sendResources(Network::TcpPacket &packet) {
 	std::list<Resource*>	resources;
 	for (std::list<Texture*>::iterator it = _gameTextures.begin(); it != _gameTextures.end(); ++it)
 		resources.push_back((*it)->getImg());
@@ -134,4 +179,10 @@ void	Game::_update() {
 	for (std::list<GameObject*>::iterator it = _objects.begin();
 		it != _objects.end(); ++it)
 		_updatePool->addTask(*it, &GameObject::update, NULL);
+}
+
+
+Network::APacket&       operator<<(Network::APacket& packet, Game const& game) {
+    packet << game.getId() << game.getName() << game.getNbPlayers() << game.getNbSlots();
+    return packet;
 }

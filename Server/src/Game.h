@@ -32,14 +32,20 @@ class GameObject;
 class Game : public IGame, public Object
 {
 public:
+    enum State {STOPPED, WAITING, STARTED};
+
     Game(Network::TcpPacket* packet);
     ~Game();
 
-    std::string const&     getName(void);
+    std::string const&      getName(void) const;
+    State                  getState(void) const;
+    uint32                  getNbPlayers(void) const;
+    uint32                  getNbSlots(void) const;
 
     void     join(Player* player);
     bool     canJoin();
     void     quit(Player* player);
+    void     playerReady(Player* player);
 
     virtual void                addGraphicElement(IGraphicElement* element);
     virtual IGraphicElement*    createGraphicElement() const;
@@ -56,9 +62,8 @@ public:
 	virtual IScenery*			addScenery();
 
 	void						loadMap(std::string const& fileName);
-
+    void                        sendResources(Network::TcpPacket &packet);
 private:
-	void						_sendResources(Network::TcpPacket &packet);
 	void						_update();
 
 	std::vector<Player*>            _players;
@@ -74,6 +79,7 @@ private:
 	GraphicScene					_graphicScene;
 	PhysicScene						_physicScene;
 	Threading::ThreadPool*			_updatePool;
+    State                           _state;
 
 #ifdef OS_MAC
 	static const int					_updateThreadNumber = 7;
@@ -81,5 +87,7 @@ private:
 	static const int					_updateThreadNumber = 3;
 #endif
 };
+
+Network::APacket&       operator<<(Network::APacket& packet, Game const& game);
 
 #endif

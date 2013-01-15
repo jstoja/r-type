@@ -3,7 +3,7 @@
 mkdir -p build
 cd build
 echo "Executing Cmake"
-cmake .. $@
+cmake -DCMAKE_BUILD_TYPE=Debug .. $@
 cd ..
 echo "Generating Makefile and clean.sh"
 echo -e "all:\n\tmake -C build" > Makefile
