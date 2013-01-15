@@ -47,7 +47,7 @@ public:
 	}
 
 	void	save(std::string const& filename) {
-		std::ofstream	file(filename, std::ofstream::binary);
+		std::ofstream	file(filename.c_str(), std::ofstream::binary);
 
 		writeData<uint32>(file, Map::MapMagic);
 		writeData<uint32>(file, _name.size());

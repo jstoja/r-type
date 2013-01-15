@@ -93,7 +93,7 @@ public:
         scenery->setOpacity(0.8);
         _scene.addScenery(scenery);
 
-        _wmenu = new Menu::WelcomeMenu(&_scene, this);
+        _wmenu = new Menu::Welcome(&_scene, this);
 
         // Add event listeners
         Event::Manager::getInstance()
@@ -138,7 +138,7 @@ public:
     virtual void optionsCallGeneralMenu() {}
 
 private:
-    Menu::WelcomeMenu   *_wmenu;
+    Menu::Welcome   *_wmenu;
     bool                _close;
     Graphic::Scene      _scene;
 };
