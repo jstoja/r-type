@@ -28,7 +28,7 @@ public:
 
 private:
     ObjectManager();
-	std::map<uint32, Object*>	_objects;
+	std::map<uint32, Object*>	*_objects;
 };
 
 #endif /* defined(__R_Type__Object__) */

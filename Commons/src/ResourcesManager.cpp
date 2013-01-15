@@ -17,6 +17,8 @@ template <> ResourcesManager Singleton<ResourcesManager>::_instance = ResourcesM
 #endif
 
 ResourcesManager::ResourcesManager() {
+    _resourcesId = new std::map<uint32, Resource*>;
+    _resourcesName = new std::map<std::string, Resource*>;
 }
 
 ResourcesManager::~ResourcesManager() {
@@ -25,27 +27,27 @@ ResourcesManager::~ResourcesManager() {
 void ResourcesManager::removeResource(std::string const& name) {
     std::map<std::string, Resource*>::iterator it = _resourcesName->find(name);
     if (it != _resourcesName->end()) {
-        _resourcesId.erase(it->second->getId());
-        _resourcesName.erase(it->second->getName());
+        _resourcesId->erase(it->second->getId());
+        _resourcesName->erase(it->second->getName());
     }
 }
 
 Resource* ResourcesManager::loadResource(std::string const& name) {
     std::map<std::string, Resource*>::iterator it;
 
-    if ((it = _resourcesName.find(name)) != _resourcesName.end())
+    if ((it = _resourcesName->find(name)) != _resourcesName->end())
       return it->second;
     Resource *res = new Resource(name);
     
-    _resourcesName[name] = res;
-    _resourcesId[res->getId()] = res;
+    _resourcesName->at(name) = res;
+    _resourcesId->at(res->getId()) = res;
     return res;
 }
 
 Resource*	ResourcesManager::getResource(std::string const& name) {
     std::map<std::string, Resource*>::const_iterator it;
 
-    if ((it = _resourcesName.find(name)) != _resourcesName.end())
+    if ((it = _resourcesName->find(name)) != _resourcesName->end())
       return it->second;
     return loadResource(name);
 }
@@ -53,7 +55,7 @@ Resource*	ResourcesManager::getResource(std::string const& name) {
 Resource*	ResourcesManager::getResource(uint32 id) const {
     std::map<uint32, Resource*>::const_iterator it;
 
-    if ((it = _resourcesId.find(id)) != _resourcesId.end())
+    if ((it = _resourcesId->find(id)) != _resourcesId->end())
         return it->second;
     throw new Exception("Cannot find resource with id " + id);
 }
