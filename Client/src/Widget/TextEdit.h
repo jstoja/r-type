@@ -9,7 +9,6 @@
 #ifndef __R_Type__TextEdit__
 # define __R_Type__TextEdit__
 
-# include <iostream>
 # include "Event/Manager.h"
 # include "Event/Listener.h"
 # include "Event/IListenerDelegate.h"
@@ -33,18 +32,12 @@ namespace Widget {
                      public Event::IListenerDelegate {
     public:
         //! Constructor
-        TextEdit(Graphic::Scene*,
-                 ITextEditDelegate *,
-                 Widget* parent = NULL);
+        TextEdit(Graphic::Scene* scene,
+                 ITextEditDelegate * delegate,
+                 std::string const& background);
         
         //! Destructor
         ~TextEdit();
-        
-        //! Constructor with text
-        TextEdit(Graphic::Scene*,
-                 ITextEditDelegate*,
-                 std::string const&,
-                 Widget* parent = NULL);
         
         //! Getter text
         std::string const&   getText() const;
@@ -54,9 +47,6 @@ namespace Widget {
         
         //! Draw
         void    draw() {}
-        
-        //! Update
-        void    update();
         
         //! Put a char in string
         void    operator<<(char);
@@ -77,7 +67,7 @@ namespace Widget {
         virtual void    processEvent(Event::Event const&);
     private:
         Event::Listener*    _eventListener;
-        Label       _label;
+        Label               _label;
         ITextEditDelegate*  _delegate;
     };
 };

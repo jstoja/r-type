@@ -17,7 +17,7 @@ Widget::GraphicWidget::GraphicWidget(Graphic::Scene* scene,
                                      Widget* parent) :
     Widget(parent), _scene(scene) {
     _element.setType(Graphic::Element::Floating);
-    _scene->addElement(&_element);        
+    _scene->addElement(&_element);
 }
 
 Widget::GraphicWidget::~GraphicWidget() {
