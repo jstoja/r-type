@@ -56,8 +56,12 @@ namespace Widget {
          //! Set size
          void    setSize(Vec2 const&);
         
-        //! Overlead of process event
-        virtual void    processEvent(Event::Event const&);
+        //! Overload of process event
+        virtual void processEvent(Event::Event const&);
+        
+        //! Overload of set focus to handle iOS input
+        virtual void setFocus(bool);
+        
     private:
         Event::Listener*    _eventListener;
         Label               _label;

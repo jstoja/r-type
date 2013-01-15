@@ -4,32 +4,63 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Text Input View Controller-->
         <scene sceneID="EI9-pa-7Xc">
             <objects>
-                <viewController storyboardIdentifier="TextInputController" id="wYk-8I-1ek" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="tPz-HR-sAz">
+                <viewController storyboardIdentifier="TextInputController" id="wYk-8I-1ek" customClass="TextInputViewController" sceneMemberID="viewController">
+                    <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="tPz-HR-sAz">
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="stars-background.png" translatesAutoresizingMaskIntoConstraints="NO" id="nd1-DL-64H"/>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="ENTER TEXT HERE" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Ff-81-k90">
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="wYk-8I-1ek" id="7uo-ZE-DsP"/>
+                                </connections>
                             </textField>
+                            <navigationBar contentMode="scaleToFill" barStyle="blackTranslucent" translatesAutoresizingMaskIntoConstraints="NO" id="qIk-f5-PSF">
+                                <items>
+                                    <navigationItem title="Enter text" id="A2K-hW-vUa">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="4RL-Rw-pfO">
+                                            <connections>
+                                                <action selector="cancelInput:" destination="wYk-8I-1ek" id="9HV-y7-pMD"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="eHi-Aa-2iW">
+                                            <connections>
+                                                <action selector="doneInput:" destination="wYk-8I-1ek" id="E5Z-xl-G7r"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="2Ff-81-k90" firstAttribute="top" secondItem="tPz-HR-sAz" secondAttribute="top" constant="66" id="SA3-6X-5Pf"/>
-                            <constraint firstItem="2Ff-81-k90" firstAttribute="leading" secondItem="tPz-HR-sAz" secondAttribute="leading" constant="77" id="Z52-Uc-P6q"/>
+                            <constraint firstItem="qIk-f5-PSF" firstAttribute="trailing" secondItem="tPz-HR-sAz" secondAttribute="trailing" type="default" id="3Ac-yR-6JG"/>
+                            <constraint firstItem="qIk-f5-PSF" firstAttribute="leading" secondItem="tPz-HR-sAz" secondAttribute="leading" type="default" id="ASf-IV-YgP"/>
+                            <constraint firstItem="nd1-DL-64H" firstAttribute="leading" secondItem="tPz-HR-sAz" secondAttribute="leading" type="default" id="Exa-V7-Aar"/>
+                            <constraint firstItem="nd1-DL-64H" firstAttribute="top" secondItem="tPz-HR-sAz" secondAttribute="top" type="default" id="Fnu-du-Ekw"/>
+                            <constraint firstItem="2Ff-81-k90" firstAttribute="leading" secondItem="tPz-HR-sAz" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="dOT-d6-gbB"/>
+                            <constraint firstItem="qIk-f5-PSF" firstAttribute="top" secondItem="tPz-HR-sAz" secondAttribute="top" type="default" id="ehm-aG-cpm"/>
+                            <constraint firstAttribute="trailing" secondItem="2Ff-81-k90" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="eoy-Di-8sj"/>
+                            <constraint firstItem="nd1-DL-64H" firstAttribute="bottom" secondItem="tPz-HR-sAz" secondAttribute="bottom" type="default" id="h1d-Hq-N4R"/>
+                            <constraint firstItem="2Ff-81-k90" firstAttribute="top" secondItem="tPz-HR-sAz" secondAttribute="top" constant="66" id="hQg-up-Hju"/>
+                            <constraint firstItem="nd1-DL-64H" firstAttribute="trailing" secondItem="tPz-HR-sAz" secondAttribute="trailing" type="default" id="qfH-gP-BrM"/>
                         </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" id="uUj-56-Jdq"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <outlet property="textField" destination="2Ff-81-k90" id="iI0-Sj-97i"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A2V-ic-S6j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="782" y="250"/>
+            <point key="canvasLocation" x="832" y="221"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="5">
@@ -50,9 +81,20 @@
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="stars-background.png" width="1280" height="720"/>
+    </resources>
     <classes>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="TextInputViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TextInputViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancelInput:"/>
+                <relationship kind="action" name="doneInput:"/>
+                <relationship kind="outlet" name="textField" candidateClass="UITextField"/>
+            </relationships>
         </class>
         <class className="ViewController" superclassName="GLKViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>

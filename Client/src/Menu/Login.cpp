@@ -17,7 +17,7 @@ _delegate(delegate) {
     _ipField->setPosition(Vec3(8, 4, 0));
     
     _ipField = new Widget::TextEdit(scene, this, "text-field.png");
-    _ipField->setValue("SALUT");
+    _ipField->setValue("Les mecs !");
     _ipField->setSize(Vec2(4, 1));
     _ipField->setPosition(Vec3(8, 2, 0));
 

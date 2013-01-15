@@ -6,6 +6,7 @@
 //
 //
 
+#include "OS.h"
 #include "Graphic/Renderer.h"
 #include "Widget.h"
 #include "GraphicWidget.h"
@@ -74,7 +75,7 @@ void Widget::TextEdit::setSize(Vec2 const& size) {
     _label.setSize(labelSize);
 }
 
-void    Widget::TextEdit::processEvent(Event::Event const& event) {
+void Widget::TextEdit::processEvent(Event::Event const& event) {
     if (event.type == Event::PointerPushed) {
         if (!hasFocus() && getRect().in(event.pos)) {
             setFocus(true);
@@ -93,3 +94,9 @@ void    Widget::TextEdit::processEvent(Event::Event const& event) {
         _delegate->textEditHasChanged(this);
     }
 }
+
+#ifndef OS_IOS
+void Widget::TextEdit::setFocus(bool focus) {
+    Widget::setFocus(focus);
+}
+#endif

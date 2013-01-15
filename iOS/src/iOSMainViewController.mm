@@ -12,7 +12,7 @@
 //template <> iOSMainViewController Singleton<iOSMainViewController>::_instance = iOSMainViewController();
 
 iOSMainViewController::iOSMainViewController(void) :
-_viewController(NULL), _events() {
+_viewController(NULL), _events(), _currentTextEdit(NULL) {
 }
 
 iOSMainViewController::~iOSMainViewController(void) {
@@ -50,4 +50,13 @@ void iOSMainViewController::pushEvent(Event::Event& event) {
 
 GLKView* iOSMainViewController::getOpenGLView(void) const {
     return (GLKView*)_viewController.view;
+}
+
+void iOSMainViewController::openTextInput(Widget::TextEdit* textEdit) {
+    _currentTextEdit = textEdit;
+    [_viewController openTextInput];
+}
+
+Widget::TextEdit* iOSMainViewController::getCurrentTextEdit(void) const {
+    return _currentTextEdit;
 }

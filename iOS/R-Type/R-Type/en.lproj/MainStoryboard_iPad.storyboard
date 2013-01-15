@@ -9,16 +9,94 @@
             <objects>
                 <viewController id="2" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="5" customClass="GLKView">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <segue destination="l0d-PP-gOh" kind="modal" identifier="TextInputController" id="6uH-LK-l6R"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
+        <!--Text Input View Controller-->
+        <scene sceneID="xSB-og-q06">
+            <objects>
+                <viewController storyboardIdentifier="TextInputController" id="l0d-PP-gOh" customClass="TextInputViewController" sceneMemberID="viewController">
+                    <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="YYW-Fh-fkk">
+                        <rect key="frame" x="0.0" y="20" width="1024" height="748"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="stars-background.png" translatesAutoresizingMaskIntoConstraints="NO" id="0Pe-QT-bEd"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="ENTER TEXT HERE" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vEH-wh-xyb">
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="l0d-PP-gOh" id="JM1-z8-Rny"/>
+                                </connections>
+                            </textField>
+                            <navigationBar contentMode="scaleToFill" barStyle="blackTranslucent" translatesAutoresizingMaskIntoConstraints="NO" id="QkI-qY-Olf">
+                                <items>
+                                    <navigationItem title="Title" id="phB-Ti-Lza">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="HYO-gD-f2d">
+                                            <connections>
+                                                <action selector="cancelInput:" destination="l0d-PP-gOh" id="skf-2T-iqK"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="D5m-h1-YbY">
+                                            <connections>
+                                                <action selector="doneInput:" destination="l0d-PP-gOh" id="f81-OV-Lk8"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="0Pe-QT-bEd" firstAttribute="leading" secondItem="YYW-Fh-fkk" secondAttribute="leading" type="default" id="0Un-sw-pjY"/>
+                            <constraint firstItem="vEH-wh-xyb" firstAttribute="top" secondItem="YYW-Fh-fkk" secondAttribute="top" constant="66" id="66U-9h-1kq"/>
+                            <constraint firstItem="0Pe-QT-bEd" firstAttribute="bottom" secondItem="YYW-Fh-fkk" secondAttribute="bottom" type="default" id="9dg-oI-wDD"/>
+                            <constraint firstAttribute="trailing" secondItem="vEH-wh-xyb" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="O2u-2H-l2J"/>
+                            <constraint firstItem="QkI-qY-Olf" firstAttribute="leading" secondItem="YYW-Fh-fkk" secondAttribute="leading" type="default" id="YGN-kU-vDg"/>
+                            <constraint firstItem="QkI-qY-Olf" firstAttribute="top" secondItem="YYW-Fh-fkk" secondAttribute="top" type="default" id="nSF-7T-EWl"/>
+                            <constraint firstItem="vEH-wh-xyb" firstAttribute="leading" secondItem="YYW-Fh-fkk" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="pLu-mc-XPp"/>
+                            <constraint firstItem="0Pe-QT-bEd" firstAttribute="top" secondItem="YYW-Fh-fkk" secondAttribute="top" type="default" id="sqP-x2-3Jp"/>
+                            <constraint firstItem="QkI-qY-Olf" firstAttribute="trailing" secondItem="YYW-Fh-fkk" secondAttribute="trailing" type="default" id="uQu-hj-nZV"/>
+                            <constraint firstItem="0Pe-QT-bEd" firstAttribute="trailing" secondItem="YYW-Fh-fkk" secondAttribute="trailing" type="default" id="zMa-Aj-oI2"/>
+                        </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="X90-86-gg7"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <outlet property="textField" destination="vEH-wh-xyb" id="fCC-8Q-ZsZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4sG-0S-fVv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1162" y="-166"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="stars-background.png" width="1280" height="720"/>
+    </resources>
     <classes>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="TextInputViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TextInputViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancelInput:"/>
+                <relationship kind="action" name="doneInput:"/>
+                <relationship kind="outlet" name="textField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
         <class className="ViewController" superclassName="GLKViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
         </class>

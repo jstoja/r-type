@@ -13,6 +13,7 @@
 #include "Client.h"
 #include "Graphic/Renderer.h"
 #include "Debug.h"
+#include "Widget/TextEdit.h"
 
 @implementation ViewController
 
@@ -28,11 +29,9 @@
     catch (std::exception* e) {
         std::cerr << e->what() << std::endl;
     }
-    
-    //[NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(goText:) userInfo:nil repeats:NO];
 }
 
--(void)goText:(id)sender {
+-(void)openTextInput {    
     [self performSegueWithIdentifier:@"TextInputController" sender:self];
 }
 
