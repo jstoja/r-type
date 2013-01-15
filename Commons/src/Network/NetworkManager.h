@@ -37,8 +37,8 @@ namespace Network {
 		NetworkManager();
 		~NetworkManager();
 
-		std::vector<ASocket*>			_sockets;
-		Threading::Mutex				_socketsMutex;
+		std::vector<ASocket*>                   *_sockets;
+		Threading::Mutex                        _socketsMutex;
 		Threading::Thread<NetworkManager>		_runThread;
 	};
 

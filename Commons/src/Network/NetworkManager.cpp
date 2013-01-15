@@ -29,7 +29,8 @@ Network::NetworkManager::NetworkManager() : _runThread(this) {
      WSADATA wsa;
      WSAStartup (MAKEWORD (2,2), &wsa);
 #endif
-  _runThread.run();
+    _sockets = new std::vector<ASocket*>;
+    _runThread.run();
 }
 
 Network::NetworkManager::~NetworkManager() {
@@ -38,15 +39,15 @@ Network::NetworkManager::~NetworkManager() {
 
 void Network::NetworkManager::registerSocket(Network::ASocket* socket) {
   Threading::MutexLocker locker(&_socketsMutex);
-  _sockets.push_back(socket);
+  _sockets->push_back(socket);
 }
 
 void Network::NetworkManager::unregisterSocket(Network::ASocket* socket) {
   Threading::MutexLocker locker(&_socketsMutex);
   std::vector<ASocket*>::iterator it;
-  for (it = _sockets.begin(); it != _sockets.end();)
+  for (it = _sockets->begin(); it != _sockets->end();)
     if (*it == socket)
-      it = _sockets.erase(it);
+      it = _sockets->erase(it);
     else
       ++it;
 }
@@ -67,7 +68,7 @@ void Network::NetworkManager::operator()() {
     _socketsMutex.lock();
     std::vector<ASocket*>::iterator it;
 
-    for (it = _sockets.begin(); it != _sockets.end(); ++it) {
+    for (it = _sockets->begin(); it != _sockets->end(); ++it) {
       if ((*it)->isReading() || (*it)->isListening()) {
 	FD_SET((*it)->getId(), &readSockets);
 	if ((*it)->getId() >= max)
@@ -87,16 +88,16 @@ void Network::NetworkManager::operator()() {
       else {
 	_socketsMutex.lock();
 	
-	unsigned int size = _sockets.size();
+	unsigned int size = _sockets->size();
 	for (unsigned int i = 0; i < size; ++i) {
-	  if ((_sockets[i]->isReading() || _sockets[i]->isListening()) && FD_ISSET(_sockets[i]->getId(), &readSockets)) {
+	  if ((_sockets->at(i)->isReading() || _sockets->at(i)->isListening()) && FD_ISSET(_sockets->at(i)->getId(), &readSockets)) {
 	    _socketsMutex.unlock();
-	    _sockets[i]->canRead();
+	    _sockets->at(i)->canRead();
 	    _socketsMutex.lock();
 	  }
-	  if (_sockets[i]->isWriting() && FD_ISSET(_sockets[i]->getId(), &writeSockets)) {
+	  if (_sockets->at(i)->isWriting() && FD_ISSET(_sockets->at(i)->getId(), &writeSockets)) {
 	    _socketsMutex.unlock();
-	    _sockets[i]->canWrite();
+	    _sockets->at(i)->canWrite();
 	    _socketsMutex.lock();
 	  }
 	}
