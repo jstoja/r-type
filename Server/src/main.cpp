@@ -15,8 +15,10 @@
 #include <Application.h>
 
 #include "Server.h"
+
 int	main(int argc, char *argv[]) {
-	Application::getInstance().init(argc, argv);
+	App.init(argc, argv);
+	App.setRelativeResourcesPath("./Resources");
 	Server server;
 
 	getchar();

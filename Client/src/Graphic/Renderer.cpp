@@ -13,6 +13,8 @@
 #include "GraphicException.h"
 #include "Event/Manager.h"
 
+template <> Graphic::Renderer Singleton<Graphic::Renderer>::_instance;
+
 static const char* vertexShader =
     "attribute vec3 position;\n"
     "attribute vec2 textureCoords;\n"

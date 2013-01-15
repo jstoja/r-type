@@ -9,6 +9,8 @@
 
 #include "UUIDGenerator.h"
 
+template <> UUIDGenerator Singleton<UUIDGenerator>::_instance;
+
 uint32 UUIDGenerator::_id = 0;
 
 UUIDGenerator::UUIDGenerator() {

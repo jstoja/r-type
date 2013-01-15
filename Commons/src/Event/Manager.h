@@ -20,7 +20,7 @@
 
 namespace Event {
     
-    class COMMON_EXPORT_IMPORT_REMOVED Manager : public Singleton<Manager> {
+    class COMMON_EXPORT_IMPORT Manager : public Singleton<Manager> {
         friend class Singleton<Manager>;
         
     public:

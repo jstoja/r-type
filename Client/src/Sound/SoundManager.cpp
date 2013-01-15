@@ -12,6 +12,8 @@
 #include "ResourcesManager.h"
 #include "Resource.h"
 
+template <> Sound::SoundManager	Singleton<Sound::SoundManager>::_instance;
+
 Sound::SoundManager::SoundManager() {  
 }
 

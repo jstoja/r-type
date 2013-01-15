@@ -47,7 +47,7 @@ class COMMON_EXPORT_IMPORT ByteArray {
         void		append(ByteArray const&);
 
         //! Append char * / uint32
-        void		append(char *, uint32);
+        void		append(const char *, uint32);
 
         //! Copy buffer with char * + size
         void		bufcopy(const char *, uint32);

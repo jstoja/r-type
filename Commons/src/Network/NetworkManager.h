@@ -21,7 +21,7 @@
 # include "Threading/MutexLocker.h"
 namespace Network {
   
-	class COMMON_EXPORT_IMPORT_REMOVED NetworkManager : public Singleton<NetworkManager> {
+	class COMMON_EXPORT_IMPORT NetworkManager : public Singleton<NetworkManager> {
     
     friend class Singleton<NetworkManager>;
     friend class Threading::Thread<NetworkManager>;

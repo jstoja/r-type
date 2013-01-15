@@ -84,7 +84,7 @@ void	  ByteArray::append(ByteArray const& cpy) {
     _buffer[pos++] = buf[i];
 }
 
-void    ByteArray::append(char *buffer, uint32 size) {
+void    ByteArray::append(const char *buffer, uint32 size) {
   uint32 pos = getSize();
 
   _buffer.resize(getSize() + size);

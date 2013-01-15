@@ -12,6 +12,8 @@
 #include "Manager.h"
 #include "Event.h"
 
+template <> Event::Manager Singleton<Event::Manager>::_instance;
+
 Event::Manager::Manager(void) : _providers(), _listeners(), _lastPointerPos() {
 }
 
