@@ -26,7 +26,7 @@ public:
 private:
     LibraryFactory();
 
-	std::map<std::string, Library*>	_libraries;
+	std::map<std::string, Library*>     *_libraries;
 };
 
 #endif
