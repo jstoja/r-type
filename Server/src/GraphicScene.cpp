@@ -16,25 +16,31 @@ GraphicScene::~GraphicScene() {
 }
 
 void	GraphicScene::addElement(GraphicElement *element) {
+    _graphicElementsMutex.lock();
 	_graphicElements.push_back(element);
+    _graphicElementsMutex.unlock();
 }
 
 void	GraphicScene::sendStaticElements(Network::TcpPacket& packet) {
 	std::list<GraphicElement*>	toSend;
 
+    _graphicElementsMutex.lock();
 	for (std::list<GraphicElement*>::iterator it = _graphicElements.begin();
 		it != _graphicElements.end(); ++it)
 		if ((*it)->getType() == IGraphicElement::Static)
 			toSend.push_back(*it);
+    _graphicElementsMutex.unlock();
 	packet << toSend;
 }
 
 void	GraphicScene::sendElements(Network::UdpPacket& packet) {
 	std::list<GraphicElement*>	toSend;
 
+    _graphicElementsMutex.lock();
 	for (std::list<GraphicElement*>::iterator it = _graphicElements.begin();
 		it != _graphicElements.end(); ++it)
 		if ((*it)->hasChanged())
 			toSend.push_back(*it);
+    _graphicElementsMutex.unlock();
 	packet << toSend;
 }

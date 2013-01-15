@@ -15,6 +15,8 @@
 # include <ByteArray.h>
 # include <Object.h>
 # include <Types.h>
+# include "Threading/Mutex.h"
+# include "Threading/MutexLocker.h"
 
 class IPlugin;
 class IGame;
@@ -29,10 +31,12 @@ public:
 	float32	getXStart() const;
 
 private:
-	void		_loadPlugin();
+	void                _loadPlugin();
 
-	std::string	_pluginName;
-	IPlugin*	_plugin;
+	std::string         _pluginName;
+
+    Threading::Mutex	*_pluginMutex;
+	IPlugin*            _plugin;
 };
 
 #endif

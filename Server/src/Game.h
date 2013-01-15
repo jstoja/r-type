@@ -61,12 +61,12 @@ private:
 	void						_sendResources(Network::TcpPacket &packet);
 	void						_update();
 
-	std::vector<Player*>	_players;
-	uint32					_nbSlots;
-	std::string				_name;
-	Map						_currentLevel;
-	std::list<GameObject*>	_objects;
-	std::list<Texture*>		_gameTextures;
+	std::vector<Player*>            _players;
+	uint32                          _nbSlots;
+	std::string                     _name;
+	Map                             _currentLevel;
+	std::list<GameObject*>          _objects;
+	std::list<Texture*>             _gameTextures;
 	std::map<std::string, Sprite*>	_levelSprites;
 	std::list<Sprite*>				_gameSprites;
 	std::list<Scenery*>				_gameSceneries;

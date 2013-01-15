@@ -13,6 +13,8 @@
 # include <IPhysicElement.h>
 # include <Object.h>
 # include <Network/UdpPacket.h>
+# include "Threading/Mutex.h"
+# include "Threading/MutexLocker.h"
 
 class PhysicElement : public IPhysicElement, public Object {
 public:
@@ -36,6 +38,16 @@ public:
 	virtual Type	getType() const;
 
 private:
+    enum    _mutexVariable {
+        ePosition = 0,
+        eSize,
+        eRotation,
+        eHasChanged,
+        eType,
+        eLastAttribute
+    };
+    
+    std::vector<Threading::Mutex*>	_attributesMutex;
 	Vec2	_pos;
 	Vec2	_size;
 	float32	_rotation;

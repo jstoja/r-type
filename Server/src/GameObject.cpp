@@ -18,25 +18,32 @@
 
 GameObject::GameObject(std::string const& name) : _pluginName(name), _plugin(NULL) {
 	_loadPlugin();
+    _pluginMutex = new Threading::Mutex();
 }
 
 
 GameObject::~GameObject() {
+    delete _pluginMutex;
 	delete _plugin;
 }
 
 bool	GameObject::init(IGame* game, ByteArray const& params, float32 xStart) {
+    _pluginMutex->lock();
 	if (_plugin)
 		return _plugin->init(game, params, xStart);
+    _pluginMutex->unlock();
 	return false;
 }
 
 void	GameObject::update(void *params) {
+    _pluginMutex->lock();
 	if (_plugin)
 		_plugin->update();
+    _pluginMutex->unlock();
 }
 
 float32	GameObject::getXStart() const {
+    Threading::MutexLocker locker(_pluginMutex);
 	if (_plugin)
 		return (_plugin->getXStart());
 	return (-1);

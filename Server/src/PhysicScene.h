@@ -16,6 +16,7 @@
 # include <Network/TcpPacket.h>
 
 # include "PhysicElement.h"
+# include "Threading/Mutex.h"
 
 class PhysicScene {
 public:
@@ -27,7 +28,8 @@ public:
 	void	sendElements(Network::UdpPacket& packet);
 
 private:
-	std::list<PhysicElement*>	_graphicElements;
+    Threading::Mutex            _physicElementsMutex;
+	std::list<PhysicElement*>	_physicElements;
 };
 
 #endif

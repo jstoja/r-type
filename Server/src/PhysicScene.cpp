@@ -16,25 +16,31 @@ PhysicScene::~PhysicScene() {
 }
 
 void	PhysicScene::addElement(PhysicElement *element) {
-	_graphicElements.push_back(element);
+    _physicElementsMutex.lock();
+	_physicElements.push_back(element);
+    _physicElementsMutex.unlock();
 }
 
 void	PhysicScene::sendStaticElements(Network::TcpPacket& packet) {
 	std::list<PhysicElement*>	toSend;
-
-	for (std::list<PhysicElement*>::iterator it = _graphicElements.begin();
-		it != _graphicElements.end(); ++it)
+    
+    _physicElementsMutex.lock();
+	for (std::list<PhysicElement*>::iterator it = _physicElements.begin();
+		it != _physicElements.end(); ++it)
 		if ((*it)->getType() == IPhysicElement::Static)
 			toSend.push_back(*it);
+    _physicElementsMutex.unlock();
 	packet << toSend;
 }
 
 void	PhysicScene::sendElements(Network::UdpPacket& packet) {
 	std::list<PhysicElement*>	toSend;
 
-	for (std::list<PhysicElement*>::iterator it = _graphicElements.begin();
-		it != _graphicElements.end(); ++it)
+    _physicElementsMutex.lock();
+	for (std::list<PhysicElement*>::iterator it = _physicElements.begin();
+		it != _physicElements.end(); ++it)
 		if ((*it)->hasChanged())
 			toSend.push_back(*it);
+    _physicElementsMutex.unlock();
 	packet << toSend;
 }

@@ -21,7 +21,7 @@ namespace Threading {
 	public:
 		//! Constructor
 		/*!
-			Constructs a MutexLocker and locks the mutex. The mutex will be unlocked when the QMutexLocker is destroyed. If mutex is zero, MutexLocker does nothing.
+			Constructs a MutexLocker and locks the mutex. The mutex will be unlocked when the MutexLocker is destroyed. If mutex is zero, MutexLocker does nothing.
 		*/
 		MutexLocker(Mutex *mutex);
 

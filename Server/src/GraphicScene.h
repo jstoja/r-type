@@ -16,6 +16,7 @@
 # include <Network/TcpPacket.h>
 
 # include "GraphicElement.h"
+# include "Threading/Mutex.h"
 
 class GraphicScene {
 public:
@@ -27,6 +28,7 @@ public:
 	void	sendElements(Network::UdpPacket& packet);
 
 private:
+    Threading::Mutex            _graphicElementsMutex;
 	std::list<GraphicElement*>	_graphicElements;
 };
 

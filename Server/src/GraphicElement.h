@@ -13,6 +13,9 @@
 # include <IGraphicElement.h>
 # include <Object.h>
 # include <Network/UdpPacket.h>
+# include "Threading/Mutex.h"
+# include "Threading/MutexLocker.h"
+
 
 class Sprite;
 
@@ -44,13 +47,25 @@ public:
 	virtual Type	getType() const;
 
 private:
-	Vec3	_pos;
-	Vec2	_size;
-	float32	_rotation;
-	bool	_hasChanged;
-	Sprite	*_sprite;
-	char	_spriteIndex;
-	char	_type;
+    enum    _mutexVariable {
+        ePosition = 0,
+        eSize,
+        eRotation,
+        eHasChanged,
+        eSprite,
+        eSpriteIndex,
+        eType,
+        eLastAttribute
+    };
+    
+    std::vector<Threading::Mutex*>	_attributesMutex;
+	Vec3                            _pos;
+	Vec2                            _size;
+	float32                         _rotation;
+	bool                            _hasChanged;
+	Sprite	                        *_sprite;
+	char                            _spriteIndex;
+	char                            _type;
 };
 
 Network::APacket&		operator<<(Network::APacket & packet, GraphicElement & element);
