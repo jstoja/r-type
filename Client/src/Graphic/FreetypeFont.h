@@ -40,8 +40,6 @@ namespace Graphic {
         int     getStringHeight(std::string const& str);
         int     getStringWidth(std::string const& str);
 
-        void	setColor(uint8 r, uint8 g, uint8 b);
-        
     private:
         
         //! Return an rgba image from a FreeType bitmap

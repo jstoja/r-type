@@ -11,7 +11,7 @@
 #include <Application.h>
 #include "LibraryFactory.h"
 
-template <> LibraryFactory Singleton<LibraryFactory>::_instance;
+template <> LibraryFactory Singleton<LibraryFactory>::_instance = LibraryFactory();
 
 LibraryFactory::LibraryFactory() {
 }

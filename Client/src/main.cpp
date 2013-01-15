@@ -13,11 +13,12 @@
 
 int	main(int argc, char *argv[]) {
     try {
+        Application::getInstance().init(argc, argv);
 #if defined OS_MAC
         Application::getInstance().setRelativeResourcesPath("../Resources");
-#endif
-        Application::getInstance().init(argc, argv);
+#else
         Application::getInstance().setRelativeResourcesPath("Resources");
+#endif
         Client client;
     }
     catch (std::exception* e) {

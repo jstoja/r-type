@@ -72,7 +72,6 @@ void Graphic::FreetypeFont::loadFont(const std::string &resourceName) {
         _bearingTop.push_back(slot->bitmap_top);
         _characterTab.push_back(_alphaToRGBA(slot->bitmap));
     }
-    setColor(255, 255, 255);
 }
 
 uint8 *Graphic::FreetypeFont::_alphaToRGBA(FT_Bitmap bitmap) {

@@ -12,7 +12,7 @@
 #include "Exception.h"
 #include "Debug.h"
 
-template <> ResourcesManager Singleton<ResourcesManager>::_instance;
+template <> ResourcesManager Singleton<ResourcesManager>::_instance = ResourcesManager();
 
 ResourcesManager::ResourcesManager() {
 }

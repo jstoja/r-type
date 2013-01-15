@@ -12,7 +12,7 @@
 #include "Manager.h"
 #include "Event.h"
 
-template <> Event::Manager Singleton<Event::Manager>::_instance;
+template <> Event::Manager Singleton<Event::Manager>::_instance = Event::Manager();
 
 Event::Manager::Manager(void) : _providers(), _listeners(), _lastPointerPos() {
 }
