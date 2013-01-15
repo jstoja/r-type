@@ -35,8 +35,8 @@ namespace Event {
         Manager(void);
         ~Manager(void);
         
-        std::vector<IProvider*> _providers;
-        std::vector<Listener*>  _listeners;
+        std::vector<IProvider*> *_providers;
+        std::vector<Listener*>  *_listeners;
         Vec2                    _lastPointerPos;
     };
     

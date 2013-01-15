@@ -10,11 +10,14 @@
 #include <iostream>
 #include "ThreadPool.hpp"
 
-Threading::ThreadPool::ThreadPool(int nbThreads, bool run) : _run(run) {
+Threading::ThreadPool::ThreadPool(int nbThreads, bool run) :
+	_run(run),
+	_threads(new std::vector<Thread<ThreadPool>*>()),
+	_tasks(new std::queue<ITask*>()) {
  _tasksCondition = new Mutex::Condition(&_tasksMutex);
   for (int i = 0; i < nbThreads; ++i) {
     Thread<ThreadPool>* thread = new Thread<ThreadPool>(this);
-	_threads.push_back(thread);
+	_threads->push_back(thread);
 	if (_run)
 	    thread->run();
   }
@@ -22,27 +25,28 @@ Threading::ThreadPool::ThreadPool(int nbThreads, bool run) : _run(run) {
 
 Threading::ThreadPool::~ThreadPool() {
   _tasksMutex.lock();
-  for (int i = 0; i < _threads.size(); ++i) {
-    _threads[i]->stop();
-    delete _threads[i];
+  for (unsigned int i = 0; i < _threads->size(); ++i) {
+    (*_threads)[i]->stop();
+    delete (*_threads)[i];
   }
+  delete _threads;
   delete _tasksCondition;
 }
 
 void Threading::ThreadPool::run() {
 	if (!_run) {
-		for (int i = 0; i < _threads.size(); ++i) {
-		    _threads[i]->run();
+		for (unsigned int i = 0; i < _threads->size(); ++i) {
+		    (*_threads)[i]->run();
 		}
-		for (int i = 0; i < _threads.size(); ++i) {
-		    _threads[i]->join();
+		for (unsigned int i = 0; i < _threads->size(); ++i) {
+		    (*_threads)[i]->join();
 		}
 	}
 }
 
 void Threading::ThreadPool::wait() {
 	_tasksMutex.lock();
-	while (_tasks.size() > 0) {
+	while (_tasks->size() > 0) {
 		_tasksCondition->wait();
 	}
 	_tasksMutex.unlock();
@@ -51,9 +55,9 @@ void Threading::ThreadPool::wait() {
 void Threading::ThreadPool::operator()(void) {
   while (1) {
     _tasksMutex.lock();
-    while (_tasks.size() > 0) {
-		ITask* task = _tasks.front();
-		_tasks.pop();
+    while (_tasks->size() > 0) {
+		ITask* task = _tasks->front();
+		_tasks->pop();
 		_tasksCondition->signal();
 		_tasksMutex.unlock();
 		task->call();

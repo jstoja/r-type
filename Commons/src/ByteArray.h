@@ -67,7 +67,7 @@ class COMMON_EXPORT_IMPORT ByteArray {
     
         void		debug() const;
   private:
-        std::vector<char>	_buffer;
+        std::vector<char>	*_buffer;
 };
 
 #endif

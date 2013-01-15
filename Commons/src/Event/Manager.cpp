@@ -16,41 +16,43 @@
 template <> Event::Manager Singleton<Event::Manager>::_instance = Event::Manager();
 #endif
 
-Event::Manager::Manager(void) : _providers(), _listeners(), _lastPointerPos() {
+Event::Manager::Manager(void) : _providers(new std::vector<IProvider*>()), _listeners(new std::vector<Listener*>()), _lastPointerPos() {
 }
 
 Event::Manager::~Manager(void) {
+	delete _providers;
+	delete _listeners;
 }
 
 void Event::Manager::registerProvider(IProvider *provider) {
-    if (std::find(_providers.begin(), _providers.end(), provider) == _providers.end()) {
-        _providers.push_back(provider);
+    if (std::find(_providers->begin(), _providers->end(), provider) == _providers->end()) {
+        _providers->push_back(provider);
     }
 }
 
 void Event::Manager::addEventListener(Listener *listener) {
-    if (std::find(_listeners.begin(), _listeners.end(), listener) == _listeners.end()) {
-        _listeners.push_back(listener);
+    if (std::find(_listeners->begin(), _listeners->end(), listener) == _listeners->end()) {
+        _listeners->push_back(listener);
     }
 }
 
 void Event::Manager::removeEventListener(Listener* listener) {
     std::vector<Listener*>::iterator it =
-        std::find(_listeners.begin(), _listeners.end(), listener);
-    if (it != _listeners.end())
-        _listeners.erase(it);
+        std::find(_listeners->begin(), _listeners->end(), listener);
+    if (it != _listeners->end())
+        _listeners->erase(it);
 }
 
 void Event::Manager::processEvents(void) {
-    for (std::vector<IProvider*>::iterator it = _providers.begin(),
-         end = _providers.end(); it != end; ++it) {
+    for (std::vector<IProvider*>::iterator it = _providers->begin(),
+         end = _providers->end(); it != end; ++it) {
         (*it)->processEvents(this);
     }
 }
 
 void Event::Manager::fire(Event const& event) {
-    for (std::vector<Listener*>::iterator it = _listeners.begin(),
-         end = _listeners.end(); it != end; ++it) {
+    for (std::vector<Listener*>::iterator it = _listeners->begin(),
+         end = _listeners->end(); it != end; ++it) {
         Listener* listener = *it;
         if ((listener->getType() & event.type)
             && (!listener->hasRect() || listener->getRect().in(event.pos))) {

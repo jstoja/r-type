@@ -2,22 +2,23 @@
 #include <algorithm>
 #include "ByteArray.h"
 
-ByteArray::ByteArray() {  
+ByteArray::ByteArray() : _buffer(new std::vector<char>()) {  
 }
 
-ByteArray::ByteArray(const char *buffer,  uint32 size) {
+ByteArray::ByteArray(const char *buffer,  uint32 size) : _buffer(new std::vector<char>()) {
   bufcopy(buffer, size);
 }
 
-ByteArray::ByteArray(uint32 size) {
-  _buffer.resize(size);
+ByteArray::ByteArray(uint32 size) : _buffer(new std::vector<char>()) {
+  _buffer->resize(size);
 }
 
-ByteArray::ByteArray(ByteArray const& cpy) {
+ByteArray::ByteArray(ByteArray const& cpy) : _buffer(new std::vector<char>()) {
   bufcopy(cpy.getBuffer());
 }
 
 ByteArray::~ByteArray() {
+	delete _buffer;
 }
 
 ByteArray&	ByteArray::operator=(ByteArray const& cpy) {
@@ -32,8 +33,8 @@ bool		ByteArray::operator==(ByteArray const& cmp) {
     return false;
   std::vector<char> buf = cmp.getBuffer();
   for (uint64 i = 0; i < bufsize; ++i)
-    if (buf[i] != _buffer[i])
-      return false;
+	  if (buf[i] != _buffer->at(i))
+	      return false;
   return true;
 }
 
@@ -44,8 +45,8 @@ bool		ByteArray::operator!=(ByteArray const& cmp) {
     return true;
   std::vector<char> buf = cmp.getBuffer();
   for (uint32 i = 0; i < bufsize; ++i)
-    if (buf[i] != _buffer[i])
-      return true;
+	  if (buf[i] != _buffer->at(i))
+	      return true;
   return false;
 }
 
@@ -55,7 +56,7 @@ ByteArray&	ByteArray::operator<<(ByteArray const& cpy) {
 }
 
 ByteArray::operator char*() {
-  return (char*)&_buffer[0];
+  return (char*)(&_buffer->at(0));
 }
 
 ByteArray::operator const char*() const {
@@ -63,15 +64,15 @@ ByteArray::operator const char*() const {
 }
 
 std::vector<char> const& ByteArray::getBuffer() const {
-  return _buffer;
+  return *_buffer;
 }
 
 uint32	ByteArray::getSize() const {
-  return _buffer.size();
+  return _buffer->size();
 }
 
 void ByteArray::resize(uint32 size) {
-  _buffer.resize(size);
+  _buffer->resize(size);
 }
 
 void	  ByteArray::append(ByteArray const& cpy) {
@@ -79,39 +80,39 @@ void	  ByteArray::append(ByteArray const& cpy) {
   uint64 pos = getSize();
   std::vector<char> buf = cpy.getBuffer();
   
-  _buffer.resize(getSize() + bufsize);
+  _buffer->resize(getSize() + bufsize);
   for (uint32 i = 0; i < bufsize; ++i)
-    _buffer[pos++] = buf[i];
+    (*_buffer)[pos++] = buf[i];
 }
 
 void    ByteArray::append(const char *buffer, uint32 size) {
   uint32 pos = getSize();
 
-  _buffer.resize(getSize() + size);
+  _buffer->resize(getSize() + size);
   for (uint32 i = 0; i < size; ++i)
-    _buffer[pos++] = buffer[i];
+    (*_buffer)[pos++] = buffer[i];
 }
 
 void	ByteArray::bufcopy(const char* buffer, uint32 size) {
-  _buffer.resize(size);
+  _buffer->resize(size);
   for (uint32 i = 0; i < size; ++i)
-    _buffer[i] = buffer[i];
+    (*_buffer)[i] = buffer[i];
 }
 
 void	ByteArray::bufcopy(std::vector<char> const& buffer) {
- _buffer.resize(buffer.size());
- copy(buffer.begin(), buffer.end(), _buffer.begin());
+ _buffer->resize(buffer.size());
+ copy(buffer.begin(), buffer.end(), _buffer->begin());
  }
 
 char const* ByteArray::getData() const {
-    return (const char*)&_buffer[0];
+    return (const char*)&_buffer->at(0);
 }
 
 void	ByteArray::debug() const {
   std::cout << "### DEBUG BYTE ARRAY ###" << std::endl;
-  std::cout << "SIZE " << _buffer.size() << std::endl;
-  for (uint32 i = 0; i < _buffer.size(); ++i)
-    std::cout << "[" << _buffer[i] << "]";
+  std::cout << "SIZE " << _buffer->size() << std::endl;
+  for (uint32 i = 0; i < _buffer->size(); ++i)
+    std::cout << "[" << (*_buffer)[i] << "]";
   std::cout << std::endl;
   std::cout << "###################" << std::endl;
 }
