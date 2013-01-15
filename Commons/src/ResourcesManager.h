@@ -41,7 +41,7 @@ class COMMON_EXPORT_IMPORT ResourcesManager : public Singleton<ResourcesManager>
         //! Constructor
         ResourcesManager();
     
-        std::map<uint32, Resource*>		_resourcesId;
+        std::map<uint32, Resource*>         _resourcesId;
         std::map<std::string, Resource*>	_resourcesName;
 };
 

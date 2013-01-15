@@ -28,7 +28,7 @@ ViewController* iOSMainViewController::getViewController(void) const {
 }
 
 void iOSMainViewController::processEvents(Event::Manager* manager) {
-    while (_events.size() > 0) {
+    while (_events.size() > 0) {        
         manager->fire(_events.top());
         _events.pop();
     }
@@ -44,7 +44,6 @@ void iOSMainViewController::pushEvent(Event::Event& event) {
         Event::Manager::getInstance().registerProvider(this);
         registered = true;
     }
-    
     event.sender = this;
     _events.push(event);
 }

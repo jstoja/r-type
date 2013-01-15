@@ -44,7 +44,12 @@ void Graphic::Renderer::processEvents(Event::Manager* manager) {
 
 Vec2 Graphic::Renderer::getViewportSize(void) const {
     CGRect  viewRect = _view.bounds;
-    return Vec2(viewRect.size.height, viewRect.size.width);
+    // Crappy fix... At launch time, viewport is not oriented yet, so we
+    // should inverse x and y values
+    if (viewRect.size.width < viewRect.size.height)
+        return Vec2(viewRect.size.height, viewRect.size.width);
+    else
+        return Vec2(viewRect.size.width, viewRect.size.height);
 }
 
 void Graphic::Renderer::refresh(void) {
