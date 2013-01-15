@@ -32,6 +32,13 @@ void Event::Manager::addEventListener(Listener *listener) {
     }
 }
 
+void Event::Manager::removeEventListener(Listener* listener) {
+    std::vector<Listener*>::iterator it =
+        std::find(_listeners.begin(), _listeners.end(), listener);
+    if (it != _listeners.end())
+        _listeners.erase(it);
+}
+
 void Event::Manager::processEvents(void) {
     for (std::vector<IProvider*>::iterator it = _providers.begin(),
          end = _providers.end(); it != end; ++it) {

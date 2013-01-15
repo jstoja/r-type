@@ -13,12 +13,16 @@
 const float32 UserInterface::_maxViewportX = 1000000000.0;
 
 UserInterface::UserInterface(IUserInterfaceDelegate* delegate) :
-_delegate(delegate), _time(), _welcomeMenu(), _sceneries() {
+_delegate(delegate), _time(), _sceneries() {
     // Create the sceneries used in all the user interface
     _createSceneries();
     
+    // Debug
+    _loginMenu = new Menu::Login(_delegate->getScene(), this);
+    return ;
+    
     // Present welcome menu
-    _welcomeMenu = new Menu::WelcomeMenu(_delegate->getScene(), this);
+    _welcomeMenu = new Menu::Welcome(_delegate->getScene(), this);
 }
 
 UserInterface::~UserInterface(void) {
@@ -33,7 +37,10 @@ void UserInterface::update(void) {
 }
 
 void UserInterface::welcomeCompleted(void) {
-    Log("Welcome !");
+    delete _welcomeMenu;
+    
+    // Present login menu
+    _loginMenu = new Menu::Login(_delegate->getScene(), this);
 }
 
 void UserInterface::loginCompleted(std::string const& login,

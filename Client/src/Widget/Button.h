@@ -16,6 +16,7 @@
 # include "Event/Listener.h"
 # include "Event/IListenerDelegate.h"
 # include "Widget.h"
+# include "GraphicWidget.h"
 # include "IButtonDelegate.h"
 
 namespace Widget {
@@ -24,10 +25,6 @@ namespace Widget {
 
     class Button : public GraphicWidget, public Event::IListenerDelegate {
         public:
-            //! Create the Button
-            Button(Graphic::Scene*,
-                   IButtonDelegate *delegate,
-                   Widget* parent = NULL);
 
             //! Create a button with position/size and image
             Button(Graphic::Scene*,
@@ -47,8 +44,8 @@ namespace Widget {
             virtual void processEvent(Event::Event const& event);
 
         private:
-            IButtonDelegate     *_delegate;
-            Event::Listener     *_eventListener;
+            IButtonDelegate*    _delegate;
+            Event::Listener*    _eventListener;
 
     };
 }

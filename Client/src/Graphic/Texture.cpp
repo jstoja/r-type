@@ -12,7 +12,7 @@
 #include "UUIDGenerator.h"
 #include "GraphicException.h"
 
-Graphic::Texture::Texture() : Object(), _glID(0) {
+Graphic::Texture::Texture() : Object(), _glID(0), _size(0) {
     glGenTextures(1, &_glID);
     
     // Configure the texture
@@ -22,7 +22,7 @@ Graphic::Texture::Texture() : Object(), _glID(0) {
 }
 
 
-Graphic::Texture::Texture(uint32 id) : Object(id), _glID(0) {
+Graphic::Texture::Texture(uint32 id) : Object(id), _glID(0), _size(0) {
     glGenTextures(1, &_glID);
     
     // Configure the texture
@@ -52,8 +52,14 @@ void Graphic::Texture::setData(uint32 width, uint32 height, const uint8* data) {
                  GL_UNSIGNED_BYTE,  // Data type of the pixel datas
                  data);
     Graphic::Exception::checkOpenGLError();
+    _size.x = width;
+    _size.y = height;
 }
 
-uint32 Graphic::Texture::getGLID() const {
+uint32 Graphic::Texture::getGLID(void) const {
     return _glID;
+}
+
+Vec2 const& Graphic::Texture::getSize(void) const {
+    return _size;
 }

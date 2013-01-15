@@ -24,7 +24,6 @@
     try {
         iOSMainViewController::getInstance().setViewController(self);
         self.client = new Client();
-        self.preferredFramesPerSecond = self.client->getFramerateLimit();
     }
     catch (std::exception* e) {
         std::cerr << e->what() << std::endl;

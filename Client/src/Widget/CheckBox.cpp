@@ -56,7 +56,6 @@ void    Widget::CheckBox::init() {
         setCurrentFrame(0);
     }
     Event::Manager::getInstance().addEventListener(_eventListener);
-    addElement();
 }
 
 bool    Widget::CheckBox::isChecked() const {

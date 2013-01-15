@@ -18,7 +18,7 @@ Event::Listener::Listener(uint32 type, Rect2 const& rect, IListenerDelegate* del
 }
 
 Event::Listener::~Listener() {
-
+    
 }
 
 
