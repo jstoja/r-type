@@ -34,7 +34,8 @@ namespace   Widget {
         };
         
         //! Constructor with text
-        Label(Graphic::Scene*, std::string const&, Vec3 color=Vec3(1, 1, 1));
+        Label(Graphic::Scene*, std::string const& text="",
+              Vec3 color=Vec3(1, 1, 1));
         
         //! Destructor
         ~Label();

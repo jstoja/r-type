@@ -22,18 +22,13 @@ ResourcesManager::ResourcesManager() {
 }
 
 ResourcesManager::~ResourcesManager() {
-	for (std::map<std::string, Resource*>::iterator it = _resourcesName->begin();
-		it != _resourcesName->end(); ++it) {
-		delete it->second;
-	}
 }
 
 void ResourcesManager::removeResource(std::string const& name) {
-    Resource *item = getResource(name);
-    if (item != NULL) {
-        _resourcesId->erase(item->getId());
-        _resourcesName->erase(item->getName());
-		delete item;
+    std::map<std::string, Resource*>::iterator it = _resourcesName->find(name);
+    if (it != _resourcesName->end()) {
+        _resourcesId->erase(it->second->getId());
+        _resourcesName->erase(it->second->getName());
     }
 }
 

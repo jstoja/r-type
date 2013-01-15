@@ -24,6 +24,7 @@ _scene(), _framerateLimit(30), _time(), _ui() {
     // Adapt the scene viewport to the window aspect
     Vec2 viewport = _scene.getViewport();
     Vec2 screen = Graphic::Renderer::getInstance().getViewportSize();
+    
     viewport.x = viewport.y * (screen.x / screen.y);
     _scene.setViewport(viewport);
     

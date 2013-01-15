@@ -38,6 +38,7 @@ Widget::Label::~Label() {
 void Widget::Label::update() {
     if (getSize().x + getSize().y == 0)
         return ;
+    
     Graphic::Texture *texture = _getStringTexture();
     if (getSprite() && getSprite()->getTexture())
         delete getSprite()->getTexture();
