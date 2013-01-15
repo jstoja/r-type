@@ -10,6 +10,8 @@
 #include "ObjectManager.h"
 #include "Object.h"
 
+template <> ObjectManager Singleton<ObjectManager>::_instance;
+
 ObjectManager::ObjectManager() {
 }
 

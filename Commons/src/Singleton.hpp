@@ -13,11 +13,7 @@
 # include <OS.h>
 
 template <typename T>
-# ifdef COMMON_EXPORT
-class COMMON_EXPORT_IMPORT Singleton {
-# else
 class Singleton {
-# endif
 public:
   static T& getInstance(void) {
     return _instance;
@@ -27,6 +23,6 @@ private:
   static T _instance;
 };
 
-template <class T> T Singleton<T>::_instance = T();
+//template <class T> T Singleton<T>::_instance = T();
 
 #endif

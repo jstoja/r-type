@@ -20,6 +20,8 @@
 #endif
 #include "NetworkManager.h"
 
+template <> Network::NetworkManager Singleton<Network::NetworkManager>::_instance;
+
 Network::NetworkManager::NetworkManager() : _runThread(this) {
 #ifdef OS_WINDOWS
      WSADATA wsa;

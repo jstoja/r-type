@@ -23,7 +23,7 @@ namespace Graphic {
     class FreetypeFont {
     public:
 
-        FreetypeFont(const std::string &resourceName, uint8 size = 24);
+        FreetypeFont(const std::string &resourceName, uint8 size = 24, Vec3 color=Vec3(1, 1, 1));
 
         void loadFont(const std::string &resourceName);
 
@@ -60,9 +60,7 @@ namespace Graphic {
         std::vector<int>        _height;
         std::vector<int>        _bearingLeft;
         std::vector<int>        _bearingTop;
-        uint8					_colorRed;
-        uint8					_colorGreen;
-        uint8					_colorBlue;
+        Vec3                    _color;
     };
 }
 

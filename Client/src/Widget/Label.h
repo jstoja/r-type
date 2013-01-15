@@ -13,6 +13,7 @@
 # include <string>
 # include "Widget.h"
 # include "Widget/GraphicWidget.h"
+# include "Vec3.h"
 
 # ifdef OS_IOS
 
@@ -33,13 +34,13 @@ namespace   Widget {
         };
         
         //! Constructor with text
-        Label(Graphic::Scene*, std::string const&);
+        Label(Graphic::Scene*, std::string const&, Vec3 color=Vec3(1, 1, 1));
         
         //! Destructor
         ~Label();
         
-        //! Platform specific update of the label with its actual text
-        void    update();
+        //! Update the label with its actual text
+        void update();
         
         //! Text getter
         std::string const&  getText() const;
@@ -54,23 +55,30 @@ namespace   Widget {
         virtual void setSize(Vec2 const&);
         
         //! Set the text alignment
-        void setTextAligment(TextAlignment alignment);        
+        void setTextAligment(TextAlignment alignment);
+        
+        //! Set the text color
+        void setColor(Vec3 const& color);
         
     private:
         
         //! Platform specific initialisation of the label
         void _init(void);
         
+        //! Platform specific generation of the text texture
+        Graphic::Texture* _getStringTexture(void);
+        
         //! Platform specific destruction of the label
         void _destroy(void);
         
 # ifdef OS_IOS
-        void*                           _label;
+        void*                           _font;
 # else
         Graphic::FreetypeFont*          _font;
 # endif
         std::string                     _text;
         TextAlignment                   _alignment;
+        Vec3                            _color;
     };
 };
 

@@ -13,8 +13,7 @@
 #include "Texture.h"
 
 Texture::Texture(std::string const& filepath) {
-	std::string tmp = Application::getInstance().getResourcesPath() + filepath;
-	_img = ResourcesManager::getInstance().loadResource(tmp);
+	_img = ResourcesManager::getInstance().loadResource(filepath);
 }
 
 Texture::~Texture() {

@@ -61,7 +61,7 @@ void Resource::setData(ByteArray const& cpy) {
 }
 
 void	Resource::_readFile() {
-    std::string filename = Application::getInstance().getResourcesPath() + _name;
+	std::string filename = App.getResourcesPath() + App.convertPath(_name);
     std::ifstream   ifs(filename.c_str(), std::ios::binary);
     uint32          fileSize;
 

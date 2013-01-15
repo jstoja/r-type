@@ -60,7 +60,10 @@ std::string const&				Map::getFilename() const {
 }
 
 bool	Map::_getFilename(std::string const& filePath) {
-	_filename = filePath.substr(filePath.find_last_of(Application::getInstance().getDirectorySeparator()));
+	size_t idx = filePath.find_last_of(Application::getInstance().getDirectorySeparator());
+	if (idx != std::string::npos)
+		++idx;
+	_filename = filePath.substr(idx);
 	_filename = _filename.substr(0, _filename.find_last_of(".lvl"));
 	return (true);
 }
@@ -68,7 +71,7 @@ bool	Map::_getFilename(std::string const& filePath) {
 bool	Map::_checkMagic(std::ifstream& file) {
 	uint32			nbr;
 
-	file >> nbr;
+	file.read((char*)&nbr, sizeof(nbr));
 	if (nbr != MapMagic) {
 		_error = _filename + " is not a RType Map";
 		file.close();
@@ -81,7 +84,7 @@ bool	Map::_getName(std::ifstream& file) {
 	uint32	size;
 	char	*data;
 
-	file >> size;
+	file.read((char*)&size, sizeof(size));
 	data = new char[size];
 	file.read(data, size);
 	_name.assign(data, size);
@@ -92,27 +95,27 @@ bool	Map::_getName(std::ifstream& file) {
 bool	Map::_loadSprites(std::ifstream& file) {
 	uint32	nbr;
 
-	file >> nbr;
+	file.read((char*)&nbr, sizeof(nbr));
 	for (; nbr > 0 && file.good(); --nbr) {
 		std::string	spriteName, imageName;
 		uint32	size;
 		char	*data;
 
-		file >> size;
+		file.read((char*)&size, sizeof(size));
 		data = new char[size];
 		file.read(data, size);
 		spriteName.assign(data, size);
 		delete []data;
-		file >> size;
+		file.read((char*)&size, sizeof(size));
 		data = new char[size];
 		file.read(data, size);
 		imageName.assign(data, size);
 		delete []data;
 		Texture*	texture = _textures[imageName];
 		if (texture == NULL) {
-			texture = new Texture("Levels" +
-			Application::getInstance().getDirectorySeparator() + _filename +
-			Application::getInstance().getDirectorySeparator() + imageName);
+			texture = new Texture(std::string("Levels") +
+			App.getDirectorySeparator() + std::string(_filename) +
+			App.getDirectorySeparator() + std::string(imageName));
 			_textures[imageName] = texture;
 		}
 		if (_sprites[spriteName] != NULL) {
@@ -130,10 +133,11 @@ bool	Map::_loadSprites(std::ifstream& file) {
 bool	Map::_loadFrames(std::ifstream& file, Sprite *sprite) {
 	uint32	nbr;
 
-	file >> nbr;
+	file.read((char*)&nbr, sizeof(nbr));
 	for (; nbr > 0 && file.good(); --nbr) {
 		Vec2	p1, p2;
-		file >> p1.x >> p1.y >> p2.x >> p2.y;
+		file.read((char*)&p1, sizeof(p1));
+		file.read((char*)&p2, sizeof(p2));
 		sprite->addFrame(p1, p2);
 	}
 	return true;
@@ -142,19 +146,19 @@ bool	Map::_loadFrames(std::ifstream& file, Sprite *sprite) {
 bool	Map::_loadObject(std::ifstream& file) {
 	uint32	nbr;
 
-	file >> nbr;
+	file.read((char*)&nbr, sizeof(nbr));
 	for (; nbr > 0 && file.good(); --nbr) {
 		Object obj;
 		int32	size;
 		char	*data;
 
-		file >> size;
+		file.read((char*)&size, sizeof(size));
 		data = new char[size];
 		file.read(data, size);
 		obj.name.assign(data, size);
 		delete []data;
-		file >> obj.xStart;
-		file >> size;
+		file.read((char*)&obj.xStart, sizeof(obj.xStart));
+		file.read((char*)&size, sizeof(size));
 		data = new char[size];
 		file.read(data, size);
 		obj.params.bufcopy(data, size);

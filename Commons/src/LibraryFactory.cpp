@@ -11,6 +11,8 @@
 #include <Application.h>
 #include "LibraryFactory.h"
 
+template <> LibraryFactory Singleton<LibraryFactory>::_instance;
+
 LibraryFactory::LibraryFactory() {
 }
 
@@ -19,7 +21,7 @@ LibraryFactory::~LibraryFactory() {
 }
 
 Library* LibraryFactory::load(std::string const& dir, std::string const& name) {
-	std::string key = dir + Application::getInstance().getDirectorySeparator();
+	std::string key = App.convertPath(dir) + App.getDirectorySeparator();
 
 #if defined(OS_WINDOWS)
 	key += name + ".dll";

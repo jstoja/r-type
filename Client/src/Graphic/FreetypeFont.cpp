@@ -18,8 +18,8 @@
 FT_Library  Graphic::FreetypeFont::_library;
 bool        Graphic::FreetypeFont::_libraryLoaded = false;
 
-Graphic::FreetypeFont::FreetypeFont(const std::string &resourceName, uint8 size)
-: _fontSize(size) {
+Graphic::FreetypeFont::FreetypeFont(const std::string &resourceName, uint8 size, Vec3 color)
+: _fontSize(size), _color(color) {
     
     if (!_libraryLoaded) {
         int error;
@@ -79,9 +79,9 @@ uint8 *Graphic::FreetypeFont::_alphaToRGBA(FT_Bitmap bitmap) {
     uint8 *data = new uint8[bitmap.width * bitmap.rows * 4];
     
     for (int i = 0; i < bitmap.width * bitmap.rows; ++i) {
-        data[i * 4 + 0] = _colorRed;
-        data[i * 4 + 1] = _colorGreen;
-        data[i * 4 + 2] = _colorBlue;
+        data[i * 4 + 0] = 255 * _color.x;
+        data[i * 4 + 1] = 255 * _color.y;
+        data[i * 4 + 2] = 255 * _color.z;
         data[i * 4 + 3] = bitmap.buffer[i];
     }
     return data;
@@ -195,10 +195,4 @@ int     Graphic::FreetypeFont::getWidth(char c) const {
 
 int     Graphic::FreetypeFont::getHeight(char c) const {
     return _height[c];
-}
-
-void	Graphic::FreetypeFont::setColor(uint8 r, uint8 g, uint8 b) {
-	_colorRed = r;
-	_colorGreen = g;
-	_colorBlue = b;
 }

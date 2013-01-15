@@ -13,8 +13,7 @@
 #include "Sound.h"
 
 Sound::Sound(std::string const& filepath) : _changed(false), _isPlaying(false), _repeat(0) {
-	std::string tmp = Application::getInstance().getResourcesPath() + filepath;
-	_sound = ResourcesManager::getInstance().loadResource(tmp);
+	_sound = ResourcesManager::getInstance().loadResource(filepath);
 }
 
 Sound::~Sound() {

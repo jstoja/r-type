@@ -31,6 +31,20 @@ Graphic::Texture::Texture(uint32 id) : Object(id), _glID(0), _size(0) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
 
+Graphic::Texture::Texture(const std::string& resourceImage)
+: Object(), _glID(0), _size(0) {
+    glGenTextures(1, &_glID);
+    
+    // Configure the texture
+    bind();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
+    Graphic::Image image;
+    image.loadFromResource(resourceImage);
+    setData(image.getWidth(), image.getHeight(), image.getPixelsPtr());
+}
+
 Graphic::Texture::~Texture() {
     glDeleteTextures(1, &_glID);
 }

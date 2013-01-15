@@ -17,6 +17,7 @@ int	main(int argc, char *argv[]) {
         Application::getInstance().setRelativeResourcesPath("../Resources");
 #endif
         Application::getInstance().init(argc, argv);
+        Application::getInstance().setRelativeResourcesPath("Resources");
         Client client;
     }
     catch (std::exception* e) {

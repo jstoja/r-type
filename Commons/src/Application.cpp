@@ -17,8 +17,11 @@
 #include "Exception.h"
 #include "Debug.h"
 
+template <class Application> Application Singleton<Application>::_instance;
+
 Application::Application() :
 _argv(NULL), _argc(0), _binaryPath(), _resourcesPath() {
+	std::cout << "PLOP" << std::endl;
 }
 
 Application::~Application() {
@@ -65,7 +68,7 @@ void	Application::_initBinaryPath() {
 #endif
 
 std::string Application::getRelativePath(std::string const& path) const {
-	std::string tmp = _binaryPath + path;
+	std::string tmp = _binaryPath + convertPath(path);
 	return (tmp);
 }
 	
@@ -74,7 +77,7 @@ std::string Application::getResourcesPath() const {
 }
 
 void Application::setRelativeResourcesPath(std::string const& path) {
-    _resourcesPath = path;
+    _resourcesPath = convertPath(path);
 }
 
 char Application::getDirectorySeparator() const {
@@ -83,4 +86,15 @@ char Application::getDirectorySeparator() const {
 # else
 	return ('/');
 #endif
+}
+
+std::string	Application::convertPath(std::string const& path) const {
+	std::string filename = path;
+	if (getDirectorySeparator() != '/') {
+		size_t	idx = filename.find_last_of('/');
+		while ((idx = filename.find_last_of('/')) != std::string::npos) {
+			filename.replace(idx, 1, 1, Application::getInstance().getDirectorySeparator());
+		}
+	}
+	return (filename);
 }

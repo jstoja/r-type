@@ -17,7 +17,7 @@
 
 class Object;
 
-class COMMON_EXPORT_IMPORT_REMOVED ObjectManager : public Singleton<ObjectManager> {
+class COMMON_EXPORT_IMPORT ObjectManager : public Singleton<ObjectManager> {
     friend class Singleton<ObjectManager>;
 public:
     ~ObjectManager();

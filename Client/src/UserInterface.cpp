@@ -18,8 +18,8 @@ _delegate(delegate), _time(), _sceneries() {
     _createSceneries();
     
     // Debug
-    _loginMenu = new Menu::Login(_delegate->getScene(), this);
-    return ;
+//    _loginMenu = new Menu::Login(_delegate->getScene(), this);
+//    return ;
     
     // Present welcome menu
     _welcomeMenu = new Menu::Welcome(_delegate->getScene(), this);

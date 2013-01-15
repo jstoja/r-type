@@ -15,7 +15,9 @@
 # include "Types.h"
 # include "Singleton.hpp"
 
-class COMMON_EXPORT_IMPORT_REMOVED Application : public Singleton<Application> {
+# define App Application::getInstance()
+
+class COMMON_EXPORT_IMPORT Application : public Singleton<Application> {
     friend class Singleton<Application>;
 
 public:
@@ -38,6 +40,8 @@ public:
 
 	std::string getRelativePath(std::string const& path) const;
 	char		getDirectorySeparator() const;
+
+	std::string	convertPath(std::string const& path) const;
 
 private:
     //! Construct the object

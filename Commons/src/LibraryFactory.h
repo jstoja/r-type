@@ -16,7 +16,7 @@
 # include <Library.h>
 # include <Singleton.hpp>
 
-class COMMON_EXPORT_IMPORT_REMOVED LibraryFactory : public Singleton<LibraryFactory> {
+class COMMON_EXPORT_IMPORT LibraryFactory : public Singleton<LibraryFactory> {
     friend class Singleton<LibraryFactory>;
 public:
     ~LibraryFactory();
