@@ -53,8 +53,8 @@ namespace Threading {
 	void run();
 	void wait();
   private:
-    std::vector<Thread<ThreadPool>*>	*_threads;
-    std::queue<ITask*>					*_tasks;
+    std::vector<Thread<ThreadPool>*>*	 _threads;
+    std::queue<ITask*>*					 _tasks;
     Mutex								_tasksMutex;
     Mutex::Condition*					_tasksCondition;
 	bool								_run;

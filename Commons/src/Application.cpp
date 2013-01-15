@@ -22,7 +22,7 @@ template <> Application* Singleton<Application>::_instance = new Application();
 #endif
 
 Application::Application() :
-_argv(NULL), _argc(0), _binaryPath(NULL), _resourcesPath(NULL) {
+_argv(NULL), _argc(0), _binaryPath(new std::string("")), _resourcesPath(new std::string("")) {
 }
 
 Application::~Application() {
@@ -39,10 +39,8 @@ void Application::init(int32 ac, char **av) {
 #ifndef OS_IOS
 
 void	Application::_initBinaryPath() {
-	delete _binaryPath;
-	_binaryPath = NULL;
 # if defined OS_WINDOWS
-    _binaryPath = new std::string(_argv[0]);
+    *_binaryPath = _argv[0];
     *_binaryPath = _binaryPath->substr(0, _binaryPath->find_last_of('\\'));
     *_binaryPath += '\\';
 # elif defined (OS_UNIX)
@@ -51,19 +49,19 @@ void	Application::_initBinaryPath() {
     std::string cmd = _argv[0];
     if (cmd[0] == '/') {
         // If the binary has been launched from the root, we have the full path
-        _binaryPath = new std::string(cmd);
+        *_binaryPath = cmd;
     } else if (cmd.find('/') != std::string::npos) {
         // Else, use getcwd and the path of launch to get the binary path
         char* cwd = getcwd(NULL, 4096);
         if (!cwd)
             throw new Exception("Application cannot get current working directory");
-            _binaryPath = new std::string(cwd) + "/" + cmd;
-            free(cwd);
-            } else
-    throw new Exception("Application cannot be launched from a PATH, the "
-                        "binary path, either absolute or relative to current"
-                        " directory, must be in the launch command in order"
-                        " to find the full binary path");
+        *_binaryPath = std::string(cwd + '/' + cmd);
+        free(cwd);
+    } else
+        throw new Exception("Application cannot be launched from a PATH, the "
+                            "binary path, either absolute or relative to current"
+                            " directory, must be in the launch command in order"
+                            " to find the full binary path");
 
     // Remove the binary name from the path
     *_binaryPath = cmd.substr(0, cmd.find_last_of('/'));
@@ -82,8 +80,7 @@ std::string Application::getResourcesPath() const {
 }
 
 void Application::setRelativeResourcesPath(std::string const& path) {
-	delete _resourcesPath;
-    _resourcesPath = new std::string(convertPath(path));
+    *_resourcesPath = convertPath(path);
 }
 
 char Application::getDirectorySeparator() const {

@@ -11,10 +11,9 @@
 #include "ThreadPool.hpp"
 
 Threading::ThreadPool::ThreadPool(int nbThreads, bool run) :
-	_run(run),
-	_threads(new std::vector<Thread<ThreadPool>*>()),
-	_tasks(new std::queue<ITask*>()) {
- _tasksCondition = new Mutex::Condition(&_tasksMutex);
+_threads(new std::vector<Thread<ThreadPool>*>()), _tasks(new std::queue<ITask*>()),
+_tasksMutex(), _tasksCondition(), _run(run) {
+    _tasksCondition = new Mutex::Condition(&_tasksMutex);
   for (int i = 0; i < nbThreads; ++i) {
     Thread<ThreadPool>* thread = new Thread<ThreadPool>(this);
 	_threads->push_back(thread);

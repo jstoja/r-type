@@ -29,10 +29,7 @@ namespace Widget {
             //! Create a button with position/size and image
             Button(Graphic::Scene*,
                     IButtonDelegate *delegate,
-                    Vec2 const&,
-                    Vec3 const&,
-                    std::string const&,
-                    Widget* parent = NULL);
+                    std::string const&);
 
             //! Destruct the Button
             ~Button(void);

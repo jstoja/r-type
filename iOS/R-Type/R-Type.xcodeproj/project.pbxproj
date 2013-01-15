@@ -23,8 +23,6 @@
 		2613B46716A36E7500CF84AA /* button-create-game.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B44A16A36E7500CF84AA /* button-create-game.png */; };
 		2613B46816A36E7500CF84AA /* button-new-game.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B44B16A36E7500CF84AA /* button-new-game.png */; };
 		2613B46916A36E7500CF84AA /* button-ready.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B44C16A36E7500CF84AA /* button-ready.png */; };
-		2613B46A16A36E7500CF84AA /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B44D16A36E7500CF84AA /* button.png */; };
-		2613B46B16A36E7500CF84AA /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B44E16A36E7500CF84AA /* checkbox.png */; };
 		2613B46C16A36E7500CF84AA /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2613B44F16A36E7500CF84AA /* icon.icns */; };
 		2613B46D16A36E7500CF84AA /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B45016A36E7500CF84AA /* icon.png */; };
 		2613B46E16A36E7500CF84AA /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B45116A36E7500CF84AA /* icon@2x.png */; };
@@ -40,7 +38,6 @@
 		2613B47916A36E7500CF84AA /* stars-red.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B45C16A36E7500CF84AA /* stars-red.png */; };
 		2613B47A16A36E7500CF84AA /* table-lines.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B45D16A36E7500CF84AA /* table-lines.png */; };
 		2613B47B16A36E7500CF84AA /* table-pagination.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B45E16A36E7500CF84AA /* table-pagination.png */; };
-		2613B47C16A36E7500CF84AA /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B45F16A36E7500CF84AA /* test.png */; };
 		2613B47D16A36E7500CF84AA /* text-field.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B46016A36E7500CF84AA /* text-field.png */; };
 		2613B47E16A36E7500CF84AA /* welcome-screen-ios.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B46116A36E7500CF84AA /* welcome-screen-ios.png */; };
 		2613B47F16A36E7500CF84AA /* welcome-screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B46216A36E7500CF84AA /* welcome-screen.png */; };
@@ -107,8 +104,8 @@
 		2699AA811684AED40092AC40 /* Vec2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA701684AED40092AC40 /* Vec2.cpp */; };
 		2699AAAA1684C8570092AC40 /* Rect2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AAA81684C8570092AC40 /* Rect2.cpp */; };
 		269AFFB516A5A8E8005BB638 /* stars-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 269AFFB416A5A8E8005BB638 /* stars-background.png */; };
-		269AFFB916A5A970005BB638 /* TextInputViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 269AFFB816A5A970005BB638 /* TextInputViewController.mm */; };
-		269AFFBB16A5AB90005BB638 /* iOSTextEdit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 269AFFBA16A5AB90005BB638 /* iOSTextEdit.mm */; };
+		269AFFF616A5F75E005BB638 /* iOSTextEdit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 269AFFF516A5F75E005BB638 /* iOSTextEdit.mm */; };
+		269AFFFA16A5F7C7005BB638 /* TextInputViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 269AFFF916A5F7C7005BB638 /* TextInputViewController.mm */; };
 		26B59C4B1685E67200BC64D7 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B59C4A1685E67200BC64D7 /* icon@2x.png */; };
 		26B59C4E1685E6D500BC64D7 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B59C4D1685E6D500BC64D7 /* icon.png */; };
 /* End PBXBuildFile section */
@@ -147,8 +144,6 @@
 		2613B44A16A36E7500CF84AA /* button-create-game.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-create-game.png"; sourceTree = "<group>"; };
 		2613B44B16A36E7500CF84AA /* button-new-game.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-new-game.png"; sourceTree = "<group>"; };
 		2613B44C16A36E7500CF84AA /* button-ready.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-ready.png"; sourceTree = "<group>"; };
-		2613B44D16A36E7500CF84AA /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button.png; sourceTree = "<group>"; };
-		2613B44E16A36E7500CF84AA /* checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox.png; sourceTree = "<group>"; };
 		2613B44F16A36E7500CF84AA /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		2613B45016A36E7500CF84AA /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		2613B45116A36E7500CF84AA /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
@@ -164,7 +159,6 @@
 		2613B45C16A36E7500CF84AA /* stars-red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stars-red.png"; sourceTree = "<group>"; };
 		2613B45D16A36E7500CF84AA /* table-lines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "table-lines.png"; sourceTree = "<group>"; };
 		2613B45E16A36E7500CF84AA /* table-pagination.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "table-pagination.png"; sourceTree = "<group>"; };
-		2613B45F16A36E7500CF84AA /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 		2613B46016A36E7500CF84AA /* text-field.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "text-field.png"; sourceTree = "<group>"; };
 		2613B46116A36E7500CF84AA /* welcome-screen-ios.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-screen-ios.png"; sourceTree = "<group>"; };
 		2613B46216A36E7500CF84AA /* welcome-screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome-screen.png"; sourceTree = "<group>"; };
@@ -293,9 +287,9 @@
 		2699AAA81684C8570092AC40 /* Rect2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Rect2.cpp; path = ../../../Commons/src/Rect2.cpp; sourceTree = "<group>"; };
 		2699AAA91684C8570092AC40 /* Rect2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rect2.h; path = ../../../Commons/src/Rect2.h; sourceTree = "<group>"; };
 		269AFFB416A5A8E8005BB638 /* stars-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stars-background.png"; sourceTree = SOURCE_ROOT; };
-		269AFFB716A5A96F005BB638 /* TextInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextInputViewController.h; sourceTree = "<group>"; };
-		269AFFB816A5A970005BB638 /* TextInputViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TextInputViewController.mm; sourceTree = "<group>"; };
-		269AFFBA16A5AB90005BB638 /* iOSTextEdit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iOSTextEdit.mm; path = ../../../iOS/src/Widget/iOSTextEdit.mm; sourceTree = "<group>"; };
+		269AFFF516A5F75E005BB638 /* iOSTextEdit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iOSTextEdit.mm; path = ../../../iOS/src/Widget/iOSTextEdit.mm; sourceTree = "<group>"; };
+		269AFFF816A5F7C7005BB638 /* TextInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextInputViewController.h; sourceTree = "<group>"; };
+		269AFFF916A5F7C7005BB638 /* TextInputViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TextInputViewController.mm; sourceTree = "<group>"; };
 		26B59C4A1685E67200BC64D7 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../icon@2x.png"; sourceTree = "<group>"; };
 		26B59C4D1685E6D500BC64D7 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -349,8 +343,6 @@
 				2613B44A16A36E7500CF84AA /* button-create-game.png */,
 				2613B44B16A36E7500CF84AA /* button-new-game.png */,
 				2613B44C16A36E7500CF84AA /* button-ready.png */,
-				2613B44D16A36E7500CF84AA /* button.png */,
-				2613B44E16A36E7500CF84AA /* checkbox.png */,
 				2613B44F16A36E7500CF84AA /* icon.icns */,
 				2613B45016A36E7500CF84AA /* icon.png */,
 				2613B45116A36E7500CF84AA /* icon@2x.png */,
@@ -366,7 +358,6 @@
 				2613B45C16A36E7500CF84AA /* stars-red.png */,
 				2613B45D16A36E7500CF84AA /* table-lines.png */,
 				2613B45E16A36E7500CF84AA /* table-pagination.png */,
-				2613B45F16A36E7500CF84AA /* test.png */,
 				2613B46016A36E7500CF84AA /* text-field.png */,
 				2613B46116A36E7500CF84AA /* welcome-screen-ios.png */,
 				2613B46216A36E7500CF84AA /* welcome-screen.png */,
@@ -409,8 +400,8 @@
 				266F075816A4884D004F5554 /* Label.h */,
 				266F075916A4884D004F5554 /* Table.cpp */,
 				266F075A16A4884D004F5554 /* Table.h */,
+				269AFFF516A5F75E005BB638 /* iOSTextEdit.mm */,
 				266F075B16A4884D004F5554 /* TextEdit.cpp */,
-				269AFFBA16A5AB90005BB638 /* iOSTextEdit.mm */,
 				266F075C16A4884D004F5554 /* TextEdit.h */,
 				266F075D16A4884D004F5554 /* Widget.cpp */,
 				266F075E16A4884D004F5554 /* Widget.h */,
@@ -463,8 +454,8 @@
 				2699A9F41684AD400092AC40 /* AppDelegate.m */,
 				2699A9FC1684AD400092AC40 /* MainStoryboard_iPhone.storyboard */,
 				2699A9FF1684AD400092AC40 /* MainStoryboard_iPad.storyboard */,
-				269AFFB716A5A96F005BB638 /* TextInputViewController.h */,
-				269AFFB816A5A970005BB638 /* TextInputViewController.mm */,
+				269AFFF816A5F7C7005BB638 /* TextInputViewController.h */,
+				269AFFF916A5F7C7005BB638 /* TextInputViewController.mm */,
 				2699AA061684AD400092AC40 /* ViewController.h */,
 				2699AA071684AD400092AC40 /* ViewController.mm */,
 				2613B35C16A35A5000CF84AA /* iOSMainViewController.mm */,
@@ -715,8 +706,6 @@
 				2613B46716A36E7500CF84AA /* button-create-game.png in Resources */,
 				2613B46816A36E7500CF84AA /* button-new-game.png in Resources */,
 				2613B46916A36E7500CF84AA /* button-ready.png in Resources */,
-				2613B46A16A36E7500CF84AA /* button.png in Resources */,
-				2613B46B16A36E7500CF84AA /* checkbox.png in Resources */,
 				2613B46C16A36E7500CF84AA /* icon.icns in Resources */,
 				2613B46D16A36E7500CF84AA /* icon.png in Resources */,
 				2613B46E16A36E7500CF84AA /* icon@2x.png in Resources */,
@@ -732,7 +721,6 @@
 				2613B47916A36E7500CF84AA /* stars-red.png in Resources */,
 				2613B47A16A36E7500CF84AA /* table-lines.png in Resources */,
 				2613B47B16A36E7500CF84AA /* table-pagination.png in Resources */,
-				2613B47C16A36E7500CF84AA /* test.png in Resources */,
 				2613B47D16A36E7500CF84AA /* text-field.png in Resources */,
 				2613B47E16A36E7500CF84AA /* welcome-screen-ios.png in Resources */,
 				2613B47F16A36E7500CF84AA /* welcome-screen.png in Resources */,
@@ -829,8 +817,8 @@
 				266F076A16A48872004F5554 /* Login.cpp in Sources */,
 				266F076B16A48872004F5554 /* Welcome.cpp in Sources */,
 				266F076F16A48910004F5554 /* iOSLabel.mm in Sources */,
-				269AFFB916A5A970005BB638 /* TextInputViewController.mm in Sources */,
-				269AFFBB16A5AB90005BB638 /* iOSTextEdit.mm in Sources */,
+				269AFFF616A5F75E005BB638 /* iOSTextEdit.mm in Sources */,
+				269AFFFA16A5F7C7005BB638 /* TextInputViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

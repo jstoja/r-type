@@ -17,8 +17,13 @@ namespace Widget {
     
     class GraphicWidget : public Widget {
     public:
+        
         //! Constructor
-        GraphicWidget(Graphic::Scene*, Widget* parent = NULL);
+        GraphicWidget(Graphic::Scene*);
+        
+        //! Constructor with an image
+        GraphicWidget(Graphic::Scene*, std::string const& imageName,
+                      uint32 nbFrames=1);
         
         //! Destructor
         virtual ~GraphicWidget();
@@ -54,14 +59,10 @@ namespace Widget {
         Graphic::Sprite     *getSprite() const;
         
         Rect2  getRect() const;
-        
-        void    createBackground(std::string const&);
-        
-        void    setBackgroundSize(Vec2 const&);
+
     private:
         Graphic::Scene*     _scene;
         Graphic::Element    _element;
-        Graphic::Element    _background;
     };
 };
 

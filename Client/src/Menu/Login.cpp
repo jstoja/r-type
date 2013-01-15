@@ -11,41 +11,94 @@
 Menu::Login::Login(Graphic::Scene *scene, IMenuDelegate* delegate) :
 _delegate(delegate) {
     
-    _ipField = new Widget::TextEdit(scene, this, "text-field.png");
-    _ipField->setValue("SALUT");
-    _ipField->setSize(Vec2(4, 1));
-    _ipField->setPosition(Vec3(8, 4, 0));
+    _logoWidget = new Widget::GraphicWidget(scene, "logo.png");
+    _logoWidget->setSize(Vec2(11.7, 3.2));
+    _logoWidget->setPosition(Vec3(scene->getViewport().x/2,
+                                  scene->getViewport().y - 1.6));
+    
+    
+    // Setup form
+    
+    _ipLabel = new Widget::Label(scene, "Server IP");
+    _ipLabel->setTextAligment(Widget::Label::TextAlignRight);
+    _ipLabel->setSize(Vec2(4.8, 0.525));
+    _ipLabel->setPosition(Vec3(scene->getViewport().x/2 - 3.2,
+                          4.9, 0));
     
     _ipField = new Widget::TextEdit(scene, this, "text-field.png");
-    _ipField->setValue("Les mecs !");
-    _ipField->setSize(Vec2(4, 1));
-    _ipField->setPosition(Vec3(8, 2, 0));
-
-    /*
-    Widget::Label* label;
-    label = new Widget::Label(scene, "Server IP", Vec3((float32)0x56/0xff, (float32)0xa2/0xff, (float32)0x6f/0xff));
-    label->setTextAligment(Widget::Label::TextAlignCenter);
-    label->setPosition(Vec3(scene->getViewport().x, scene->getViewport().y)
-                          / 2);
-    label->setSize(Vec2(scene->getViewport().x, 1));
-    _labels.push_back(label);
-     */
+    _ipField->setValue("");
+    _ipField->setSize(Vec2(6.5, 1.25));
+    _ipField->setPosition(Vec3(scene->getViewport().x/2 + 2.6,
+                               4.9, 0));
+    
+    _portLabel = new Widget::Label(scene, "Server PorT");
+    _portLabel->setTextAligment(Widget::Label::TextAlignRight);
+    _portLabel->setSize(Vec2(4.8, 0.525));
+    _portLabel->setPosition(Vec3(scene->getViewport().x/2 - 3.2,
+                               3.7, 0));
+    
+    _portField = new Widget::TextEdit(scene, this, "text-field.png");
+    _portField->setValue("");
+    _portField->setSize(Vec2(6.5, 1.25));
+    _portField->setPosition(Vec3(scene->getViewport().x/2 + 2.6,
+                               3.7, 0));
+    
+    
+    _usernameLabel = new Widget::Label(scene, "Username");
+    _usernameLabel->setTextAligment(Widget::Label::TextAlignRight);
+    _usernameLabel->setSize(Vec2(4.8, 0.525));
+    _usernameLabel->setPosition(Vec3(scene->getViewport().x/2 - 3.2,
+                                 2.5, 0));
+    
+    _usernameField = new Widget::TextEdit(scene, this, "text-field.png");
+    _usernameField->setValue("");
+    _usernameField->setSize(Vec2(6.5, 1.25));
+    _usernameField->setPosition(Vec3(scene->getViewport().x/2 + 2.6,
+                                 2.5, 0));
+    
+    _connectionButton = new Widget::Button(scene, this, "button-connection.png");
+    _connectionButton->setSize(Vec2(4.9, 0.85));
+    _connectionButton->setPosition(Vec3(scene->getViewport().x/2, 1));
 }
 
 Menu::Login::~Login(void) {
-    for (std::vector<Widget::Label*>::iterator it = _labels.begin(),
-         end = _labels.end(); it != end; ++it)
-        delete *it;
+    delete _logoWidget;
+    delete _ipLabel;
+    delete _ipField;
+    delete _portLabel;
+    delete _portField;
+    delete _usernameLabel;
+    delete _usernameField;
+    delete _connectionButton;
 }
 
 void Menu::Login::textEditFocused(Widget::TextEdit* instance) {
-    Log("Focused");
+    
 }
 
 void Menu::Login::textEditUnFocused(Widget::TextEdit* instance) {
-    Log("UnFocused");
+    
 }
 
 void Menu::Login::textEditHasChanged(Widget::TextEdit* instance) {
     
+}
+
+void Menu::Login::buttonHovered(Widget::Button &instance) {
+    
+}
+
+void Menu::Login::buttonUnHovered(Widget::Button &instance) {
+    
+}
+
+void Menu::Login::buttonPushed(Widget::Button &instance) {
+    
+}
+
+void Menu::Login::buttonReleased(Widget::Button &instance) {
+    if (_ipField->getValue() != "" && _portField->getValue() != ""
+        && _usernameField->getValue() != "") {
+        _delegate->loginCompleted(_usernameField->getValue(), _ipField->getValue(), _portField->getValue());
+    }
 }
