@@ -15,7 +15,12 @@
 
 void Widget::TextEdit::setFocus(bool focus) {
     Widget::setFocus(focus);
-    iOSMainViewController::getInstance().openTextInput(this);
+    if (focus) {
+        getElement()->setCurrentFrame(1);
+        iOSMainViewController::getInstance().openTextInput(this);
+    } else {
+        getElement()->setCurrentFrame(0);
+    }
 }
 
 #endif

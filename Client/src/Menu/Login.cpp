@@ -65,6 +65,11 @@ Menu::Login::~Login(void) {
     delete _logoWidget;
     delete _ipLabel;
     delete _ipField;
+    delete _portLabel;
+    delete _portField;
+    delete _usernameLabel;
+    delete _usernameField;
+    delete _connectionButton;
 }
 
 void Menu::Login::textEditFocused(Widget::TextEdit* instance) {
@@ -92,5 +97,8 @@ void Menu::Login::buttonPushed(Widget::Button &instance) {
 }
 
 void Menu::Login::buttonReleased(Widget::Button &instance) {
-    
+    if (_ipField->getValue() != "" && _portField->getValue() != ""
+        && _usernameField->getValue() != "") {
+        _delegate->loginCompleted(_usernameField->getValue(), _ipField->getValue(), _portField->getValue());
+    }
 }

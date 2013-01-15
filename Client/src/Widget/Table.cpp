@@ -83,10 +83,6 @@ void    Widget::Table::setLineBackground(uint32 pos,
     GraphicWidget*  w = _widgets[pos][0];
     uint32  sizeLine = getSizeLine(pos);
     
-    w->createBackground(name);
-    w->setBackgroundSize(Vec3(sizeLine,
-                              w->getSize().y,
-                              0.995));
     (void)name;
 }
 

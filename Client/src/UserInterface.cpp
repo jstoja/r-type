@@ -18,8 +18,8 @@ _delegate(delegate), _time(), _sceneries() {
     _createSceneries();
     
     // Debug
-    _loginMenu = new Menu::Login(_delegate->getScene(), this);
-    return ;
+//    _loginMenu = new Menu::Login(_delegate->getScene(), this);
+//    return ;
     
     // Present welcome menu
     _welcomeMenu = new Menu::Welcome(_delegate->getScene(), this);
@@ -36,6 +36,20 @@ void UserInterface::update(void) {
     _delegate->getScene()->setViewportPosition(Vec2(xPos, 0));
 }
 
+void UserInterface::presentMessage(std::string const& message) {
+    _messageLabel = new Widget::Label(_delegate->getScene());
+    _messageLabel->setText(message);
+    _messageLabel->setPosition(Vec3(_delegate->getScene()->getViewport().x,
+                                    _delegate->getScene()->getViewport().y)
+                               /2);
+    _messageLabel->setSize(Vec2(_delegate->getScene()->getViewport().x, 0.6));
+}
+
+void UserInterface::hideMessage(void) {
+    if (_messageLabel)
+        delete _messageLabel;
+}
+
 void UserInterface::welcomeCompleted(void) {
     delete _welcomeMenu;
     
@@ -46,7 +60,8 @@ void UserInterface::welcomeCompleted(void) {
 void UserInterface::loginCompleted(std::string const& login,
 								   std::string const& ipAdress,
 								   std::string const& port) {
-    Log("Login Completed !");
+    delete _loginMenu;
+    presentMessage("CONNECTION IN PROGRESS...");
 }
 
 void UserInterface::newGameCallGeneralMenu(void) {

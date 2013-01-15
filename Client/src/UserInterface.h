@@ -15,6 +15,7 @@
 # include "Menu/IMenuDelegate.h"
 # include "Menu/Welcome.h"
 # include "Menu/Login.h"
+# include "Widget/Label.h"
 
 class UserInterface : public Menu::IMenuDelegate {
 public:
@@ -24,6 +25,9 @@ public:
     
     void update(void);
     
+    void presentMessage(std::string const& message);
+    void hideMessage(void);
+    
     // IMenuDelegate implementation
     virtual void welcomeCompleted(void);
     virtual void loginCompleted(std::string const& login,
@@ -32,7 +36,6 @@ public:
     virtual void newGameCallGeneralMenu(void);
     virtual void serverListCallGeneralMenu(void);
     virtual void optionsCallGeneralMenu(void);
-
     
 private:
     static const float32 _maxViewportX;
@@ -46,6 +49,7 @@ private:
     // Menus
     Menu::Welcome*                  _welcomeMenu;
     Menu::Login*                    _loginMenu;
+    Widget::Label*                  _messageLabel;
 };
 
 #endif /* defined(__R_Type__UserInterface__) */

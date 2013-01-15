@@ -23,7 +23,6 @@
 		2613B46716A36E7500CF84AA /* button-create-game.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B44A16A36E7500CF84AA /* button-create-game.png */; };
 		2613B46816A36E7500CF84AA /* button-new-game.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B44B16A36E7500CF84AA /* button-new-game.png */; };
 		2613B46916A36E7500CF84AA /* button-ready.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B44C16A36E7500CF84AA /* button-ready.png */; };
-		2613B46A16A36E7500CF84AA /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B44D16A36E7500CF84AA /* button.png */; };
 		2613B46B16A36E7500CF84AA /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B44E16A36E7500CF84AA /* checkbox.png */; };
 		2613B46C16A36E7500CF84AA /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2613B44F16A36E7500CF84AA /* icon.icns */; };
 		2613B46D16A36E7500CF84AA /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B45016A36E7500CF84AA /* icon.png */; };
@@ -147,7 +146,6 @@
 		2613B44A16A36E7500CF84AA /* button-create-game.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-create-game.png"; sourceTree = "<group>"; };
 		2613B44B16A36E7500CF84AA /* button-new-game.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-new-game.png"; sourceTree = "<group>"; };
 		2613B44C16A36E7500CF84AA /* button-ready.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-ready.png"; sourceTree = "<group>"; };
-		2613B44D16A36E7500CF84AA /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button.png; sourceTree = "<group>"; };
 		2613B44E16A36E7500CF84AA /* checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox.png; sourceTree = "<group>"; };
 		2613B44F16A36E7500CF84AA /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		2613B45016A36E7500CF84AA /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
@@ -349,7 +347,6 @@
 				2613B44A16A36E7500CF84AA /* button-create-game.png */,
 				2613B44B16A36E7500CF84AA /* button-new-game.png */,
 				2613B44C16A36E7500CF84AA /* button-ready.png */,
-				2613B44D16A36E7500CF84AA /* button.png */,
 				2613B44E16A36E7500CF84AA /* checkbox.png */,
 				2613B44F16A36E7500CF84AA /* icon.icns */,
 				2613B45016A36E7500CF84AA /* icon.png */,
@@ -715,7 +712,6 @@
 				2613B46716A36E7500CF84AA /* button-create-game.png in Resources */,
 				2613B46816A36E7500CF84AA /* button-new-game.png in Resources */,
 				2613B46916A36E7500CF84AA /* button-ready.png in Resources */,
-				2613B46A16A36E7500CF84AA /* button.png in Resources */,
 				2613B46B16A36E7500CF84AA /* checkbox.png in Resources */,
 				2613B46C16A36E7500CF84AA /* icon.icns in Resources */,
 				2613B46D16A36E7500CF84AA /* icon.png in Resources */,

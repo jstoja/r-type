@@ -43,11 +43,6 @@ Widget::GraphicWidget::~GraphicWidget() {
             delete _element.getSprite()->getTexture();
         delete _element.getSprite();
     }
-    if (_background.getSprite()) {
-        if (_background.getSprite()->getTexture())
-            delete _background.getSprite()->getTexture();
-        delete _background.getSprite();
-    }
 }
 
 Vec2 const&         Widget::GraphicWidget::getElementSize() const {
@@ -106,30 +101,4 @@ void    Widget::GraphicWidget::setSprite(Graphic::Sprite* sprite) {
 
 void    Widget::GraphicWidget::setElement(Graphic::Element* element) {
     _element = *element;
-}
-
-void    Widget::GraphicWidget::createBackground(std::string const& name) {
-    Graphic::Image *img = new Graphic::Image();
-    img->loadFromResource("text-field.png");
-    Graphic::Texture* buttonTexture = new Graphic::Texture();
-    buttonTexture->setData(img->getWidth(),
-                           img->getHeight(),
-                           img->getPixelsPtr());
-    Graphic::Sprite* buttonSprite = new Graphic::Sprite();
-    buttonSprite->setTexture(buttonTexture);
-    buttonSprite->setAutoFrames(2, Graphic::Sprite::Vertical);
-    _background.setSprite(buttonSprite);
-    _background.setPosition(Vec3(_element.getPosition().x,
-                                 _element.getPosition().y,
-                                 0.995));
-    _background.setSize(Vec2(getSize().x + 1,
-                             getSize().y + 1));
-    _scene->addElement(&_background);
-}
-
-void    Widget::GraphicWidget::setBackgroundSize(Vec2 const& v) {
-    _background.setPosition(Vec3(_background.getPosition().x + v.x / 2 - 2,
-                                 _background.getPosition().y,
-                                 _background.getPosition().z));
-    _background.setSize(Vec2(v.x + 2, v.y + 1));
 }
