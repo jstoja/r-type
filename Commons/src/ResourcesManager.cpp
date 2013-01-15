@@ -12,7 +12,9 @@
 #include "Exception.h"
 #include "Debug.h"
 
+#ifndef OS_IOS
 template <> ResourcesManager Singleton<ResourcesManager>::_instance = ResourcesManager();
+#endif
 
 ResourcesManager::ResourcesManager() {
 }

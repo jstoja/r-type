@@ -34,7 +34,11 @@ static uint32 UpperPowerOfTwo(uint32 v)
     return v;
 }
 
-Graphic::Texture* Widget::Label::_getStringTexture(void) {    
+Graphic::Texture* Widget::Label::_getStringTexture(void) {
+    
+    if (_text == "")
+        return new Graphic::Texture();
+    
     UIFont* font = (UIFont*)_font;
     NSString* textString = [NSString stringWithUTF8String:_text.c_str()];
     
@@ -72,7 +76,7 @@ Graphic::Texture* Widget::Label::_getStringTexture(void) {
     Graphic::Texture *texture = new Graphic::Texture();
     texture->setData(textureSize.x, textureSize.y, textureData);
     
-    delete textureData;
+    delete[] textureData;
     
     return texture;
 }

@@ -13,7 +13,9 @@
 #include "GraphicException.h"
 #include "Event/Manager.h"
 
+#ifndef OS_IOS
 template <> Graphic::Renderer Singleton<Graphic::Renderer>::_instance = Graphic::Renderer();
+#endif
 
 static const char* vertexShader =
     "attribute vec3 position;\n"

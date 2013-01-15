@@ -17,11 +17,12 @@
 #include "Exception.h"
 #include "Debug.h"
 
+#ifndef OS_IOS
 template <class Application> Application Singleton<Application>::_instance;
+#endif
 
 Application::Application() :
 _argv(NULL), _argc(0), _binaryPath(), _resourcesPath() {
-	std::cout << "PLOP" << std::endl;
 }
 
 Application::~Application() {

@@ -9,7 +9,9 @@
 
 #include "UUIDGenerator.h"
 
+#ifndef OS_IOS
 template <> UUIDGenerator Singleton<UUIDGenerator>::_instance = UUIDGenerator();
+#endif
 
 uint32 UUIDGenerator::_id = 0;
 

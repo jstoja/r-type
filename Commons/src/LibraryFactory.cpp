@@ -11,7 +11,9 @@
 #include <Application.h>
 #include "LibraryFactory.h"
 
+#ifndef OS_IOS
 template <> LibraryFactory Singleton<LibraryFactory>::_instance = LibraryFactory();
+#endif
 
 LibraryFactory::LibraryFactory() {
 }
