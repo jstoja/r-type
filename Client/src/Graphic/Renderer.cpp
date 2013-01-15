@@ -251,6 +251,10 @@ void Graphic::Renderer::_renderScenery(Scenery* scenery) {
 
 void Graphic::Renderer::_setupElementTexture(Element* element) {
     // Send texture coords for the sprite frame
+    if (!element->getSprite())
+        throw new Graphic::Exception("Trying to render an element with no sprite");
+    if (!element->getSprite()->getTexture())
+        throw new Graphic::Exception("Trying to render an element with no texture");
     element->getSprite()->getTexuteCoordsBuffer()->bind();
     uint32 frameTextureCoordsIndex = element->getCurrentFrame() * 12 * sizeof(GL_FLOAT);
     glVertexAttribPointer(_vertexTextureCoordsLocation, 2, GL_FLOAT,

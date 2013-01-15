@@ -67,6 +67,11 @@ void Graphic::Renderer::processEvents(Event::Manager* manager) {
         } else if (sfEvent.type == sf::Event::TextEntered) {
 			Event::Event event(Event::TextEntered, sfEvent.text.unicode, this);
             manager->fire(event);
+        } else if (sfEvent.type == sf::Event::KeyPressed) {
+            if (sfEvent.key.code == sf::Keyboard::Back) {
+                Event::Event event(Event::TextEntered, '\b', this);
+                manager->fire(event);
+            }
         }
         //! Update the viewport if window size has changed
         else if (sfEvent.type == sf::Event::Resized) {

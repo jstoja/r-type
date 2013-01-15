@@ -12,7 +12,7 @@
 # ifndef OS_IOS
 
 void Widget::Label::_init(void) {
-    _font = new Graphic::FreetypeFont("transformers-font.ttf");
+    _font = new Graphic::FreetypeFont("transformers-font.ttf", 26, _color);
     update();
 }
 
@@ -20,10 +20,25 @@ void Widget::Label::_destroy(void) {
     delete _font;
 }
 
+Graphic::Texture* Widget::Label::_getStringTexture(void) {
+    return _font->getStringTexture(_text);
+}
+
+# endif
+
+Widget::Label::Label(Graphic::Scene* scene, std::string const& text, Vec3 color)
+: GraphicWidget(scene, NULL), _text(text), _alignment(TextAlignCenter), _color(color) {
+    _init();
+}
+
+Widget::Label::~Label() {
+    _destroy();
+}
+
 void Widget::Label::update() {
     if (getSize().x + getSize().y == 0)
         return ;
-    Graphic::Texture *texture = _font->getStringTexture(_text);
+    Graphic::Texture *texture = _getStringTexture();
     if (getSprite() && getSprite()->getTexture())
         delete getSprite()->getTexture();
     if (!getSprite()) {
@@ -47,18 +62,6 @@ void Widget::Label::update() {
     getElement()->setPosition(newPos);
 }
 
-# endif
-
-Widget::Label::Label(Graphic::Scene* scene, std::string const& text)
-: GraphicWidget(scene, NULL), _text(text) {
-    _init();
-    _alignment = TextAlignCenter;
-}
-
-Widget::Label::~Label() {
-    _destroy();
-}
-
 std::string const&  Widget::Label::getText() const {
     return _text;
 }
@@ -80,5 +83,10 @@ void Widget::Label::setSize(Vec2 const&s) {
 
 void Widget::Label::setTextAligment(TextAlignment alignment) {
     _alignment = alignment;
+    update();
+}
+
+void Widget::Label::setColor(Vec3 const& color) {
+    _color = color;
     update();
 }

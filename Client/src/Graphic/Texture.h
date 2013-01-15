@@ -19,6 +19,7 @@
 # include "Types.h"
 # include "Object.h"
 # include "Vec2.h"
+# include "Image.h"
 
 namespace Graphic {
     
@@ -31,6 +32,9 @@ namespace Graphic {
         
         //! Create a new texture with a given id
         Texture(uint32 id);
+        
+        //! Create a new texture from a resource image
+        Texture(const std::string& resourceImage);
         
         //! Destruct the texture
         virtual ~Texture();
