@@ -23,8 +23,8 @@ ResourcesManager::~ResourcesManager() {
 }
 
 void ResourcesManager::removeResource(std::string const& name) {
-    std::map<std::string, Resource*>::iterator it = _resourcesName.find(name);
-    if (it != _resourcesName.end()) {
+    std::map<std::string, Resource*>::iterator it = _resourcesName->find(name);
+    if (it != _resourcesName->end()) {
         _resourcesId.erase(it->second->getId());
         _resourcesName.erase(it->second->getName());
     }
