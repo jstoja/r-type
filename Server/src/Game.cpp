@@ -17,7 +17,7 @@
 #include "Sprite.h"
 #include "GameObject.h"
 
-Game::Game(Network::TcpPacket* packet) : _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::State::WAITING) {
+Game::Game(Network::TcpPacket* packet) : _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::WAITING) {
     *packet >> _name;
     *packet >> _nbSlots;
 }
@@ -47,7 +47,7 @@ void     Game::start(void) {
         *toSend.packet << _id;
         _players[i]->sendPacket(toSend);
     }
-    _state = Game::State::STARTED;
+    _state = Game::STARTED;
 }
 
 bool     Game::canJoin(void) {

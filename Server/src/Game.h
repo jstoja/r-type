@@ -46,6 +46,7 @@ public:
     bool     canJoin();
     void     quit(Player* player);
     void     playerReady(Player* player);
+    void     start(void);
 
     virtual void                addGraphicElement(IGraphicElement* element);
     virtual IGraphicElement*    createGraphicElement() const;
