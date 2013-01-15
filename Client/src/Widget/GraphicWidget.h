@@ -17,8 +17,13 @@ namespace Widget {
     
     class GraphicWidget : public Widget {
     public:
+        
         //! Constructor
-        GraphicWidget(Graphic::Scene*, Widget* parent = NULL);
+        GraphicWidget(Graphic::Scene*);
+        
+        //! Constructor with an image
+        GraphicWidget(Graphic::Scene*, std::string const& imageName,
+                      uint32 nbFrames=1);
         
         //! Destructor
         virtual ~GraphicWidget();

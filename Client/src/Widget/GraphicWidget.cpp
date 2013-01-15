@@ -13,11 +13,27 @@
 #include "Graphic/Element.h"
 #include "GraphicWidget.h"
 
-Widget::GraphicWidget::GraphicWidget(Graphic::Scene* scene,
-                                     Widget* parent) :
-    Widget(parent), _scene(scene) {
+Widget::GraphicWidget::GraphicWidget(Graphic::Scene* scene) :
+    Widget(), _scene(scene) {
     _element.setType(Graphic::Element::Floating);
     _scene->addElement(&_element);
+}
+
+Widget::GraphicWidget::GraphicWidget(Graphic::Scene* scene, std::string const& imageName,
+                                     uint32 nbFrames) :
+Widget(), _scene(scene) {
+    _element.setType(Graphic::Element::Floating);
+    _scene->addElement(&_element);
+    
+    Graphic::Image image;
+    image.loadFromResource(imageName);
+    Graphic::Texture* texture = new Graphic::Texture();
+    texture->setData(image.getWidth(), image.getHeight(), image.getPixelsPtr());
+    Graphic::Sprite* sprite = new Graphic::Sprite();
+    sprite->setTexture(texture);
+    sprite->setAutoFrames(nbFrames);
+    
+    setSprite(sprite);
 }
 
 Widget::GraphicWidget::~GraphicWidget() {

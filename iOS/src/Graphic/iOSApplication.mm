@@ -12,7 +12,7 @@
 # if defined OS_IOS
 
 void Application::_initBinaryPath(void) {
-    _binaryPath = [[[NSBundle mainBundle] resourcePath] UTF8String];
+    _binaryPath = new std::string([[[NSBundle mainBundle] resourcePath] UTF8String]);
 }
 
 # endif

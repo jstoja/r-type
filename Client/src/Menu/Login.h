@@ -13,10 +13,11 @@
 # include "Graphic/Scene.h"
 # include "Widget/Label.h"
 # include "Widget/TextEdit.h"
+# include "Widget/Button.h"
 
 namespace Menu {
     
-    class Login : public Widget::ITextEditDelegate {
+    class Login : public Widget::ITextEditDelegate, public Widget::IButtonDelegate {
     public:
         
         Login(Graphic::Scene *scene, IMenuDelegate* delegate);
@@ -26,10 +27,25 @@ namespace Menu {
         virtual void textEditUnFocused(Widget::TextEdit* instance);
         virtual void textEditHasChanged(Widget::TextEdit* instance);
         
+        virtual void buttonHovered(Widget::Button &instance);
+        virtual void buttonUnHovered(Widget::Button &instance);
+        virtual void buttonPushed(Widget::Button &instance);
+        virtual void buttonReleased(Widget::Button &instance);
+        
     private:
         Menu::IMenuDelegate*        _delegate;
-        std::vector<Widget::Label*> _labels;
+        Widget::GraphicWidget*      _logoWidget;
+        
+        Widget::Label*              _ipLabel;
         Widget::TextEdit*           _ipField;
+        
+        Widget::Label*              _portLabel;
+        Widget::TextEdit*           _portField;
+        
+        Widget::Label*              _usernameLabel;
+        Widget::TextEdit*           _usernameField;
+        
+        Widget::Button*             _connectionButton;
   };
 }
 

@@ -10,7 +10,6 @@ namespace Widget {
     public:
       virtual ~IButtonDelegate() {}
 
-      //virtual void buttonClicked(Button &instance) = 0;
       virtual void buttonHovered(Button &instance) = 0;
       virtual void buttonUnHovered(Button &instance) = 0;
       virtual void buttonPushed(Button &instance) = 0;
