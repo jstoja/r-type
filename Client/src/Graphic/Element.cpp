@@ -14,13 +14,13 @@ Graphic::Element::Element(void) :
 Object(),
 _type(Dynamic), _position(), _rotation(0), _opacity(1), _size(),
 _sprite(NULL), _currentFrame(0),
-_updateTransformationMatrix(true) {
+_updateTransformationMatrix(true), _isVisible(true) {
 }
 
 Graphic::Element::Element(uint32 id) :
 Object(id), _position(), _rotation(0), _opacity(1), _size(),
 _sprite(NULL), _currentFrame(0),
-_updateTransformationMatrix(true) {
+_updateTransformationMatrix(true), _isVisible(true) {
 }
 
 Graphic::Element::~Element(void) {
@@ -96,4 +96,12 @@ Graphic::Matrix4f const& Graphic::Element::getTransformationMatrix(void) {
 
 Rect2 Graphic::Element::getRect() const {
     return Rect2(Vec2(_position) - _size / 2, _size);
+}
+
+void Graphic::Element::setVisible(bool visible) {
+	_isVisible = visible;
+}
+
+bool Graphic::Element::isVisible(void) const {
+	return (_isVisible);
 }

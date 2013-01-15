@@ -12,96 +12,83 @@
 #include "Graphic/Scene.h"
 #include "Table.h"
 
-Widget::Table::Table(Widget *parent) :
-    Widget(parent) {
-    _space = 0.0;
+Widget::Table::Table(uint32 columnCount, std::string const& backgroundImage, Graphic::Scene* scene, Widget *parent) : Widget(parent) {
+	_changed = true;
+	_scene = scene;
+	_columnCount = columnCount;
+	_lineHeight = 0.5;
+	_headerBackground = new GraphicWidget(scene, this);
+	_headerBackground->getElement()->setCurrentFrame(0);
+	_columnSizes.resize(columnCount, 3);
+	_columnNames.resize(columnCount);
+	for (unsigned int i = 0; i < columnCount; ++i)
+		_columnNames[i] = new Label(scene, "");
 }
 
 Widget::Table::~Table() {
 }
 
-void    Widget::Table::addLine() {
-    _space += 1;
-    _widgets.push_back(std::vector<GraphicWidget*>());
+void	Widget::Table::setHeaderNames(std::vector<std::string> const& names) {
+	for (uint32 i = 0; i < _columnCount; ++i)
+		_columnNames[i]->setText(i < names.size() ? names[i] : "");
+	_changed = true;
 }
 
-std::vector<Widget::GraphicWidget*> Widget::Table::getLine(uint32 pos) {
-    return _widgets[pos];
+void	Widget::Table::setHeaderName(std::string const& name, uint32 idx) {
+	if (idx < _columnCount)
+		_columnNames[idx]->setText(name);
+	_changed = true;
 }
 
-Widget::GraphicWidget*  Widget::Table::getWidget(uint32 x,
-                                                 uint32 y) {
-    return _widgets[x][y];
+void	Widget::Table::setColumnSizes(std::vector<float32> const& sizes) {
+	for (uint32 i = 0; i < _columnCount; ++i)
+		_columnSizes[i] = i < sizes.size() ? sizes[i] : 1;
+	_changed = true;
 }
 
-void    Widget::Table::addWidget(GraphicWidget* widget,
-                                 uint32 pos) {
-    uint32 sizeLine = getSizeLine(pos);
-    _widgets[pos].push_back(widget);
-    std::cout << "put widget in " << getPosition().x
-                  << " " << getPosition().y + _widgets[pos].size()
-        << std::endl;
-    widget->setPosition(Vec3(getPosition().x + sizeLine,
-                             getPosition().y - pos - _space,
-                        0.990));
+void	Widget::Table::setColumnSize(uint32 size, uint32 idx) {
+	if (idx < _columnCount)
+		_columnSizes[idx] = size;
+	_changed = true;
 }
 
-void    Widget::Table::align(Align alignement, uint32 pos) {
-    uint32 i = 0;
-    std::vector<GraphicWidget*>::iterator it;
-    
-    if (alignement == LEFT) {
-        for (it = _widgets[pos].begin(); it != _widgets[pos].end(); ++it) {
-            
-        }
-    } else if (alignement == RIGHT) {
-        for (it = _widgets[pos].begin(); it != _widgets[pos].end(); ++it) {
-            
-        }
-    } else {
-        for (it = _widgets[pos].begin(); it != _widgets[pos].end(); ++it) {
-            (*it)->setPosition(Vec3(getPosition().x + pos,
-                                    getPosition().y + i,
-                                    0.990));
-            i++;
-        }
-    }
+void	Widget::Table::setLineHeight(float32 lineHeight) {
+	_lineHeight = lineHeight;
 }
 
-uint32  Widget::Table::getSizeLine(uint32 pos) const {
-    std::vector<GraphicWidget*>::const_iterator it;
-    uint32  ret = 0;
-    
-    for (it = _widgets[pos].begin(); it != _widgets[pos].end(); ++it) {
-        ret += (*it)->getSize().x;
-    }
-    return ret;
+void	Widget::Table::setHeaderHeight(float32 headerHeight) {
+	_headerHeight = headerHeight;
 }
 
-void    Widget::Table::setLineBackground(uint32 pos,
-                                         std::string const& name) {
-    GraphicWidget*  w = _widgets[pos][0];
-    uint32  sizeLine = getSizeLine(pos);
-    
-    w->createBackground(name);
-    w->setBackgroundSize(Vec3(sizeLine,
-                              w->getSize().y,
-                              0.995));
-    (void)name;
+void	Widget::Table::setLineNumberByPage(uint32 nbr) {
+	if (nbr < _lineByPages) {
+		for (; nbr < _lineByPages; ++nbr)
+			delete _lineBackgrounds[nbr];
+		_lineBackgrounds.resize(nbr);
+		_lineByPages = nbr;
+	} else {
+		_lineBackgrounds.resize(nbr);
+		for (; _lineByPages < nbr; ++_lineByPages) {
+			GraphicWidget* tmp = new GraphicWidget(_scene, this);
+			tmp->getElement()->setCurrentFrame(_lineByPages % 2 == 0 ? 1 : 2);
+			_lineBackgrounds[_lineByPages] = tmp;
+		}
+	}
+	_changed = true;
 }
 
-/*
-void    Widget::Table::lineBackground(std::string const& name) {
-    uint32 size = getMaxLine();
-   _widgets.begin()->first->createBackground(name);
-   _widgets.begin()->first->setBackgroundSize(Vec2(size, 1));
-    std::map<Label*, std::vector<GraphicWidget*> >::iterator it = _widgets.begin();
-    for (std::vector<GraphicWidget*>::iterator ite = (*it).second.begin() ;
-         ite != (*it).second.end(); ++ite) {
-        (*ite)->createBackground(name);
-        (*ite)->setBackgroundSize(Vec2(size, 1));
-    }
+void    Widget::Table::update() {
+	if (_changed == false)
+		return;
+	float32 width = 0, height = _headerHeight + _lineHeight * (_cells.size() < _lineByPages ? _cells.size() : _lineByPages);
+	for (std::vector<float32>::iterator it = _columnSizes.begin(); it != _columnSizes.end(); ++it)
+		width += *it;
+	setSize(Vec2(width, height));
+	_changed = true;
+	_headerBackground->setPosition(getPosition() + Vec3(0, 0, 0.1));
+	_headerBackground->setSize(Vec2(width, _headerHeight));
+	for (uint32 i = 0; i < _lineByPages; ++i) {
+		_lineBackgrounds[i]->setPosition(getPosition() + Vec3(0, _headerHeight + i * _lineHeight, 0.1));
+		_lineBackgrounds[i]->setSize(Vec2(width, _lineHeight));
+	}
 }
-
-
-*/

@@ -164,7 +164,7 @@ void Graphic::Renderer::render(void) {
     for (std::vector<Element*>::const_iterator it = elements.begin(),
          end = elements.end(); it != end; ++it) {
         Element* element = *it;
-        if (!(element->getType() == Element::Static
+        if (!element->isVisible() || !(element->getType() == Element::Static
               || element->getType() == Element::Dynamic))
             continue;
         // Set element transformation matrix
@@ -186,7 +186,7 @@ void Graphic::Renderer::render(void) {
     for (std::vector<Element*>::const_iterator it = elements.begin(),
          end = elements.end(); it != end; ++it) {
         Element* element = *it;
-        if (!(element->getType() == Element::Floating))
+        if (!element->isVisible() || !(element->getType() == Element::Floating))
             continue;
         // Set element transformation matrix
         glUniformMatrix4fv(_transformationMatrixLocation, 1, GL_FALSE,
