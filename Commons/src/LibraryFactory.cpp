@@ -16,6 +16,7 @@ template <> LibraryFactory Singleton<LibraryFactory>::_instance = LibraryFactory
 #endif
 
 LibraryFactory::LibraryFactory() {
+    _libraries = new std::map<std::string, Library*>;
 }
 
 LibraryFactory::~LibraryFactory() {
@@ -32,21 +33,21 @@ Library* LibraryFactory::load(std::string const& dir, std::string const& name) {
 #else
 	key += "lib" + name + ".so";
 #endif
-	Library	*lib = _libraries[key];
+	Library	*lib = _libraries->at(key);
 	if (lib == NULL) {
 		lib = new Library(key);
 		if (lib->load() == false) {
 			delete lib;
 			return (NULL);
 		}
-		_libraries[key] = lib;
+		_libraries->at(key) = lib;
 	}
 	return lib;
 }
 
 void	LibraryFactory::clear() {
-	for (std::map<std::string, Library*>::iterator it = _libraries.begin(); it != _libraries.end();) {
+	for (std::map<std::string, Library*>::iterator it = _libraries->begin(); it != _libraries->end();) {
 		delete it->second;
 	}
-    _libraries.clear();
+    _libraries->clear();
 }

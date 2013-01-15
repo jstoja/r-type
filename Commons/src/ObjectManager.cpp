@@ -15,6 +15,7 @@ template <> ObjectManager Singleton<ObjectManager>::_instance = ObjectManager();
 #endif
 
 ObjectManager::ObjectManager() {
+    _objects = new std::map<uint32, Object*>;
 }
 
 ObjectManager::~ObjectManager() {
@@ -22,14 +23,14 @@ ObjectManager::~ObjectManager() {
     
 void	ObjectManager::addObject(Object *obj) {
 	if (obj)
-		_objects[obj->getId()] = obj;
+		_objects->at(obj->getId()) = obj;
 }
 
 void	ObjectManager::removeObject(Object *obj) {
 	if (obj)
-		_objects.erase(obj->getId());
+		_objects->erase(obj->getId());
 }
 
 Object*	ObjectManager::getObject(uint32 id) {
-	return (_objects[id]);
+	return (_objects->at(id));
 }
