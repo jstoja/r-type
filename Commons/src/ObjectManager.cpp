@@ -11,7 +11,7 @@
 #include "Object.h"
 
 #ifndef OS_IOS
-template <> ObjectManager Singleton<ObjectManager>::_instance = ObjectManager();
+template <> ObjectManager* Singleton<ObjectManager>::_instance = new ObjectManager();
 #endif
 
 ObjectManager::ObjectManager() {
@@ -19,11 +19,12 @@ ObjectManager::ObjectManager() {
 }
 
 ObjectManager::~ObjectManager() {
+	delete _objects;
 }
     
 void	ObjectManager::addObject(Object *obj) {
 	if (obj)
-		_objects->at(obj->getId()) = obj;
+		(*_objects)[obj->getId()] = obj;
 }
 
 void	ObjectManager::removeObject(Object *obj) {

@@ -53,7 +53,7 @@ class COMMON_EXPORT_IMPORT Resource : public Object {
         void	_readFile();
 
         ByteArray	_data;
-        std::string	_name;
+        std::string	*_name;
 };
 
 #endif

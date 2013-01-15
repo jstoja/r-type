@@ -15,8 +15,8 @@
 bool	Library::load() {
 	if (isLoaded() == false) {
 		_load = false;
-		if ((_handle = dlopen(_fileName.c_str(), RTLD_LAZY)) == NULL)
-			_errorString = dlerror();
+		if ((_handle = dlopen(_fileName->c_str(), RTLD_LAZY)) == NULL)
+			_errorString->assign(dlerror());
 		else
 			_load = true;
 	}
@@ -27,10 +27,10 @@ void*	Library::resolve(const char *name) {
     if (isLoaded()) {
         void *ptr = dlsym(_handle, name);
         if (ptr == NULL)
-            _errorString = dlerror();
+            _errorString->assign(dlerror());
         return ptr;
     }
-	_errorString = "Library is not loaded";
+	_errorString->assign("Library is not loaded");
     return NULL;
 }
 
@@ -39,11 +39,11 @@ bool	Library::unload() {
         if (dlclose(_handle) == 0)
 	       return true;
 		else {
-			_errorString = dlerror();
+			_errorString->assign(dlerror());
 			return false;
 		}
     }
-	_errorString = "Library is not loaded";
+	_errorString->assign("Library is not loaded");
     return false;
 }
 

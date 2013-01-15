@@ -42,6 +42,7 @@ namespace Network {
 		Threading::Thread<NetworkManager>		_runThread;
 	};
 
+	
 }
 
 #endif

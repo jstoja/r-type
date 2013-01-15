@@ -51,8 +51,8 @@ private:
 
     char**		_argv;
     int32		_argc;
-    std::string	_binaryPath;
-    std::string	_resourcesPath;
+    std::string	*_binaryPath;
+    std::string	*_resourcesPath;
 };
 
 #endif

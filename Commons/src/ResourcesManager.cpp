@@ -13,7 +13,7 @@
 #include "Debug.h"
 
 #ifndef OS_IOS
-template <> ResourcesManager Singleton<ResourcesManager>::_instance = ResourcesManager();
+template <> ResourcesManager* Singleton<ResourcesManager>::_instance = new ResourcesManager();
 #endif
 
 ResourcesManager::ResourcesManager() {
@@ -43,9 +43,9 @@ Resource* ResourcesManager::loadResource(std::string const& name) {
     if ((it = _resourcesName->find(name)) != _resourcesName->end())
       return it->second;
     Resource *res = new Resource(name);
-    
-    _resourcesName->at(name) = res;
-    _resourcesId->at(res->getId()) = res;
+
+    (*_resourcesName)[name] = res;
+    (*_resourcesId)[res->getId()] = res;
     return res;
 }
 

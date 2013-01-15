@@ -14,8 +14,8 @@
 
 bool	Library::load() {
 	if (isLoaded() == false) {
-		if ((_handle = LoadLibrary(TEXT(_fileName.c_str()))) == NULL)
-			_errorString = GetLastError();
+		if ((_handle = LoadLibrary(TEXT(_fileName->c_str()))) == NULL)
+			_errorString->assign((char*)GetLastError());
 		else
 			_load = true;
 	}
@@ -26,23 +26,23 @@ void*	Library::resolve(const char *name) {
     if (isLoaded()) {
         void *ptr = GetProcAddress(_handle, name);
 		if (ptr == NULL)
-			_errorString = GetLastError();
+			_errorString->assign((char*)GetLastError());
         return ptr;
     }
-	_errorString = "Library is not loaded";
+	_errorString->assign("Library is not loaded");
     return NULL;
 }
 
 bool	Library::unload() {
     if (isLoaded()) {
 		if (FreeLibrary(_handle) == false) {
-			_errorString = GetLastError();
+			_errorString->assign((char*)GetLastError());
 			return (false);
 		}
 		else
 			return (true);
 	}
-	_errorString = "Library is not loaded";
+	_errorString->assign((char*)"Library is not loaded");
     return false;
 }
 

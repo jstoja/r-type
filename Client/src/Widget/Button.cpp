@@ -40,7 +40,7 @@ Widget::Button::Button(Graphic::Scene* scene,
 
 Widget::Button::~Button() {
     Event::Manager::getInstance().removeEventListener(_eventListener);
-    delete _eventListener;
+	_eventListener->deleteLater();
 }
 
 void    Widget::Button::processEvent(Event::Event const& event) {

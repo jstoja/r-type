@@ -16,15 +16,15 @@ template <typename T>
 class Singleton {
 public:
   static T& getInstance(void) {
-    return _instance;
+    return *_instance;
   }
 
 private:
-  static T _instance;
+  static T* _instance;
 };
 
 #ifdef OS_IOS
-template <class T> T Singleton<T>::_instance = T();
+template <class T> T Singleton<T>::_instance = new T();
 #endif
 
 

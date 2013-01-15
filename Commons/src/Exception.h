@@ -25,8 +25,8 @@ public:
     virtual const char* what() const throw();
 
 private:
-    std::string     _type;
-    std::string     _message;
+    std::string     *_type;
+    std::string     *_message;
 };
 
 #endif /* defined(__RType__Exception__) */

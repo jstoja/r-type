@@ -10,6 +10,7 @@
 # define __R_Type__Event__Manager__
 
 # include <vector>
+# include <list>
 
 # include <OS.h>
 # include "Singleton.hpp"
@@ -32,12 +33,17 @@ namespace Event {
         void fire(Event const& event);
         
     private:
+		void _flushListeners();
+
         Manager(void);
         ~Manager(void);
         
-        std::vector<IProvider*> *_providers;
-        std::vector<Listener*>  *_listeners;
-        Vec2                    _lastPointerPos;
+        std::vector<IProvider*>*	_providers;
+        std::vector<Listener*>*		_listeners;
+        Vec2						_lastPointerPos;
+		int							_isInListenerLoop;
+        std::list<Listener*>*		_listenersToRemove;
+        std::list<Listener*>*		_listenersToAdd;
     };
     
 }

@@ -14,7 +14,7 @@
 #include "Event/Manager.h"
 
 #ifndef OS_IOS
-template <> Graphic::Renderer Singleton<Graphic::Renderer>::_instance = Graphic::Renderer();
+template <> Graphic::Renderer* Singleton<Graphic::Renderer>::_instance = new Graphic::Renderer();
 #endif
 
 static const char* vertexShader =

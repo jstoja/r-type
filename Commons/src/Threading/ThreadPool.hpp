@@ -44,7 +44,7 @@ namespace Threading {
     template <typename T>
     void addTask(T* object, void (T::* function)(void*), void* param) {
       _tasksMutex.lock();
-      _tasks.push(new Task<T>(object, function, param));
+      _tasks->push(new Task<T>(object, function, param));
       _tasksCondition->signal();
       _tasksMutex.unlock();
     }

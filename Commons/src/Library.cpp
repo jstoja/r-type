@@ -9,21 +9,24 @@
 #include "Library.h"
 
 Library::Library(std::string& fileName) :
-	_fileName(fileName),
+	_fileName(new std::string(fileName)),
     _load(false),
-	_handle(NULL) {
+	_handle(NULL),
+	_errorString(new std::string()) {
 }
 
 Library::~Library() {
+	delete _errorString;
+	delete _fileName;
     unload();
 }
 
 std::string const& Library::getErrorString() const {
-    return _errorString;
+    return *_errorString;
 }
 
 std::string const& Library::getFileName() const {
-    return _fileName;
+    return *_fileName;
 }
 
 bool	Library::isLoaded() const {
@@ -31,5 +34,5 @@ bool	Library::isLoaded() const {
 }
 
 void	Library::setFileName(std::string& filename) {
-    _fileName = filename;
+    _fileName->assign(filename);
 }

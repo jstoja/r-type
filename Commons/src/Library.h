@@ -31,14 +31,14 @@ public:
     void	setFileName(std::string&);
     bool	unload();
 private:
-    std::string&    _fileName;
+    std::string*	_fileName;
     bool    _load;
 #ifdef OS_WINDOWS
     HMODULE  _handle;
 #else
     void*   _handle;
 #endif
-    std::string     _errorString;
+    std::string*	_errorString;
 };
 
 #endif /* defined(__R_Type__DLLoader__) */

@@ -12,8 +12,9 @@
 #include "LibraryFactory.h"
 
 #ifndef OS_IOS
-template <> LibraryFactory Singleton<LibraryFactory>::_instance = LibraryFactory();
+template <> LibraryFactory* Singleton<LibraryFactory>::_instance = new LibraryFactory();
 #endif
+
 
 LibraryFactory::LibraryFactory() {
     _libraries = new std::map<std::string, Library*>;

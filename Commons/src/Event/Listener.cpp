@@ -10,15 +10,14 @@
 #include "IListenerDelegate.h"
 
 Event::Listener::Listener(uint32 type, IListenerDelegate* delegate)
-: _type(static_cast<Type>(type)), _delegate(delegate), _rect(), _hasRect(false) {
+: _type(static_cast<Type>(type)), _delegate(delegate), _rect(), _hasRect(false), _delete(false) {
 }
 
 Event::Listener::Listener(uint32 type, Rect2 const& rect, IListenerDelegate* delegate)
-: _type(static_cast<Type>(type)), _delegate(delegate), _rect(rect), _hasRect(true) {
+: _type(static_cast<Type>(type)), _delegate(delegate), _rect(rect), _hasRect(true), _delete(false){
 }
 
 Event::Listener::~Listener() {
-    
 }
 
 
@@ -41,4 +40,12 @@ void        Event::Listener::setRect(Rect2 const& rect) {
 
 bool Event::Listener::hasRect() const {
     return _hasRect;
+}
+
+void	Event::Listener::deleteLater() {
+	_delete = true;
+}
+
+bool	Event::Listener::shouldBeDeleted() const {
+	return (_delete);
 }

@@ -30,12 +30,15 @@ namespace Event {
         void            setRect(Rect2 const& rect);
         bool            hasRect() const;
         void            processEvent(Event const& event);
-        
+		void			deleteLater();
+        bool			shouldBeDeleted() const;
+
     private:
         Type                _type;
         IListenerDelegate*  _delegate;
         Rect2                _rect;
         bool                _hasRect;
+		bool				_delete;
     };
     
 }

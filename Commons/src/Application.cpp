@@ -18,14 +18,16 @@
 #include "Debug.h"
 
 #ifndef OS_IOS
-template <class Application> Application Singleton<Application>::_instance;
+template <> Application* Singleton<Application>::_instance = new Application();
 #endif
 
 Application::Application() :
-_argv(NULL), _argc(0), _binaryPath(), _resourcesPath() {
+_argv(NULL), _argc(0), _binaryPath(NULL), _resourcesPath(NULL) {
 }
 
 Application::~Application() {
+	delete _binaryPath;
+	delete _resourcesPath;
 }
 
 void Application::init(int32 ac, char **av) {
@@ -37,23 +39,25 @@ void Application::init(int32 ac, char **av) {
 #ifndef OS_IOS
 
 void	Application::_initBinaryPath() {
+	delete _binaryPath;
+	_binaryPath = NULL;
 # if defined OS_WINDOWS
-    _binaryPath = _argv[0];
-    _binaryPath = _binaryPath.substr(0, _binaryPath.find_last_of('\\'));
-    _binaryPath += '\\';
+    _binaryPath = new std::string(_argv[0]);
+    *_binaryPath = _binaryPath->substr(0, _binaryPath->find_last_of('\\'));
+    *_binaryPath += '\\';
 # elif defined (OS_UNIX)
     if (!(_argc > 0 && strlen(_argv[0]) > 0))
         throw new Exception("Application cannot find the binary directory");
     std::string cmd = _argv[0];
     if (cmd[0] == '/') {
         // If the binary has been launched from the root, we have the full path
-        _binaryPath = cmd;
+        _binaryPath = new std::string(cmd);
     } else if (cmd.find('/') != std::string::npos) {
         // Else, use getcwd and the path of launch to get the binary path
         char* cwd = getcwd(NULL, 4096);
         if (!cwd)
             throw new Exception("Application cannot get current working directory");
-            _binaryPath = std::string(cwd) + "/" + cmd;
+            _binaryPath = new std::string(cwd) + "/" + cmd;
             free(cwd);
             } else
     throw new Exception("Application cannot be launched from a PATH, the "
@@ -62,23 +66,24 @@ void	Application::_initBinaryPath() {
                         " to find the full binary path");
 
     // Remove the binary name from the path
-    _binaryPath = cmd.substr(0, cmd.find_last_of('/'));
-    _binaryPath += '/';
+    *_binaryPath = cmd.substr(0, cmd.find_last_of('/'));
+    *_binaryPath += '/';
 # endif
 }
 #endif
 
 std::string Application::getRelativePath(std::string const& path) const {
-	std::string tmp = _binaryPath + convertPath(path);
+	std::string tmp = *_binaryPath + convertPath(path);
 	return (tmp);
 }
 	
 std::string Application::getResourcesPath() const {
-    return _binaryPath + _resourcesPath + getDirectorySeparator();
+    return *_binaryPath + *_resourcesPath + getDirectorySeparator();
 }
 
 void Application::setRelativeResourcesPath(std::string const& path) {
-    _resourcesPath = convertPath(path);
+	delete _resourcesPath;
+    _resourcesPath = new std::string(convertPath(path));
 }
 
 char Application::getDirectorySeparator() const {

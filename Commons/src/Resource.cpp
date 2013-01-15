@@ -16,15 +16,17 @@
 #include "ResourcesManager.h"
 
 Resource::Resource() : Object() {
+    _name = new std::string();
 }
 
 Resource::Resource(std::string const& name) : Object() {
-    _name = name;
+    _name = new std::string(name);
     _readFile();
 }
 
 Resource::~Resource() {
 	ResourcesManager::getInstance().removeResource(getName());
+	delete _name;
 }
 
 Resource::Resource(Resource const& cpy) : Object(cpy.getId()) {
@@ -33,11 +35,12 @@ Resource::Resource(Resource const& cpy) : Object(cpy.getId()) {
 }
 
 std::string const& Resource::getName() const {
-    return _name;
+    return *_name;
 }
 
 void	Resource::setName(std::string const& name) {
-    _name = name;
+	delete _name;
+    _name = new std::string(name);
 }
 
 Resource&	Resource::operator=(Resource const& cpy) {
@@ -61,7 +64,7 @@ void Resource::setData(ByteArray const& cpy) {
 }
 
 void	Resource::_readFile() {
-	std::string filename = App.getResourcesPath() + App.convertPath(_name);
+	std::string filename = App.getResourcesPath() + App.convertPath(*_name);
     std::ifstream   ifs(filename.c_str(), std::ios::binary);
     uint32          fileSize;
 

@@ -20,9 +20,9 @@
 #endif
 #include "NetworkManager.h"
 
-#ifndef OS_IOS
-template <> Network::NetworkManager Singleton<Network::NetworkManager>::_instance = Network::NetworkManager();
-#endif
+# ifndef OS_IOS
+template <> Network::NetworkManager* Singleton<Network::NetworkManager>::_instance = new Network::NetworkManager();
+# endif
 
 Network::NetworkManager::NetworkManager() : _runThread(this) {
 #ifdef OS_WINDOWS
