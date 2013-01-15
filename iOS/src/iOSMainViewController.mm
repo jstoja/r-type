@@ -9,6 +9,8 @@
 #include "iOSMainViewController.h"
 #include "Debug.h"
 
+//template <> iOSMainViewController Singleton<iOSMainViewController>::_instance = iOSMainViewController();
+
 iOSMainViewController::iOSMainViewController(void) :
 _viewController(NULL), _events() {
 }

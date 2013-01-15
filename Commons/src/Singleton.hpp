@@ -23,6 +23,9 @@ private:
   static T _instance;
 };
 
-//template <class T> T Singleton<T>::_instance = T();
+#ifdef OS_IOS
+template <class T> T Singleton<T>::_instance = T();
+#endif
+
 
 #endif

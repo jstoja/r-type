@@ -27,7 +27,7 @@ void Graphic::Image::loadFromData(ByteArray const& data) {
     _height = image.getSize().y;
     uint32 dataSize = _width * _height * 4;
     if (_pixels)
-        delete _pixels;
+        delete[] _pixels;
     _pixels = new uint8[dataSize];
     memcpy((void*)_pixels, image.getPixelsPtr(), dataSize);
 }

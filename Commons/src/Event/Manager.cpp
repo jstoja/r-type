@@ -12,7 +12,9 @@
 #include "Manager.h"
 #include "Event.h"
 
+#ifndef OS_IOS
 template <> Event::Manager Singleton<Event::Manager>::_instance = Event::Manager();
+#endif
 
 Event::Manager::Manager(void) : _providers(), _listeners(), _lastPointerPos() {
 }

@@ -40,6 +40,8 @@ Widget::TextEdit::TextEdit(Graphic::Scene* scene,
 }
 
 Widget::TextEdit::~TextEdit() {
+    Event::Manager::getInstance().removeEventListener(_eventListener);
+    delete _eventListener;
 }
 
 std::string const&  Widget::TextEdit::getText() const {
@@ -71,6 +73,7 @@ void    Widget::TextEdit::clear() {
 }
 
 void    Widget::TextEdit::processEvent(Event::Event const& event) {
+    Log("process");
     if (event.type == Event::PointerPushed) {
         if (!hasFocus() && getRect().in(event.pos)) {
             setFocus(true);
@@ -88,6 +91,4 @@ void    Widget::TextEdit::processEvent(Event::Event const& event) {
             *this << (char)event.value;
         _delegate->textEditHasChanged(this);
     }
-    Event::Manager::getInstance().processEvents();
-    Graphic::Renderer::getInstance().render();
 }

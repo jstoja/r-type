@@ -10,7 +10,9 @@
 #include "ObjectManager.h"
 #include "Object.h"
 
+#ifndef OS_IOS
 template <> ObjectManager Singleton<ObjectManager>::_instance = ObjectManager();
+#endif
 
 ObjectManager::ObjectManager() {
 }

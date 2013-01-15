@@ -12,7 +12,9 @@
 #include "ResourcesManager.h"
 #include "Resource.h"
 
+#ifndef OS_IOS
 template <> Sound::SoundManager	Singleton<Sound::SoundManager>::_instance;
+#endif
 
 Sound::SoundManager::SoundManager() {  
 }

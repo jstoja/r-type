@@ -43,8 +43,6 @@ Graphic::Element*   Widget::GraphicWidget::getElement() {
 }
 
 bool    Widget::GraphicWidget::loadImage(const std::string &image_path) {
-    
-    std::cout << image_path << std::endl;
     Graphic::Image *img = new Graphic::Image(image_path);
     Graphic::Texture* buttonTexture = new Graphic::Texture();
     buttonTexture->setData(img->getWidth(),
@@ -114,7 +112,6 @@ void    Widget::GraphicWidget::createBackground(std::string const& name) {
 }
 
 void    Widget::GraphicWidget::setBackgroundSize(Vec2 const& v) {
-    std::cout << " a " << v.x << std::endl;
     _background.setPosition(Vec3(_background.getPosition().x + v.x / 2 - 2,
                                  _background.getPosition().y,
                                  _background.getPosition().z));
