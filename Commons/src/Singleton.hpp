@@ -24,7 +24,7 @@ private:
 };
 
 #ifdef OS_IOS
-template <class T> T Singleton<T>::_instance = new T();
+template <class T> T* Singleton<T>::_instance = new T();
 #endif
 
 

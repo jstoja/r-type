@@ -18,7 +18,7 @@ Widget::CheckBox::CheckBox(Graphic::Scene* scene,
                            ICheckBoxDelegate *delegate, 
                            bool checked,
                            Widget* parent)
-: GraphicWidget(scene, parent),
+: GraphicWidget(scene),
   _checked(checked) {
       //  _imagePath = "./checkbox.png";
       _imagePath = Application::getInstance().getResourcesPath() + std::string("button.png");
@@ -34,7 +34,7 @@ Widget::CheckBox::CheckBox(Graphic::Scene* scene,
                            std::string const& image,
                            bool checked,
                            Widget* parent)
-:  GraphicWidget(scene, parent),
+:  GraphicWidget(scene),
   _imagePath(image),
   _checked(checked),
   _delegate(delegate) {

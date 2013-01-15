@@ -29,12 +29,6 @@ Menu::GeneralMenu::GeneralMenu(Graphic::Scene *scene, Menu::IMenuDelegate *deleg
         std::cout << "Viewport has x: " << scene->getViewport().x << " y: " << scene->getViewport().y << std::endl;
         for(uint32 i = 0; buttonsAssets[i].image != NULL; ++i) {
             std::cout << "Button n " << i << " has x: " << offsetX << " and y: " << offsetY - i*escapment << std::endl;
-            button = new Widget::Button(scene,
-                    this,
-                    Vec2(3.0, 1.0),
-                    Vec3(offsetX, offsetY - i*escapment),
-                    buttonsAssets[i].image);
-            _buttons.push_back(button);
         }
 
     }

@@ -17,11 +17,12 @@ const std::string Menu::Welcome::backgroundImage = "welcome-screen.png";
 
 Menu::Welcome::Welcome(Graphic::Scene *scene, IMenuDelegate* delegate)
 : _delegate(delegate),
-  _button(scene, this, scene->getViewport(),
-          Vec3(scene->getViewport().x,
-               scene->getViewport().y)
-          / 2.0, backgroundImage)
+  _button(scene, this, backgroundImage)
 {
+    _button.setSize(scene->getViewport());
+    _button.setPosition(Vec3(scene->getViewport().x,
+                             scene->getViewport().y)
+                        / 2.0);
       Graphic::Sprite *sprite = _button.getSprite();
       sprite->clearFrames();
       sprite->addFrame(Graphic::Sprite::Frame(Vec2(0.0, 0.0), Vec2(1.0, 1.0)));

@@ -27,7 +27,7 @@ Graphic::Texture* Widget::Label::_getStringTexture(void) {
 # endif
 
 Widget::Label::Label(Graphic::Scene* scene, std::string const& text, Vec3 color)
-: GraphicWidget(scene, NULL), _text(text), _alignment(TextAlignCenter), _color(color) {
+: GraphicWidget(scene), _text(text), _alignment(TextAlignCenter), _color(color) {
     _init();
 }
 
