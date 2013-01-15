@@ -13,7 +13,7 @@
 #include "Widget.h"
 
 Widget::Widget::Widget(Widget* parent)
-    : _parent(parent) {
+    : _parent(parent), _focus(false) {
 }
 
 Widget::Widget::~Widget() {

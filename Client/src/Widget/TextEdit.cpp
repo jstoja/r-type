@@ -88,6 +88,4 @@ void    Widget::TextEdit::processEvent(Event::Event const& event) {
             *this << (char)event.value;
         _delegate->textEditHasChanged(this);
     }
-    Event::Manager::getInstance().processEvents();
-    Graphic::Renderer::getInstance().render();
 }
