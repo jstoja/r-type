@@ -28,8 +28,7 @@ namespace Widget {
     class Label;
     class ITextEditDelegate;
     
-    class TextEdit : public GraphicWidget,
-                     public Event::IListenerDelegate {
+    class TextEdit : public GraphicWidget, public Event::IListenerDelegate {
     public:
         //! Constructor
         TextEdit(Graphic::Scene* scene,
@@ -39,36 +38,36 @@ namespace Widget {
         //! Destructor
         ~TextEdit();
         
-        //! Getter text
-        std::string const&   getText() const;
+        //! Return the value of the text input
+        std::string const&   getValue() const;
 
-        //! Setter text
-        void    setText(std::string const&);
+        //! Set the field value
+        void    setValue(std::string const&);
         
         //! Draw
         void    draw() {}
-        
-        //! Put a char in string
-        void    operator<<(char);
-        
-        //! Put a string in string
-        void    operator<<(std::string const&);
-        
+                
         //! Init the text edit
         void    init();
         
-        //! Clear text
-        void    clear();
-        
         //! Set position
         void    setPosition(Vec3 const&);
+                         
+         //! Set size
+         void    setSize(Vec2 const&);
         
-        //! Overlead of process event
-        virtual void    processEvent(Event::Event const&);
+        //! Overload of process event
+        virtual void processEvent(Event::Event const&);
+        
+        //! Overload of set focus to handle iOS input
+        virtual void setFocus(bool);
+        
     private:
         Event::Listener*    _eventListener;
         Label               _label;
         ITextEditDelegate*  _delegate;
+        int32               _labelMaxLength;
+        std::string         _value;
     };
 };
 

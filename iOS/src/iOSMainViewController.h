@@ -14,6 +14,7 @@
 # import "ViewController.h"
 # import <GLKit/GLKit.h>
 # include "Event/Manager.h"
+# include "Widget/TextEdit.h"
 
 # include <stack>
 
@@ -37,13 +38,21 @@ public:
     //! Push a new event to be provided to the application
     void pushEvent(Event::Event& event);
     
+    //! Return the OpenGL view of the main controller
     GLKView* getOpenGLView(void) const;
+    
+    //! Open the text input for a given text edit
+    void openTextInput(Widget::TextEdit* textEdit);
+    
+    //! Get the current text edit for input
+    Widget::TextEdit* getCurrentTextEdit(void) const;
     
 private:
     iOSMainViewController(void);
     
     ViewController*             _viewController;
     std::stack<Event::Event>    _events;
+    Widget::TextEdit*           _currentTextEdit;
 };
 
 #endif /* defined(__R_Type__iOSMainViewController__) */

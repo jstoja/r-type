@@ -21,4 +21,6 @@ class Client;
 @property (nonatomic) Client* client;
 @property (strong, nonatomic) EAGLContext *context;
 
+-(void)openTextInput;
+
 @end
