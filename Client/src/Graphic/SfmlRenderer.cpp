@@ -68,10 +68,13 @@ void Graphic::Renderer::processEvents(Event::Manager* manager) {
 			Event::Event event(Event::TextEntered, sfEvent.text.unicode, this);
             manager->fire(event);
         } else if (sfEvent.type == sf::Event::KeyPressed) {
-            if (sfEvent.key.code == sf::Keyboard::Back) {
+// Fixed Sfml Backspace Event Missing on textEntered
+#ifdef OS_MAC
+			if (sfEvent.key.code == sf::Keyboard::Back) {
                 Event::Event event(Event::TextEntered, '\b', this);
                 manager->fire(event);
             }
+#endif
         }
         //! Update the viewport if window size has changed
         else if (sfEvent.type == sf::Event::Resized) {

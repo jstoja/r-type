@@ -15,7 +15,7 @@
 #include "Graphic/Scene.h"
 #include "Graphic/Image.h"
 
-#include "Menu/WelcomeMenu.h"
+#include "Menu/Welcome.h"
 #include "Menu/IMenuDelegate.h"
 
 #include <SFML/Graphics.hpp>
