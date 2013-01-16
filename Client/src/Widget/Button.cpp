@@ -40,16 +40,16 @@ Widget::Button::~Button() {
 void    Widget::Button::processEvent(Event::Event const& event) {
   if (event.type == Event::PointerReleased) {
       setCurrentFrame(1);
-      _delegate->buttonReleased(*this);
+      _delegate->buttonReleased(this);
   } else if (event.type == Event::PointerPushed) {
       setCurrentFrame(0);
-      _delegate->buttonPushed(*this);
+      _delegate->buttonPushed(this);
   } else if (event.type == Event::PointerIn) {
       setCurrentFrame(1);
-      _delegate->buttonHovered(*this);
+      _delegate->buttonHovered(this);
   } else if (event.type == Event::PointerOut) {
       setCurrentFrame(2);
-      _delegate->buttonUnHovered(*this);
+      _delegate->buttonUnHovered(this);
   }
 }
 

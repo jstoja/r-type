@@ -9,7 +9,7 @@
 #include "Menu/Login.h"
 
 Menu::Login::Login(Graphic::Scene *scene, IMenuDelegate* delegate) :
-_delegate(delegate) {
+Menu::Menu(scene, delegate) {
     
     _logoWidget = new Widget::GraphicWidget(scene, "logo.png");
     _logoWidget->setSize(Vec2(11.7, 3.2));
@@ -65,6 +65,11 @@ Menu::Login::~Login(void) {
     delete _logoWidget;
     delete _ipLabel;
     delete _ipField;
+    delete _portLabel;
+    delete _portField;
+    delete _usernameLabel;
+    delete _usernameField;
+    delete _connectionButton;
 }
 
 void Menu::Login::textEditFocused(Widget::TextEdit* instance) {
@@ -79,18 +84,21 @@ void Menu::Login::textEditHasChanged(Widget::TextEdit* instance) {
     
 }
 
-void Menu::Login::buttonHovered(Widget::Button &instance) {
+void Menu::Login::buttonHovered(Widget::Button* instance) {
     
 }
 
-void Menu::Login::buttonUnHovered(Widget::Button &instance) {
+void Menu::Login::buttonUnHovered(Widget::Button* instance) {
     
 }
 
-void Menu::Login::buttonPushed(Widget::Button &instance) {
+void Menu::Login::buttonPushed(Widget::Button* instance) {
     
 }
 
-void Menu::Login::buttonReleased(Widget::Button &instance) {
-    
+void Menu::Login::buttonReleased(Widget::Button* instance) {
+    if (_ipField->getValue() != "" && _portField->getValue() != ""
+        && _usernameField->getValue() != "") {
+        getDelegate()->loginCompleted(_usernameField->getValue(), _ipField->getValue(), _portField->getValue());
+    }
 }

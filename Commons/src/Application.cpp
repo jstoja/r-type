@@ -49,13 +49,13 @@ void	Application::_initBinaryPath() {
     std::string cmd = _argv[0];
     if (cmd[0] == '/') {
         // If the binary has been launched from the root, we have the full path
-        _binaryPath = new std::string(cmd);
+        *_binaryPath = cmd;
     } else if (cmd.find('/') != std::string::npos) {
         // Else, use getcwd and the path of launch to get the binary path
         char* cwd = getcwd(NULL, 4096);
         if (!cwd)
             throw new Exception("Application cannot get current working directory");
-        _binaryPath = new std::string(cwd + '/' + cmd);
+        *_binaryPath = std::string(cwd + '/' + cmd);
         free(cwd);
     } else
         throw new Exception("Application cannot be launched from a PATH, the "

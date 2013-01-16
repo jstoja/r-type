@@ -9,6 +9,7 @@
 #ifndef LOGIN_MENU_H
 # define LOGIN_MENU_H
 
+# include "Menu.h"
 # include "IMenuDelegate.h"
 # include "Graphic/Scene.h"
 # include "Widget/Label.h"
@@ -17,7 +18,7 @@
 
 namespace Menu {
     
-    class Login : public Widget::ITextEditDelegate, public Widget::IButtonDelegate {
+    class Login : public Menu, public Widget::ITextEditDelegate, public Widget::IButtonDelegate {
     public:
         
         Login(Graphic::Scene *scene, IMenuDelegate* delegate);
@@ -27,13 +28,12 @@ namespace Menu {
         virtual void textEditUnFocused(Widget::TextEdit* instance);
         virtual void textEditHasChanged(Widget::TextEdit* instance);
         
-        virtual void buttonHovered(Widget::Button &instance);
-        virtual void buttonUnHovered(Widget::Button &instance);
-        virtual void buttonPushed(Widget::Button &instance);
-        virtual void buttonReleased(Widget::Button &instance);
+        virtual void buttonHovered(Widget::Button* instance);
+        virtual void buttonUnHovered(Widget::Button* instance);
+        virtual void buttonPushed(Widget::Button* instance);
+        virtual void buttonReleased(Widget::Button* instance);
         
     private:
-        Menu::IMenuDelegate*        _delegate;
         Widget::GraphicWidget*      _logoWidget;
         
         Widget::Label*              _ipLabel;

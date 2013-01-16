@@ -13,14 +13,27 @@
 
 #ifdef OS_IOS
 
+// Biwtise hack to upper a number to its nearest power of two
+static uint32 UpperPowerOfTwo(uint32 v)
+{
+    v--;
+    v |= v >> 1;
+    v |= v >> 2;
+    v |= v >> 4;
+    v |= v >> 8;
+    v |= v >> 16;
+    v++;
+    return v;
+}
+
 void Graphic::Image::loadFromData(ByteArray const& data) {
     @autoreleasepool {
         NSData* nsData = [NSData dataWithBytes:data.getData() length:data.getSize()];
         UIImage* image = [[UIImage alloc] initWithData:nsData];
         if (image) {
-            // Get the image data
-            _width = [image size].width;
-            _height = [image size].height;
+            // Get the image data, and upscale it two power-of-two sizes :)
+            _width = UpperPowerOfTwo([image size].width);
+            _height = UpperPowerOfTwo([image size].height);
             if (_pixels)
                 delete[] _pixels;
             _pixels = new uint8[_width * _height * 4];

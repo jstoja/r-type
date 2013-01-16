@@ -8,13 +8,14 @@
 #ifndef WELCOME_MENU_H
 # define WELCOME_MENU_H
 
+# include "Menu.h"
 # include "IMenuDelegate.h"
 # include "Widget/Button.h"
 # include "Widget/IButtonDelegate.h"
 
 namespace Menu {
     
-    class Welcome: public Widget::IButtonDelegate {
+    class Welcome : public Menu, public Widget::IButtonDelegate {
     public:
         
         static const std::string backgroundImage;
@@ -23,12 +24,11 @@ namespace Menu {
         ~Welcome();
 
         //! IButtonDelegate Methods
-        virtual void buttonHovered(Widget::Button &instance);
-        virtual void buttonUnHovered(Widget::Button &instance);
-        virtual void buttonPushed(Widget::Button &instance);
-        virtual void buttonReleased(Widget::Button &instance);
+        virtual void buttonHovered(Widget::Button* instance);
+        virtual void buttonUnHovered(Widget::Button* instance);
+        virtual void buttonPushed(Widget::Button* instance);
+        virtual void buttonReleased(Widget::Button* instance);
     private:
-        Menu::IMenuDelegate*    _delegate;
         Widget::Button          _button;
     };
     

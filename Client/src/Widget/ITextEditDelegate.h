@@ -12,9 +12,9 @@ namespace Widget {
     public:
       virtual ~ITextEditDelegate() {}
 
-      virtual void textEditFocused(TextEdit* instance) = 0;
-      virtual void textEditUnFocused(TextEdit* instance) = 0;
-      virtual void textEditHasChanged(TextEdit* instance) = 0;
+      virtual void textEditFocused(TextEdit* instance) {};
+      virtual void textEditUnFocused(TextEdit* instance) {};
+      virtual void textEditHasChanged(TextEdit* instance) {};
   };
 }
 
