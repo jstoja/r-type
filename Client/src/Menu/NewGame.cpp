@@ -12,7 +12,7 @@
 
 Menu::NewGame::NewGame(Graphic::Scene *scene, IMenuDelegate* delegate,
                        std::string const& serverName)
-: Menu::Menu(scene, delegate), _nbPlayers(1) {
+: Menu(scene, delegate), _nbPlayers(1) {
     
     // Server title
     _serverLabel = new Widget::Label(scene, "SERVER:", Vec3(0x5658a2));

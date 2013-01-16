@@ -19,7 +19,7 @@
 
 namespace Menu {
     
-    class NewGame : public Menu::Menu, public Widget::ITextEditDelegate, public Widget::IButtonDelegate, public Event::IListenerDelegate {
+	class NewGame : public Menu, public Widget::ITextEditDelegate, public Widget::IButtonDelegate, public Event::IListenerDelegate {
     public:
         
         NewGame(Graphic::Scene *scene, IMenuDelegate* delegate,

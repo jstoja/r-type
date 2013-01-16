@@ -34,7 +34,7 @@ public:
 		_table->setPosition(Vec3(8, 4.5));
 		_table->setHeaderName("C1", 0);
 		_table->setHeaderName("C2", 1);
-		_table->setLineNumberByPage(8);
+		_table->setLineNumberByPage(3);
 		_table->setColumnAlignement(Widget::Table::RIGHT, 1);
 		std::vector<std::string>	data;
 		data.push_back("V1/1");

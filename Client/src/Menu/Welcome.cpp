@@ -16,7 +16,7 @@ const std::string Menu::Welcome::backgroundImage = "welcome-screen.png";
 #endif
 
 Menu::Welcome::Welcome(Graphic::Scene *scene, IMenuDelegate* delegate)
-: Menu::Menu(scene, delegate),
+: Menu(scene, delegate),
   _button(scene, this, backgroundImage)
 {
     _button.setSize(scene->getViewport());

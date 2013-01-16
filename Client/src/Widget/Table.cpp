@@ -28,16 +28,16 @@ Widget::Table::Table(uint32 columnCount, std::string const& backgroundImage, Gra
 	setLineHeight(1);
 	setHeaderHeight(1);
 	setWidthHeaderPadding(0.2);
-	setHeightHeaderPadding(0.25);
+	setHeightHeaderPadding(0.3);
 	setWidthCellPadding(0.2);
-	setHeightCellPadding(0.25);
+	setHeightCellPadding(0.3);
 	_columnSizes.resize(columnCount, 15.36 / 2);
 	_columnNames.resize(columnCount);
 	_columnAligns.resize(columnCount, LEFT);
 	for (unsigned int i = 0; i < columnCount; ++i)
 		_columnNames[i] = new Label(scene, "");
 	_headerBackground = new GraphicWidget(scene, backgroundImage, 4);
-	_headerBackground->getElement()->setCurrentFrame(0);
+	_headerBackground->getElement()->setCurrentFrame(3);
 	_lineByPages = 0;
 	setLineNumberByPage(6);
 	_init = false;
@@ -289,7 +289,7 @@ void	Widget::Table::processEvent(Event::Event const& event) {
 	} else if (event.type & Event::PointerPushed && event.pointerButton == Event::PointerLeft) {
 		if (_currentLine >= 0) {
 			_currentBackground = _lineBackgrounds[_currentLine];
-			_currentBackground->getElement()->setCurrentFrame(3);
+			_currentBackground->getElement()->setCurrentFrame(0);
 		}
 	}
 }

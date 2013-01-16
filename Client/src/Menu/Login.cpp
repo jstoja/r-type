@@ -9,7 +9,7 @@
 #include "Menu/Login.h"
 
 Menu::Login::Login(Graphic::Scene *scene, IMenuDelegate* delegate) :
-Menu::Menu(scene, delegate) {
+Menu(scene, delegate) {
     
     _logoWidget = new Widget::GraphicWidget(scene, "logo.png");
     _logoWidget->setSize(Vec2(11.7, 3.2));
