@@ -21,44 +21,45 @@ Menu(scene, delegate) {
     
     _ipLabel = new Widget::Label(scene, "Server IP");
     _ipLabel->setTextAligment(Widget::Label::TextAlignRight);
-    _ipLabel->setSize(Vec2(4.8, 0.525));
     _ipLabel->setPosition(Vec3(scene->getViewport().x/2 - 3.2,
                           4.9, 0));
+    _ipLabel->setSize(Vec2(4.8, 0.525));
+
     
     _ipField = new Widget::TextEdit(scene, this, "text-field.png");
     _ipField->setValue("");
-    _ipField->setSize(Vec2(6.5, 1.25));
     _ipField->setPosition(Vec3(scene->getViewport().x/2 + 2.6,
                                4.9, 0));
+    _ipField->setSize(Vec2(6.5, 1.25));
     
     _portLabel = new Widget::Label(scene, "Server PorT");
     _portLabel->setTextAligment(Widget::Label::TextAlignRight);
-    _portLabel->setSize(Vec2(4.8, 0.525));
     _portLabel->setPosition(Vec3(scene->getViewport().x/2 - 3.2,
                                3.7, 0));
+    _portLabel->setSize(Vec2(4.8, 0.525));    
     
     _portField = new Widget::TextEdit(scene, this, "text-field.png");
     _portField->setValue("");
-    _portField->setSize(Vec2(6.5, 1.25));
     _portField->setPosition(Vec3(scene->getViewport().x/2 + 2.6,
                                3.7, 0));
+    _portField->setSize(Vec2(6.5, 1.25));
     
     
     _usernameLabel = new Widget::Label(scene, "Username");
     _usernameLabel->setTextAligment(Widget::Label::TextAlignRight);
-    _usernameLabel->setSize(Vec2(4.8, 0.525));
     _usernameLabel->setPosition(Vec3(scene->getViewport().x/2 - 3.2,
                                  2.5, 0));
+    _usernameLabel->setSize(Vec2(4.8, 0.525));    
     
     _usernameField = new Widget::TextEdit(scene, this, "text-field.png");
     _usernameField->setValue("");
-    _usernameField->setSize(Vec2(6.5, 1.25));
     _usernameField->setPosition(Vec3(scene->getViewport().x/2 + 2.6,
                                  2.5, 0));
+    _usernameField->setSize(Vec2(6.5, 1.25));
     
     _connectionButton = new Widget::Button(scene, this, "button-connection.png");
-    _connectionButton->setSize(Vec2(4.9, 0.85));
     _connectionButton->setPosition(Vec3(scene->getViewport().x/2, 1));
+    _connectionButton->setSize(Vec2(4.9, 0.85));    
 }
 
 Menu::Login::~Login(void) {

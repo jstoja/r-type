@@ -59,6 +59,8 @@
 		266F076B16A48872004F5554 /* Welcome.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F076816A48872004F5554 /* Welcome.cpp */; };
 		266F076D16A48889004F5554 /* transformers-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 266F076C16A48889004F5554 /* transformers-font.ttf */; };
 		266F076F16A48910004F5554 /* iOSLabel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 266F076E16A48910004F5554 /* iOSLabel.mm */; };
+		26756ECB16A72BE0005880D1 /* button-left-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 26756EC916A72BE0005880D1 /* button-left-arrow.png */; };
+		26756ECC16A72BE0005880D1 /* button-right-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 26756ECA16A72BE0005880D1 /* button-right-arrow.png */; };
 		2699A9E11684AD400092AC40 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E01684AD400092AC40 /* UIKit.framework */; };
 		2699A9E31684AD400092AC40 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E21684AD400092AC40 /* Foundation.framework */; };
 		2699A9E51684AD400092AC40 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699A9E41684AD400092AC40 /* CoreGraphics.framework */; };
@@ -108,6 +110,7 @@
 		269AFFFA16A5F7C7005BB638 /* TextInputViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 269AFFF916A5F7C7005BB638 /* TextInputViewController.mm */; };
 		26B59C4B1685E67200BC64D7 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B59C4A1685E67200BC64D7 /* icon@2x.png */; };
 		26B59C4E1685E6D500BC64D7 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B59C4D1685E6D500BC64D7 /* icon.png */; };
+		26F4250C16A72AE6004FCBD3 /* Join.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26F4250A16A72AE6004FCBD3 /* Join.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -197,6 +200,8 @@
 		266F076916A48872004F5554 /* Welcome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Welcome.h; sourceTree = "<group>"; };
 		266F076C16A48889004F5554 /* transformers-font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "transformers-font.ttf"; sourceTree = "<group>"; };
 		266F076E16A48910004F5554 /* iOSLabel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iOSLabel.mm; path = ../../../iOS/src/Widget/iOSLabel.mm; sourceTree = "<group>"; };
+		26756EC916A72BE0005880D1 /* button-left-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-left-arrow.png"; sourceTree = "<group>"; };
+		26756ECA16A72BE0005880D1 /* button-right-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-right-arrow.png"; sourceTree = "<group>"; };
 		2699A9DC1684AD400092AC40 /* R-Type.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "R-Type.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2699A9E01684AD400092AC40 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2699A9E21684AD400092AC40 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -292,6 +297,8 @@
 		269AFFF916A5F7C7005BB638 /* TextInputViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TextInputViewController.mm; sourceTree = "<group>"; };
 		26B59C4A1685E67200BC64D7 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../icon@2x.png"; sourceTree = "<group>"; };
 		26B59C4D1685E6D500BC64D7 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
+		26F4250A16A72AE6004FCBD3 /* Join.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Join.cpp; sourceTree = "<group>"; };
+		26F4250B16A72AE6004FCBD3 /* Join.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Join.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,6 +342,8 @@
 		2613B44516A36E7500CF84AA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				26756EC916A72BE0005880D1 /* button-left-arrow.png */,
+				26756ECA16A72BE0005880D1 /* button-right-arrow.png */,
 				266F076C16A48889004F5554 /* transformers-font.ttf */,
 				2613B44616A36E7500CF84AA /* background.png */,
 				2613B44716A36E7500CF84AA /* background_menu.png */,
@@ -369,6 +378,8 @@
 		266F070216A43519004F5554 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				26F4250A16A72AE6004FCBD3 /* Join.cpp */,
+				26F4250B16A72AE6004FCBD3 /* Join.h */,
 				269A002316A62C48005BB638 /* Menu.cpp */,
 				269A002416A62C48005BB638 /* Menu.h */,
 				269A002516A62C48005BB638 /* NewGame.cpp */,
@@ -728,6 +739,8 @@
 				2613B48A16A3763600CF84AA /* Default.png in Resources */,
 				266F076D16A48889004F5554 /* transformers-font.ttf in Resources */,
 				269AFFB516A5A8E8005BB638 /* stars-background.png in Resources */,
+				26756ECB16A72BE0005880D1 /* button-left-arrow.png in Resources */,
+				26756ECC16A72BE0005880D1 /* button-right-arrow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -819,6 +832,7 @@
 				269AFFFA16A5F7C7005BB638 /* TextInputViewController.mm in Sources */,
 				269A002716A62C48005BB638 /* Menu.cpp in Sources */,
 				269A002816A62C48005BB638 /* NewGame.cpp in Sources */,
+				26F4250C16A72AE6004FCBD3 /* Join.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
