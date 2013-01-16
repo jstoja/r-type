@@ -1,5 +1,5 @@
 //
-//  WelcomeMenu.h
+//  Join.h
 //  R-Type
 //
 //  Copyright (c) 2013 EPITECH. All rights reserved.

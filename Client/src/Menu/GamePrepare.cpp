@@ -21,27 +21,28 @@ Menu::GamePrepare::GamePrepare(Graphic::Scene *scene, IMenuDelegate* delegate,
 	_previousMenu->setSize(Vec2(0.56, 0.575));
 	_previousMenu->setPosition(Vec3(_previousMenu->getSize().x / 2 + 0.425, scene->getViewport().y - 0.8));
     
-	_gameList = new Widget::Table(2, "table-lines.png", scene, this);
-	_gameList->setColumnAlignement(Widget::Table::Right, 1);
+	_playerList = new Widget::Table(2, "table-lines.png", scene, this);
+	_playerList->setColumnAlignement(Widget::Table::Right, 1);
 	std::vector<std::string> names;
-	names.push_back("GAMES NAME");
 	names.push_back("PLAYER");
-	_gameList->setHeaderNames(names);
+	names.push_back("STATUS");
+	_playerList->setHeaderNames(names);
 	float x = scene->getViewport().x / 2, y = scene->getViewport().y - 4.6;
-	_gameList->setPosition(Vec3(x, y));
-	_nextPageButton = new Widget::Button(scene, this, "button-right-arrow.png");
-	_nextPageButton->setSize(Vec2(0.56, 0.575));
-	_nextPageButton->setPosition(Vec3(getScene()->getViewport().x - _nextPageButton->getSize().x / 2 - 0.425, y - _gameList->getSize().y / 2 - _nextPageButton->getSize().y / 2 - 0.25));
-	_nextPageButton->getElement()->setVisible(false);
-	_previousPageButton = new Widget::Button(scene, this, "button-left-arrow.png");
-	_previousPageButton->setSize(Vec2(0.56, 0.575));
-	_previousPageButton->setPosition(_nextPageButton->getPosition() - Vec3(_nextPageButton->getSize().x / 2 + _previousPageButton->getSize().x / 2, 0, 0));
-	_previousPageButton->getElement()->setVisible(false);
-	_createGame = new Widget::Button(scene, this, "button-new-game.png");
-	_createGame->setSize(Vec2(3.45, 0.575));
-	_createGame->setPosition(Vec3(_createGame->getSize().x / 2 + 0.425, y - _gameList->getSize().y / 2 - _createGame->getSize().y / 2 - 0.2));
+	_playerList->setPosition(Vec3(x, y));
+
+	_readyButton = new Widget::Button(scene, this, "button-ready.png");
+	_readyButton->setSize(Vec2(2.8, 0.725));
+	_readyButton->setPosition(Vec3(scene->getViewport().x - 2, 1));
 }
 
 Menu::GamePrepare::~GamePrepare(void) {
-    
+    delete _serverNameLabel;
+    delete _previousMenu;
+    delete _playerList;
+    delete _readyButton;
+}
+
+void Menu::GamePrepare::buttonReleased(Widget::Button* instance) {
+	if (instance == _previousMenu)
+		getDelegate()->previous();
 }

@@ -41,15 +41,19 @@ _messageLabel(NULL) {
 	menu->addGame("FOURTH GAME", 4, 4);
 	menu->addGame("FIFTH GAME", 2, 4);
 	menu->addGame("LAST GAME", 0, 4);
+    
+	Menu::GamePrepare*	menu2 = new Menu::GamePrepare(_delegate->getScene(), this, "Server of the death");
 
 	// Present welcome menu
 	_menus["Welcome"] = new Menu::Welcome(_delegate->getScene(), this);
 	_menus["Login"] = new Menu::Login(_delegate->getScene(), this);
 	_menus["Join"] = menu;
 	_menus["NewGame"] = new Menu::NewGame(_delegate->getScene(), this, "Server Of The Death");
+	_menus["GamePrepare"] = menu2;
+    
 	for (std::map<std::string, Menu::Menu*>::iterator it = _menus.begin(); it != _menus.end(); ++it)
 		it->second->setVisible(false);
-    _currentMenu = _menus["Welcome"];
+    _currentMenu = _menus["GamePrepare"];
 	_currentMenu->setVisible(true);
 }
 

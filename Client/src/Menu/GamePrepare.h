@@ -24,17 +24,17 @@ namespace Menu {
         GamePrepare(Graphic::Scene *scene, IMenuDelegate* delegate,
                     std::string const& serverName);
         virtual ~GamePrepare(void);
+        
+        virtual void buttonReleased(Widget::Button* instance);
 
     private:
         Widget::Label*      _serverNameLabel;
         
 		Widget::Button*		_previousMenu;
         
-		Widget::Table*		_gameList;
+		Widget::Table*		_playerList;
         
-		Widget::Button*		_nextPageButton;
-		Widget::Button*		_previousPageButton;
-		Widget::Button*		_createGame;
+		Widget::Button*		_readyButton;
     };
     
 }
