@@ -16,7 +16,7 @@ const std::string Menu::Welcome::backgroundImage = "welcome-screen.png";
 #endif
 
 Menu::Welcome::Welcome(Graphic::Scene *scene, IMenuDelegate* delegate)
-: _delegate(delegate),
+: Menu(scene, delegate),
   _button(scene, this, backgroundImage)
 {
     _button.setSize(scene->getViewport());
@@ -33,14 +33,14 @@ Menu::Welcome::Welcome(Graphic::Scene *scene, IMenuDelegate* delegate)
 Menu::Welcome::~Welcome() {    
 }
 
-void Menu::Welcome::buttonHovered(Widget::Button &instance) {
+void Menu::Welcome::buttonHovered(Widget::Button* instance) {
 }
 
-void Menu::Welcome::buttonUnHovered(Widget::Button &instance) {
+void Menu::Welcome::buttonUnHovered(Widget::Button* instance) {
 }
-void Menu::Welcome::buttonPushed(Widget::Button &instance) {
+void Menu::Welcome::buttonPushed(Widget::Button* instance) {
 
 }
-void Menu::Welcome::buttonReleased(Widget::Button &instance) {
-    _delegate->welcomeCompleted();
+void Menu::Welcome::buttonReleased(Widget::Button* instance) {
+    getDelegate()->welcomeCompleted();
 }

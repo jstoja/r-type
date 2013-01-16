@@ -112,6 +112,15 @@ namespace Graphic {
 		 */
         Rect2            getRect(void) const;
         
+        //! Change the visibility of the Element
+        /*
+         \param visible boolean
+         */
+        void        setVisible(bool visible);
+
+        //! Return if the element is visible
+        bool		isVisible(void) const;
+
     private:
         Type        _type;
         Vec3        _position;
@@ -122,6 +131,7 @@ namespace Graphic {
         uint16      _currentFrame;
         Matrix4f    _transformationMatrix;
         bool        _updateTransformationMatrix;
+		bool		_isVisible;
     };
     
 }

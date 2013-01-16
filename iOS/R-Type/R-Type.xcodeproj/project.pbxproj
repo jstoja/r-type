@@ -48,8 +48,6 @@
 		261F248916A06B64006C1CF4 /* iOSImage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 261F248716A06B64006C1CF4 /* iOSImage.mm */; };
 		2658303E1685DE1300BFB900 /* iOSRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2658303C1685DE1300BFB900 /* iOSRenderer.mm */; };
 		266F06C716A41579004F5554 /* UserInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F06C516A41579004F5554 /* UserInterface.cpp */; };
-		266F071E16A43519004F5554 /* GeneralMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F070316A43519004F5554 /* GeneralMenu.cpp */; };
-		266F072016A43519004F5554 /* MapMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F070816A43519004F5554 /* MapMenu.cpp */; };
 		266F075F16A4884D004F5554 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F074E16A4884D004F5554 /* Button.cpp */; };
 		266F076016A4884D004F5554 /* CheckBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F075016A4884D004F5554 /* CheckBox.cpp */; };
 		266F076116A4884D004F5554 /* GraphicWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 266F075216A4884D004F5554 /* GraphicWidget.cpp */; };
@@ -103,6 +101,8 @@
 		2699AA801684AED40092AC40 /* UUIDGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA6E1684AED40092AC40 /* UUIDGenerator.cpp */; };
 		2699AA811684AED40092AC40 /* Vec2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AA701684AED40092AC40 /* Vec2.cpp */; };
 		2699AAAA1684C8570092AC40 /* Rect2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2699AAA81684C8570092AC40 /* Rect2.cpp */; };
+		269A002716A62C48005BB638 /* Menu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269A002316A62C48005BB638 /* Menu.cpp */; };
+		269A002816A62C48005BB638 /* NewGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269A002516A62C48005BB638 /* NewGame.cpp */; };
 		269AFFB516A5A8E8005BB638 /* stars-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 269AFFB416A5A8E8005BB638 /* stars-background.png */; };
 		269AFFF616A5F75E005BB638 /* iOSTextEdit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 269AFFF516A5F75E005BB638 /* iOSTextEdit.mm */; };
 		269AFFFA16A5F7C7005BB638 /* TextInputViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 269AFFF916A5F7C7005BB638 /* TextInputViewController.mm */; };
@@ -133,7 +133,7 @@
 		2613B34D16A3337600CF84AA /* Vec3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Vec3.cpp; path = ../../../Commons/src/Vec3.cpp; sourceTree = "<group>"; };
 		2613B34E16A3337600CF84AA /* Vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vec3.h; path = ../../../Commons/src/Vec3.h; sourceTree = "<group>"; };
 		2613B34F16A3337700CF84AA /* WinLibrary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WinLibrary.cpp; path = ../../../Commons/src/WinLibrary.cpp; sourceTree = "<group>"; };
-		2613B35816A358AB00CF84AA /* Client.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = Client.cpp; path = ../../../Client/src/Client.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		2613B35816A358AB00CF84AA /* Client.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = Client.cpp; path = ../../../Client/src/Client.cpp; sourceTree = "<group>"; };
 		2613B35916A358AB00CF84AA /* Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Client.h; path = ../../../Client/src/Client.h; sourceTree = "<group>"; };
 		2613B35C16A35A5000CF84AA /* iOSMainViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iOSMainViewController.mm; path = ../../src/iOSMainViewController.mm; sourceTree = "<group>"; };
 		2613B35D16A35A5000CF84AA /* iOSMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iOSMainViewController.h; path = ../../src/iOSMainViewController.h; sourceTree = "<group>"; };
@@ -173,11 +173,7 @@
 		266F06C516A41579004F5554 /* UserInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UserInterface.cpp; path = ../../../Client/src/UserInterface.cpp; sourceTree = "<group>"; };
 		266F06C616A41579004F5554 /* UserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInterface.h; path = ../../../Client/src/UserInterface.h; sourceTree = "<group>"; };
 		266F070116A43519004F5554 /* IUserInterfaceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IUserInterfaceDelegate.h; path = ../../../Client/src/IUserInterfaceDelegate.h; sourceTree = "<group>"; };
-		266F070316A43519004F5554 /* GeneralMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GeneralMenu.cpp; sourceTree = "<group>"; };
-		266F070416A43519004F5554 /* GeneralMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralMenu.h; sourceTree = "<group>"; };
 		266F070516A43519004F5554 /* IMenuDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMenuDelegate.h; sourceTree = "<group>"; };
-		266F070816A43519004F5554 /* MapMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapMenu.cpp; sourceTree = "<group>"; };
-		266F070916A43519004F5554 /* MapMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapMenu.h; sourceTree = "<group>"; };
 		266F074E16A4884D004F5554 /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
 		266F074F16A4884D004F5554 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
 		266F075016A4884D004F5554 /* CheckBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheckBox.cpp; sourceTree = "<group>"; };
@@ -286,6 +282,10 @@
 		2699AA711684AED40092AC40 /* Vec2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vec2.h; path = ../../../Commons/src/Vec2.h; sourceTree = "<group>"; };
 		2699AAA81684C8570092AC40 /* Rect2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Rect2.cpp; path = ../../../Commons/src/Rect2.cpp; sourceTree = "<group>"; };
 		2699AAA91684C8570092AC40 /* Rect2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rect2.h; path = ../../../Commons/src/Rect2.h; sourceTree = "<group>"; };
+		269A002316A62C48005BB638 /* Menu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Menu.cpp; sourceTree = "<group>"; };
+		269A002416A62C48005BB638 /* Menu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Menu.h; sourceTree = "<group>"; };
+		269A002516A62C48005BB638 /* NewGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewGame.cpp; sourceTree = "<group>"; };
+		269A002616A62C48005BB638 /* NewGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewGame.h; sourceTree = "<group>"; };
 		269AFFB416A5A8E8005BB638 /* stars-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stars-background.png"; sourceTree = SOURCE_ROOT; };
 		269AFFF516A5F75E005BB638 /* iOSTextEdit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iOSTextEdit.mm; path = ../../../iOS/src/Widget/iOSTextEdit.mm; sourceTree = "<group>"; };
 		269AFFF816A5F7C7005BB638 /* TextInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextInputViewController.h; sourceTree = "<group>"; };
@@ -369,15 +369,15 @@
 		266F070216A43519004F5554 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				269A002316A62C48005BB638 /* Menu.cpp */,
+				269A002416A62C48005BB638 /* Menu.h */,
+				269A002516A62C48005BB638 /* NewGame.cpp */,
+				269A002616A62C48005BB638 /* NewGame.h */,
 				266F076616A48872004F5554 /* Login.cpp */,
 				266F076716A48872004F5554 /* Login.h */,
 				266F076816A48872004F5554 /* Welcome.cpp */,
 				266F076916A48872004F5554 /* Welcome.h */,
-				266F070316A43519004F5554 /* GeneralMenu.cpp */,
-				266F070416A43519004F5554 /* GeneralMenu.h */,
 				266F070516A43519004F5554 /* IMenuDelegate.h */,
-				266F070816A43519004F5554 /* MapMenu.cpp */,
-				266F070916A43519004F5554 /* MapMenu.h */,
 			);
 			name = Menu;
 			path = ../../../Client/src/Menu;
@@ -805,8 +805,6 @@
 				2613B35A16A358AB00CF84AA /* Client.cpp in Sources */,
 				2613B35E16A35A5000CF84AA /* iOSMainViewController.mm in Sources */,
 				266F06C716A41579004F5554 /* UserInterface.cpp in Sources */,
-				266F071E16A43519004F5554 /* GeneralMenu.cpp in Sources */,
-				266F072016A43519004F5554 /* MapMenu.cpp in Sources */,
 				266F075F16A4884D004F5554 /* Button.cpp in Sources */,
 				266F076016A4884D004F5554 /* CheckBox.cpp in Sources */,
 				266F076116A4884D004F5554 /* GraphicWidget.cpp in Sources */,
@@ -819,6 +817,8 @@
 				266F076F16A48910004F5554 /* iOSLabel.mm in Sources */,
 				269AFFF616A5F75E005BB638 /* iOSTextEdit.mm in Sources */,
 				269AFFFA16A5F7C7005BB638 /* TextInputViewController.mm in Sources */,
+				269A002716A62C48005BB638 /* Menu.cpp in Sources */,
+				269A002816A62C48005BB638 /* NewGame.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

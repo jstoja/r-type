@@ -10,6 +10,7 @@
 # define __R_Type__Renderer__
 
 # include <string>
+# include <list>
 
 # include "Singleton.hpp"
 # include "Scene.h"
@@ -106,6 +107,9 @@ namespace Graphic {
     private:
         // Private constructor
         Renderer(void);
+        
+        //! Scene manipulation
+        std::list<Element*> _getElementsToRender(void);
         
         //! Rendering
         void _renderSceneries(void);
