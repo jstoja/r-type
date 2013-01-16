@@ -254,7 +254,7 @@ void Graphic::Renderer::_renderScenery(Scenery* scenery) {
 void Graphic::Renderer::_setupElementTexture(Element* element) {
     // Send texture coords for the sprite frame
     if (!element->getSprite())
-        throw new Graphic::Exception("Trying to render an element with no sprite");
+        throw new Graphic::Exception(std::string("Trying to render an element with no sprite"));
     if (!element->getSprite()->getTexture())
         throw new Graphic::Exception("Trying to render an element with no texture");
     element->getSprite()->getTexuteCoordsBuffer()->bind();

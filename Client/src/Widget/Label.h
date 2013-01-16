@@ -38,7 +38,7 @@ namespace   Widget {
               Vec3 color=Vec3(1, 1, 1));
         
         //! Destructor
-        ~Label();
+        virtual ~Label();
         
         //! Update the label with its actual text
         void update();
