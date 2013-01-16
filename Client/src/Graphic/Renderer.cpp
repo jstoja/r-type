@@ -158,10 +158,11 @@ void Graphic::Renderer::render(void) {
     glUniformMatrix4fv(_worldMatrixLocation, 1, GL_FALSE,
                        (const float32*)_scene->getViewportMatrix());
     
-    // Draw static and dynamic scene elements
-    std::vector<Element*> const& elements = _scene->getElements();
+    // Get list of elements in viewport, sort by depth
+    std::list<Element*> elements = _getElementsToRender();
     
-    for (std::vector<Element*>::const_iterator it = elements.begin(),
+    // Draw static and dynamic scene elements    
+    for (std::list<Element*>::const_iterator it = elements.begin(),
          end = elements.end(); it != end; ++it) {
         Element* element = *it;
         if (!(element->getType() == Element::Static
@@ -183,7 +184,7 @@ void Graphic::Renderer::render(void) {
     glUniformMatrix4fv(_worldMatrixLocation, 1, GL_FALSE,
                        (const float32*)_scene->getWorldMatrix());
     
-    for (std::vector<Element*>::const_iterator it = elements.begin(),
+    for (std::list<Element*>::const_iterator it = elements.begin(),
          end = elements.end(); it != end; ++it) {
         Element* element = *it;
         if (!(element->getType() == Element::Floating))
@@ -204,6 +205,33 @@ void Graphic::Renderer::render(void) {
     glDisableVertexAttribArray(_vertexPositionLocation);
     
     refresh();
+}
+
+std::list<Graphic::Element*> Graphic::Renderer::_getElementsToRender(void) {
+    std::vector<Graphic::Element*> const& sceneElements = _scene->getElements();
+    std::list<Graphic::Element*> elements;
+    
+    for (std::vector<Graphic::Element*>::const_iterator it = sceneElements.begin(),
+         end = sceneElements.end(); it != end; ++it) {
+        Rect2 rect = (*it)->getRect();
+        if ((*it)->getType() == Graphic::Element::Floating
+            || (rect.pos.x + rect.size.x >= _scene->getViewportPosition().x
+                && rect.pos.x < _scene->getViewportPosition().x + _scene->getViewport().x
+                && rect.pos.y + rect.size.y >= _scene->getViewportPosition().y
+                && rect.pos.y < _scene->getViewportPosition().y + _scene->getViewport().y)) {
+                std::list<Graphic::Element*>::iterator it2 = elements.begin(),
+                end2 = elements.end();
+                for (; it2 != end2; ++it2) {
+                    if ((*it)->getPosition().z > (*it2)->getPosition().z) {
+                        elements.insert(it2, *it);
+                        break;
+                    }
+                }
+                if (it2 == end2)
+                    elements.push_back(*it);
+        }
+    }
+    return elements;
 }
 
 void Graphic::Renderer::_renderSceneries(void) {

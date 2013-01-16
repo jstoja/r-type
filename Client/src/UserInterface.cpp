@@ -9,24 +9,28 @@
 #include "UserInterface.h"
 
 #include "Graphic/Image.h"
+#include <sstream>
 
 const float32 UserInterface::_maxViewportX = 1000000000.0;
 
 UserInterface::UserInterface(IUserInterfaceDelegate* delegate) :
-_delegate(delegate), _time(), _sceneries() {
+_delegate(delegate), _time(), _sceneries(), _currentMenu(NULL),
+_messageLabel(NULL) {
     // Create the sceneries used in all the user interface
     _createSceneries();
     
     // Debug
-//    _loginMenu = new Menu::Login(_delegate->getScene(), this);
-//    return ;
+    //_loginMenu = new Menu::Login(_delegate->getScene(), this);
+    _currentMenu = new Menu::NewGame(_delegate->getScene(), this, "The server of the death");
+    return ;
     
     // Present welcome menu
-    _welcomeMenu = new Menu::Welcome(_delegate->getScene(), this);
+    _currentMenu = new Menu::Welcome(_delegate->getScene(), this);
 }
 
 UserInterface::~UserInterface(void) {
-    
+    if (_currentMenu)
+        delete _currentMenu;
 }
 
 void UserInterface::update(void) {
@@ -51,29 +55,27 @@ void UserInterface::hideMessage(void) {
 }
 
 void UserInterface::welcomeCompleted(void) {
-    delete _welcomeMenu;
+    delete _currentMenu;
     
     // Present login menu
-    _loginMenu = new Menu::Login(_delegate->getScene(), this);
+    _currentMenu = new Menu::Login(_delegate->getScene(), this);
 }
 
 void UserInterface::loginCompleted(std::string const& login,
 								   std::string const& ipAdress,
 								   std::string const& port) {
-    delete _loginMenu;
-    presentMessage("CONNECTION IN PROGRESS...");
+    std::stringstream str;
+    str << "CONNECTION TO " << login << "@" << ipAdress << ":" << port << "...";
+    delete _currentMenu;    
+    presentMessage(str.str());
 }
 
-void UserInterface::newGameCallGeneralMenu(void) {
-    
-}
-
-void UserInterface::serverListCallGeneralMenu(void) {
-    
-}
-
-void UserInterface::optionsCallGeneralMenu(void) {
-    
+void UserInterface::newGameCompleted(std::string const& name,
+                                     uint32 nbPlayers) {
+    std::stringstream str;
+    str << "CREATING GAME " << name << " WITH " << nbPlayers << " PLAYERS...";
+    delete _currentMenu;    
+    presentMessage(str.str());
 }
 
 void UserInterface::_createSceneries(void) {

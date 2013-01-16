@@ -13,9 +13,10 @@
 # include "IUserInterfaceDelegate.h"
 # include "Clock.h"
 # include "Menu/IMenuDelegate.h"
+# include "Widget/Label.h"
 # include "Menu/Welcome.h"
 # include "Menu/Login.h"
-# include "Widget/Label.h"
+# include "Menu/NewGame.h"
 
 class UserInterface : public Menu::IMenuDelegate {
 public:
@@ -33,9 +34,7 @@ public:
     virtual void loginCompleted(std::string const& login,
 								std::string const& ipAdress,
 								std::string const& port);
-    virtual void newGameCallGeneralMenu(void);
-    virtual void serverListCallGeneralMenu(void);
-    virtual void optionsCallGeneralMenu(void);
+    virtual void newGameCompleted(std::string const& name, uint32 nbPlayers);
     
 private:
     static const float32 _maxViewportX;
@@ -44,11 +43,8 @@ private:
     IUserInterfaceDelegate* _delegate;
     Clock                   _time;
     
-    std::vector<Graphic::Scenery*>  _sceneries;
-    
-    // Menus
-    Menu::Welcome*                  _welcomeMenu;
-    Menu::Login*                    _loginMenu;
+    std::vector<Graphic::Scenery*>  _sceneries;    
+    Menu::Menu*                     _currentMenu;
     Widget::Label*                  _messageLabel;
 };
 

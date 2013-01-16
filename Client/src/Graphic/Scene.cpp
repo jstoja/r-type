@@ -22,6 +22,13 @@ void Graphic::Scene::addBackground(Background* background) {
 }
 
 void Graphic::Scene::addScenery(Scenery* scenery) {
+    for (std::vector<Scenery*>::iterator it = _sceneries.begin(),
+         end = _sceneries.end(); it != end; ++it) {
+        if (scenery->getDepth() > (*it)->getDepth()) {
+            _sceneries.insert(it, scenery);
+            return ;
+        }
+    }
     _sceneries.push_back(scenery);
 }
 

@@ -13,9 +13,14 @@
 # include <ostream>
 # include "Types.h"
 
+struct Vec2;
+
 struct COMMON_EXPORT_IMPORT Vec3 {
     
-    Vec3(float32 x=0.0, float32 y=0.0, float32 z=0.0);
+    Vec3(void);
+    Vec3(float32 x, float32 y, float32 z=0.0);
+    Vec3(uint32 color);
+    Vec3(Vec2 const& v, float32 z=0.0);
     
     bool operator>=(Vec3 const& v3) const;
     bool operator<=(Vec3 const& v3) const;
