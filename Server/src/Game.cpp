@@ -44,7 +44,7 @@ void     Game::start(void) {
     for (int i=0; i < _players.size(); i++) {
         Network::Proxy<Network::TcpPacket>::ToSend toSend(new Network::TcpPacket(), Network::HostAddress::AnyAddress, 0);
         toSend.packet->setCode(0x01020100);
-        *toSend.packet << _id;
+        *toSend.packet << getId();
         _players[i]->sendPacket(toSend);
     }
     _state = Game::STARTED;
