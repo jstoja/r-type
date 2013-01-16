@@ -8,16 +8,18 @@
 //
 
 #include <iostream>
+#include "Game.h"
 #include "Player.h"
 
-Player::Player(Network::ASocket* socket, IServerDelegate* server) : _socket(socket), _proxy(socket, this), _server(server) {
+Player::Player(Network::ASocket* socket, IServerDelegate* server) : _isReady(false), _socket(socket), _proxy(socket, this), _server(server) {
   std::cout << "New Player" << std::endl;
 
   _commands[0x00000000] = &Player::connection;
-  _commands[0x00000200] = &Player::joinGame;
-  // _commands[0x00000210] = &Player::quitGame;
-  _commands[0x00000220] = &Player::createGame;
-  // _commands[0x00000230] = &Player::readyToStart;
+  _commands[0x00010000] = &Player::listGame;
+  _commands[0x00020000] = &Player::joinGame;
+  _commands[0x00020100] = &Player::quitGame;
+  _commands[0x00020200] = &Player::createGame;
+  _commands[0x00020300] = &Player::readyToStart;
 }
 
 Player::~Player() {
@@ -51,6 +53,9 @@ void Player::connection(Network::TcpPacket* packet) {
   _proxy.sendPacket(toSend);
 }
 
+void  Player::sendPacket(Network::Proxy<Network::TcpPacket>::ToSend const& toSend) {
+    _proxy.sendPacket(toSend);
+}
 
 void Player::createGame(Network::TcpPacket* packet) {
     Game *game = new Game(packet);
@@ -61,28 +66,57 @@ void Player::createGame(Network::TcpPacket* packet) {
     }
 
     Network::Proxy<Network::TcpPacket>::ToSend toSend(new Network::TcpPacket(), Network::HostAddress::AnyAddress, 0);
-    toSend.packet->setCode(0x1230);
-    *toSend.packet << (uint32)(gameCreated ? 3 : 1);
+    toSend.packet->setCode(0x01020300 + (gameCreated ? 3 : 1));
+    *toSend.packet << *game;
     _proxy.sendPacket(toSend);
  }
 
-
 void Player::joinGame(Network::TcpPacket* packet) {
     uint32 id;
-    int code;
 
     *packet >> id;
-    code = _server->joinGame(id, this);
+    int code = 0x01020000 + _server->joinGame(id, this);
 
     Network::Proxy<Network::TcpPacket>::ToSend toSend(new Network::TcpPacket(), Network::HostAddress::AnyAddress, 0);
-    toSend.packet->setCode(0x1200);
-    *toSend.packet << (uint32)code;
+    toSend.packet->setCode(code);
+    *toSend.packet << id;
     _proxy.sendPacket(toSend);
+    _server->sendResources(id, this);
  }
 
 void Player::quitGame(Network::TcpPacket* packet) {
     uint32 id;
 
     *packet >> id;
+    _isReady = false;
     _server->quitGame(id, this);
  }
+
+
+void Player::listGame(Network::TcpPacket* packet) {
+    std::map<uint32, Game*> games = _server->getGames();
+
+    std::list<Game*> newGamesList;
+    for (int i=0; i<games.size(); i++) {
+        newGamesList.push_back(games[i]);
+    }
+
+    Network::Proxy<Network::TcpPacket>::ToSend toSend(new Network::TcpPacket(), Network::HostAddress::AnyAddress, 0);
+    toSend.packet->setCode(0x01010100);
+    *toSend.packet << newGamesList;
+    _proxy.sendPacket(toSend);
+}
+
+void Player::readyToStart(Network::TcpPacket* packet) {
+    uint32 gameId;
+
+    *packet >> gameId;
+    _isReady = true;
+    _server->playerReady(gameId, this);
+}
+
+
+Network::APacket&       operator<<(Network::APacket& packet, Player const& player) {
+    packet << player.getId();
+    return packet;
+}

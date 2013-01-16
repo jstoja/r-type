@@ -23,21 +23,25 @@ public:
   Server();
   ~Server();
 
+  virtual std::map<uint32, Game*> const&    getGames(void);
+
   void newConnection(Network::ASocket*);
 
   virtual bool  createGame(Game* game, Player* player);
-  //virtual void  listGame(Network::ASocket* socket);
   virtual int   joinGame(uint32 gameId, Player* player);
   virtual void  quitGame(uint32 gameId, Player* player);
+  virtual void  sendResources(uint32 gameId, Player* player);
+  virtual void  playerReady(uint32 gameId, Player* player);
+  virtual void  gameStart(uint32 gameId);
 
-  static std::string const&	getPluginDirectory();
-  static void				setPluginDirectory(std::string const& dir);
+  static std::string const& getPluginDirectory();
+  static void               setPluginDirectory(std::string const& dir);
 
 private:
-	static std::string	_pluginDirectory;
-	Network::TcpServer	_tcpServer;
-	std::vector<Player*>	_players;
-  std::map<uint32, Game*>  _games;
+    static std::string      _pluginDirectory;
+    Network::TcpServer      _tcpServer;
+    std::vector<Player*>    _players;
+    std::map<uint32, Game*> _games;
 };
 
 #endif
