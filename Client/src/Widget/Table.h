@@ -42,6 +42,8 @@ namespace Widget {
         //! Destructor
         ~Table();
 
+		void	clearDatas();
+
 		void	setHeaderNames(std::vector<std::string> const& names);
 		void	setHeaderName(std::string const& name, uint32 idx);
 
@@ -79,6 +81,8 @@ namespace Widget {
 
 		virtual void	setVisible(bool visible);
     private:
+		uint32	_lineByPosition(Vec2 const& pos) const;
+
 		std::string					_backgroundImage;
 		Graphic::Scene*				_scene;
 		uint32						_columnCount;

@@ -58,6 +58,16 @@ Widget::Table::~Table() {
 	_listener->deleteLater();
 }
 
+void	Widget::Table::clearDatas() {
+	for (unsigned int i = 0; i < _cells.size(); ++i)
+		for (uint32 j = 0; j < _columnCount; ++j)
+			delete _cells[i][j];
+	_cells.clear();
+	_currentPage = 0;
+	_currentLine = -1;
+	_currentBackground = NULL;
+}
+
 void	Widget::Table::setHeaderNames(std::vector<std::string> const& names) {
 	for (uint32 i = 0; i < _columnCount; ++i)
 		_columnNames[i]->setText(i < names.size() ? names[i] : "");
@@ -270,19 +280,24 @@ void	Widget::Table::setPosition(Vec3 const& pos) {
 	update();
 }
 
+uint32	Widget::Table::_lineByPosition(Vec2 const& pos) const {
+	float32	y = (pos.y - _listener->getRect().pos.y) / _listener->getRect().size.y;
+	int32 nbLine = _cells.size() - _currentPage * _lineByPages;
+	if (nbLine > _lineByPages)
+		nbLine = _lineByPages;
+	int32 currentLine = nbLine - (nbLine * y);
+	if (currentLine < 0)
+		currentLine = 0;
+	else if (currentLine >= _lineByPages)
+		currentLine = _lineByPages - 1;
+	return (currentLine);
+}
+
 void	Widget::Table::processEvent(Event::Event const& event) {
 	if (isVisible() == false)
 		return ;
 	if (event.type & Event::PointerMove) {
-		float32	y = (event.pos.y - _listener->getRect().pos.y) / _listener->getRect().size.y;
-		int32 nbLine = _cells.size() - _currentPage * _lineByPages;
-		if (nbLine > _lineByPages)
-			nbLine = _lineByPages;
-		int32 currentLine = nbLine - (nbLine * y);
-		if (currentLine < 0)
-			currentLine = 0;
-		else if (currentLine >= _lineByPages)
-			currentLine = _lineByPages - 1;
+		uint32 currentLine = _lineByPosition(event.pos);
 		if (_currentLine != currentLine && _currentBackground != NULL) {
 			_currentBackground->getElement()->setCurrentFrame(_currentLine % 2 == 0 ? 1 : 2);
 			_currentBackground = NULL;
@@ -300,6 +315,7 @@ void	Widget::Table::processEvent(Event::Event const& event) {
 		else if (_delegate != NULL && fire)
 			_delegate->linePushed(this, _currentPage * _lineByPages + _currentLine);
 	} else if (event.type & Event::PointerPushed && event.pointerButton == Event::PointerLeft) {
+		_currentLine = _lineByPosition(event.pos);
 		if (_currentLine >= 0) {
 			_currentBackground = _lineBackgrounds[_currentLine];
 			_currentBackground->getElement()->setCurrentFrame(0);
