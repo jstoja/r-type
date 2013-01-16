@@ -32,13 +32,30 @@ _messageLabel(NULL) {
 	//menu->addGame("LAST GAME", 0, 4);
     //return ;
     
-    // Present welcome menu
-    _currentMenu = new Menu::Welcome(_delegate->getScene(), this);
+	Menu::Join*	menu = new Menu::Join(_delegate->getScene(), this, "Server of the death");
+	menu->addGame("FIRST GAME", 3, 4);
+	menu->addGame("SECOND GAME", 0, 4);
+	menu->addGame("THIRD GAME", 4, 4);
+	menu->addGame("FOURTH GAME", 4, 4);
+	menu->addGame("FIFTH GAME", 2, 4);
+	menu->addGame("FOURTH GAME", 4, 4);
+	menu->addGame("FIFTH GAME", 2, 4);
+	menu->addGame("LAST GAME", 0, 4);
+
+	// Present welcome menu
+	_menus["Welcome"] = new Menu::Welcome(_delegate->getScene(), this);
+	_menus["Login"] = new Menu::Login(_delegate->getScene(), this);
+	_menus["Join"] = menu;
+	_menus["NewGame"] = new Menu::NewGame(_delegate->getScene(), this, "Server Of The Death");
+	for (std::map<std::string, Menu::Menu*>::iterator it = _menus.begin(); it != _menus.end(); ++it)
+		it->second->setVisible(false);
+    _currentMenu = _menus["Welcome"];
+	_currentMenu->setVisible(true);
 }
 
 UserInterface::~UserInterface(void) {
-    if (_currentMenu)
-        delete _currentMenu;
+	for (std::map<std::string, Menu::Menu*>::iterator it = _menus.begin(); it != _menus.end(); ++it)
+		delete it->second;
 }
 
 void UserInterface::update(void) {
@@ -63,47 +80,51 @@ void UserInterface::hideMessage(void) {
 }
 
 void UserInterface::welcomeCompleted(void) {
-    delete _currentMenu;
-    
     // Present login menu
-    _currentMenu = new Menu::Login(_delegate->getScene(), this);
+	_currentMenu->setVisible(false);
+    _currentMenu = _menus["Login"];
+	_currentMenu->setVisible(true);
 }
 
 void UserInterface::loginCompleted(std::string const& login,
 								   std::string const& ipAdress,
 								   std::string const& port) {
-    std::stringstream str;
-    str << "CONNECTION TO " << login << "@" << ipAdress << ":" << port << "...";
-    delete _currentMenu;    
-//    presentMessage(str.str());
-	Menu::Join*	menu = new Menu::Join(_delegate->getScene(), this, "The server of the death");
-    _currentMenu = menu;
-	menu->addGame("FIRST GAME", 3, 4);
-	menu->addGame("SECOND GAME", 0, 4);
-	menu->addGame("THIRD GAME", 1, 4);
-	menu->addGame("FOURTH GAME", 4, 4);
-	menu->addGame("FIFTH GAME", 2, 4);
-	menu->addGame("LAST GAME", 0, 4);
+	_currentMenu->setVisible(false);
+    _currentMenu = _menus["Join"];
+	_currentMenu->setVisible(true);
 }
 
 void UserInterface::newGameCompleted(std::string const& name,
                                      uint32 nbPlayers) {
     std::stringstream str;
     str << "CREATING GAME " << name << " WITH " << nbPlayers << " PLAYERS...";
-    delete _currentMenu;    
+	_currentMenu->setVisible(false);
     presentMessage(str.str());
 }
 
 void UserInterface::createGame() {
-   delete _currentMenu;
-   _currentMenu = new Menu::NewGame(_delegate->getScene(), this, "The Server of the Death");
+	_currentMenu->setVisible(false);
+    _currentMenu = _menus["NewGame"];
+	_currentMenu->setVisible(true);
 }
 
 void UserInterface::joinGame(uint32 idx) {
     std::stringstream str;
     str << "Joining game at index " << idx;
-   delete _currentMenu;
+	_currentMenu->setVisible(false);
     presentMessage(str.str());
+}
+
+void UserInterface::previous() {
+	if (_currentMenu == _menus["Join"]) {
+		_currentMenu->setVisible(false);
+		_currentMenu = _menus["Login"];
+		_currentMenu->setVisible(true);
+	} else if (_currentMenu == _menus["NewGame"]) {
+		_currentMenu->setVisible(false);
+		_currentMenu = _menus["Join"];
+		_currentMenu->setVisible(true);
+	}
 }
 
 void UserInterface::_createSceneries(void) {

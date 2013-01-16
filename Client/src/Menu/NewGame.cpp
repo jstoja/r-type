@@ -14,18 +14,17 @@ Menu::NewGame::NewGame(Graphic::Scene *scene, IMenuDelegate* delegate,
                        std::string const& serverName)
 : Menu(scene, delegate), _nbPlayers(1) {
     
-    // Server title
-    _serverLabel = new Widget::Label(scene, "SERVER:", Vec3(0x5658a2));
-    _serverLabel->setPosition(Vec3(1.8, scene->getViewport().y - 0.8));
-    _serverLabel->setSize(Vec2(0.8, 0.50));
-    
     std::string upperName = serverName;
     std::transform(serverName.begin(), serverName.end(), upperName.begin(), ::toupper);
     _serverNameLabel = new Widget::Label(scene, upperName);
-    _serverNameLabel->setTextAligment(Widget::Label::TextAlignLeft);
-    _serverNameLabel->setPosition(Vec3(3.8, scene->getViewport().y - 0.8));
-    _serverNameLabel->setSize(Vec2(0.8, 0.50));
-    
+    _serverNameLabel->setPosition(Vec3(scene->getViewport().x / 2, scene->getViewport().y - 0.8));
+	_serverNameLabel->setSize(Vec2(scene->getViewport().x - (0.425 * 2), 0.50));
+    _serverNameLabel->setTextAligment(Widget::Label::TextAlignRight);
+
+	_previousMenu = new Widget::Button(scene, this, "button-left-arrow.png");
+	_previousMenu->setSize(Vec2(0.56, 0.575));
+	_previousMenu->setPosition(Vec3(_previousMenu->getSize().x / 2 + 0.425, scene->getViewport().y - 0.8));
+
     _newGameLabel = new Widget::Label(scene, "NEW GAME");
     _newGameLabel->setPosition(Vec3(scene->getViewport().x/2,
                                     scene->getViewport().y-3));
@@ -86,7 +85,6 @@ Menu::NewGame::NewGame(Graphic::Scene *scene, IMenuDelegate* delegate,
 }
 
 Menu::NewGame::~NewGame(void) {
-    delete _serverLabel;
     delete _serverNameLabel;
     delete _newGameLabel;
     delete _nameLabel;
@@ -112,18 +110,20 @@ void Menu::NewGame::processEvent(Event::Event const& event) {
 }
 
 void Menu::NewGame::buttonReleased(Widget::Button* instance) {
-    if (_nameField->getValue() != "") {
+    if (instance == _newGameButton && _nameField->getValue() != "")
         getDelegate()->newGameCompleted(_nameField->getValue(), _nbPlayers);
-    }
+	else if (instance == _previousMenu)
+		getDelegate()->previous();
 }
 
 void Menu::NewGame::setVisible(bool visible) {
-	_serverLabel->setVisible(visible);
     _serverNameLabel->setVisible(visible);
     _newGameLabel->setVisible(visible);
+    _newGameButton->setVisible(visible);
     _nameLabel->setVisible(visible);
     _nameField->setVisible(visible);
 	_playersLabel->setVisible(visible);
+	_previousMenu->setVisible(visible);
 	for (unsigned int i = 0; i < _playersSelect.size(); ++i)
 		_playersSelect[i]->setVisible(visible);
 	Menu::setVisible(visible);

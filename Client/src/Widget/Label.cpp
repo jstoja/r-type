@@ -36,6 +36,10 @@ Widget::Label::~Label() {
 }
 
 void Widget::Label::update() {
+	if (isVisible() == false) {
+		getElement()->setVisible(false);
+		return ;
+	}
     if (getSize().x + getSize().y == 0)
         return ;
     

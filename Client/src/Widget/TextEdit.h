@@ -61,6 +61,8 @@ namespace Widget {
         
         //! Overload of set focus to handle iOS input
         virtual void setFocus(bool);
+
+		virtual void setVisible(bool visible);
         
     private:
         Event::Listener*    _eventListener;

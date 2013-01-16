@@ -76,6 +76,8 @@ void Widget::TextEdit::setSize(Vec2 const& size) {
 }
 
 void Widget::TextEdit::processEvent(Event::Event const& event) {
+	if (isVisible() == false)
+		return ;
     if (event.type == Event::PointerPushed) {
         if (!hasFocus() && getRect().in(event.pos)) {
             setFocus(true);
@@ -93,6 +95,11 @@ void Widget::TextEdit::processEvent(Event::Event const& event) {
             setValue(_value + (char)event.value);
         _delegate->textEditHasChanged(this);
     }
+}
+
+void Widget::TextEdit::setVisible(bool visible) {
+	_label.setVisible(visible);
+	GraphicWidget::setVisible(visible);
 }
 
 #ifndef OS_IOS

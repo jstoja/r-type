@@ -34,7 +34,10 @@ namespace Menu {
 
 		//! The game has been choosen
 		virtual void joinGame(uint32 idx) = 0;
-};
+
+		//! The previous menu is required
+		virtual void previous() = 0;
+	};
 }
 
 #endif

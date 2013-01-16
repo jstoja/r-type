@@ -105,4 +105,5 @@ void    Widget::GraphicWidget::setElement(Graphic::Element* element) {
 
 void	Widget::GraphicWidget::setVisible(bool visible) {
 	getElement()->setVisible(visible);
+	Widget::setVisible(visible);
 }

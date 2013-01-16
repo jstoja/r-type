@@ -83,6 +83,8 @@ void    Widget::CheckBox::setPosition(Vec3 const& v) {
 }
 
 void    Widget::CheckBox::processEvent(Event::Event const& event) {
+	if (isVisible() == false)
+		return ;
     if (event.type == Event::PointerReleased) {
         if (_checked == true) {
             _checked = false;

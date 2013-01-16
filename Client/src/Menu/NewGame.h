@@ -34,9 +34,10 @@ namespace Menu {
     private:        
         uint32              _nbPlayers;
         
-        Widget::Label*      _serverLabel;
         Widget::Label*      _serverNameLabel;
         
+		Widget::Button*		_previousMenu;
+
         Widget::Label*      _newGameLabel;
         
         Widget::Label*      _nameLabel;

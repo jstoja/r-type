@@ -39,7 +39,7 @@ namespace Widget {
         
             // Event Listener Virtual Methods
             virtual void processEvent(Event::Event const& event);
-
+			virtual void setVisible(bool visible);
         private:
             IButtonDelegate*    _delegate;
             Event::Listener*    _eventListener;

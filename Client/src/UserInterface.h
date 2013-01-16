@@ -10,6 +10,8 @@
 # define __R_Type__UserInterface__
 
 # include <string>
+# include <map>
+
 # include "IUserInterfaceDelegate.h"
 # include "Clock.h"
 # include "Menu/IMenuDelegate.h"
@@ -38,6 +40,7 @@ public:
     virtual void newGameCompleted(std::string const& name, uint32 nbPlayers);
 	virtual void createGame();
 	virtual void joinGame(uint32 idx);
+	virtual void previous();
     
 private:
     static const float32 _maxViewportX;
@@ -46,7 +49,8 @@ private:
     IUserInterfaceDelegate* _delegate;
     Clock                   _time;
     
-    std::vector<Graphic::Scenery*>  _sceneries;    
+    std::vector<Graphic::Scenery*>  _sceneries;
+	std::map<std::string, Menu::Menu*>	_menus;
     Menu::Menu*                     _currentMenu;
     Widget::Label*                  _messageLabel;
 };

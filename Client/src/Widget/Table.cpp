@@ -25,8 +25,8 @@ Widget::Table::Table(uint32 columnCount, std::string const& backgroundImage, Gra
 	_changed = true;
 	_scene = scene;
 	_columnCount = columnCount;
-	setLineHeight(1);
-	setHeaderHeight(1);
+	setLineHeight(0.93);
+	setHeaderHeight(0.93);
 	setWidthHeaderPadding(0.2);
 	setHeightHeaderPadding(0.3);
 	setWidthCellPadding(0.2);
@@ -39,7 +39,7 @@ Widget::Table::Table(uint32 columnCount, std::string const& backgroundImage, Gra
 	_headerBackground = new GraphicWidget(scene, backgroundImage, 4);
 	_headerBackground->getElement()->setCurrentFrame(3);
 	_lineByPages = 0;
-	setLineNumberByPage(4);
+	setLineNumberByPage(6);
 	_init = false;
 	update();
 	Event::Manager::getInstance().addEventListener(_listener);
@@ -234,19 +234,19 @@ void    Widget::Table::update() {
 	_headerBackground->setVisible(Widget::isVisible());
 	float32	x = 0;
 	for (uint32 i = 0; i < _columnCount; ++i) {
+		_columnNames[i]->setVisible(Widget::isVisible());
 		_columnNames[i]->setPosition(getPosition() + Vec3(-width / 2 + x + _columnSizes[i] / 2, height / 2 - _headerHeight / 2, 0.3));
 		_columnNames[i]->setTextAligment((Label::TextAlignment)_columnAligns[i]);
 		_columnNames[i]->setSize(Vec2(_columnSizes[i] - _widthHeaderPadding * 2, _headerHeight - _heightHeaderPadding * 2));
-		_columnNames[i]->setVisible(Widget::isVisible());
 		x += _columnSizes[i];
 	}
 	for (uint32 i = 0; i < _lineByPages; ++i) {
 		bool visible = i + _currentPage * _lineByPages < _cells.size();
 		_lineBackgrounds[i]->getElement()->setVisible(visible);
 		if (visible) {
+			_lineBackgrounds[i]->setVisible(Widget::isVisible());
 			_lineBackgrounds[i]->setPosition(getPosition() + Vec3(0, height / 2 - _headerHeight - (i + 0.5) * _lineHeight, 0.3));
 			_lineBackgrounds[i]->setSize(Vec2(width, _lineHeight));
-			_lineBackgrounds[i]->setVisible(Widget::isVisible());
 		}
 	}
 	for (uint32 i = 0; i < _cells.size(); ++i) {
@@ -271,6 +271,8 @@ void	Widget::Table::setPosition(Vec3 const& pos) {
 }
 
 void	Widget::Table::processEvent(Event::Event const& event) {
+	if (isVisible() == false)
+		return ;
 	if (event.type & Event::PointerMove) {
 		float32	y = (event.pos.y - _listener->getRect().pos.y) / _listener->getRect().size.y;
 		int32 nbLine = _cells.size() - _currentPage * _lineByPages;
@@ -306,5 +308,7 @@ void	Widget::Table::processEvent(Event::Event const& event) {
 }
 
 void	Widget::Table::setVisible(bool visible) {
+	Widget::setVisible(visible);
+	_changed = true;
 	update();
 }

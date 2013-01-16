@@ -33,10 +33,9 @@ namespace Menu {
     private:
 		void	_updatePageButtons();
 
-		Widget::Label*      _serverLabel;
 		Widget::Label*      _serverNameLabel;
 
-		Widget::Label*      _joinGameLabel;
+		Widget::Button*		_previousMenu;
 
 		Widget::Table*		_gameList;
 
