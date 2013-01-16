@@ -102,3 +102,15 @@ void Menu::Login::buttonReleased(Widget::Button* instance) {
         getDelegate()->loginCompleted(_usernameField->getValue(), _ipField->getValue(), _portField->getValue());
     }
 }
+
+void Menu::Login::setVisible(bool visible) {
+	_logoWidget->setVisible(visible);
+    _ipLabel->setVisible(visible);
+    _ipField->setVisible(visible);
+    _portLabel->setVisible(visible);
+    _portField->setVisible(visible);
+    _usernameLabel->setVisible(visible);
+    _usernameField->setVisible(visible);
+    _connectionButton->setVisible(visible);
+	Menu::setVisible(visible);
+}

@@ -44,3 +44,8 @@ void Menu::Welcome::buttonPushed(Widget::Button* instance) {
 void Menu::Welcome::buttonReleased(Widget::Button* instance) {
     getDelegate()->welcomeCompleted();
 }
+
+void Menu::Welcome::setVisible(bool visible) {
+	_button.setVisible(visible);
+	Menu::setVisible(visible);
+}

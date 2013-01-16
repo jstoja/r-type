@@ -30,6 +30,7 @@ namespace Menu {
         
         virtual void buttonReleased(Widget::Button* instance);
       
+		virtual void setVisible(bool visible);
     private:        
         uint32              _nbPlayers;
         
@@ -40,7 +41,7 @@ namespace Menu {
         
         Widget::Label*      _nameLabel;
         Widget::TextEdit*   _nameField;
-        
+
         Widget::Label*                          _playersLabel;
         std::vector<Widget::GraphicWidget*>     _playersSelect;
         Event::Listener*                        _eventListener;

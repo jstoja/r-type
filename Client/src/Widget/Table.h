@@ -31,9 +31,9 @@ namespace Widget {
     public:
         enum    Align
         {
-            LEFT,
-            RIGHT,
-            CENTER
+            Left,
+            Right,
+            Center
         };
         
         //! Constructor
@@ -56,7 +56,7 @@ namespace Widget {
 		
 		void	setLineNumberByPage(uint32 nbr);
 		
-		void	addLine(std::vector<std::string> const& names);
+		uint32	addLine(std::vector<std::string> const& names);
 		
 		void	setWidthHeaderPadding(float32 pad);
 		void	setHeightHeaderPadding(float32 pad);
@@ -77,6 +77,7 @@ namespace Widget {
         virtual void    update();
 		virtual void processEvent(Event::Event const& event);
 
+		virtual void	setVisible(bool visible);
     private:
 		std::string					_backgroundImage;
 		Graphic::Scene*				_scene;

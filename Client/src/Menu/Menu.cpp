@@ -24,3 +24,11 @@ Graphic::Scene* Menu::Menu::getScene(void) const {
 Menu::IMenuDelegate* Menu::Menu::getDelegate(void) const {
     return _delegate;
 }
+
+void Menu::Menu::setVisible(bool visible) {
+	_isVisible = visible;
+}
+
+bool Menu::Menu::isVisible() const {
+	return _isVisible;
+}

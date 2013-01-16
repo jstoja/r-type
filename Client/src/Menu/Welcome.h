@@ -28,7 +28,9 @@ namespace Menu {
         virtual void buttonUnHovered(Widget::Button* instance);
         virtual void buttonPushed(Widget::Button* instance);
         virtual void buttonReleased(Widget::Button* instance);
-    private:
+
+		virtual void setVisible(bool visible);
+	private:
         Widget::Button          _button;
     };
     

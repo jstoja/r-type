@@ -102,3 +102,7 @@ void    Widget::GraphicWidget::setSprite(Graphic::Sprite* sprite) {
 void    Widget::GraphicWidget::setElement(Graphic::Element* element) {
     _element = *element;
 }
+
+void	Widget::GraphicWidget::setVisible(bool visible) {
+	getElement()->setVisible(visible);
+}

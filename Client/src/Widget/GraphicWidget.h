@@ -60,6 +60,8 @@ namespace Widget {
         
         Rect2  getRect() const;
 
+		virtual void		setVisible(bool visible);
+
     private:
         Graphic::Scene*     _scene;
         Graphic::Element    _element;

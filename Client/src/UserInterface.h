@@ -17,6 +17,7 @@
 # include "Menu/Welcome.h"
 # include "Menu/Login.h"
 # include "Menu/NewGame.h"
+# include "Menu/Join.h"
 
 class UserInterface : public Menu::IMenuDelegate {
 public:
@@ -35,6 +36,8 @@ public:
 								std::string const& ipAdress,
 								std::string const& port);
     virtual void newGameCompleted(std::string const& name, uint32 nbPlayers);
+	virtual void createGame();
+	virtual void joinGame(uint32 idx);
     
 private:
     static const float32 _maxViewportX;

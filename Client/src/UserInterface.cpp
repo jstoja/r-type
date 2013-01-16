@@ -21,8 +21,16 @@ _messageLabel(NULL) {
     
     // Debug
     //_loginMenu = new Menu::Login(_delegate->getScene(), this);
-    _currentMenu = new Menu::NewGame(_delegate->getScene(), this, "The server of the death");
-    return ;
+    //_currentMenu = new Menu::NewGame(_delegate->getScene(), this, "The server of the death");
+	//Menu::Join*	menu = new Menu::Join(_delegate->getScene(), this, "The server of the death");
+ //   _currentMenu = menu;
+	//menu->addGame("FIRST GAME", 3, 4);
+	//menu->addGame("SECOND GAME", 0, 4);
+	//menu->addGame("THIRD GAME", 1, 4);
+	//menu->addGame("FOURTH GAME", 4, 4);
+	//menu->addGame("FIFTH GAME", 2, 4);
+	//menu->addGame("LAST GAME", 0, 4);
+    //return ;
     
     // Present welcome menu
     _currentMenu = new Menu::Welcome(_delegate->getScene(), this);
@@ -67,7 +75,15 @@ void UserInterface::loginCompleted(std::string const& login,
     std::stringstream str;
     str << "CONNECTION TO " << login << "@" << ipAdress << ":" << port << "...";
     delete _currentMenu;    
-    presentMessage(str.str());
+//    presentMessage(str.str());
+	Menu::Join*	menu = new Menu::Join(_delegate->getScene(), this, "The server of the death");
+    _currentMenu = menu;
+	menu->addGame("FIRST GAME", 3, 4);
+	menu->addGame("SECOND GAME", 0, 4);
+	menu->addGame("THIRD GAME", 1, 4);
+	menu->addGame("FOURTH GAME", 4, 4);
+	menu->addGame("FIFTH GAME", 2, 4);
+	menu->addGame("LAST GAME", 0, 4);
 }
 
 void UserInterface::newGameCompleted(std::string const& name,
@@ -75,6 +91,18 @@ void UserInterface::newGameCompleted(std::string const& name,
     std::stringstream str;
     str << "CREATING GAME " << name << " WITH " << nbPlayers << " PLAYERS...";
     delete _currentMenu;    
+    presentMessage(str.str());
+}
+
+void UserInterface::createGame() {
+   delete _currentMenu;
+   _currentMenu = new Menu::NewGame(_delegate->getScene(), this, "The Server of the Death");
+}
+
+void UserInterface::joinGame(uint32 idx) {
+    std::stringstream str;
+    str << "Joining game at index " << idx;
+   delete _currentMenu;
     presentMessage(str.str());
 }
 

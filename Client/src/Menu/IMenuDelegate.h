@@ -28,7 +28,13 @@ namespace Menu {
         //! New game informations has been fully entered
         virtual void newGameCompleted(std::string const& name,
                                       uint32 nbPlayers) = 0;
-    };
+
+        //! User triggered the createGame button
+		virtual void createGame() = 0;
+
+		//! The game has been choosen
+		virtual void joinGame(uint32 idx) = 0;
+};
 }
 
 #endif

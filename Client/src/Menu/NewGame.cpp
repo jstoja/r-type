@@ -116,3 +116,15 @@ void Menu::NewGame::buttonReleased(Widget::Button* instance) {
         getDelegate()->newGameCompleted(_nameField->getValue(), _nbPlayers);
     }
 }
+
+void Menu::NewGame::setVisible(bool visible) {
+	_serverLabel->setVisible(visible);
+    _serverNameLabel->setVisible(visible);
+    _newGameLabel->setVisible(visible);
+    _nameLabel->setVisible(visible);
+    _nameField->setVisible(visible);
+	_playersLabel->setVisible(visible);
+	for (unsigned int i = 0; i < _playersSelect.size(); ++i)
+		_playersSelect[i]->setVisible(visible);
+	Menu::setVisible(visible);
+}

@@ -33,6 +33,7 @@ namespace Menu {
         virtual void buttonPushed(Widget::Button* instance);
         virtual void buttonReleased(Widget::Button* instance);
         
+		virtual void setVisible(bool visible);
     private:
         Widget::GraphicWidget*      _logoWidget;
         
