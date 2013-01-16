@@ -52,6 +52,12 @@ namespace Widget {
             //! Get focus
             bool                hasFocus() const;
             
+            //! Set Visibility
+            virtual void		setVisible(bool visible);
+            
+            //! Get Visibility
+			virtual bool		isVisible() const;
+            
             //! Parent widget getter
             Widget* getParent() const;
     private:
@@ -59,6 +65,7 @@ namespace Widget {
             Vec2                _size;
             Vec3                _position;
             bool                _focus;
+			bool				_visible;
     };
 };
 

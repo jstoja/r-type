@@ -33,13 +33,13 @@ Widget::Table::Table(uint32 columnCount, std::string const& backgroundImage, Gra
 	setHeightCellPadding(0.3);
 	_columnSizes.resize(columnCount, 15.36 / 2);
 	_columnNames.resize(columnCount);
-	_columnAligns.resize(columnCount, LEFT);
+	_columnAligns.resize(columnCount, Left);
 	for (unsigned int i = 0; i < columnCount; ++i)
 		_columnNames[i] = new Label(scene, "");
 	_headerBackground = new GraphicWidget(scene, backgroundImage, 4);
 	_headerBackground->getElement()->setCurrentFrame(3);
 	_lineByPages = 0;
-	setLineNumberByPage(6);
+	setLineNumberByPage(4);
 	_init = false;
 	update();
 	Event::Manager::getInstance().addEventListener(_listener);
@@ -52,6 +52,10 @@ Widget::Table::~Table() {
 			delete _cells[i][j];
 	for (uint32 i = 0; i < _lineByPages; ++i)
 		delete _lineBackgrounds[i];
+	for (uint32 i = 0; i < _columnCount; ++i)
+		delete _columnNames[i];
+	Event::Manager::getInstance().removeEventListener(_listener);
+	_listener->deleteLater();
 }
 
 void	Widget::Table::setHeaderNames(std::vector<std::string> const& names) {
@@ -84,7 +88,7 @@ void	Widget::Table::setColumnSize(uint32 size, uint32 idx) {
 
 void	Widget::Table::setColumnAlignements(std::vector<Align> const& aligns) {
 	for (uint32 i = 0; i < _columnCount; ++i)
-		_columnAligns[i] = i < aligns.size() ? aligns[i] : LEFT;
+		_columnAligns[i] = i < aligns.size() ? aligns[i] : Left;
 	_changed = true;
 	update();
 }
@@ -149,7 +153,7 @@ void	Widget::Table::setHeightCellPadding(float32 pad) {
 	update();
 }
 
-void	Widget::Table::addLine(std::vector<std::string> const& names) {
+uint32	Widget::Table::addLine(std::vector<std::string> const& names) {
 	std::vector<Label*>	toAdd;
 
 	toAdd.resize(_columnCount);
@@ -158,6 +162,7 @@ void	Widget::Table::addLine(std::vector<std::string> const& names) {
 	_cells.push_back(toAdd);
 	_changed = true;
 	update();
+	return (_cells.size() - 1);
 }
 
 bool	Widget::Table::hasNextPage() const {
@@ -183,6 +188,7 @@ void	Widget::Table::previousPage() {
 	else
 		_currentPage = _cells.size() / _lineByPages + ((_cells.size() % _lineByPages) == 0 ? 0 : 1);
 	_changed = true;
+	update();
 }
 
 void	Widget::Table::setColor(uint32 y, uint32 x, Vec3 const& color) {
@@ -214,18 +220,24 @@ void    Widget::Table::update() {
 	if (_init || _changed == false)
 		return;
 	_changed = false;
-	float32 width = 0, height = _headerHeight + _lineHeight * (_cells.size() < _lineByPages ? _cells.size() : _lineByPages);
+	float32 width = 0, height = _headerHeight + _lineHeight * _lineByPages;
 	for (std::vector<float32>::iterator it = _columnSizes.begin(); it != _columnSizes.end(); ++it)
 		width += *it;
 	setSize(Vec2(width, height));
-	_listener->setRect(Rect2(Vec2(getPosition().x, getPosition().y) - getSize() / 2, Vec2(getSize().x, getSize().y - _headerHeight)));
+	uint32 tmp = _cells.size() - (_currentPage * _lineByPages);
+	if (tmp > _lineByPages)
+		tmp = _lineByPages;
+	float32	tmpHeight = _lineHeight * tmp;
+	_listener->setRect(Rect2(Vec2(getPosition().x - width / 2, getPosition().y + height / 2 - _headerHeight - tmpHeight), Vec2(getSize().x, tmpHeight)));
 	_headerBackground->setPosition(getPosition() + Vec3(0, height / 2 - _headerHeight / 2, 0.2));
 	_headerBackground->setSize(Vec2(width, _headerHeight));
+	_headerBackground->setVisible(Widget::isVisible());
 	float32	x = 0;
 	for (uint32 i = 0; i < _columnCount; ++i) {
 		_columnNames[i]->setPosition(getPosition() + Vec3(-width / 2 + x + _columnSizes[i] / 2, height / 2 - _headerHeight / 2, 0.3));
 		_columnNames[i]->setTextAligment((Label::TextAlignment)_columnAligns[i]);
 		_columnNames[i]->setSize(Vec2(_columnSizes[i] - _widthHeaderPadding * 2, _headerHeight - _heightHeaderPadding * 2));
+		_columnNames[i]->setVisible(Widget::isVisible());
 		x += _columnSizes[i];
 	}
 	for (uint32 i = 0; i < _lineByPages; ++i) {
@@ -234,10 +246,11 @@ void    Widget::Table::update() {
 		if (visible) {
 			_lineBackgrounds[i]->setPosition(getPosition() + Vec3(0, height / 2 - _headerHeight - (i + 0.5) * _lineHeight, 0.3));
 			_lineBackgrounds[i]->setSize(Vec2(width, _lineHeight));
+			_lineBackgrounds[i]->setVisible(Widget::isVisible());
 		}
 	}
 	for (uint32 i = 0; i < _cells.size(); ++i) {
-		bool visible = (i >= _currentPage * _lineByPages && i < (_currentPage + 1) * _lineByPages);
+		bool visible = (Widget::isVisible() && i >= _currentPage * _lineByPages && i < (_currentPage + 1) * _lineByPages);
 		x = 0;
 		for (uint32 j = 0; j < _columnCount; ++j) {
 			_cells[i][j]->getElement()->setVisible(visible);
@@ -249,7 +262,6 @@ void    Widget::Table::update() {
 			}
 		}
 	}
-	this;
 }
 
 void	Widget::Table::setPosition(Vec3 const& pos) {
@@ -260,8 +272,7 @@ void	Widget::Table::setPosition(Vec3 const& pos) {
 
 void	Widget::Table::processEvent(Event::Event const& event) {
 	if (event.type & Event::PointerMove) {
-		//float32	y = (getSize().y - _headerHeight) - (event.pos.y - getPosition().y);
-		float32	y = (event.pos.y - (getPosition().y - getSize().y / 2)) / (getSize().y - _headerHeight);
+		float32	y = (event.pos.y - _listener->getRect().pos.y) / _listener->getRect().size.y;
 		int32 nbLine = _cells.size() - _currentPage * _lineByPages;
 		if (nbLine > _lineByPages)
 			nbLine = _lineByPages;
@@ -292,4 +303,8 @@ void	Widget::Table::processEvent(Event::Event const& event) {
 			_currentBackground->getElement()->setCurrentFrame(0);
 		}
 	}
+}
+
+void	Widget::Table::setVisible(bool visible) {
+	update();
 }

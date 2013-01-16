@@ -22,10 +22,13 @@ namespace Menu {
         
         Graphic::Scene* getScene(void) const;
         IMenuDelegate*  getDelegate(void) const;
+		virtual void	setVisible(bool visible);
+		virtual bool	isVisible() const;
 
     private:
         Graphic::Scene* _scene;
         IMenuDelegate*  _delegate;
+		bool			_isVisible;
     };
 
 }

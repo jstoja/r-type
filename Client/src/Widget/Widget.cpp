@@ -46,3 +46,11 @@ Vec3 const&   Widget::Widget::getPosition() const {
 Widget::Widget*  Widget::Widget::getParent() const {
     return _parent;
 }
+
+void Widget::Widget::setVisible(bool visible) {
+	_visible = visible;
+}
+
+bool Widget::Widget::isVisible() const {
+	return (_visible);
+}
