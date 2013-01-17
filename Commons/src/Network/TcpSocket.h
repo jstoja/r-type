@@ -29,14 +29,14 @@ public:
 
   TcpSocket();
   TcpSocket(int fd);
-  ~TcpSocket();
+  virtual ~TcpSocket();
 
   int	getId() const;
 
   bool		connect(const HostAddress& address, uint16 port);
   bool		listen(const HostAddress& address, uint16 port);
   void		read(ByteArray&, bool all = true, uint32 start = 0);
-  void		write(ByteArray&, const HostAddress& hostAddress = HostAddress::AnyAddress, uint16 port = 0);
+  void		write(ByteArray const&, const HostAddress& hostAddress = HostAddress::AnyAddress, uint16 port = 0);
   void		close();
   uint16       	getLocalPort() const;
 
@@ -44,21 +44,21 @@ public:
   void	canWrite();
   
 private:
-  int			_fd;
+  int               _fd;
   HostAddress		_hostAddress;
-  uint16		_hostPort;
+  uint16            _hostPort;
 
-  ByteArray		_buffer;
+  ByteArray         _buffer;
   Threading::Mutex	_bufferMutex;
 
   unsigned int		_toRead;
   ByteArray*		_bufferToRead;
-  bool			_readAll;
-  uint32		_readStart;
+  bool              _readAll;
+  uint32            _readStart;
   Threading::Mutex	_bufferToReadMutex;
 
-  ByteArray*		_bufferToWrite;
-  uint32		_writePosition;
+  ByteArray const*	_bufferToWrite;
+  uint32            _writePosition;
   Threading::Mutex	_bufferToWriteMutex;
 };
 

@@ -80,14 +80,14 @@ bool Network::TcpSocket::listen(const HostAddress& address, uint16 port) {
   return (true);
 }
 
-void Network::TcpSocket::write(ByteArray& biteArray, const HostAddress& hostAddress, uint16 port) {
+void Network::TcpSocket::write(ByteArray const& byteArray, const HostAddress& hostAddress, uint16 port) {
   (void)hostAddress;
   (void)port;
 
   Threading::MutexLocker locker(&_bufferToWriteMutex);
   _writing = true;
   _writePosition = 0;
-  _bufferToWrite = &biteArray;
+  _bufferToWrite = &byteArray;
 }
 
 void Network::TcpSocket::read(ByteArray& biteArray, bool all, uint32 start) {
@@ -176,7 +176,7 @@ void Network::TcpSocket::canWrite() {
   if (_writing && _bufferToWrite) {
     uint32 size = (_bufferToWrite->getSize() - _writePosition < writeSize) ? _bufferToWrite->getSize() - _writePosition : writeSize;
 
-    int ret = ::send(_fd, &(((char*)(*_bufferToWrite))[_writePosition]), size, 0);
+    int ret = ::send(_fd, &(((const char*)(*_bufferToWrite))[_writePosition]), size, 0);
     if (ret == -1)
       size = 0;
     else
@@ -187,7 +187,7 @@ void Network::TcpSocket::canWrite() {
     if (_writePosition == _bufferToWrite->getSize()) {
       _bufferToWriteMutex.unlock();
       if (_delegate)
-	_delegate->writeFinished(this, *_bufferToWrite);
+          _delegate->writeFinished(this, *_bufferToWrite);
       _bufferToWriteMutex.lock();
       _writing = false;
       _bufferToWrite = NULL;

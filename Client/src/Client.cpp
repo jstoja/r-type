@@ -16,7 +16,7 @@
 #include "Graphic/Image.h"
 
 Client::Client(void) :
-_scene(), _framerateLimit(30), _time(), _ui() {
+_scene(), _framerateLimit(30), _time(), _ui(), _tcpSocket(NULL), _proxy(NULL) {
     
     Graphic::Renderer::getInstance().init();
     Graphic::Renderer::getInstance().setScene(&_scene);
@@ -28,14 +28,17 @@ _scene(), _framerateLimit(30), _time(), _ui() {
     viewport.x = viewport.y * (screen.x / screen.y);
     _scene.setViewport(viewport);
     
+    loginCompleted("aurao", "127.0.0.1", "4242");
+    
     // Create the ui
     _ui = new UserInterface(this);
-    
+
     mainLoop();
 }
 
 Client::~Client(void) {
-
+    delete _tcpSocket;
+    delete _proxy;
 }
 
 void Client::mainLoop(void) {
@@ -72,4 +75,28 @@ uint32 Client::getFramerateLimit(void) const {
 
 Graphic::Scene* Client::getScene(void) {
     return &_scene;
+}
+
+void Client::loginCompleted(std::string const& login, std::string const& ipAdress,
+                            std::string const& port) {
+    delete _tcpSocket;
+    delete _proxy;
+    _tcpSocket = new Network::TcpSocket();
+    if (_tcpSocket->connect(std::string("127.0.0.1"), 4242)) {
+        Log("Connected to server");
+        _proxy = new Network::Proxy<Network::TcpPacket>(_tcpSocket, this);
+        Network::TcpPacket packet;
+        packet << login;
+        _proxy->sendPacket(packet);
+    } else {
+        Log("Connection failed");
+    }
+}
+
+void Client::newPacket(Network::TcpPacket* packet) {
+    Log("Packet received");
+}
+
+void Client::packetWrited(Network::TcpPacket const* packet) {
+    Log("Packet sent");
 }

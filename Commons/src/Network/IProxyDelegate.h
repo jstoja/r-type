@@ -19,7 +19,7 @@ namespace Network {
   public:
     virtual ~IProxyDelegate() {}
     virtual void newPacket(T*) = 0;
-    virtual void packetWrited(T*) = 0;
+    virtual void packetWrited(T const*) = 0;
   };
 
 }

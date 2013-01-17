@@ -31,12 +31,12 @@ namespace Network {
   void	newConnection(ASocket*);
   void	readFinished(ASocket*, ByteArray&, const HostAddress&, uint16) {}
   void	dataReceived(ASocket*, ByteArray&, uint32) {}
-  void	dataSent(ASocket*, ByteArray&, uint32) {}
-  void	writeFinished(ASocket*, ByteArray&) {}
+  void	dataSent(ASocket*, ByteArray const&, uint32) {}
+  void	writeFinished(ASocket*, ByteArray const&) {}
   void	disconnection(ASocket*) {}
 
  private:
-  TcpSocket		_socket;
+  TcpSocket             _socket;
   ITcpServerDelegate*	_delegate;
 };
 
