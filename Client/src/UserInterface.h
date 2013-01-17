@@ -39,12 +39,15 @@ public:
 								std::string const& ipAdress,
 								std::string const& port);
     virtual void newGameCompleted(std::string const& name, uint32 nbPlayers);
-	virtual void createGame();
+	virtual void createGame(void);
 	virtual void joinGame(uint32 idx);
-	virtual void previous();
+	virtual void previous(void);
+    virtual void playerReady(void);
     
 private:
     static const float32 _maxViewportX;
+    
+    void _goToMenu(std::string const& menu);
     void _createSceneries(void);
     
     IUserInterfaceDelegate* _delegate;

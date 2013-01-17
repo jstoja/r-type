@@ -22,19 +22,29 @@ namespace Menu {
     public:
         
         GamePrepare(Graphic::Scene *scene, IMenuDelegate* delegate,
-                    std::string const& serverName);
+                    std::string const& serverName, std::string const& gameName,
+                    uint32 nbPlayers, uint32 nbSlots);
         virtual ~GamePrepare(void);
         
         virtual void buttonReleased(Widget::Button* instance);
+        
+        void addPlayer(std::string const& name, bool ready);
+        
+        virtual void setVisible(bool visible);
 
     private:
-        Widget::Label*      _serverNameLabel;
+        Widget::Button*		_previousMenu;
         
-		Widget::Button*		_previousMenu;
+        Widget::Label*      _serverNameLabel;
+        Widget::Label*      _gameLabel;
+        Widget::Label*      _gameNameLabel;
+        Widget::Label*      _nbPlayersLabel;
+        Widget::Label*      _nbPlayersValueLabel;
         
 		Widget::Table*		_playerList;
         
 		Widget::Button*		_readyButton;
+        Widget::Label*      _waitingLabel;        
     };
     
 }

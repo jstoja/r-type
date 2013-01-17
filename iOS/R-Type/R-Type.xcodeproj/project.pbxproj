@@ -110,7 +110,11 @@
 		269AFFFA16A5F7C7005BB638 /* TextInputViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 269AFFF916A5F7C7005BB638 /* TextInputViewController.mm */; };
 		26B59C4B1685E67200BC64D7 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B59C4A1685E67200BC64D7 /* icon@2x.png */; };
 		26B59C4E1685E6D500BC64D7 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B59C4D1685E6D500BC64D7 /* icon.png */; };
-		26F4250C16A72AE6004FCBD3 /* Join.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26F4250A16A72AE6004FCBD3 /* Join.cpp */; };
+		26BEB5E616A7EBEF00E6CC83 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26BEB5E016A7EBEF00E6CC83 /* Game.cpp */; };
+		26BEB5E716A7EBEF00E6CC83 /* GameJoin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26BEB5E216A7EBEF00E6CC83 /* GameJoin.cpp */; };
+		26BEB5E816A7EBEF00E6CC83 /* GamePrepare.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26BEB5E416A7EBEF00E6CC83 /* GamePrepare.cpp */; };
+		26BEB5EB16A7EC0800E6CC83 /* ProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26BEB5E916A7EC0700E6CC83 /* ProgressBar.cpp */; };
+		26BEB5ED16A7EC2F00E6CC83 /* group-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 26BEB5EC16A7EC2F00E6CC83 /* group-background.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -297,8 +301,15 @@
 		269AFFF916A5F7C7005BB638 /* TextInputViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TextInputViewController.mm; sourceTree = "<group>"; };
 		26B59C4A1685E67200BC64D7 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../icon@2x.png"; sourceTree = "<group>"; };
 		26B59C4D1685E6D500BC64D7 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
-		26F4250A16A72AE6004FCBD3 /* Join.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Join.cpp; sourceTree = "<group>"; };
-		26F4250B16A72AE6004FCBD3 /* Join.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Join.h; sourceTree = "<group>"; };
+		26BEB5E016A7EBEF00E6CC83 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
+		26BEB5E116A7EBEF00E6CC83 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		26BEB5E216A7EBEF00E6CC83 /* GameJoin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameJoin.cpp; sourceTree = "<group>"; };
+		26BEB5E316A7EBEF00E6CC83 /* GameJoin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameJoin.h; sourceTree = "<group>"; };
+		26BEB5E416A7EBEF00E6CC83 /* GamePrepare.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GamePrepare.cpp; sourceTree = "<group>"; };
+		26BEB5E516A7EBEF00E6CC83 /* GamePrepare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GamePrepare.h; sourceTree = "<group>"; };
+		26BEB5E916A7EC0700E6CC83 /* ProgressBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProgressBar.cpp; sourceTree = "<group>"; };
+		26BEB5EA16A7EC0700E6CC83 /* ProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressBar.h; sourceTree = "<group>"; };
+		26BEB5EC16A7EC2F00E6CC83 /* group-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "group-background.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -342,6 +353,7 @@
 		2613B44516A36E7500CF84AA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				26BEB5EC16A7EC2F00E6CC83 /* group-background.png */,
 				26756EC916A72BE0005880D1 /* button-left-arrow.png */,
 				26756ECA16A72BE0005880D1 /* button-right-arrow.png */,
 				266F076C16A48889004F5554 /* transformers-font.ttf */,
@@ -378,8 +390,12 @@
 		266F070216A43519004F5554 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				26F4250A16A72AE6004FCBD3 /* Join.cpp */,
-				26F4250B16A72AE6004FCBD3 /* Join.h */,
+				26BEB5E016A7EBEF00E6CC83 /* Game.cpp */,
+				26BEB5E116A7EBEF00E6CC83 /* Game.h */,
+				26BEB5E216A7EBEF00E6CC83 /* GameJoin.cpp */,
+				26BEB5E316A7EBEF00E6CC83 /* GameJoin.h */,
+				26BEB5E416A7EBEF00E6CC83 /* GamePrepare.cpp */,
+				26BEB5E516A7EBEF00E6CC83 /* GamePrepare.h */,
 				269A002316A62C48005BB638 /* Menu.cpp */,
 				269A002416A62C48005BB638 /* Menu.h */,
 				269A002516A62C48005BB638 /* NewGame.cpp */,
@@ -397,6 +413,8 @@
 		266F074D16A4884D004F5554 /* Widget */ = {
 			isa = PBXGroup;
 			children = (
+				26BEB5E916A7EC0700E6CC83 /* ProgressBar.cpp */,
+				26BEB5EA16A7EC0700E6CC83 /* ProgressBar.h */,
 				266F074E16A4884D004F5554 /* Button.cpp */,
 				266F074F16A4884D004F5554 /* Button.h */,
 				266F075016A4884D004F5554 /* CheckBox.cpp */,
@@ -741,6 +759,7 @@
 				269AFFB516A5A8E8005BB638 /* stars-background.png in Resources */,
 				26756ECB16A72BE0005880D1 /* button-left-arrow.png in Resources */,
 				26756ECC16A72BE0005880D1 /* button-right-arrow.png in Resources */,
+				26BEB5ED16A7EC2F00E6CC83 /* group-background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -832,7 +851,10 @@
 				269AFFFA16A5F7C7005BB638 /* TextInputViewController.mm in Sources */,
 				269A002716A62C48005BB638 /* Menu.cpp in Sources */,
 				269A002816A62C48005BB638 /* NewGame.cpp in Sources */,
-				26F4250C16A72AE6004FCBD3 /* Join.cpp in Sources */,
+				26BEB5E616A7EBEF00E6CC83 /* Game.cpp in Sources */,
+				26BEB5E716A7EBEF00E6CC83 /* GameJoin.cpp in Sources */,
+				26BEB5E816A7EBEF00E6CC83 /* GamePrepare.cpp in Sources */,
+				26BEB5EB16A7EC0800E6CC83 /* ProgressBar.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

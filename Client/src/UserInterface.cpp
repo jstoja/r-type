@@ -19,30 +19,34 @@ _messageLabel(NULL) {
     // Create the sceneries used in all the user interface
     _createSceneries();
     
-	//Menu::Game*	menu = new Menu::Game(_delegate->getScene(), this, "Server of the death");
-	//menu->addGame("FIRST GAME", 3, 4);
-	//menu->addGame("SECOND GAME", 0, 4);
-	//menu->addGame("THIRD GAME", 4, 4);
-	//menu->addGame("FOURTH GAME", 4, 4);
-	//menu->addGame("FIFTH GAME", 2, 4);
-	//menu->addGame("FOURTH GAME", 4, 4);
-	//menu->addGame("FIFTH GAME", 2, 4);
-	//menu->addGame("LAST GAME", 0, 4);
+	Menu::Game*	menu = new Menu::Game(_delegate->getScene(), this, "Server of the death");
+	menu->addGame("FIRST GAME", 3, 4);
+	menu->addGame("SECOND GAME", 0, 4);
+	menu->addGame("THIRD GAME", 4, 4);
+	menu->addGame("FOURTH GAME", 4, 4);
+	menu->addGame("FIFTH GAME", 2, 4);
+	menu->addGame("FOURTH GAME", 4, 4);
+	menu->addGame("FIFTH GAME", 2, 4);
+	menu->addGame("LAST GAME", 0, 4);
 
-	//Menu::GamePrepare*	menu2 = new Menu::GamePrepare(_delegate->getScene(), this, "Server of the death");
+	Menu::GamePrepare*	menu2 = new Menu::GamePrepare(_delegate->getScene(), this, "Server of the death", "Auto generated game", 3, 4);
+    menu2->addPlayer("Aurao", true);
+    menu2->addPlayer("Astow", false);
+    menu2->addPlayer("Helfar", true);
+    menu2->addPlayer("Skanight", false);
 
 	Menu::GameJoin*	menu3 = new Menu::GameJoin(_delegate->getScene(), this, "Server of the death", "The Game");
-	menu3->setProgress(0.4);
-	//_menus["Welcome"] = new Menu::Welcome(_delegate->getScene(), this);
-	//_menus["Login"] = new Menu::Login(_delegate->getScene(), this);
-	//_menus["Game"] = menu;
-	//_menus["NewGame"] = new Menu::NewGame(_delegate->getScene(), this, "Server Of The Death");
-	//_menus["GamePrepare"] = menu2;
+    
+	_menus["Welcome"] = new Menu::Welcome(_delegate->getScene(), this);
+	_menus["Login"] = new Menu::Login(_delegate->getScene(), this);
+	_menus["Game"] = menu;
+	_menus["NewGame"] = new Menu::NewGame(_delegate->getScene(), this, "Server Of The Death");
+	_menus["GamePrepare"] = menu2;
 	_menus["GameJoin"] = menu3;
     
 	for (std::map<std::string, Menu::Menu*>::iterator it = _menus.begin(); it != _menus.end(); ++it)
 		it->second->setVisible(false);
-    _currentMenu = menu3;
+    _currentMenu = _menus["Welcome"];
 	_currentMenu->setVisible(true);
 }
 
@@ -56,6 +60,19 @@ void UserInterface::update(void) {
     if (xPos > _maxViewportX)
         xPos = 0;
     _delegate->getScene()->setViewportPosition(Vec2(xPos, 0));
+
+    static float32 gameJoinProgressStart = -1;
+    static float32 gameJoinProgress;
+    if (_currentMenu == _menus["GameJoin"]) {
+        if (gameJoinProgressStart == -1)
+            gameJoinProgressStart = xPos;
+        gameJoinProgress = (xPos - gameJoinProgressStart) / 10;
+        if (gameJoinProgress > 1) {
+            gameJoinProgressStart = -1;
+            _goToMenu("GamePrepare");
+        } else
+            ((Menu::GameJoin*)_currentMenu)->setProgress(gameJoinProgress);
+    }
 }
 
 void UserInterface::presentMessage(std::string const& message) {
@@ -103,21 +120,28 @@ void UserInterface::createGame() {
 
 void UserInterface::joinGame(uint32 idx) {
     std::stringstream str;
-    str << "Joining game at index " << idx;
-	_currentMenu->setVisible(false);
-    presentMessage(str.str());
+    str << "GAME " << idx;
+    _goToMenu("GameJoin");
 }
 
 void UserInterface::previous() {
 	if (_currentMenu == _menus["Game"]) {
-		_currentMenu->setVisible(false);
-		_currentMenu = _menus["Login"];
-		_currentMenu->setVisible(true);
-	} else if (_currentMenu == _menus["NewGame"]) {
-		_currentMenu->setVisible(false);
-		_currentMenu = _menus["Game"];
-		_currentMenu->setVisible(true);
+        _goToMenu("Login");
+	} else if (_currentMenu == _menus["NewGame"]
+               || _currentMenu == _menus["GameJoin"]
+               || _currentMenu == _menus["GamePrepare"]) {
+		_goToMenu("Game");
 	}
+}
+
+void UserInterface::playerReady(void) {
+    
+}
+
+void UserInterface::_goToMenu(std::string const& menu) {
+    _currentMenu->setVisible(false);
+    _currentMenu = _menus[menu];
+    _currentMenu->setVisible(true);
 }
 
 void UserInterface::_createSceneries(void) {
