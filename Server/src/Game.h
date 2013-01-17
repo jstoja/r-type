@@ -43,7 +43,7 @@ public:
     uint32                  getNbSlots(void) const;
 
     void     join(Player* player);
-    bool     canJoin();
+    bool     canJoin() const;
     void     quit(Player* player);
     void     playerReady(Player* player);
     void     start(void);

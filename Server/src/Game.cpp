@@ -52,7 +52,7 @@ void     Game::start(void) {
     _state = Game::STARTED;
 }
 
-bool     Game::canJoin(void) {
+bool     Game::canJoin(void) const {
     return _nbSlots > _players.size();
 }
 
