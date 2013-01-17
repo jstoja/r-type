@@ -175,6 +175,56 @@ void	Game::sendResources(Network::TcpPacket &packet) {
 	packet << _gameSceneries << _gameSounds;
 }
 
+void    Game::_sendSound(void) {
+    for (std::list<Sound*>::const_iterator it = _gameSounds.begin(); it != _gameSounds.end(); ++it) {
+        if ((*it)->hasChanged()) {
+            Network::UdpPacket *udpPacket = new Network::UdpPacket();
+            Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
+            *toSend.packet << (*it)->getId();
+
+            if ((*it)->isPlaying()) {
+                toSend.packet->setCode(Network::Proxy<Network::UdpPacket>::PLAY_SOUND);
+            } else {
+                toSend.packet->setCode(Network::Proxy<Network::UdpPacket>::STOP_SOUND);
+            }
+
+            for (int i=0; i < _players.size(); i++) {
+                _players[i]->sendPacket(toSend);
+            }
+            (*it)->setChanged(false);
+            delete udpPacket;
+        }
+    }
+}
+
+void    Game::_sendGraphicElements(void) {
+    Network::UdpPacket *udpPacket = new Network::UdpPacket();
+    Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
+    toSend.packet->setCode(Network::Proxy<Network::UdpPacket>::GRAPHIC_ELEMENTS);
+    _graphicScene.sendElements(*toSend.packet);
+
+    for (int i=0; i < _players.size(); i++) {
+        _players[i]->sendPacket(toSend);
+    }
+}
+
+void    Game::_sendPhysicElements(void) {
+    Network::UdpPacket *udpPacket = new Network::UdpPacket();
+    Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
+    toSend.packet->setCode(Network::Proxy<Network::UdpPacket>::PHYSIC_ELEMENTS);
+    _physicScene.sendElements(*toSend.packet);
+
+    for (int i=0; i < _players.size(); i++) {
+        _players[i]->sendPacket(toSend);
+    }
+}
+
+void    Game::udpHandler(void) {
+    this->_sendGraphicElements();
+    this->_sendPhysicElements();
+    this->_sendSound();
+}
+
 void	Game::_update() {
 	for (std::list<GameObject*>::iterator it = _objects.begin();
 		it != _objects.end(); ++it)
