@@ -49,7 +49,6 @@ public:
     void	playerReady(Player* player);
     void	start(void);
     void	update();
-    void    udpHandler(void);
 
     virtual void                addGraphicElement(IGraphicElement* element);
     virtual IGraphicElement*    createGraphicElement() const;
@@ -71,6 +70,7 @@ public:
     void                        sendResources(Network::TcpPacket &packet);
 
 private:
+    void                        _udpHandler(void);
     void                        _sendSound(void);
     void                        _sendGraphicElements(void);
     void                        _sendPhysicElements(void);

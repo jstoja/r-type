@@ -66,6 +66,7 @@ void	Game::update() {
 		it != _objects.end(); ++it)
 		if (_viewPort->isInViewport((*it)->getXStart()))
 			_updatePool->addTask(*it, &GameObject::update, NULL);
+	udpHandler();
 }
 
 bool     Game::canJoin(void) const {
