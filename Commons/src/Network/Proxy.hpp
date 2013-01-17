@@ -25,12 +25,11 @@ namespace Network {
         enum UdpActions {GRAPHIC_ELEMENTS, PHYSIC_ELEMENTS, PLAY_SOUND, STOP_SOUND,
             TIME, UPDATE_LIFE, UPDATE_SCORE, GAME_FINISHED};
 
-
         struct		ToSend {
-            ToSend(T* packet, const HostAddress& hostAddress, uint16 port)
+            ToSend(T const* packet, const HostAddress& hostAddress, uint16 port)
                 : packet(packet), hostAddress(hostAddress), port(port) {}
 
-            T*              packet;
+            T const*        packet;
             HostAddress     hostAddress;
             uint16          port;
         };
@@ -41,11 +40,9 @@ namespace Network {
             _socket->setDelegate(this);
             _packet = new T();
             _packet->read(socket);
-            (APacket*)_packet;
         }
 
-        ~Proxy() {
-
+        virtual ~Proxy() {
         }
 
         void sendPacket(const ToSend& toSend) {
@@ -56,6 +53,10 @@ namespace Network {
                 this->_write();
         }
 
+        void sendPacket(const T& packet) {
+            sendPacket(ToSend(&packet, HostAddress::AnyAddress, 0));
+        }
+        
         void sendPackets(const std::vector<ToSend>& toSend) {
             _toSendMutex.lock();
             typename std::vector<ToSend>::const_iterator it;
@@ -83,12 +84,12 @@ namespace Network {
         void dataReceived(ASocket*, ByteArray&, uint32) {
 
         }
-
-        void dataSent(ASocket*, ByteArray&, uint32) {
-
+        
+        void dataSent(ASocket*, ByteArray const&, uint32) {
+            
         }
-
-        void writeFinished(ASocket*, ByteArray&) {
+        
+        void writeFinished(ASocket*, ByteArray const&) {
             _toSendMutex.lock();
             ToSend toSend = _toSend->front();
             _toSend->pop_front();

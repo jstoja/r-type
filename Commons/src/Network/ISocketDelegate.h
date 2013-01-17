@@ -22,8 +22,8 @@ class COMMON_EXPORT_IMPORT ISocketDelegate {
   virtual void newConnection(ASocket*) = 0;
   virtual void readFinished(ASocket*, ByteArray&, const HostAddress& hostAddress, uint16 port) = 0;
   virtual void dataReceived(ASocket*, ByteArray&, uint32) = 0;
-  virtual void dataSent(ASocket*, ByteArray&, uint32) = 0;
-  virtual void writeFinished(ASocket*, ByteArray&) = 0;
+  virtual void dataSent(ASocket*, ByteArray const&, uint32) = 0;
+  virtual void writeFinished(ASocket*, ByteArray const&) = 0;
   virtual void disconnection(ASocket*) = 0;
 };
 

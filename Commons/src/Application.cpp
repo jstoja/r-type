@@ -94,7 +94,7 @@ char Application::getDirectorySeparator() const {
 std::string	Application::convertPath(std::string const& path) const {
 	std::string filename = path;
 	if (getDirectorySeparator() != '/') {
-		size_t	idx = filename.find_last_of('/');
+		size_t	idx;
 		while ((idx = filename.find_last_of('/')) != std::string::npos) {
 			filename.replace(idx, 1, 1, Application::getInstance().getDirectorySeparator());
 		}

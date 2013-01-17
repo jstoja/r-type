@@ -21,6 +21,10 @@ ByteArray& Network::APacket::getData() {
 	return _data;
 }
 
+ByteArray const& Network::APacket::getData() const {
+	return _data;
+}
+
 uint32 Network::APacket::getSize() const {
 	return _size;
 }

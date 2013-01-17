@@ -24,8 +24,7 @@ namespace Network {
     bool        isComplete() const;
 
     void	setCode(uint32 code);
-    uint32     	getCode();
-    ByteArray&	getData();
+    uint32     	getCode();      
 
   private:
     enum State {

@@ -29,7 +29,8 @@ namespace Network {
     APacket();
     ~APacket();
 
-    virtual ByteArray&	getData();
+    virtual ByteArray&          getData();
+    virtual const ByteArray&	getData() const;
     uint32		getSize() const;
 
     virtual void	read(ASocket*) = 0;

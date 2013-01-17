@@ -13,8 +13,11 @@
 # include "Graphic/Scene.h"
 # include "Clock.h"
 # include "UserInterface.h"
+# include "Network/Proxy.hpp"
+# include "Network/TcpSocket.h"
+# include "Network/TcpPacket.h"
 
-class Client : public IUserInterfaceDelegate {
+class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Network::TcpPacket> {
     public:
     
     Client(void);
@@ -35,12 +38,22 @@ class Client : public IUserInterfaceDelegate {
     
     // User interface delegate methods
     Graphic::Scene* getScene(void);
+    virtual void    loginCompleted(std::string const& login,
+                                   std::string const& ipAdress,
+                                   std::string const& port);
+                    
+    // Network proxy delegate methods
+    void newPacket(Network::TcpPacket* packet);
+    void packetWrited(Network::TcpPacket const* packet);
     
     private:
     Graphic::Scene  _scene;
     uint32          _framerateLimit;
     Clock           _time;
     UserInterface*   _ui;
+    
+    Network::TcpSocket*                 _tcpSocket;
+    Network::Proxy<Network::TcpPacket>* _proxy;
 };
 
 #endif

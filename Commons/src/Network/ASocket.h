@@ -19,7 +19,7 @@ namespace Network {
   class COMMON_EXPORT_IMPORT ASocket {
   public:
     ASocket();
-    ~ASocket();
+    virtual ~ASocket();
 
     bool	isListening() const;
     bool	isReading() const;
@@ -27,8 +27,8 @@ namespace Network {
     void	setDelegate(ISocketDelegate*);
 
     virtual void	read(ByteArray&, bool all = true, uint32 start = 0) = 0;
-    virtual void	write(ByteArray&, const HostAddress& hostAddress = HostAddress::AnyAddress, uint16 port = 0) = 0;
-    virtual void       	close() = 0;
+    virtual void	write(ByteArray const&, const HostAddress& hostAddress = HostAddress::AnyAddress, uint16 port = 0) = 0;
+    virtual void    close() = 0;
     virtual int		getId() const = 0;
     virtual void	canRead() = 0;
     virtual void	canWrite() = 0;

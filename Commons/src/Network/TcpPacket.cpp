@@ -58,9 +58,3 @@ uint32 Network::TcpPacket::getCode() {
     return *((int*)(&((char*)_data)[0]));
   return 0;
 }
-
-ByteArray& Network::TcpPacket::getData() {
-  if (_data.getSize() >= 8)
-    *((int*)(&((char*)_data)[4])) = _size;
-  return _data;
-}
