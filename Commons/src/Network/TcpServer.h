@@ -1,9 +1,9 @@
 /*
 ** TcpServer.h for r-type in /home/michar_l//r-type/Commons/src/Network
-** 
+**
 ** Made by loick michard
 ** Login   <michar_l@epitech.net>
-** 
+**
 ** Started on  Tue Dec 18 15:29:20 2012 loick michard
 */
 
@@ -25,7 +25,7 @@ namespace Network {
   ~TcpServer();
 
   void		setDelegate(ITcpServerDelegate*);
-  bool		listen(const HostAddress& address = HostAddress::AnyAddress, uint16 port = 0);
+  bool		listen(const HostAddress& address = HostAddress::AnyAddress, uint16 port = 4242);
   uint16	getLocalPort() const;
 
   void	newConnection(ASocket*);
