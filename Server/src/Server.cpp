@@ -101,7 +101,7 @@ void				Server::setPluginDirectory(std::string const& dir) {
 	_pluginDirectory = dir;
 }
 
-void	Server::run() {
+int	Server::run() {
 	Clock	clock;
 	while (1) {
 		clock.reset();
@@ -114,4 +114,5 @@ void	Server::run() {
 			Clock::sleep(sleeping);
 		std::cout << " " << clock.getEllapsedTime() << std::endl;
 	}
+	return (0);
 }

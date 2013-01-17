@@ -33,7 +33,7 @@ public:
   virtual void  sendResources(uint32 gameId, Player* player);
   virtual void  playerReady(uint32 gameId, Player* player);
   virtual void  gameStart(uint32 gameId);
-  void			run();
+  int			run();
 
   static std::string const& getPluginDirectory();
   static void               setPluginDirectory(std::string const& dir);
