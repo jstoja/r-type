@@ -68,10 +68,12 @@ void  Server::playerReady(uint32 gameId, Player* player) {
 void  Server::sendResources(uint32 gameId, Player* player) {
     if (_games.find(gameId) != _games.end()) {
 
-        Network::Proxy<Network::TcpPacket>::ToSend toSend(new Network::TcpPacket(), Network::HostAddress::AnyAddress, 0);
+        Network::TcpPacket *packet = new Network::TcpPacket();
+        Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
         toSend.packet->setCode(0x01020200);
         _games[gameId]->sendResources(*toSend.packet);
         player->sendPacket(toSend);
+        delete packet;
     }
 }
 
