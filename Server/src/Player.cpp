@@ -57,9 +57,9 @@ void Player::connection(Network::TcpPacket* packet) {
   std::cout << "Connection with login " << login << std::endl;
 
   Network::TcpPacket *tcpPacket = new Network::TcpPacket();
+  tcpPacket->setCode(0x01000000);
+  tcpPacket << (uint32)42;
   Network::Proxy<Network::TcpPacket>::ToSend toSend(tcpPacket, Network::HostAddress::AnyAddress, 0);
-  toSend.packet->setCode(0x01000000);
-  *toSend.packet << (uint32)42;
   _proxy.sendPacket(toSend);
   delete packet;
 }
