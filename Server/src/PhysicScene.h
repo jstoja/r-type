@@ -17,6 +17,7 @@
 
 # include "PhysicElement.h"
 # include "Threading/Mutex.h"
+# include "ViewPort.h"
 
 class PhysicScene {
 public:
@@ -25,7 +26,7 @@ public:
 
 	void	addElement(PhysicElement *element);
 	void	sendStaticElements(Network::TcpPacket& packet);
-	void	sendElements(Network::UdpPacket& packet);
+	void	sendElements(Network::UdpPacket& packet, ViewPort* viewPort);
 
 private:
     Threading::Mutex            _physicElementsMutex;

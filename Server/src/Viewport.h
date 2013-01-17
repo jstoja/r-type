@@ -28,6 +28,7 @@ public:
 	virtual void	setSpeed(float32 width);
 	virtual float32	getSpeed() const;
 
+	virtual bool	isInViewport(Rect2 const& object) const;
 	virtual bool	isInViewport(float32 x) const;
 
 	void			update(Clock& clock);

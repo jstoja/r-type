@@ -33,13 +33,13 @@ void	PhysicScene::sendStaticElements(Network::TcpPacket& packet) {
 	packet << toSend;
 }
 
-void	PhysicScene::sendElements(Network::UdpPacket& packet) {
+void	PhysicScene::sendElements(Network::UdpPacket& packet, ViewPort* viewPort) {
 	std::list<PhysicElement*>	toSend;
 
     _physicElementsMutex.lock();
 	for (std::list<PhysicElement*>::iterator it = _physicElements.begin();
 		it != _physicElements.end(); ++it)
-		if ((*it)->hasChanged())
+		if ((*it)->hasChanged() && viewPort->isInViewport(Rect2((*it)->getPosition(), (*it)->getSize())))
 			toSend.push_back(*it);
     _physicElementsMutex.unlock();
 	packet << toSend;

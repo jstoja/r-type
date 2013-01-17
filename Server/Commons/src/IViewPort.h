@@ -11,6 +11,7 @@
 # define _I_VIEWPORT_H_
 
 # include <Types.h>
+# include <Rect2.h>
 
 class IViewPort {
 public:
@@ -25,6 +26,7 @@ public:
 	virtual void	setSpeed(float32 width) = 0;
 	virtual float32	getSpeed() const = 0;
 
+	virtual bool	isInViewport(Rect2 const& object) const = 0;
 	virtual bool	isInViewport(float32 x) const = 0;
 };
 

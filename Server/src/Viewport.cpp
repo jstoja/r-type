@@ -43,6 +43,12 @@ bool	ViewPort::isInViewport(float32 x) const {
 	return (x >= _x && x < _x + _width);
 }
 
+bool	ViewPort::isInViewport(Rect2 const& object) const {
+	return ((object.pos.x >= _x && object.pos.x < _x + _width) ||
+		(object.pos.x + object.size.x >= _x && object.pos.x + object.size.x < _x + _width) ||
+		(object.pos.x < _x && object.pos.x + object.size.x >= _x + _width));
+}
+
 void	ViewPort::update(Clock& clock) {
 	_x += clock.getEllapsedTime() * _speed;
 }

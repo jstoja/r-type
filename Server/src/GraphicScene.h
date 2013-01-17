@@ -17,6 +17,7 @@
 
 # include "GraphicElement.h"
 # include "Threading/Mutex.h"
+# include "Viewport.h"
 
 class GraphicScene {
 public:
@@ -25,7 +26,7 @@ public:
 
 	void	addElement(GraphicElement *element);
 	void	sendStaticElements(Network::TcpPacket& packet);
-	void	sendElements(Network::UdpPacket& packet);
+	void	sendElements(Network::UdpPacket& packet, ViewPort* viewport);
 
 private:
     Threading::Mutex            _graphicElementsMutex;

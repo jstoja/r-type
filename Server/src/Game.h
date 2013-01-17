@@ -39,7 +39,7 @@ public:
     ~Game();
 
     std::string const&      getName(void) const;
-    State                  getState(void) const;
+    State					getState(void) const;
     uint32                  getNbPlayers(void) const;
     uint32                  getNbSlots(void) const;
 
@@ -85,6 +85,7 @@ private:
 	Threading::ThreadPool*			_updatePool;
     State                           _state;
 	Clock							_clock;
+	Clock							_gameClock;
 	ViewPort*						_viewPort;
 
 #ifdef OS_MAC

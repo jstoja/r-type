@@ -53,6 +53,7 @@ void     Game::start(void) {
     }
 	_state = STARTED;
 	_clock.reset();
+	_gameClock.reset();
 	_viewPort->setPosition(0);
 	_viewPort->setWidth(16);
 }
@@ -61,7 +62,8 @@ void	Game::update() {
 	_viewPort->update(_clock);
 	for (std::list<GameObject*>::iterator it = _objects.begin();
 		it != _objects.end(); ++it)
-		_updatePool->addTask(*it, &GameObject::update, NULL);
+		if (_viewPort->isInViewport((*it)->getXStart()))
+			_updatePool->addTask(*it, &GameObject::update, NULL);
 }
 
 bool     Game::canJoin(void) {
