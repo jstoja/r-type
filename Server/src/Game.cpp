@@ -68,7 +68,7 @@ void	Game::update() {
 			_updatePool->addTask(*it, &GameObject::update, NULL);
 }
 
-bool     Game::canJoin(void) {
+bool     Game::canJoin(void) const {
     return _nbSlots > _players.size();
 }
 

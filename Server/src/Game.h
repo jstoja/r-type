@@ -43,12 +43,18 @@ public:
     uint32                  getNbPlayers(void) const;
     uint32                  getNbSlots(void) const;
 
+    void     join(Player* player);
+    bool     canJoin() const;
+    void     quit(Player* player);
+    void     playerReady(Player* player);
+    void     start(void);
+
     void	join(Player* player);
     bool	canJoin();
     void	quit(Player* player);
     void	playerReady(Player* player);
     void	start(void);
-	void	update();
+    void	update();
     void     udpHandler(void);
 
     virtual void                addGraphicElement(IGraphicElement* element);
