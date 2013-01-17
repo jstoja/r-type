@@ -15,6 +15,8 @@
 # include <ISprite.h>
 # include <Object.h>
 # include <Network/TcpPacket.h>
+# include "Threading/Mutex.h"
+# include "Threading/MutexLocker.h"
 # include <Rect2.h>
 # include "Frame.h"
 
@@ -33,6 +35,9 @@ public:
 	std::list<Frame> const&	getFrames() const;
 
 private:
+    
+    Threading::Mutex	*_attributesMutexTexture;
+    Threading::Mutex	*_attributesMutexFrames;
 	Texture*			_texture;
 	std::list<Frame>	_frames;
 };

@@ -13,14 +13,17 @@
 #include "Texture.h"
 
 Texture::Texture(std::string const& filepath) {
+    _mutex = new Threading::Mutex();
 	_img = ResourcesManager::getInstance().loadResource(filepath);
 }
 
 Texture::~Texture() {
+    delete _mutex;
 	delete _img;
 }
 
 Resource*	Texture::getImg() const {
+    Threading::MutexLocker  locker(_mutex);
 	return (_img);
 }
 

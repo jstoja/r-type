@@ -15,6 +15,8 @@
 # include <Network/TcpPacket.h>
 # include <Network/UdpPacket.h>
 # include <Threading/ThreadPool.hpp>
+# include "Threading/Mutex.h"
+# include "Threading/MutexLocker.h"
 # include <IGame.h>
 
 # include "GraphicScene.h"
@@ -75,6 +77,29 @@ private:
     void                        _sendGraphicElements(void);
     void                        _sendPhysicElements(void);
 
+    enum    _mutexVariable {
+        ePlayers = 0,
+        eNbSlots,
+        eName,
+        eCurrentLevel,
+        eObjects,
+        eGameTextures,
+        eLevelSprites,
+        eGameSprites,
+        eGameSceneries,
+        eGameSounds,
+        eGraphicScene,
+        ePhysicScene,
+        eUpdatePool,
+        eState,
+        eClock,
+        eGameClock,
+        eViewPort,
+        eApplication,
+        eLastAttribute
+    };
+    std::vector<Threading::Mutex*>	_attributesMutex;
+    
 	std::vector<Player*>            _players;
 	uint32                          _nbSlots;
 	std::string                     _name;

@@ -15,6 +15,8 @@
 # include <IScenery.h>
 # include <Object.h>
 # include <Network/TcpPacket.h>
+# include "Threading/Mutex.h"
+# include "Threading/MutexLocker.h"
 
 # include "Texture.h"
 
@@ -39,6 +41,17 @@ public:
 	virtual float32	getXEnd() const;
 
 private:
+    
+    enum    _mutexVariable {
+        eTexture = 0,
+        eSpeed,
+        eWidth,
+        eXStart,
+        eXEnd,
+        eLastAttribute
+    };
+    std::vector<Threading::Mutex*>	_attributesMutex;
+    
 	Texture*	_texture;
 	float32		_speed;
 	float32		_width;

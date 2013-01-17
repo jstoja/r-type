@@ -16,6 +16,8 @@
 # include <Object.h>
 # include <Resource.h>
 # include <Network/TcpPacket.h>
+# include "Threading/Mutex.h"
+# include "Threading/MutexLocker.h"
 
 class Texture : public ITexture, public Object {
 public:
@@ -25,6 +27,7 @@ public:
 	Resource*	getImg() const;
 
 private:
+    Threading::Mutex    *_mutex;
 	Resource*	_img;
 };
 

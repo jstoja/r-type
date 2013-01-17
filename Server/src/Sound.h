@@ -16,6 +16,8 @@
 # include <Object.h>
 # include <Resource.h>
 # include <Network/TcpPacket.h>
+# include "Threading/Mutex.h"
+# include "Threading/MutexLocker.h"
 
 class Sound : public ISound, public Object {
 public:
@@ -35,6 +37,15 @@ public:
     virtual bool    isPlaying() const;
 
 private:
+    enum    _mutexVariable {
+        eSound = 0,
+        eChanged,
+        eIsPlaying,
+        eRepeat,
+        eLastAttribute
+    };
+    std::vector<Threading::Mutex*>	_attributesMutex;
+
 	Resource*	_sound;
 	bool		_changed;
 	bool		_isPlaying;
