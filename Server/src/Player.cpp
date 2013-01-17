@@ -26,7 +26,7 @@ Player::~Player() {
   delete _socket;
 }
 
-void Player::newPacket(Network::TcpPacket* packet) {
+void Player::packetReceived(Network::TcpPacket* packet) {
   uint32 code, size;
 
   *packet >> code >> size;
@@ -37,17 +37,24 @@ void Player::newPacket(Network::TcpPacket* packet) {
   delete packet;
 }
 
-void Player::packetWrited(Network::TcpPacket const* packet) {
+void Player::packetSent(Network::TcpPacket const* packet) {
   delete packet;
 }
 
+void Player::connectionClosed(Network::Proxy<Network::TcpPacket>*) {
+    
+}
 
-void Player::newPacket(Network::UdpPacket* packet) {
+void Player::packetReceived(Network::UdpPacket* packet) {
   delete packet;
 }
 
-void Player::packetWrited(Network::UdpPacket const* packet) {
+void Player::packetSent(Network::UdpPacket const* packet) {
   delete packet;
+}
+
+void Player::connectionClosed(Network::Proxy<Network::UdpPacket>*) {
+    
 }
 
 void Player::connection(Network::TcpPacket* packet) {

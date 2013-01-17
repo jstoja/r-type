@@ -17,7 +17,7 @@ namespace Network {
   class COMMON_EXPORT_IMPORT_REMOVED UdpPacket : public APacket {
   public:
     UdpPacket();
-    ~UdpPacket();
+    virtual ~UdpPacket();
 
     void    read(ASocket*);
     void    update();

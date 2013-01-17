@@ -13,13 +13,17 @@
 # include <OS.h>
 
 namespace Network {
+    
+    template <class T>
+    class Proxy;
 
   template <typename T>
   class COMMON_EXPORT_IMPORT_REMOVED IProxyDelegate {
   public:
-    virtual ~IProxyDelegate() {}
-    virtual void newPacket(T*) = 0;
-    virtual void packetWrited(T const*) = 0;
+    virtual ~IProxyDelegate(void) {}
+    virtual void packetReceived(T*) = 0;
+    virtual void packetSent(T const*) = 0;
+    virtual void connectionClosed(Network::Proxy<T>*) = 0;
   };
 
 }

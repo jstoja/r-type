@@ -43,8 +43,9 @@ class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Ne
                                    std::string const& port);
                     
     // Network proxy delegate methods
-    void newPacket(Network::TcpPacket* packet);
-    void packetWrited(Network::TcpPacket const* packet);
+    void packetReceived(Network::TcpPacket* packet);
+    void packetSent(Network::TcpPacket const* packet);
+    void connectionClosed(Network::Proxy<Network::TcpPacket>* packet);
     
     private:
     Graphic::Scene  _scene;

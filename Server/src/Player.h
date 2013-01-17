@@ -20,12 +20,15 @@
 class Player : public Network::IProxyDelegate<Network::TcpPacket>,  public Network::IProxyDelegate<Network::UdpPacket>, public Object {
  public:
   Player(Network::ASocket*, IServerDelegate* server);
-  ~Player();
+  virtual ~Player();
 
-  void	newPacket(Network::TcpPacket*);
-  void	packetWrited(Network::TcpPacket const*);
-  void  newPacket(Network::UdpPacket*);
-  void  packetWrited(Network::UdpPacket const*);
+  void	packetReceived(Network::TcpPacket*);
+  void	packetSent(Network::TcpPacket const*);
+  void	connectionClosed(Network::Proxy<Network::TcpPacket>*);
+  void  packetReceived(Network::UdpPacket*);
+  void  packetSent(Network::UdpPacket const*);
+  void	connectionClosed(Network::Proxy<Network::UdpPacket>*);
+    
   void  sendPacket(Network::Proxy<Network::TcpPacket>::ToSend const& toSend);
   void  sendPacket(Network::Proxy<Network::UdpPacket>::ToSend const& toSend);
 

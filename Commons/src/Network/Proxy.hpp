@@ -53,8 +53,8 @@ namespace Network {
                 this->_write();
         }
 
-        void sendPacket(const T& packet) {
-            sendPacket(ToSend(&packet, HostAddress::AnyAddress, 0));
+        void sendPacket(const T* packet) {
+            sendPacket(ToSend(packet, HostAddress::AnyAddress, 0));
         }
         
         void sendPackets(const std::vector<ToSend>& toSend) {
@@ -73,7 +73,7 @@ namespace Network {
             _packet->update();
             if (_packet->isComplete()) {
                 if (_delegate)
-                    _delegate->newPacket(_packet);
+                    _delegate->packetReceived(_packet);
                 _packet = new T();
                 _packet->read(_socket);
             }
@@ -101,7 +101,7 @@ namespace Network {
             _toSendMutex.unlock();
             if (!found) {
                 if (_delegate)
-                    _delegate->packetWrited(toSend.packet);
+                    _delegate->packetSent(toSend.packet);
             }
             this->_write();
         }

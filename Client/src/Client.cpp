@@ -85,18 +85,22 @@ void Client::loginCompleted(std::string const& login, std::string const& ipAdres
     if (_tcpSocket->connect(std::string("127.0.0.1"), 4242)) {
         Log("Connected to server");
         _proxy = new Network::Proxy<Network::TcpPacket>(_tcpSocket, this);
-        Network::TcpPacket packet;
-        packet << login;
+        Network::TcpPacket* packet = new Network::TcpPacket();
+        *packet << login;
         _proxy->sendPacket(packet);
     } else {
         Log("Connection failed");
     }
 }
 
-void Client::newPacket(Network::TcpPacket* packet) {
+void Client::packetReceived(Network::TcpPacket* packet) {
     Log("Packet received");
 }
 
-void Client::packetWrited(Network::TcpPacket const* packet) {
+void Client::packetSent(Network::TcpPacket const* packet) {
     Log("Packet sent");
+}
+
+void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* packet) {
+    
 }
