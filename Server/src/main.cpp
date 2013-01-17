@@ -21,6 +21,5 @@ int	main(int argc, char *argv[]) {
 	App.setRelativeResourcesPath("./Resources");
 	Server server;
 
-	getchar();
-	return (0);
+	return (server.run());
 }

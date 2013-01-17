@@ -33,6 +33,7 @@ public:
   virtual void  sendResources(uint32 gameId, Player* player);
   virtual void  playerReady(uint32 gameId, Player* player);
   virtual void  gameStart(uint32 gameId);
+  void			run();
 
   static std::string const& getPluginDirectory();
   static void               setPluginDirectory(std::string const& dir);
@@ -42,6 +43,8 @@ private:
     Network::TcpServer      _tcpServer;
     std::vector<Player*>    _players;
     std::map<uint32, Game*> _games;
+
+	static const uint32		_sendFramerate = 40;
 };
 
 #endif

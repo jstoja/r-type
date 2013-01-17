@@ -100,3 +100,18 @@ std::string const&	Server::getPluginDirectory() {
 void				Server::setPluginDirectory(std::string const& dir) {
 	_pluginDirectory = dir;
 }
+
+void	Server::run() {
+	Clock	clock;
+	while (1) {
+		clock.reset();
+		for (std::map<uint32, Game*>::iterator it = _games.begin(); it != _games.end(); ++it)
+			if (it->second->getState() == Game::STARTED)
+				it->second->update();
+		uint32 sleeping = (1000 / _sendFramerate) - clock.getEllapsedTime();
+		std::cout << "FPS: " << clock.getEllapsedTime() << " " << sleeping;
+		if (sleeping > 0)
+			Clock::sleep(sleeping);
+		std::cout << " " << clock.getEllapsedTime() << std::endl;
+	}
+}
