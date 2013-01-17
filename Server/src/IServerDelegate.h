@@ -17,7 +17,7 @@ public:
     virtual std::map<uint32, Game*> const&  getGames(void) = 0;
     virtual bool                            createGame(Game* game, Player* player) = 0;
     virtual int                             joinGame(uint32 gameId, Player* player) = 0;
-    virtual void                            quitGame(uint32 gameId, Player* player) = 0;
+    virtual void                            quitGame(Player* player) = 0;
     virtual void                            sendResources(uint32 gameId, Player* player) = 0;
     virtual void                            playerReady(uint32 gameId, Player* player) = 0;
     virtual void                            gameStart(uint32 gameId) = 0;

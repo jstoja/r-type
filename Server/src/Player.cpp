@@ -17,7 +17,6 @@ Player::Player(Network::ASocket* socket, IServerDelegate* server) : _isReady(fal
   _commands[0x00000000] = &Player::connection;
   _commands[0x00010000] = &Player::listGame;
   _commands[0x00020000] = &Player::joinGame;
-  _commands[0x00020100] = &Player::quitGame;
   _commands[0x00020200] = &Player::createGame;
   _commands[0x00020300] = &Player::readyToStart;
 }
@@ -42,7 +41,7 @@ void Player::packetSent(Network::TcpPacket const* packet) {
 }
 
 void Player::connectionClosed(Network::Proxy<Network::TcpPacket>*) {
-    
+
 }
 
 void Player::packetReceived(Network::UdpPacket* packet) {
@@ -54,7 +53,7 @@ void Player::packetSent(Network::UdpPacket const* packet) {
 }
 
 void Player::connectionClosed(Network::Proxy<Network::UdpPacket>*) {
-    
+    _server->quitGame(this);
 }
 
 void Player::connection(Network::TcpPacket* packet) {
@@ -108,14 +107,6 @@ void Player::joinGame(Network::TcpPacket* packet) {
     _proxy.sendPacket(toSend);
     _server->sendResources(id, this);
     delete packet;
- }
-
-void Player::quitGame(Network::TcpPacket* packet) {
-    uint32 id;
-
-    *packet >> id;
-    _isReady = false;
-    _server->quitGame(id, this);
  }
 
 

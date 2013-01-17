@@ -28,7 +28,7 @@ class Player : public Network::IProxyDelegate<Network::TcpPacket>,  public Netwo
   void  packetReceived(Network::UdpPacket*);
   void  packetSent(Network::UdpPacket const*);
   void	connectionClosed(Network::Proxy<Network::UdpPacket>*);
-    
+
   void  sendPacket(Network::Proxy<Network::TcpPacket>::ToSend const& toSend);
   void  sendPacket(Network::Proxy<Network::UdpPacket>::ToSend const& toSend);
 
@@ -36,7 +36,6 @@ class Player : public Network::IProxyDelegate<Network::TcpPacket>,  public Netwo
   void  connection(Network::TcpPacket*);
   void  createGame(Network::TcpPacket*);
   void  joinGame(Network::TcpPacket*);
-  void  quitGame(Network::TcpPacket*);
   void  listGame(Network::TcpPacket* packet);
   void  readyToStart(Network::TcpPacket* packet);
 
