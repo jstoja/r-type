@@ -248,9 +248,12 @@ void    Game::udpHandler(void) {
     this->_sendPhysicElements();
     this->_sendSound();
 }
-}
 
 Network::APacket&       operator<<(Network::APacket& packet, Game const& game) {
     packet << game.getId() << game.getName() << game.getNbPlayers() << game.getNbSlots();
     return packet;
+}
+
+IViewPort*	Game::getViewPort() const {
+	return (_viewPort);
 }
