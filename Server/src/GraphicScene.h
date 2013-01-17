@@ -17,7 +17,7 @@
 
 # include "GraphicElement.h"
 # include "Threading/Mutex.h"
-# include "Viewport.h"
+# include "ViewPort.h"
 
 class GraphicScene {
 public:
