@@ -1,9 +1,9 @@
 //
 // UdpPacket.cpp for r-type in /home/michar_l//r-type/Commons/src/Network
-// 
+//
 // Made by loick michard
 // Login   <michar_l@epitech.net>
-// 
+//
 // Started on  Sun Dec 23 10:45:12 2012 loick michard
 //
 
@@ -31,4 +31,17 @@ bool Network::UdpPacket::isComplete() const {
   if (_data.getSize() == 0)
     return false;
   return true;
+}
+
+void Network::UdpPacket::setCode(uint32 code) {
+  if (_data.getSize() < 8)
+    _data.resize(8);
+  *((int*)(&((char*)_data)[0])) = code;
+  *((int*)(&((char*)_data)[4])) = _size;
+}
+
+uint32 Network::UdpPacket::getCode() {
+  if (_data.getSize() >= 4)
+    return *((int*)(&((char*)_data)[0]));
+  return 0;
 }

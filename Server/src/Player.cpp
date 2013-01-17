@@ -11,7 +11,7 @@
 #include "Game.h"
 #include "Player.h"
 
-Player::Player(Network::ASocket* socket, IServerDelegate* server) : _isReady(false), _socket(socket), _proxy(socket, this), _server(server) {
+Player::Player(Network::ASocket* socket, IServerDelegate* server) : _isReady(false), _socket(socket), _proxy(socket, this), _udpProxy(socket, this), _server(server) {
   std::cout << "New Player" << std::endl;
 
   _commands[0x00000000] = &Player::connection;
@@ -41,6 +41,15 @@ void Player::packetWrited(Network::TcpPacket* packet) {
   delete packet;
 }
 
+
+    void Player::newPacket(Network::UdpPacket* packet) {
+  delete packet;
+}
+
+void Player::packetWrited(Network::UdpPacket* packet) {
+  delete packet;
+}
+
 void Player::connection(Network::TcpPacket* packet) {
   std::string login;
 
@@ -55,6 +64,10 @@ void Player::connection(Network::TcpPacket* packet) {
 
 void  Player::sendPacket(Network::Proxy<Network::TcpPacket>::ToSend const& toSend) {
     _proxy.sendPacket(toSend);
+}
+
+void  Player::sendPacket(Network::Proxy<Network::UdpPacket>::ToSend const& toSend) {
+    _udpProxy.sendPacket(toSend);
 }
 
 void Player::createGame(Network::TcpPacket* packet) {

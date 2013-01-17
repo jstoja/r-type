@@ -17,14 +17,17 @@
 # include "Game.h"
 # include "IServerDelegate.h"
 
-class Player : public Network::IProxyDelegate<Network::TcpPacket>, public Object {
+class Player : public Network::IProxyDelegate<Network::TcpPacket>,  public Network::IProxyDelegate<Network::UdpPacket>, public Object {
  public:
   Player(Network::ASocket*, IServerDelegate* server);
   ~Player();
 
   void	newPacket(Network::TcpPacket*);
   void	packetWrited(Network::TcpPacket*);
+  void  newPacket(Network::UdpPacket*);
+  void  packetWrited(Network::UdpPacket*);
   void  sendPacket(Network::Proxy<Network::TcpPacket>::ToSend const& toSend);
+  void  sendPacket(Network::Proxy<Network::UdpPacket>::ToSend const& toSend);
 
   // Protocol functions
   void  connection(Network::TcpPacket*);
@@ -40,6 +43,7 @@ class Player : public Network::IProxyDelegate<Network::TcpPacket>, public Object
   bool                                  _isReady;
   Network::ASocket*                     _socket;
   Network::Proxy<Network::TcpPacket>    _proxy;
+  Network::Proxy<Network::UdpPacket>    _udpProxy;
   IServerDelegate*                      _server;
   std::map<int, commandPointer>         _commands;
 };

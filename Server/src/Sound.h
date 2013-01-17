@@ -3,7 +3,7 @@
 //
 // Made by Samuel Olivier
 // Login   <olivie_a@epitech.net>
-// 
+//
 // Started on  lun. janv. 14 01:09:40 2013 Samuel Olivier
 //
 
@@ -32,6 +32,7 @@ public:
 
 	virtual bool	hasChanged() const;
 	virtual void	setChanged(bool val);
+    virtual bool    isPlaying() const;
 
 private:
 	Resource*	_sound;

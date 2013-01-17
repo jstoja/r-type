@@ -3,7 +3,7 @@
 //
 // Made by Samuel Olivier
 // Login   <olivie_a@epitech.net>
-// 
+//
 // Started on  lun. janv. 14 01:12:55 2013 Samuel Olivier
 //
 
@@ -40,6 +40,10 @@ void	Sound::play() {
 void	Sound::stop() {
 	_isPlaying = false;
 	_changed = true;
+}
+
+bool    Sound::isPlaying() const {
+    return _isPlaying;
 }
 
 bool	Sound::hasChanged() const {
