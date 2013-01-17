@@ -1,5 +1,5 @@
 //
-//  Join.cpp
+//  Game.cpp
 //  R-Type
 //
 //  Copyright (c) 2013 EPITECH. All rights reserved.
@@ -7,10 +7,10 @@
 
 #include <sstream>
 
-#include "Join.h"
+#include "Game.h"
 #include "Graphic/Scene.h"
 
-Menu::Join::Join(Graphic::Scene *scene, IMenuDelegate* delegate,
+Menu::Game::Game(Graphic::Scene *scene, IMenuDelegate* delegate,
                 std::string const& serverName) : Menu(scene, delegate) {
 	std::string upperName = serverName;
     std::transform(serverName.begin(), serverName.end(), upperName.begin(), ::toupper);
@@ -44,15 +44,16 @@ Menu::Join::Join(Graphic::Scene *scene, IMenuDelegate* delegate,
 	_createGame->setPosition(Vec3(_createGame->getSize().x / 2 + 0.425, y - _gameList->getSize().y / 2 - _createGame->getSize().y / 2 - 0.2));
 }
 
-Menu::Join::~Join(void) {
+Menu::Game::~Game(void) {
 	delete _serverNameLabel;
 	delete _gameList;
 	delete _nextPageButton;
 	delete _previousPageButton;
 	delete _createGame;
+	delete _previousMenu;
 }
 
-void Menu::Join::addGame(std::string const& gameName, uint32 gamePlayerNumber, uint32 gamePlayerSlot) {
+void Menu::Game::addGame(std::string const& gameName, uint32 gamePlayerNumber, uint32 gamePlayerSlot) {
 	std::stringstream tmp;
 	tmp << gamePlayerNumber << "/" << gamePlayerSlot;
 	std::vector<std::string>	line;
@@ -64,7 +65,7 @@ void Menu::Join::addGame(std::string const& gameName, uint32 gamePlayerNumber, u
 	_updatePageButtons();
 }
 
-void Menu::Join::buttonReleased(Widget::Button* instance) {
+void Menu::Game::buttonReleased(Widget::Button* instance) {
 	if (instance == _nextPageButton && _gameList->hasNextPage())
 		_gameList->nextPage();
 	else if (instance == _previousPageButton && _gameList->hasPreviousPage())
@@ -79,16 +80,16 @@ void Menu::Join::buttonReleased(Widget::Button* instance) {
 	_updatePageButtons();
 }
 
-void Menu::Join::linePushed(Widget::Table* instance, uint32 line) {
+void Menu::Game::linePushed(Widget::Table* instance, uint32 line) {
 	getDelegate()->joinGame(line);
 }
 
-void Menu::Join::_updatePageButtons() {
+void Menu::Game::_updatePageButtons() {
 	_nextPageButton->getElement()->setVisible(isVisible() ? _gameList->hasNextPage() : false);
 	_previousPageButton->getElement()->setVisible(isVisible() ? _gameList->hasPreviousPage() : false);
 }
 
-void Menu::Join::setVisible(bool visible) {
+void Menu::Game::setVisible(bool visible) {
 	Menu::setVisible(visible);
 	_serverNameLabel->setVisible(visible);
 	_gameList->setVisible(visible);

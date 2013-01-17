@@ -5,8 +5,8 @@
 //  Copyright (c) 2013 EPITECH. All rights reserved.
 //
 
-#ifndef JOIN_MENU_H
-# define JOIN_MENU_H
+#ifndef _GAME_MENU_H_
+# define _GAME_MENU_H_
 
 # include "Menu.h"
 # include "IMenuDelegate.h"
@@ -18,11 +18,11 @@
 
 namespace Menu {
     
-    class Join : public Menu, public Widget::IButtonDelegate, public Widget::ITableDelegate {
+    class Game : public Menu, public Widget::IButtonDelegate, public Widget::ITableDelegate {
     public:        
-        Join(Graphic::Scene *scene, IMenuDelegate* delegate,
+        Game(Graphic::Scene *scene, IMenuDelegate* delegate,
                 std::string const& serverName);
-        virtual ~Join(void);
+        virtual ~Game(void);
 
 		void addGame(std::string const& gameName, uint32 gamePlayerNumber, uint32 gamePlayerSlot);
 
@@ -43,7 +43,6 @@ namespace Menu {
 		Widget::Button*		_previousPageButton;
 		Widget::Button*		_createGame;
     };
-    
 }
 
 #endif

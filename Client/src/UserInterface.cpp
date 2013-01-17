@@ -7,7 +7,7 @@
 //
 
 #include "UserInterface.h"
-
+#include "Menu/GameJoin.h"
 #include "Graphic/Image.h"
 #include <sstream>
 
@@ -19,37 +19,23 @@ _messageLabel(NULL) {
     // Create the sceneries used in all the user interface
     _createSceneries();
     
-    // Debug
-    //_loginMenu = new Menu::Login(_delegate->getScene(), this);
-    //_currentMenu = new Menu::NewGame(_delegate->getScene(), this, "The server of the death");
-	//Menu::Join*	menu = new Menu::Join(_delegate->getScene(), this, "The server of the death");
- //   _currentMenu = menu;
+	//Menu::Game*	menu = new Menu::Game(_delegate->getScene(), this, "Server of the death");
 	//menu->addGame("FIRST GAME", 3, 4);
 	//menu->addGame("SECOND GAME", 0, 4);
-	//menu->addGame("THIRD GAME", 1, 4);
+	//menu->addGame("THIRD GAME", 4, 4);
+	//menu->addGame("FOURTH GAME", 4, 4);
+	//menu->addGame("FIFTH GAME", 2, 4);
 	//menu->addGame("FOURTH GAME", 4, 4);
 	//menu->addGame("FIFTH GAME", 2, 4);
 	//menu->addGame("LAST GAME", 0, 4);
-    //return ;
-    
-	Menu::Join*	menu = new Menu::Join(_delegate->getScene(), this, "Server of the death");
-	menu->addGame("FIRST GAME", 3, 4);
-	menu->addGame("SECOND GAME", 0, 4);
-	menu->addGame("THIRD GAME", 4, 4);
-	menu->addGame("FOURTH GAME", 4, 4);
-	menu->addGame("FIFTH GAME", 2, 4);
-	menu->addGame("FOURTH GAME", 4, 4);
-	menu->addGame("FIFTH GAME", 2, 4);
-	menu->addGame("LAST GAME", 0, 4);
-
-	// Present welcome menu
-	_menus["Welcome"] = new Menu::Welcome(_delegate->getScene(), this);
-	_menus["Login"] = new Menu::Login(_delegate->getScene(), this);
-	_menus["Join"] = menu;
-	_menus["NewGame"] = new Menu::NewGame(_delegate->getScene(), this, "Server Of The Death");
+	//_menus["Welcome"] = new Menu::Welcome(_delegate->getScene(), this);
+	//_menus["Login"] = new Menu::Login(_delegate->getScene(), this);
+	//_menus["Game"] = menu;
+	//_menus["NewGame"] = new Menu::NewGame(_delegate->getScene(), this, "Server Of The Death");
+	_menus["GameJoin"] = new Menu::GameJoin(_delegate->getScene(), this, "Server Of The Death", "The Game");
 	for (std::map<std::string, Menu::Menu*>::iterator it = _menus.begin(); it != _menus.end(); ++it)
 		it->second->setVisible(false);
-    _currentMenu = _menus["Welcome"];
+    _currentMenu = _menus["GameJoin"];
 	_currentMenu->setVisible(true);
 }
 
@@ -90,7 +76,7 @@ void UserInterface::loginCompleted(std::string const& login,
 								   std::string const& ipAdress,
 								   std::string const& port) {
 	_currentMenu->setVisible(false);
-    _currentMenu = _menus["Join"];
+    _currentMenu = _menus["Game"];
 	_currentMenu->setVisible(true);
 }
 
@@ -116,13 +102,13 @@ void UserInterface::joinGame(uint32 idx) {
 }
 
 void UserInterface::previous() {
-	if (_currentMenu == _menus["Join"]) {
+	if (_currentMenu == _menus["Game"]) {
 		_currentMenu->setVisible(false);
 		_currentMenu = _menus["Login"];
 		_currentMenu->setVisible(true);
 	} else if (_currentMenu == _menus["NewGame"]) {
 		_currentMenu->setVisible(false);
-		_currentMenu = _menus["Join"];
+		_currentMenu = _menus["Game"];
 		_currentMenu->setVisible(true);
 	}
 }
