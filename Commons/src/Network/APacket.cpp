@@ -27,9 +27,14 @@ ByteArray const& Network::APacket::getData() const {
 
 uint32 Network::APacket::getSize() const {
 	return _size;
-}
+}/*
 
 Network::APacket& Network::APacket::operator<<(uint32 integer) {
+	write(&integer, sizeof(integer));
+	return *this;
+}
+
+Network::APacket& Network::APacket::operator<<(uint64 integer) {
 	write(&integer, sizeof(integer));
 	return *this;
 }
@@ -47,7 +52,7 @@ Network::APacket& Network::APacket::operator<<(float32 val) {
 Network::APacket& Network::APacket::operator<<(char character) {
 	write(&character, sizeof(character));
 	return *this;
-}
+}*/
 
 Network::APacket& Network::APacket::operator<<(const std::string& str) {
 	*this << (uint32)str.size();
@@ -78,25 +83,30 @@ Network::APacket& Network::APacket::operator<<(ByteArray const& data) {
 	return *this;
 }
 
-Network::APacket& Network::APacket::operator>>(uint32& val) {
-	read(&val, sizeof(val));
-	return *this;
-}
-
-Network::APacket& Network::APacket::operator>>(int32& val) {
-	read(&val, sizeof(val));
-	return *this;
-}
-
-Network::APacket& Network::APacket::operator>>(float32& val) {
-	read(&val, sizeof(val));
-	return *this;
-}
-
-Network::APacket& Network::APacket::operator>>(char& val) {
-	read(&val, sizeof(val));
-	return *this;
-}
+//Network::APacket& Network::APacket::operator>>(uint32& val) {
+//	read(&val, sizeof(val));
+//	return *this;
+//}
+//
+//Network::APacket& Network::APacket::operator>>(uint64& val) {
+//	read(&val, sizeof(val));
+//	return *this;
+//}
+//
+//Network::APacket& Network::APacket::operator>>(int32& val) {
+//	read(&val, sizeof(val));
+//	return *this;
+//}
+//
+//Network::APacket& Network::APacket::operator>>(float32& val) {
+//	read(&val, sizeof(val));
+//	return *this;
+//}
+//
+//Network::APacket& Network::APacket::operator>>(char& val) {
+//	read(&val, sizeof(val));
+//	return *this;
+//}
 
 Network::APacket& Network::APacket::operator>>(std::string& str) {
   uint32 size;

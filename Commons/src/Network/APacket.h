@@ -38,10 +38,6 @@ namespace Network {
     virtual bool	isComplete() const = 0;
 
 
-    APacket&		operator<<(uint32);
-    APacket&		operator<<(int32);
-    APacket&		operator<<(float32);
-    APacket&		operator<<(char);
     APacket&		operator<<(const std::string&);
     APacket&		operator<<(Vec2 const&);
     APacket&		operator<<(Vec3 const&);
@@ -70,10 +66,17 @@ namespace Network {
 		}
 		return (*this);
 	}
-    APacket&		operator>>(uint32&);
-    APacket&		operator>>(int32&);
-    APacket&		operator>>(float32&);
-    APacket&		operator>>(char&);
+
+	template<class T>
+	APacket&		operator<<(T val) {
+		write(&val, sizeof(val));
+		return *this;
+	}
+    //APacket&		operator>>(uint32&);
+    //APacket&		operator>>(uint64&);
+    //APacket&		operator>>(int32&);
+    //APacket&		operator>>(float32&);
+    //APacket&		operator>>(char&);
     APacket&		operator>>(std::string&);
 
 	template <typename T>
@@ -98,6 +101,12 @@ namespace Network {
 		  *this >> element;
 		  elements.push_front(element);
 		}
+	}
+
+	template<class T>
+	APacket&		operator>>(T& val) {
+		read(&val, sizeof(val));
+		return *this;
 	}
     APacket&		operator>>(Vec2&);
     APacket&		operator>>(Vec3&);

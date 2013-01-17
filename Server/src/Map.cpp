@@ -28,7 +28,7 @@ bool	Map::load(std::string const& mapName) {
 		_error = "Cannot open " + mapName;
 		return false;
 	}
-	if (!_getFilename(mapName) || !_checkMagic(file) || !_getName(file) || !_loadSprites(file) || !_loadObject(file)) {
+	if (!_getFilename(mapName) || !_checkMagic(file) || !_getName(file) || !_getSpeed(file) || !_loadSprites(file) || !_loadObject(file)) {
 		file.close();
 		return false;
 	}
@@ -59,6 +59,10 @@ std::string const&				Map::getFilename() const {
 	return (_filename);
 }
 
+float32							Map::getSpeed() const {
+	return (_initialSpeed);
+}
+
 bool	Map::_getFilename(std::string const& filePath) {
 	size_t idx = filePath.find_last_of(Application::getInstance().getDirectorySeparator());
 	if (idx != std::string::npos)
@@ -77,6 +81,11 @@ bool	Map::_checkMagic(std::ifstream& file) {
 		file.close();
 		return false;
 	}
+	return (true);
+}
+
+bool	Map::_getSpeed(std::ifstream& file) {
+	file.read((char*)&_initialSpeed, sizeof(_initialSpeed));
 	return (true);
 }
 

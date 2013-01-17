@@ -40,11 +40,13 @@ public:
 	std::map<std::string, Texture*> const&	getTextures() const;
 	std::string const&			getName() const;
 	std::string const&			getFilename() const;
+	float32						getSpeed() const;
 
 private:
 	bool					_getFilename(std::string const& filePath);
 	bool					_checkMagic(std::ifstream& file);
 	bool					_getName(std::ifstream& file);
+	bool					_getSpeed(std::ifstream& file);
 	bool					_loadSprites(std::ifstream& file);
 	bool					_loadObject(std::ifstream& file);
 	bool					_loadFrames(std::ifstream& file, Sprite *sprite);
@@ -55,6 +57,7 @@ private:
 	std::map<std::string, Sprite*>		_sprites;
 	std::string				_name;
 	std::string				_filename;
+	float32					_initialSpeed;
 };
 
 #endif

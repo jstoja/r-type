@@ -66,7 +66,7 @@ public:
 
 	virtual IViewPort*			getViewPort() const;
 
-	void						loadMap(std::string const& fileName);
+	void						_loadMap(std::string const& fileName);
     void                        sendResources(Network::TcpPacket &packet);
 
 private:
@@ -74,6 +74,7 @@ private:
     void                        _sendSound(void);
     void                        _sendGraphicElements(void);
     void                        _sendPhysicElements(void);
+    void                        _sendTime(void);
 
 	std::vector<Player*>            _players;
 	uint32                          _nbSlots;

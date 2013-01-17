@@ -18,6 +18,7 @@
 #include "GameObject.h"
 
 Game::Game(Network::TcpPacket* packet) : _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::WAITING) {
+	_loadMap("Levels/Level_1/Level_1.map");
     *packet >> _name;
     *packet >> _nbSlots;
 	_viewPort = new ViewPort(0.1);
@@ -58,6 +59,7 @@ void     Game::start(void) {
 	_gameClock.reset();
 	_viewPort->setPosition(0);
 	_viewPort->setWidth(16);
+	_viewPort->setSpeed(_currentLevel.getSpeed());
 }
 
 void	Game::update() {
@@ -161,7 +163,7 @@ IScenery*		Game::addScenery() {
 	return (res);
 }
 
-void		Game::loadMap(std::string const& fileName) {
+void		Game::_loadMap(std::string const& fileName) {
 	if (_currentLevel.load(fileName) == false)
 		throw new Exception("Cannot load map: " + _currentLevel.getError());
 	std::list<Map::Object> const& objects = _currentLevel.getObjects();
@@ -244,7 +246,20 @@ void    Game::_sendPhysicElements(void) {
     delete udpPacket;
 }
 
+void    Game::_sendTime(void) {
+    Network::UdpPacket *udpPacket = new Network::UdpPacket();
+	udpPacket->setCode(Network::Proxy<Network::UdpPacket>::TIME);
+	*udpPacket << _gameClock.getEllapsedTime();
+    Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
+
+    for (int i=0; i < _players.size(); i++) {
+        _players[i]->sendPacket(toSend);
+    }
+    delete udpPacket;
+}
+
 void    Game::_udpHandler(void) {
+	this->_sendTime();
     this->_sendGraphicElements();
     this->_sendPhysicElements();
     this->_sendSound();

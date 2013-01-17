@@ -52,6 +52,7 @@ public:
 		writeData<uint32>(file, Map::MapMagic);
 		writeData<uint32>(file, _name.size());
 		file.write(_name.c_str(), _name.size());
+		writeData<float32>(file, _speed);
 		writeData<uint32>(file, _sprites.size());
 		for (std::list<MapSprite>::iterator it = _sprites.begin(); it != _sprites.end(); ++it) {
 			writeData<uint32>(file, it->spriteName.size());
@@ -77,6 +78,10 @@ public:
 		file.close();
 	}
 
+	void	setSpeed(float32 speed) {
+		_speed = speed;
+	}
+
 private:
 	struct MapSprite {
 		std::string			spriteName;
@@ -86,6 +91,7 @@ private:
 	std::string				_name;
 	std::list<MapSprite>	_sprites;
 	std::list<Map::Object>	_objects;
+	float32					_speed;
 };
 
 ByteArray	createBlockParams(Vec3 const& pos, Vec2 const& size, float32 rotation, std::string const& sprite, char frameIndex) {
