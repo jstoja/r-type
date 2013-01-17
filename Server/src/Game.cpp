@@ -47,9 +47,9 @@ uint32                 Game::getNbSlots(void) const {
 void     Game::start(void) {
     for (int i=0; i < _players.size(); i++) {
         Network::TcpPacket *packet = new Network::TcpPacket();
+        packet->setCode(0x01020100);
+        *packet << getId();
         Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
-        toSend.packet->setCode(0x01020100);
-        *toSend.packet << getId();
         _players[i]->sendPacket(toSend);
         delete packet;
     }
@@ -79,9 +79,9 @@ void     Game::join(Player* player) {
         for (int i=0; i < _players.size(); i++) {
             if (_players[i] != player) {
                 Network::TcpPacket *packet = new Network::TcpPacket();
+                packet->setCode(0x01020400);
+                *packet << *player;
                 Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
-                toSend.packet->setCode(0x01020400);
-                *toSend.packet << *player;
                 _players[i]->sendPacket(toSend);
                 delete packet;
             }
@@ -91,9 +91,9 @@ void     Game::join(Player* player) {
 
 void     Game::playerReady(Player* player) {
     Network::TcpPacket *packet = new Network::TcpPacket();
+    packet->setCode(0x01020500);
+    *packet << (uint32)player->getId();
     Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
-    toSend.packet->setCode(0x01020500);
-    *toSend.packet << (uint32)player->getId();
 
     for (int i=0; i < _players.size(); i++) {
         if (_players[i] != player) {
@@ -201,14 +201,14 @@ void    Game::_sendSound(void) {
     for (std::list<Sound*>::const_iterator it = _gameSounds.begin(); it != _gameSounds.end(); ++it) {
         if ((*it)->hasChanged()) {
             Network::UdpPacket *udpPacket = new Network::UdpPacket();
-            Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
-            *toSend.packet << (*it)->getId();
+            *udpPacket << (*it)->getId();
 
             if ((*it)->isPlaying()) {
-                toSend.packet->setCode(Network::Proxy<Network::UdpPacket>::PLAY_SOUND);
+                udpPacket->setCode(Network::Proxy<Network::UdpPacket>::PLAY_SOUND);
             } else {
-                toSend.packet->setCode(Network::Proxy<Network::UdpPacket>::STOP_SOUND);
+                udpPacket->setCode(Network::Proxy<Network::UdpPacket>::STOP_SOUND);
             }
+            Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
 
             for (int i=0; i < _players.size(); i++) {
                 _players[i]->sendPacket(toSend);
@@ -221,9 +221,9 @@ void    Game::_sendSound(void) {
 
 void    Game::_sendGraphicElements(void) {
     Network::UdpPacket *udpPacket = new Network::UdpPacket();
+    udpPacket->setCode(Network::Proxy<Network::UdpPacket>::GRAPHIC_ELEMENTS);
+    _graphicScene.sendElements(*udpPacket, _viewPort);
     Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
-    toSend.packet->setCode(Network::Proxy<Network::UdpPacket>::GRAPHIC_ELEMENTS);
-    _graphicScene.sendElements(*toSend.packet, _viewPort);
 
     for (int i=0; i < _players.size(); i++) {
         _players[i]->sendPacket(toSend);
@@ -233,9 +233,9 @@ void    Game::_sendGraphicElements(void) {
 
 void    Game::_sendPhysicElements(void) {
     Network::UdpPacket *udpPacket = new Network::UdpPacket();
+    udpPacket->setCode(Network::Proxy<Network::UdpPacket>::PHYSIC_ELEMENTS);
+    _physicScene.sendElements(*udpPacket, _viewPort);
     Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
-    toSend.packet->setCode(Network::Proxy<Network::UdpPacket>::PHYSIC_ELEMENTS);
-    _physicScene.sendElements(*toSend.packet, _viewPort);
 
     for (int i=0; i < _players.size(); i++) {
         _players[i]->sendPacket(toSend);

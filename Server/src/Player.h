@@ -23,9 +23,9 @@ class Player : public Network::IProxyDelegate<Network::TcpPacket>,  public Netwo
   ~Player();
 
   void	newPacket(Network::TcpPacket*);
-  void	packetWrited(Network::TcpPacket*);
+  void	packetWrited(Network::TcpPacket const*);
   void  newPacket(Network::UdpPacket*);
-  void  packetWrited(Network::UdpPacket*);
+  void  packetWrited(Network::UdpPacket const*);
   void  sendPacket(Network::Proxy<Network::TcpPacket>::ToSend const& toSend);
   void  sendPacket(Network::Proxy<Network::UdpPacket>::ToSend const& toSend);
 

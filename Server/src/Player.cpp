@@ -37,16 +37,16 @@ void Player::newPacket(Network::TcpPacket* packet) {
   delete packet;
 }
 
-void Player::packetWrited(Network::TcpPacket* packet) {
+void Player::packetWrited(Network::TcpPacket const* packet) {
   delete packet;
 }
 
 
-    void Player::newPacket(Network::UdpPacket* packet) {
+void Player::newPacket(Network::UdpPacket* packet) {
   delete packet;
 }
 
-void Player::packetWrited(Network::UdpPacket* packet) {
+void Player::packetWrited(Network::UdpPacket const* packet) {
   delete packet;
 }
 
@@ -58,7 +58,7 @@ void Player::connection(Network::TcpPacket* packet) {
 
   Network::TcpPacket *tcpPacket = new Network::TcpPacket();
   tcpPacket->setCode(0x01000000);
-  tcpPacket << (uint32)42;
+  *tcpPacket << (uint32)42;
   Network::Proxy<Network::TcpPacket>::ToSend toSend(tcpPacket, Network::HostAddress::AnyAddress, 0);
   _proxy.sendPacket(toSend);
   delete packet;
@@ -81,9 +81,9 @@ void Player::createGame(Network::TcpPacket* packet) {
     }
 
     Network::TcpPacket *tcpPacket = new Network::TcpPacket();
+    tcpPacket->setCode(0x01020300 + (gameCreated ? 3 : 1));
+    *tcpPacket << *game;
     Network::Proxy<Network::TcpPacket>::ToSend toSend(tcpPacket, Network::HostAddress::AnyAddress, 0);
-    toSend.packet->setCode(0x01020300 + (gameCreated ? 3 : 1));
-    *toSend.packet << *game;
     _proxy.sendPacket(toSend);
     delete packet;
  }
@@ -95,9 +95,9 @@ void Player::joinGame(Network::TcpPacket* packet) {
     int code = 0x01020000 + _server->joinGame(id, this);
 
     Network::TcpPacket *tcpPacket = new Network::TcpPacket();
+    tcpPacket->setCode(code);
+    *tcpPacket << id;
     Network::Proxy<Network::TcpPacket>::ToSend toSend(tcpPacket, Network::HostAddress::AnyAddress, 0);
-    toSend.packet->setCode(code);
-    *toSend.packet << id;
     _proxy.sendPacket(toSend);
     _server->sendResources(id, this);
     delete packet;
@@ -121,9 +121,9 @@ void Player::listGame(Network::TcpPacket* packet) {
     }
 
     Network::TcpPacket *tcpPacket = new Network::TcpPacket();
+    tcpPacket->setCode(0x01010100);
+    *tcpPacket << newGamesList;
     Network::Proxy<Network::TcpPacket>::ToSend toSend(tcpPacket, Network::HostAddress::AnyAddress, 0);
-    toSend.packet->setCode(0x01010100);
-    *toSend.packet << newGamesList;
     _proxy.sendPacket(toSend);
     delete packet;
 }
