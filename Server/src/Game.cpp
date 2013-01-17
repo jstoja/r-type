@@ -42,10 +42,12 @@ uint32                 Game::getNbSlots(void) const {
 
 void     Game::start(void) {
     for (int i=0; i < _players.size(); i++) {
-        Network::Proxy<Network::TcpPacket>::ToSend toSend(new Network::TcpPacket(), Network::HostAddress::AnyAddress, 0);
+        Network::TcpPacket *packet = new Network::TcpPacket();
+        Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
         toSend.packet->setCode(0x01020100);
         *toSend.packet << getId();
         _players[i]->sendPacket(toSend);
+        delete packet;
     }
     _state = Game::STARTED;
 }
@@ -60,17 +62,20 @@ void     Game::join(Player* player) {
 
         for (int i=0; i < _players.size(); i++) {
             if (_players[i] != player) {
-                Network::Proxy<Network::TcpPacket>::ToSend toSend(new Network::TcpPacket(), Network::HostAddress::AnyAddress, 0);
+                Network::TcpPacket *packet = new Network::TcpPacket();
+                Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
                 toSend.packet->setCode(0x01020400);
                 *toSend.packet << *player;
                 _players[i]->sendPacket(toSend);
+                delete packet;
             }
         }
     }
 }
 
 void     Game::playerReady(Player* player) {
-    Network::Proxy<Network::TcpPacket>::ToSend toSend(new Network::TcpPacket(), Network::HostAddress::AnyAddress, 0);
+    Network::TcpPacket *packet = new Network::TcpPacket();
+    Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
     toSend.packet->setCode(0x01020500);
     *toSend.packet << (uint32)player->getId();
 
@@ -79,6 +84,7 @@ void     Game::playerReady(Player* player) {
             _players[i]->sendPacket(toSend);
         }
     }
+    delete packet;
 }
 
 void     Game::quit(Player* player) {
@@ -206,6 +212,7 @@ void    Game::_sendGraphicElements(void) {
     for (int i=0; i < _players.size(); i++) {
         _players[i]->sendPacket(toSend);
     }
+    delete udpPacket;
 }
 
 void    Game::_sendPhysicElements(void) {
@@ -217,6 +224,7 @@ void    Game::_sendPhysicElements(void) {
     for (int i=0; i < _players.size(); i++) {
         _players[i]->sendPacket(toSend);
     }
+    delete udpPacket;
 }
 
 void    Game::udpHandler(void) {
