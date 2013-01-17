@@ -25,6 +25,7 @@
 # include "Sound.h"
 # include "Scenery.h"
 # include "Map.h"
+# include "ViewPort.h"
 
 class Player;
 class GameObject;
@@ -42,11 +43,12 @@ public:
     uint32                  getNbPlayers(void) const;
     uint32                  getNbSlots(void) const;
 
-    void     join(Player* player);
-    bool     canJoin();
-    void     quit(Player* player);
-    void     playerReady(Player* player);
-    void     start(void);
+    void	join(Player* player);
+    bool	canJoin();
+    void	quit(Player* player);
+    void	playerReady(Player* player);
+    void	start(void);
+	void	update();
 
     virtual void                addGraphicElement(IGraphicElement* element);
     virtual IGraphicElement*    createGraphicElement() const;
@@ -62,11 +64,12 @@ public:
 
 	virtual IScenery*			addScenery();
 
+	virtual IViewPort*			getViewPort() const;
+
 	void						loadMap(std::string const& fileName);
     void                        sendResources(Network::TcpPacket &packet);
-private:
-	void						_update();
 
+private:
 	std::vector<Player*>            _players;
 	uint32                          _nbSlots;
 	std::string                     _name;
@@ -81,6 +84,8 @@ private:
 	PhysicScene						_physicScene;
 	Threading::ThreadPool*			_updatePool;
     State                           _state;
+	Clock							_clock;
+	ViewPort*						_viewPort;
 
 #ifdef OS_MAC
 	static const int					_updateThreadNumber = 7;

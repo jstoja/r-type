@@ -20,9 +20,13 @@
 Game::Game(Network::TcpPacket* packet) : _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::WAITING) {
     *packet >> _name;
     *packet >> _nbSlots;
+	_viewPort = new ViewPort(0.1);
 }
 
-Game::~Game() {}
+Game::~Game() {
+	delete _viewPort;
+	delete _updatePool;
+}
 
 std::string const&     Game::getName(void) const {
     return _name;
@@ -47,7 +51,17 @@ void     Game::start(void) {
         *toSend.packet << getId();
         _players[i]->sendPacket(toSend);
     }
-    _state = Game::STARTED;
+	_state = STARTED;
+	_clock.reset();
+	_viewPort->setPosition(0);
+	_viewPort->setWidth(16);
+}
+
+void	Game::update() {
+	_viewPort->update(_clock);
+	for (std::list<GameObject*>::iterator it = _objects.begin();
+		it != _objects.end(); ++it)
+		_updatePool->addTask(*it, &GameObject::update, NULL);
 }
 
 bool     Game::canJoin(void) {
@@ -175,12 +189,9 @@ void	Game::sendResources(Network::TcpPacket &packet) {
 	packet << _gameSceneries << _gameSounds;
 }
 
-void	Game::_update() {
-	for (std::list<GameObject*>::iterator it = _objects.begin();
-		it != _objects.end(); ++it)
-		_updatePool->addTask(*it, &GameObject::update, NULL);
+IViewPort*	Game::getViewPort() const {
+	return (_viewPort);
 }
-
 
 Network::APacket&       operator<<(Network::APacket& packet, Game const& game) {
     packet << game.getId() << game.getName() << game.getNbPlayers() << game.getNbSlots();
