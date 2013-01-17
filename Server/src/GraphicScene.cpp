@@ -33,13 +33,13 @@ void	GraphicScene::sendStaticElements(Network::TcpPacket& packet) {
 	packet << toSend;
 }
 
-void	GraphicScene::sendElements(Network::UdpPacket& packet) {
+void	GraphicScene::sendElements(Network::UdpPacket& packet, ViewPort* viewport) {
 	std::list<GraphicElement*>	toSend;
 
     _graphicElementsMutex.lock();
 	for (std::list<GraphicElement*>::iterator it = _graphicElements.begin();
 		it != _graphicElements.end(); ++it)
-		if ((*it)->hasChanged())
+		if ((*it)->hasChanged() && viewport->isInViewport(Rect2((*it)->getPosition(), (*it)->getSize())))
 			toSend.push_back(*it);
     _graphicElementsMutex.unlock();
 	packet << toSend;

@@ -18,6 +18,7 @@ class ISprite;
 class IPhysicElement;
 class ISound;
 class IScenery;
+class IViewPort;
 
 class IGame {
 public:
@@ -36,6 +37,7 @@ public:
 	virtual ISound*				loadSound(std::string const& name) = 0;
 
 	virtual IScenery*			addScenery() = 0;
+	virtual IViewPort*			getViewPort() const = 0;
 };
 
 #endif

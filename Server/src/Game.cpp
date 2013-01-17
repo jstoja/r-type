@@ -20,9 +20,13 @@
 Game::Game(Network::TcpPacket* packet) : _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::WAITING) {
     *packet >> _name;
     *packet >> _nbSlots;
+	_viewPort = new ViewPort(0.1);
 }
 
-Game::~Game() {}
+Game::~Game() {
+	delete _viewPort;
+	delete _updatePool;
+}
 
 std::string const&     Game::getName(void) const {
     return _name;
@@ -49,7 +53,19 @@ void     Game::start(void) {
         _players[i]->sendPacket(toSend);
         delete packet;
     }
-    _state = Game::STARTED;
+	_state = STARTED;
+	_clock.reset();
+	_gameClock.reset();
+	_viewPort->setPosition(0);
+	_viewPort->setWidth(16);
+}
+
+void	Game::update() {
+	_viewPort->update(_clock);
+	for (std::list<GameObject*>::iterator it = _objects.begin();
+		it != _objects.end(); ++it)
+		if (_viewPort->isInViewport((*it)->getXStart()))
+			_updatePool->addTask(*it, &GameObject::update, NULL);
 }
 
 bool     Game::canJoin(void) const {
@@ -207,7 +223,7 @@ void    Game::_sendGraphicElements(void) {
     Network::UdpPacket *udpPacket = new Network::UdpPacket();
     Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
     toSend.packet->setCode(Network::Proxy<Network::UdpPacket>::GRAPHIC_ELEMENTS);
-    _graphicScene.sendElements(*toSend.packet);
+    _graphicScene.sendElements(*toSend.packet, _viewPort);
 
     for (int i=0; i < _players.size(); i++) {
         _players[i]->sendPacket(toSend);
@@ -219,7 +235,7 @@ void    Game::_sendPhysicElements(void) {
     Network::UdpPacket *udpPacket = new Network::UdpPacket();
     Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
     toSend.packet->setCode(Network::Proxy<Network::UdpPacket>::PHYSIC_ELEMENTS);
-    _physicScene.sendElements(*toSend.packet);
+    _physicScene.sendElements(*toSend.packet, _viewPort);
 
     for (int i=0; i < _players.size(); i++) {
         _players[i]->sendPacket(toSend);
@@ -233,14 +249,11 @@ void    Game::udpHandler(void) {
     this->_sendSound();
 }
 
-void	Game::_update() {
-	for (std::list<GameObject*>::iterator it = _objects.begin();
-		it != _objects.end(); ++it)
-		_updatePool->addTask(*it, &GameObject::update, NULL);
-}
-
-
 Network::APacket&       operator<<(Network::APacket& packet, Game const& game) {
     packet << game.getId() << game.getName() << game.getNbPlayers() << game.getNbSlots();
     return packet;
+}
+
+IViewPort*	Game::getViewPort() const {
+	return (_viewPort);
 }
