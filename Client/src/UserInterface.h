@@ -20,6 +20,7 @@
 # include "Menu/Login.h"
 # include "Menu/NewGame.h"
 # include "Menu/Game.h"
+# include "Menu/GamePrepare.h"
 
 class UserInterface : public Menu::IMenuDelegate {
 public:

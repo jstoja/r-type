@@ -31,7 +31,7 @@ Widget::Table::Table(uint32 columnCount, std::string const& backgroundImage, Gra
 	setHeightHeaderPadding(0.3);
 	setWidthCellPadding(0.2);
 	setHeightCellPadding(0.3);
-	_columnSizes.resize(columnCount, 15.36 / 2);
+	_columnSizes.resize(columnCount, scene->getViewport().x / columnCount - 0.32);
 	_columnNames.resize(columnCount);
 	_columnAligns.resize(columnCount, Left);
 	for (unsigned int i = 0; i < columnCount; ++i)

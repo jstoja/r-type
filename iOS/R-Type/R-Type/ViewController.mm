@@ -43,6 +43,7 @@
         Event::Event event(Event::PointerPushed,
                            Graphic::Renderer::getInstance()
                            .viewportToScene(Vec2(location.x, location.y)));
+        event.pointerButton = Event::PointerLeft;
         iOSMainViewController::getInstance().pushEvent(event);
     }
 }
@@ -54,6 +55,7 @@
         Event::Event event(Event::PointerMove,
                            Graphic::Renderer::getInstance()
                            .viewportToScene(Vec2(location.x, location.y)));
+        event.pointerButton = Event::PointerLeft;
         iOSMainViewController::getInstance().pushEvent(event);
     }
 }
@@ -65,6 +67,7 @@
         Event::Event event(Event::PointerReleased,
                            Graphic::Renderer::getInstance()
                            .viewportToScene(Vec2(location.x, location.y)));
+        event.pointerButton = Event::PointerLeft;        
         iOSMainViewController::getInstance().pushEvent(event);
     }
 }
