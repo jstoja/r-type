@@ -38,7 +38,6 @@ public:
     void  connection(Network::TcpPacket*);
     void  createGame(Network::TcpPacket*);
     void  joinGame(Network::TcpPacket*);
-    void  quitGame(Network::TcpPacket*);
     void  listGame(Network::TcpPacket* packet);
     void  readyToStart(Network::TcpPacket* packet);
     

@@ -12,19 +12,16 @@
 #include "Player.h"
 
 Player::Player(Network::ASocket* socket, IServerDelegate* server) : _isReady(false), _socket(socket), _proxy(socket, this), _udpProxy(socket, this), _server(server) {
-    std::cout << "New Player" << std::endl;
-    
     for (uint32 i = 0; i < eLastAttribute; ++i) {
         _attributesMutex[i] = new Threading::Mutex();
     }
-    
-    
-    _commands[0x00000000] = &Player::connection;
-    _commands[0x00010000] = &Player::listGame;
-    _commands[0x00020000] = &Player::joinGame;
-    _commands[0x00020100] = &Player::quitGame;
-    _commands[0x00020200] = &Player::createGame;
-    _commands[0x00020300] = &Player::readyToStart;
+  std::cout << "New Player" << std::endl;
+
+  _commands[0x00000000] = &Player::connection;
+  _commands[0x00010000] = &Player::listGame;
+  _commands[0x00020000] = &Player::joinGame;
+  _commands[0x00020200] = &Player::createGame;
+  _commands[0x00020300] = &Player::readyToStart;
 }
 
 Player::~Player() {
@@ -63,6 +60,7 @@ void Player::packetSent(Network::UdpPacket const* packet) {
 }
 
 void Player::connectionClosed(Network::Proxy<Network::UdpPacket>*) {
+    _server->quitGame(this);
 }
 
 void Player::connection(Network::TcpPacket* packet) {
@@ -134,20 +132,6 @@ void Player::joinGame(Network::TcpPacket* packet) {
     _attributesMutex[eServer]->unlock();
     delete packet;
 }
-
-void Player::quitGame(Network::TcpPacket* packet) {
-    uint32 id;
-    
-    *packet >> id;
-    _attributesMutex[eIsReady]->lock();
-    _isReady = false;
-    _attributesMutex[eIsReady]->unlock();
-    
-    _attributesMutex[eServer]->lock();
-    _server->quitGame(id, this);
-    _attributesMutex[eServer]->unlock();
-}
-
 
 void Player::listGame(Network::TcpPacket* packet) {
     _attributesMutex[eServer]->lock();

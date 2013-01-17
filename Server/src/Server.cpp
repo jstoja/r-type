@@ -77,9 +77,9 @@ void  Server::sendResources(uint32 gameId, Player* player) {
     }
 }
 
-void Server::quitGame(uint32 gameId, Player* player) {
-    if (_games.find(gameId) != _games.end()) {
-        _games[gameId]->quit(player);
+void Server::quitGame(Player* player) {
+    for(std::map<uint32, Game*>::iterator it = _games.begin(); it != _games.end(); it++) {
+        it->second->quit(player);
     }
 }
 
