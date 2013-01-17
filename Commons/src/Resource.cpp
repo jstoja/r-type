@@ -15,11 +15,11 @@
 #include "Exception.h"
 #include "ResourcesManager.h"
 
-Resource::Resource() : Object() {
+Resource::Resource() : Object(true) {
     _name = new std::string();
 }
 
-Resource::Resource(std::string const& name) : Object() {
+Resource::Resource(std::string const& name, bool generateId) : Object(generateId) {
     _name = new std::string(name);
     _readFile();
 }

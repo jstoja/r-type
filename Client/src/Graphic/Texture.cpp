@@ -12,7 +12,7 @@
 #include "UUIDGenerator.h"
 #include "GraphicException.h"
 
-Graphic::Texture::Texture() : Object(), _glID(0), _size(0) {
+Graphic::Texture::Texture() : Object(false), _glID(0), _size(0) {
     glGenTextures(1, &_glID);
     
     // Configure the texture
@@ -31,8 +31,8 @@ Graphic::Texture::Texture(uint32 id) : Object(id), _glID(0), _size(0) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 }
 
-Graphic::Texture::Texture(const std::string& resourceImage)
-: Object(), _glID(0), _size(0) {
+Graphic::Texture::Texture(const std::string& resourceImage, bool generateId)
+: Object(false), _glID(0), _size(0) {
     glGenTextures(1, &_glID);
     
     // Configure the texture
@@ -41,7 +41,7 @@ Graphic::Texture::Texture(const std::string& resourceImage)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     
     Graphic::Image image;
-    image.loadFromResource(resourceImage);
+    image.loadFromResource(resourceImage, generateId);
     setData(image.getWidth(), image.getHeight(), image.getPixelsPtr());
 }
 

@@ -10,7 +10,7 @@
 #include "ObjectManager.h"
 #include "UUIDGenerator.h"
 
-Object::Object() : _id(UUIDGenerator::getInstance().getUUID()) {
+Object::Object(bool generateId) : _id(generateId ? UUIDGenerator::getInstance().getUUID() : (uint32)-1) {
 	ObjectManager::getInstance().addObject(this);
 }
 

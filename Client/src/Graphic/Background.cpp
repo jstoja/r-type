@@ -9,7 +9,7 @@
 #include "Background.h"
 
 Graphic::Background::Background(void)
-: Object(), _texture(NULL), _range(), _repeat(1), _opacity(1) {
+: Object(false), _texture(NULL), _range(), _repeat(1), _opacity(1) {
 }
 
 Graphic::Background::Background(uint32 id)

@@ -11,10 +11,10 @@
 #include "Resource.h"
 #include "Debug.h"
 
-Graphic::Image::Image(std::string const& resourceName)
+Graphic::Image::Image(std::string const& resourceName, bool generateId)
 : _pixels(NULL), _width(0), _height(0) {
     if (!resourceName.empty())
-        loadFromResource(resourceName);
+        loadFromResource(resourceName, generateId);
 }
 
 Graphic::Image::~Image() {
@@ -22,8 +22,8 @@ Graphic::Image::~Image() {
         delete[] _pixels;
 }
 
-void Graphic::Image::loadFromResource(std::string const& resourceName) {
-    Resource* resource = ResourcesManager::getInstance().getResource(resourceName);
+void Graphic::Image::loadFromResource(std::string const& resourceName, bool generateId) {
+    Resource* resource = ResourcesManager::getInstance().getResource(resourceName, generateId);
     
     loadFromData(resource->getData());
 }

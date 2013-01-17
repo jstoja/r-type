@@ -42,8 +42,7 @@ Graphic::FreetypeFont::~FreetypeFont(void) {
 }
 
 void Graphic::FreetypeFont::loadFont(const std::string &resourceName) {
-    
-    Resource* fontResource = ResourcesManager::getInstance().getResource(resourceName);
+    Resource* fontResource = ResourcesManager::getInstance().getResource(resourceName, false);
     
     int error;
     error = FT_New_Memory_Face(_library,

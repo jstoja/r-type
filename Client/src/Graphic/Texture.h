@@ -34,7 +34,7 @@ namespace Graphic {
         Texture(uint32 id);
         
         //! Create a new texture from a resource image
-        Texture(const std::string& resourceImage);
+        Texture(const std::string& resourceImage, bool generateId = false);
         
         //! Destruct the texture
         virtual ~Texture();

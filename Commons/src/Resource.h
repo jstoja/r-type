@@ -22,7 +22,7 @@ class COMMON_EXPORT_IMPORT Resource : public Object {
         Resource();
 
         //! Constructor with name
-        Resource(std::string const&);
+        Resource(std::string const&, bool generateId = true);
     
         //! Copy constructor
         Resource(Resource const&);

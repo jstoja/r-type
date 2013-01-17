@@ -24,10 +24,10 @@ namespace Graphic {
     class Image {
     public:
         
-        Image(std::string const& resourceName="");
+        Image(std::string const& resourceName="", bool generateId = false);
         ~Image(void);
         
-        void            loadFromResource(std::string const& resourceName);
+        void            loadFromResource(std::string const& resourceName, bool generateId = false);
         void            loadFromData(ByteArray const& data);
         
         uint8 const*    getPixelsPtr(void) const;

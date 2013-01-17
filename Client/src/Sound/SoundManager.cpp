@@ -43,7 +43,7 @@ void    Sound::SoundManager::load(Resource* resource) {
 void	Sound::SoundManager::load(std::string const& name) {
 	std::list<ChannelGroup*>::iterator it;
     ResourcesManager& manager = ResourcesManager::getInstance();
-    Resource*  resource = manager.getResource(name);
+    Resource*  resource = manager.getResource(name, true);
     Sound		*snd = new Sound(resource);
 
 	_soundsName[name] = snd;

@@ -16,7 +16,7 @@ Graphic::Sprite::Frame::Frame(Vec2 const& p1, Vec2 const& p2)
 }
 
 Graphic::Sprite::Sprite() :
-Object(), _texture(NULL), _frames(),
+Object(false), _texture(NULL), _frames(),
 _textureCoords(NULL), _needRebuildTextureCoords(true) {
 }
 

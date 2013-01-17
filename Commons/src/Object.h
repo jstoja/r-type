@@ -14,7 +14,7 @@
 class COMMON_EXPORT_IMPORT Object {
 public:
     
-    Object();
+    Object(bool generateId = true);
     Object(uint32 id);
     
     virtual ~Object();

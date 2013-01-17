@@ -14,7 +14,7 @@
 
 Texture::Texture(std::string const& filepath) {
     _mutex = new Threading::Mutex();
-	_img = ResourcesManager::getInstance().loadResource(filepath);
+	_img = ResourcesManager::getInstance().loadResource(filepath, true);
 }
 
 Texture::~Texture() {

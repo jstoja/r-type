@@ -32,24 +32,24 @@ void ResourcesManager::removeResource(std::string const& name) {
     }
 }
 
-Resource* ResourcesManager::loadResource(std::string const& name) {
+Resource* ResourcesManager::loadResource(std::string const& name, bool generateId) {
     std::map<std::string, Resource*>::iterator it;
 
     if ((it = _resourcesName->find(name)) != _resourcesName->end())
       return it->second;
-    Resource *res = new Resource(name);
+    Resource *res = new Resource(name, generateId);
 
     (*_resourcesName)[name] = res;
     (*_resourcesId)[res->getId()] = res;
     return res;
 }
 
-Resource*	ResourcesManager::getResource(std::string const& name) {
+Resource*	ResourcesManager::getResource(std::string const& name, bool generateId) {
     std::map<std::string, Resource*>::const_iterator it;
 
     if ((it = _resourcesName->find(name)) != _resourcesName->end())
       return it->second;
-    return loadResource(name);
+    return loadResource(name, generateId);
 }
 
 Resource*	ResourcesManager::getResource(uint32 id) const {

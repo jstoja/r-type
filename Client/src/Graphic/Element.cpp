@@ -11,7 +11,7 @@
 #include "Debug.h"
 
 Graphic::Element::Element(void) :
-Object(),
+Object(false),
 _type(Dynamic), _position(), _rotation(0), _opacity(1), _size(),
 _sprite(NULL), _currentFrame(0),
 _updateTransformationMatrix(true), _isVisible(true) {

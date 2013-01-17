@@ -26,13 +26,13 @@ class COMMON_EXPORT_IMPORT ResourcesManager : public Singleton<ResourcesManager>
         ~ResourcesManager();
     
         //! Load a resource and return a pointer to it
-        Resource* loadResource(std::string const&);
+        Resource* loadResource(std::string const&, bool generateId);
 
         //! Remove resource from map
         void removeResource(std::string const&);
 
         //! Get a resource by name
-        Resource*	getResource(std::string const&);
+        Resource*	getResource(std::string const&, bool generateId);
 
         //! Get a resource by id
         Resource*	getResource(uint32) const;

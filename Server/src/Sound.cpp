@@ -16,7 +16,7 @@ Sound::Sound(std::string const& filepath) : _changed(false), _isPlaying(false), 
     for (uint32 i = 0; i < eLastAttribute; ++i) {
         _attributesMutex[i] = new Threading::Mutex();
     }
-	_sound = ResourcesManager::getInstance().loadResource(filepath);
+	_sound = ResourcesManager::getInstance().loadResource(filepath, true);
 }
 
 Sound::~Sound() {
