@@ -66,7 +66,7 @@ void	Game::update() {
 		it != _objects.end(); ++it)
 		if (_viewPort->isInViewport((*it)->getXStart()))
 			_updatePool->addTask(*it, &GameObject::update, NULL);
-	udpHandler();
+	_udpHandler();
 }
 
 bool     Game::canJoin(void) const {
@@ -244,7 +244,7 @@ void    Game::_sendPhysicElements(void) {
     delete udpPacket;
 }
 
-void    Game::udpHandler(void) {
+void    Game::_udpHandler(void) {
     this->_sendGraphicElements();
     this->_sendPhysicElements();
     this->_sendSound();
