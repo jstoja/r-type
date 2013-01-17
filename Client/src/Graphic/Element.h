@@ -15,6 +15,7 @@
 # include "Vec3.h"
 # include "Rect2.h"
 # include "Matrix.hpp"
+# include "Threading/Mutex.h"
 
 namespace Graphic {
     
@@ -122,16 +123,17 @@ namespace Graphic {
         bool		isVisible(void) const;
 
     private:
-        Type        _type;
-        Vec3        _position;
-        float32     _rotation;
-        float       _opacity;
-        Vec2        _size;
-        Sprite*     _sprite;
-        uint16      _currentFrame;
-        Matrix4f    _transformationMatrix;
-        bool        _updateTransformationMatrix;
-		bool		_isVisible;
+        Type                _type;
+        Vec3                _position;
+        float32             _rotation;
+        float               _opacity;
+        Vec2                _size;
+        Sprite*             _sprite;
+        uint16              _currentFrame;
+        Matrix4f            _transformationMatrix;
+        bool                _updateTransformationMatrix;
+		bool                _isVisible;
+        Threading::Mutex*   _mutex;
     };
     
 }

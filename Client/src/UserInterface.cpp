@@ -6,16 +6,17 @@
 //  Copyright (c) 2013 EPITECH. All rights reserved.
 //
 
+#include <sstream>
 #include "UserInterface.h"
 #include "Menu/GameJoin.h"
 #include "Graphic/Image.h"
-#include <sstream>
+#include "Threading/MutexLocker.h"
 
 const float32 UserInterface::_maxViewportX = 1000000000.0;
 
 UserInterface::UserInterface(IUserInterfaceDelegate* delegate) :
 _delegate(delegate), _time(), _sceneries(), _currentMenu(NULL),
-_messageLabel(NULL) {
+_messageLabel(NULL), _mutex(new Threading::Mutex()) {
     // Create the sceneries used in all the user interface
     _createSceneries();
     
@@ -56,6 +57,7 @@ UserInterface::~UserInterface(void) {
 }
 
 void UserInterface::update(void) {
+    Threading::MutexLocker lock(_mutex);    
     float32 xPos = (float32)_time.getEllapsedTime() / 1000;
     if (xPos > _maxViewportX)
         xPos = 0;
@@ -69,6 +71,7 @@ void UserInterface::update(void) {
         gameJoinProgress = (xPos - gameJoinProgressStart) / 10;
         if (gameJoinProgress > 1) {
             gameJoinProgressStart = -1;
+            lock.unlock();
             _goToMenu("GamePrepare");
         } else
             ((Menu::GameJoin*)_currentMenu)->setProgress(gameJoinProgress);
@@ -76,6 +79,7 @@ void UserInterface::update(void) {
 }
 
 void UserInterface::presentMessage(std::string const& message) {
+    Threading::MutexLocker lock(_mutex);
     _messageLabel = new Widget::Label(_delegate->getScene());
     _messageLabel->setText(message);
     _messageLabel->setPosition(Vec3(_delegate->getScene()->getViewport().x,
@@ -85,23 +89,25 @@ void UserInterface::presentMessage(std::string const& message) {
 }
 
 void UserInterface::hideMessage(void) {
+    Threading::MutexLocker lock(_mutex);
     if (_messageLabel)
         delete _messageLabel;
 }
 
+Menu::Menu* UserInterface::getCurrentMenu(void) const {
+    Threading::MutexLocker lock(_mutex);
+    return _currentMenu;
+}
+
 void UserInterface::welcomeCompleted(void) {
     // Present login menu
-	_currentMenu->setVisible(false);
-    _currentMenu = _menus["Login"];
-	_currentMenu->setVisible(true);
+    _goToMenu("Login");
 }
 
 void UserInterface::loginCompleted(std::string const& login,
 								   std::string const& ipAdress,
 								   std::string const& port) {
-	_currentMenu->setVisible(false);
-    _currentMenu = _menus["Game"];
-	_currentMenu->setVisible(true);
+	_goToMenu("Game");
 }
 
 void UserInterface::newGameCompleted(std::string const& name,
@@ -113,9 +119,7 @@ void UserInterface::newGameCompleted(std::string const& name,
 }
 
 void UserInterface::createGame() {
-	_currentMenu->setVisible(false);
-    _currentMenu = _menus["NewGame"];
-	_currentMenu->setVisible(true);
+    _goToMenu("NewGame");
 }
 
 void UserInterface::joinGame(uint32 idx) {
@@ -125,11 +129,12 @@ void UserInterface::joinGame(uint32 idx) {
 }
 
 void UserInterface::previous() {
-	if (_currentMenu == _menus["Game"]) {
+    Menu::Menu* current = getCurrentMenu();
+	if (current == _menus["Game"]) {
         _goToMenu("Login");
-	} else if (_currentMenu == _menus["NewGame"]
-               || _currentMenu == _menus["GameJoin"]
-               || _currentMenu == _menus["GamePrepare"]) {
+	} else if (current == _menus["NewGame"]
+               || current == _menus["GameJoin"]
+               || current == _menus["GamePrepare"]) {
 		_goToMenu("Game");
 	}
 }
@@ -139,6 +144,7 @@ void UserInterface::playerReady(void) {
 }
 
 void UserInterface::_goToMenu(std::string const& menu) {
+    Threading::MutexLocker lock(_mutex);
     _currentMenu->setVisible(false);
     _currentMenu = _menus[menu];
     _currentMenu->setVisible(true);

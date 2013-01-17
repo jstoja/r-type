@@ -21,6 +21,7 @@
 # include "Menu/NewGame.h"
 # include "Menu/Game.h"
 # include "Menu/GamePrepare.h"
+# include "Threading/Mutex.h"
 
 class UserInterface : public Menu::IMenuDelegate {
 public:
@@ -32,6 +33,8 @@ public:
     
     void presentMessage(std::string const& message);
     void hideMessage(void);
+    
+    Menu::Menu* getCurrentMenu(void) const;
     
     // IMenuDelegate implementation
     virtual void welcomeCompleted(void);
@@ -53,10 +56,11 @@ private:
     IUserInterfaceDelegate* _delegate;
     Clock                   _time;
     
-    std::vector<Graphic::Scenery*>  _sceneries;
-	std::map<std::string, Menu::Menu*>	_menus;
-    Menu::Menu*                     _currentMenu;
-    Widget::Label*                  _messageLabel;
+    std::vector<Graphic::Scenery*>      _sceneries;
+	std::map<std::string, Menu::Menu*>  _menus;
+    Menu::Menu*                         _currentMenu;
+    Widget::Label*                      _messageLabel;
+    Threading::Mutex*                   _mutex;
 };
 
 #endif /* defined(__R_Type__UserInterface__) */

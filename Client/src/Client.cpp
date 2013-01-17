@@ -82,7 +82,7 @@ void Client::loginCompleted(std::string const& login, std::string const& ipAdres
     delete _tcpSocket;
     delete _proxy;
     _tcpSocket = new Network::TcpSocket();
-    if (_tcpSocket->connect(std::string("127.0.0.1"), 4242)) {
+    if (_tcpSocket->connect(std::string("127.0.0.1"), std::atoi(port.c_str()))) {
         Log("Connected to server");
         _proxy = new Network::Proxy<Network::TcpPacket>(_tcpSocket, this);
         Network::TcpPacket* packet = new Network::TcpPacket();

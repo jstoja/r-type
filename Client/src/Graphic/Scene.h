@@ -15,6 +15,7 @@
 # include "Scenery.h"
 # include "Element.h"
 # include "Matrix.hpp"
+# include "Threading/Mutex.h"
 
 namespace Graphic {
    
@@ -75,6 +76,7 @@ namespace Graphic {
         Matrix4f                    _worldMatrix;
         Vec2                        _viewport;
         Vec2                        _viewportPosition;
+        Threading::Mutex*           _mutex;
     };
     
 }
