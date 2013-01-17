@@ -13,6 +13,9 @@
 # include <Types.h>
 # include <IViewPort.h>
 # include <Clock.h>
+# include <vector>
+# include "Threading/Mutex.h"
+# include "Threading/MutexLocker.h"
 
 class ViewPort : public IViewPort {
 public:
@@ -34,6 +37,14 @@ public:
 	void			update(Clock& clock);
 
 private:
+    enum    _mutexVariable {
+        eX = 0,
+        eWidth,
+        eSpeed,
+        eLastAttribute
+    };
+    std::vector<Threading::Mutex*>	_attributesMutex;
+    
 	float32	_x;
 	float32	_width;
 	float32	_speed;

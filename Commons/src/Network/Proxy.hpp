@@ -56,7 +56,7 @@ namespace Network {
         void sendPacket(const T* packet) {
             sendPacket(ToSend(packet, HostAddress::AnyAddress, 0));
         }
-        
+
         void sendPackets(const std::vector<ToSend>& toSend) {
             _toSendMutex.lock();
             typename std::vector<ToSend>::const_iterator it;
@@ -84,11 +84,11 @@ namespace Network {
         void dataReceived(ASocket*, ByteArray&, uint32) {
 
         }
-        
+
         void dataSent(ASocket*, ByteArray const&, uint32) {
-            
+
         }
-        
+
         void writeFinished(ASocket*, ByteArray const&) {
             _toSendMutex.lock();
             ToSend toSend = _toSend->front();
@@ -107,7 +107,7 @@ namespace Network {
         }
 
         void disconnection(ASocket*) {
-
+            _delegate->connectionClosed(this);
         }
 
     private:

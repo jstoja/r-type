@@ -19,6 +19,8 @@
 
 # include "GameObject.h"
 # include "Sprite.h"
+# include "Threading/Mutex.h"
+# include "Threading/MutexLocker.h"
 
 class Map {
 public:
@@ -51,6 +53,18 @@ private:
 	bool					_loadObject(std::ifstream& file);
 	bool					_loadFrames(std::ifstream& file, Sprite *sprite);
 
+    enum    _mutexVariable {
+        eError = 0,
+        eObjects,
+        eTextures,
+        eSprites,
+        eName,
+        eFilename,
+        eApplication,
+        eLastAttribute
+    };
+    std::vector<Threading::Mutex*>	_attributesMutex;
+    
 	std::string				_error;
 	std::list<Object>		_objects;
 	std::map<std::string, Texture*>		_textures;

@@ -10,48 +10,69 @@
 #include "Scenery.h"
 
 Scenery::Scenery() : _texture(NULL), _speed(1), _width(0), _xStart(0), _xEnd(0) {
+    for (uint32 i = 0; i < eLastAttribute; ++i) {
+        _attributesMutex[i] = new Threading::Mutex();
+    }
 }
 
 Scenery::~Scenery() {
+    for (uint32 i = 0; i < eLastAttribute; ++i) {
+        delete _attributesMutex[i];
+    }
 }
 
 void		Scenery::setTexture(ITexture* texture) {
+    _attributesMutex[eTexture]->lock();
 	_texture = dynamic_cast<Texture*>(texture);
+    _attributesMutex[eTexture]->unlock();
 }
 
 Texture*	Scenery::getTexture() const {
+    Threading::MutexLocker  locker(_attributesMutex[eTexture]);
 	return (_texture);
 }
 	
 void	Scenery::setSpeed(float32 speed) {
+    _attributesMutex[eSpeed]->lock();
 	_speed = speed;
+    _attributesMutex[eSpeed]->unlock();
 }
 
 float32	Scenery::getSpeed() const {
+    Threading::MutexLocker  locker(_attributesMutex[eSpeed]);
 	return (_speed);
 }
 
 void	Scenery::setWidth(float32 width) {
+    _attributesMutex[eWidth]->lock();
 	_width = width;
+    _attributesMutex[eWidth]->unlock();
 }
 
 float32	Scenery::getWidth() const {
+    Threading::MutexLocker  locker(_attributesMutex[eWidth]);
 	return (_width);
 }
 
 void	Scenery::setXStart(float32 xStart) {
+    _attributesMutex[eXStart]->lock();
 	_xStart = xStart;
+    _attributesMutex[eSpeed]->unlock();
 }
 
 float32	Scenery::getXStart() const {
+    Threading::MutexLocker  locker(_attributesMutex[eXStart]);
 	return (_xStart);
 }
 
 void	Scenery::setXEnd(float32 xEnd) {
+    _attributesMutex[eXEnd]->lock();
 	_xEnd = xEnd;
+    _attributesMutex[eXEnd]->unlock();
 }
 
 float32	Scenery::getXEnd() const {
+    Threading::MutexLocker  locker(_attributesMutex[eXEnd]);
 	return (_xEnd);
 }
 
