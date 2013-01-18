@@ -14,6 +14,7 @@
 
 # include <OS.h>
 # ifdef OS_WINDOWS
+#  define _WINSOCKAPI_
 #  include <windows.h>
 # else
 #  include <dlfcn.h>

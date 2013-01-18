@@ -14,6 +14,7 @@
 
 # if defined (OS_WINDOWS)
 
+#  define _WINSOCKAPI_
 #  include <windows.h>
 
 namespace Threading {

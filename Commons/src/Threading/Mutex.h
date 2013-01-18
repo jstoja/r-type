@@ -13,6 +13,7 @@
 # include <OS.h>
 
 # if defined (OS_WINDOWS)
+#  define _WINSOCKAPI_
 #  include <windows.h>
 # elif defined (OS_UNIX)
 #  include <pthread.h>
