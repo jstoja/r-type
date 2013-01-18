@@ -19,7 +19,7 @@ Network::TcpPacket::~TcpPacket() {
 
 }
 
-void Network::TcpPacket::read(ASocket* socket) {
+void Network::TcpPacket::read(ASocket* socket) {    
   if (_data.getSize() == 0 && _state == Empty) {
     _data.resize(8);
     socket->read(_data, true);

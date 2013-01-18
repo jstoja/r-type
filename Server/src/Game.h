@@ -39,10 +39,11 @@ class Game : public IGame, public Object//, public Network::IProxyDelegate<Netwo
 public:
     enum State {Stopped, Waiting, Started};
 
-    Game(Network::TcpPacket* packet);
+    Game(Network::TcpPacket* packet=NULL);
     virtual ~Game();
 
     std::string const&      getName(void) const;
+    void                    setName(std::string const& name);
     State					getState(void) const;
     uint32                  getNbPlayers(void) const;
     uint32                  getNbSlots(void) const;
@@ -50,9 +51,11 @@ public:
     void	join(Player* player);
     bool	canJoin() const;
     void	quit(Player* player);
-    void	playerReady(Player* player);
+    void    playerReady(Player* player);
+    void	sendInfo(Player* player);
     void	start(void);
     void	update();
+    void    sendPlayerList(Player* player);
 
     virtual void                addGraphicElement(IGraphicElement* element);
     virtual IGraphicElement*    createGraphicElement() const;

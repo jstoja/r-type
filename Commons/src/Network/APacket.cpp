@@ -123,7 +123,7 @@ Network::APacket& Network::APacket::operator>>(std::string& str) {
 
   *this >> size;
   std::string newStr(&_data[_curser], size);
-  _curser += str.size();
+  _curser += size;
   str = newStr;
   return *this;
 }

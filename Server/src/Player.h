@@ -29,6 +29,7 @@ public:
     void	packetSent(Network::TcpPacket const*);
     void	connectionClosed(Network::Proxy<Network::TcpPacket>*);
     void    sendPacket(Network::Proxy<Network::TcpPacket>::ToSend const& toSend);
+    void    playerList(Network::TcpPacket* packet);
 
     // Protocol functions
     void  connection(Network::TcpPacket* packet);
@@ -37,6 +38,8 @@ public:
     void  createGame(Network::TcpPacket*);
     void  joinGame(Network::TcpPacket*);
     void  readyToStart(Network::TcpPacket* packet);
+
+    bool isReady(void);
 
     typedef void (Player::* commandPointer)(Network::TcpPacket*);
 

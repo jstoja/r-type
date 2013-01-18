@@ -17,6 +17,7 @@
 # define DEBUG_ENABLED
 
 # ifdef DEBUG_ENABLED
+# include <iomanip>
 #  define Log(x) (*Debug::logStream << x << std::endl)
 # else
 #  define Log(x) {}

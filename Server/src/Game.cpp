@@ -17,14 +17,19 @@
 #include "Sprite.h"
 #include "GameObject.h"
 
-Game::Game(Network::TcpPacket* packet) : _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waiting) {
-	_loadMap("Levels/Level_1/Level_1.map");
+Game::Game(Network::TcpPacket* packet) :
+_attributesMutex(), _players(), _nbSlots(0), _name(), _currentLevel(),
+_updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waiting) {
+    _attributesMutex.resize(eLastAttribute);
     for (uint32 i = 0; i < eLastAttribute; ++i) {
         _attributesMutex[i] = new Threading::Mutex();
     }
+	//_loadMap("Levels/Level_1/Level_1.map");
 
-    *packet >> _name;
-    *packet >> _nbSlots;
+    if (packet) {
+        *packet >> _name;
+        *packet >> _nbSlots;
+    }
 	_viewPort = new ViewPort(0.1);
 }
 
@@ -39,6 +44,11 @@ Game::~Game() {
 std::string const&     Game::getName(void) const {
     Threading::MutexLocker locker(_attributesMutex[eName]);
     return _name;
+}
+
+void Game::setName(std::string const& name) {
+    Threading::MutexLocker locker(_attributesMutex[eName]);
+    _name = name;
 }
 
 Game::State     Game::getState(void) const {
@@ -150,6 +160,57 @@ void     Game::playerReady(Player* player) {
     delete packet;
 }
 
+void    Game::sendPlayerList(Player* player) {
+    std::list<Player*> playerList;
+
+    for (int i = 0; i < _players.size(); ++i) {
+        if (_players[i] != player) {
+            playerList.push_back(_players[i]);
+        }
+    }
+
+    Network::TcpPacket *packet = new Network::TcpPacket();
+    _attributesMutex[ePlayers]->lock();
+
+    packet->setCode(0x01020600);
+    *packet << playerList;
+    Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
+    player->sendPacket(toSend);
+    delete packet;
+
+    _attributesMutex[ePlayers]->unlock();
+}
+
+void     Game::sendInfo(Player* player) {
+    std::list<Player*> playerList;
+
+    for (int i = 0; i < _players.size(); ++i) {
+        if (_players[i] != player) {
+            playerList.push_back(_players[i]);
+        }
+    }
+
+    Network::TcpPacket *packet = new Network::TcpPacket();
+    packet->setCode(0x01020600);
+    *packet << playerList;
+    Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
+    player->sendPacket(toSend);
+    delete packet;
+
+    for (int i = 0; i < _players.size(); ++i) {
+        if (_players[i] != player && _players[i]->isReady()) {
+            Network::TcpPacket *packet = new Network::TcpPacket();
+            packet->setCode(0x01020500);
+            *packet << _players[i]->getId();
+            Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
+            player->sendPacket(toSend);
+            delete packet;
+        }
+    }
+
+    _attributesMutex[ePlayers]->unlock();
+}
+
 void     Game::quit(Player* player) {
     _attributesMutex[ePlayers]->lock();
     _players.erase(std::remove(_players.begin(), _players.end(), player), _players.end());
@@ -236,7 +297,7 @@ IScenery*		Game::addScenery() {
 }
 
 void		Game::_loadMap(std::string const& fileName) {
-    //Using MutexLockers to avoid duplication of unlocks in each throwing cases
+    // Using MutexLockers to avoid duplication of unlocks in each throwing cases
     Threading::MutexLocker locker(_attributesMutex[eCurrentLevel]);
     Threading::MutexLocker locker1(_attributesMutex[eLevelSprites]);
     Threading::MutexLocker locker2(_attributesMutex[eGameSprites]);
