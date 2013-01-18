@@ -35,6 +35,8 @@ public:
   virtual void  gameStart(uint32 gameId);
   int			run();
 
+  void          sendGameInfo(uint32 gameId, Player* player);
+
   static std::string const& getPluginDirectory();
   static void               setPluginDirectory(std::string const& dir);
 

@@ -25,10 +25,10 @@ public:
     Player(Network::ASocket*, IServerDelegate* server);
     virtual ~Player();
 
-    void	packetReceived(Network::TcpPacket*);
-    void	packetSent(Network::TcpPacket const*);
-    void	connectionClosed(Network::Proxy<Network::TcpPacket>*);
-    void  sendPacket(Network::Proxy<Network::TcpPacket>::ToSend const& toSend);
+    void    packetReceived(Network::TcpPacket*);
+    void    packetSent(Network::TcpPacket const*);
+    void    connectionClosed(Network::Proxy<Network::TcpPacket>*);
+    void    sendPacket(Network::Proxy<Network::TcpPacket>::ToSend const& toSend);
 
     // Protocol functions
     void  connection(Network::TcpPacket*);
@@ -36,6 +36,8 @@ public:
     void  joinGame(Network::TcpPacket*);
     void  listGame(Network::TcpPacket* packet);
     void  readyToStart(Network::TcpPacket* packet);
+
+    bool isReady(void);
 
     typedef void (Player::* commandPointer)(Network::TcpPacket*);
 

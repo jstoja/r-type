@@ -21,6 +21,7 @@ public:
     virtual void                            sendResources(uint32 gameId, Player* player) = 0;
     virtual void                            playerReady(uint32 gameId, Player* player) = 0;
     virtual void                            gameStart(uint32 gameId) = 0;
+    virtual void                            sendGameInfo(uint32 gameId, Player* player) = 0;
 };
 
 #endif

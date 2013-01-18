@@ -50,7 +50,8 @@ public:
     void	join(Player* player);
     bool	canJoin() const;
     void	quit(Player* player);
-    void	playerReady(Player* player);
+    void    playerReady(Player* player);
+    void	sendInfo(Player* player);
     void	start(void);
     void	update();
 

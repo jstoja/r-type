@@ -16,7 +16,7 @@ Player::Player(Network::ASocket* socket, IServerDelegate* server) : _isReady(fal
     for (uint32 i = 0; i < eLastAttribute; ++i) {
         _attributesMutex.push_back(new Threading::Mutex());
     }
-    
+
     Log("New Player");
 
     _commands[Network::Proxy<Network::TcpPacket>::AuthenficitationConnection] = &Player::connection;
@@ -43,6 +43,10 @@ void Player::packetReceived(Network::TcpPacket* packet) {
         (this->*(it->second))(packet);
     _attributesMutex[eCommands]->unlock();
     delete packet;
+}
+
+bool Player::isReady(void) {
+    return _isReady;
 }
 
 void Player::packetSent(Network::TcpPacket const* packet) {
@@ -110,6 +114,7 @@ void Player::joinGame(Network::TcpPacket* packet) {
     _proxy.sendPacket(toSend);
     _attributesMutex[eProxy]->unlock();
 
+    _server->sendGameInfo(id, this);
     _server->sendResources(id, this);
     _attributesMutex[eServer]->unlock();
 }
