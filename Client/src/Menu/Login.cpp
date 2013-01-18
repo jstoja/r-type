@@ -27,7 +27,7 @@ Menu(scene, delegate) {
 
     
     _ipField = new Widget::TextEdit(scene, this, "text-field.png");
-    _ipField->setValue("");
+    _ipField->setValue("127.0.0.1");
     _ipField->setPosition(Vec3(scene->getViewport().x/2 + 2.6,
                                4.9, 0));
     _ipField->setSize(Vec2(6.5, 1.25));
@@ -39,7 +39,7 @@ Menu(scene, delegate) {
     _portLabel->setSize(Vec2(4.8, 0.525));    
     
     _portField = new Widget::TextEdit(scene, this, "text-field.png");
-    _portField->setValue("");
+    _portField->setValue("4242");
     _portField->setPosition(Vec3(scene->getViewport().x/2 + 2.6,
                                3.7, 0));
     _portField->setSize(Vec2(6.5, 1.25));
@@ -52,7 +52,7 @@ Menu(scene, delegate) {
     _usernameLabel->setSize(Vec2(4.8, 0.525));    
     
     _usernameField = new Widget::TextEdit(scene, this, "text-field.png");
-    _usernameField->setValue("");
+    _usernameField->setValue("aurao");
     _usernameField->setPosition(Vec3(scene->getViewport().x/2 + 2.6,
                                  2.5, 0));
     _usernameField->setSize(Vec2(6.5, 1.25));

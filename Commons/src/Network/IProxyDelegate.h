@@ -24,7 +24,6 @@ namespace Network {
     virtual void packetReceived(T*) = 0;
     virtual void packetSent(T const*) = 0;
     virtual void connectionClosed(Network::Proxy<T>*) = 0;
-	virtual void connectionFinished(Network::Proxy<T>*, bool success) = 0;
   };
 
 }

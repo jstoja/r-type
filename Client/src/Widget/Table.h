@@ -75,6 +75,7 @@ namespace Widget {
 		void	setColor(uint32 y, uint32 x, Vec3 const& color);
 		void	setColor(uint32 y, Vec3 const& color);
 
+        virtual void    setVisible(bool visible);
         virtual void    update();
 		virtual void processEvent(Event::Event const& event);
     private:

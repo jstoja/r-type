@@ -33,11 +33,13 @@ bool    Widget::Widget::hasFocus() const {
 
 void    Widget::Widget::setPosition(Vec3 const& v) {
     _position = v;
+	_rect = Rect2(_position - Vec3(_size.x / 2, _size.y / 2), _size);
 	setNeedUpdate(true);
 }
 
 void    Widget::Widget::setSize(Vec2 const& v) {
     _size = v;
+	_rect = Rect2(_position - Vec3(_size.x / 2, _size.y / 2), _size);
 	setNeedUpdate(true);
 }
 
@@ -71,4 +73,8 @@ bool Widget::Widget::needUpdate() {
 
 void Widget::Widget::setNeedUpdate(bool value) {
 	_needUpdate = value;
+}
+
+Rect2 const&	Widget::Widget::getRect() const {
+	return (_rect);
 }

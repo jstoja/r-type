@@ -27,7 +27,7 @@ public:
     const static uint32 readSize = 4096;
     const static uint32 writeSize = 32768;
 
-  TcpSocket();
+  TcpSocket(ISocketDelegate* delegate);
   TcpSocket(int fd);
   virtual ~TcpSocket();
 

@@ -22,8 +22,7 @@ namespace Menu {
 	class NewGame : public Menu, public Widget::ITextEditDelegate, public Widget::IButtonDelegate, public Event::IListenerDelegate {
     public:
         
-        NewGame(Graphic::Scene *scene, IMenuDelegate* delegate,
-                std::string const& serverName);
+        NewGame(Graphic::Scene *scene, IMenuDelegate* delegate);
         virtual ~NewGame(void);
         
         virtual void processEvent(Event::Event const& event);

@@ -16,7 +16,10 @@
 #include "Graphic/Image.h"
 
 Client::Client(void) :
-_scene(), _framerateLimit(30), _time(), _ui(), _tcpSocket(NULL), _proxy(NULL) {
+_scene(), _framerateLimit(30), _time(), _ui(), _tcpSocket(NULL), _proxy(NULL),
+_commands(), _login(""), _userId(0) {
+    
+    _commands[Network::Proxy<Network::TcpPacket>::AuthenficitationConnectionSuccess] = &Client::connectionResponse;
     
     Graphic::Renderer::getInstance().init();
     Graphic::Renderer::getInstance().setScene(&_scene);
@@ -28,10 +31,10 @@ _scene(), _framerateLimit(30), _time(), _ui(), _tcpSocket(NULL), _proxy(NULL) {
     viewport.x = viewport.y * (screen.x / screen.y);
     _scene.setViewport(viewport);
     
-    loginCompleted("aurao", "127.0.0.1", "4242");
-    
     // Create the ui
     _ui = new UserInterface(this);
+    
+    //loginCompleted("aurao", "127.0.0.1", "4242");
 
     mainLoop();
 }
@@ -81,8 +84,11 @@ void Client::loginCompleted(std::string const& login, std::string const& ipAdres
                             std::string const& port) {
     delete _tcpSocket;
     delete _proxy;
-    _tcpSocket = new Network::TcpSocket();
+    _proxy = NULL;
+    _login = login;
+    _tcpSocket = new Network::TcpSocket(this);
 	_tcpSocket->connect(ipAdress, std::atoi(port.c_str()));
+    _ui->presentMessage("Connecting...");
     //if (_tcpSocket->connect(ipAdress, std::atoi(port.c_str()))) {
     //    Log("Connected to server");
     //    _proxy = new Network::Proxy<Network::TcpPacket>(_tcpSocket, this);
@@ -96,17 +102,59 @@ void Client::loginCompleted(std::string const& login, std::string const& ipAdres
 }
 
 void Client::packetReceived(Network::TcpPacket* packet) {
-    Log("Packet received");
+    uint32 code, size;
+    
+    *packet >> code >> size;
+    std::map<int, commandPointer>::iterator it = _commands.find(code & 0xFFFFFF00);
+    if (it != _commands.end())
+        (this->*(it->second))(packet);
+    else
+        Log("Received unknown command " << code);
+    delete packet;
 }
 
+
 void Client::packetSent(Network::TcpPacket const* packet) {
-    Log("Packet sent");
+    
+}
+
+void Client::connectionResponse(Network::TcpPacket* packet) {
+    if ((packet->getCode() & 0xFF) == 1) {
+        Log("Connection error");
+    } else {
+        uint32 id;
+        *packet >> id;
+        
+        _userId = id;
+        
+        // Request server infos and games list
+        Network::TcpPacket* packet = new Network::TcpPacket();
+        packet->setCode(Network::TcpProxy::InformationsGeneral);
+        _proxy->sendPacket(packet);
+        packet = new Network::TcpPacket();
+        packet->setCode(Network::TcpProxy::InformationsGameList);
+        _proxy->sendPacket(packet);
+        
+        _ui->goToMenu("Game");
+    }
 }
 
 void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* packet) {
     Log("Connection closed");
 }
 
-void Client::connectionFinished(Network::Proxy<Network::TcpPacket>* packet, bool success) {
-
+void Client::connectionFinished(Network::ASocket* socket, bool success) {
+    if (success) {
+        Log("Connected to server");
+        _proxy = new Network::Proxy<Network::TcpPacket>(_tcpSocket, this);
+        Network::TcpPacket* packet = new Network::TcpPacket();
+        packet->setCode(Network::Proxy<Network::TcpPacket>::AuthenficitationConnection);
+        *packet << _login;
+        _proxy->sendPacket(packet);
+    }
+    else {
+        _ui->hideMessage();
+        _ui->goToMenu("Login");
+        Log("Connection failed");
+    }
 }

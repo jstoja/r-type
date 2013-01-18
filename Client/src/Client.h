@@ -17,7 +17,7 @@
 # include "Network/TcpSocket.h"
 # include "Network/TcpPacket.h"
 
-class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Network::TcpPacket> {
+class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Network::TcpPacket>, public Network::ISocketDelegate {
     public:
     
     Client(void);
@@ -41,21 +41,30 @@ class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Ne
     virtual void    loginCompleted(std::string const& login,
                                    std::string const& ipAdress,
                                    std::string const& port);
+    
+    // Socket delegate
+	void connectionFinished(Network::ASocket*, bool success);
                     
     // Network proxy delegate methods
     void packetReceived(Network::TcpPacket* packet);
     void packetSent(Network::TcpPacket const* packet);
     void connectionClosed(Network::Proxy<Network::TcpPacket>* packet);
-	void connectionFinished(Network::Proxy<Network::TcpPacket>* packet, bool success);
+    void connectionResponse(Network::TcpPacket* packet);
+    
+    typedef void (Client::* commandPointer)(Network::TcpPacket*);
     
     private:
     Graphic::Scene  _scene;
     uint32          _framerateLimit;
     Clock           _time;
-    UserInterface*   _ui;
+    UserInterface*  _ui;
     
     Network::TcpSocket*                 _tcpSocket;
     Network::Proxy<Network::TcpPacket>* _proxy;
+    std::map<int, commandPointer>       _commands;
+
+    std::string                         _login;
+    uint32                              _userId;
 };
 
 #endif

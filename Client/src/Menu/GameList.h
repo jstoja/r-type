@@ -21,8 +21,7 @@ namespace Menu {
     
     class GameList : public Menu, public Widget::IButtonDelegate, public Widget::ITableDelegate {
     public:        
-        GameList(Graphic::Scene *scene, IMenuDelegate* delegate,
-                std::string const& serverName);
+        GameList(Graphic::Scene *scene, IMenuDelegate* delegate);
         virtual ~GameList(void);
 
 		void setGameList(std::list<Game*> const& gameList);

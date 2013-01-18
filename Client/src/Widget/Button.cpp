@@ -38,7 +38,7 @@ Widget::Button::~Button() {
 }
 
 void    Widget::Button::processEvent(Event::Event const& event) {
-	if (isVisible() == false)
+  if (isVisible() == false)
 		return ;
   if (event.type == Event::PointerReleased) {
       setCurrentFrame(1);
@@ -66,6 +66,6 @@ void            Widget::Button::setSize(Vec2 const& size) {
 }
 
 void			Widget::Button::setVisible(bool visible) {
-	setCurrentFrame(2);
 	GraphicWidget::setVisible(visible);
+	setCurrentFrame(2);
 }

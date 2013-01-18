@@ -22,7 +22,7 @@ namespace Network {
     void	read(ASocket*);
     void	update();
     void    updateData();
-    bool        isComplete() const;
+    bool    isComplete() const;
 
     void	setCode(uint32 code);
     uint32     	getCode();      

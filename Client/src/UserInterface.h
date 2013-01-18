@@ -35,6 +35,8 @@ public:
     void presentMessage(std::string const& message);
     void hideMessage(void);
     
+    void goToMenu(std::string const& menu);
+    
     Menu::Menu* getCurrentMenu(void) const;
     
 	void	setServerName(std::string const& serverName);
@@ -57,8 +59,7 @@ public:
     
 private:
     static const float32 _maxViewportX;
-    
-    void _goToMenu(std::string const& menu);
+
     void _createSceneries(void);
     
     IUserInterfaceDelegate* _delegate;
@@ -69,6 +70,7 @@ private:
     std::vector<Graphic::Scenery*>      _sceneries;
 	std::map<std::string, Menu::Menu*>  _menus;
     Menu::Menu*                         _currentMenu;
+    Menu::Menu*                         _nextMenu;
     Widget::Label*                      _messageLabel;
     Threading::Mutex*                   _mutex;
 };

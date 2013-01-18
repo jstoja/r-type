@@ -11,8 +11,6 @@
 #include <sstream>
 
 Menu::GamePrepare::GamePrepare(Graphic::Scene *scene, IMenuDelegate* delegate,
-                               std::string const& serverName,
-                               std::string const& gameName,
                                uint32 nbPlayers, uint32 nbSlots)
 : Menu(scene, delegate) {
     
@@ -20,9 +18,7 @@ Menu::GamePrepare::GamePrepare(Graphic::Scene *scene, IMenuDelegate* delegate,
 	_previousMenu->setSize(Vec2(0.56, 0.575));
 	_previousMenu->setPosition(Vec3(_previousMenu->getSize().x / 2 + 0.425, scene->getViewport().y - 0.8));
     
-	std::string upperName = serverName;
-    std::transform(upperName.begin(), upperName.end(), upperName.begin(), ::toupper);
-    _serverNameLabel = new Widget::Label(scene, upperName);
+    _serverNameLabel = new Widget::Label(scene, "");
     _serverNameLabel->setPosition(Vec3(scene->getViewport().x / 2, scene->getViewport().y - 0.8));
 	_serverNameLabel->setSize(Vec2(scene->getViewport().x - (0.425 * 2), 0.50));
     _serverNameLabel->setTextAligment(Widget::Label::TextAlignRight);
@@ -32,9 +28,7 @@ Menu::GamePrepare::GamePrepare(Graphic::Scene *scene, IMenuDelegate* delegate,
 	_gameLabel->setSize(Vec2(1, 0.475));
     _gameLabel->setTextAligment(Widget::Label::TextAlignLeft);
     
-    upperName = gameName;
-    std::transform(upperName.begin(), upperName.end(), upperName.begin(), ::toupper);
-    _gameNameLabel = new Widget::Label(scene, upperName);
+    _gameNameLabel = new Widget::Label(scene, "");
     _gameNameLabel->setPosition(Vec3(3.2, scene->getViewport().y - 2));
 	_gameNameLabel->setSize(Vec2(1, 0.475));
     _gameNameLabel->setTextAligment(Widget::Label::TextAlignLeft);
@@ -127,5 +121,7 @@ void Menu::GamePrepare::setVisible(bool visible) {
 }
 
 void Menu::GamePrepare::setServerName(std::string const& serverName) {
-	_serverNameLabel->setText(serverName);
+    std::string upperName = serverName;
+    std::transform(serverName.begin(), serverName.end(), upperName.begin(), ::toupper);
+	_serverNameLabel->setText(upperName);
 }

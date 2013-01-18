@@ -18,8 +18,7 @@
 #endif
 #include "TcpServer.h"
 
-Network::TcpServer::TcpServer() : _socket(), _delegate(NULL) {
-  _socket.setDelegate(this);
+Network::TcpServer::TcpServer() : _socket(this), _delegate(NULL) {
 }
 
 Network::TcpServer::~TcpServer() {

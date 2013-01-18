@@ -90,7 +90,11 @@ void Server::gameStart(uint32 gameId) {
     }
 }
 
-std::map<uint32, Game*> const& Server::getGames(void) {
+std::string Server::getName(void) const {
+    return "Official R-Type server";
+}
+
+std::map<uint32, Game*> const& Server::getGames(void) const {
     return _games;
 }
 

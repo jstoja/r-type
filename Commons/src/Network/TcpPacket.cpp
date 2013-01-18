@@ -51,8 +51,8 @@ void Network::TcpPacket::setCode(uint32 code) {
   if (_data.getSize() < 8)
     _data.resize(8);
 
-//  *((int*)(&((char*)_data)[0])) = code;
-//  *((int*)(&((char*)_data)[4])) = _size;
+  *((int*)(&((char*)_data)[0])) = code;
+  *((int*)(&((char*)_data)[4])) = 0;
 }
 
 uint32 Network::TcpPacket::getCode() {

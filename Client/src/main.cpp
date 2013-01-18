@@ -12,7 +12,7 @@
 #include "Client.h"
 
 int	main(int argc, char *argv[]) {
-    try {
+    //try {
         Application::getInstance().init(argc, argv);
 #if defined OS_MAC
         Application::getInstance().setRelativeResourcesPath("../Resources");
@@ -20,11 +20,11 @@ int	main(int argc, char *argv[]) {
         Application::getInstance().setRelativeResourcesPath("Resources");
 #endif
         Client client;
-    }
-    catch (std::exception* e) {
-        std::cerr << e->what() << std::endl;
-    } catch (...) {
-		std::cerr << "Unhandled Exception" << std::endl;
-	}
+ //   }
+ //   catch (std::exception* e) {
+ //       std::cerr << e->what() << std::endl;
+ //   } catch (...) {
+	//	std::cerr << "Unhandled Exception" << std::endl;
+	//}
     return (0);
 }

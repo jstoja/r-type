@@ -10,13 +10,10 @@
 
 #include <algorithm>
 
-Menu::NewGame::NewGame(Graphic::Scene *scene, IMenuDelegate* delegate,
-                       std::string const& serverName)
+Menu::NewGame::NewGame(Graphic::Scene *scene, IMenuDelegate* delegate)
 : Menu(scene, delegate), _nbPlayers(1) {
     
-    std::string upperName = serverName;
-    std::transform(serverName.begin(), serverName.end(), upperName.begin(), ::toupper);
-    _serverNameLabel = new Widget::Label(scene, upperName);
+    _serverNameLabel = new Widget::Label(scene, "");
     _serverNameLabel->setPosition(Vec3(scene->getViewport().x / 2, scene->getViewport().y - 0.8));
 	_serverNameLabel->setSize(Vec2(scene->getViewport().x - (0.425 * 2), 0.50));
     _serverNameLabel->setTextAligment(Widget::Label::TextAlignRight);
@@ -130,5 +127,7 @@ void Menu::NewGame::setVisible(bool visible) {
 }
 
 void Menu::NewGame::setServerName(std::string const& serverName) {
-	_serverNameLabel->setText(serverName);
+    std::string upperName = serverName;
+    std::transform(serverName.begin(), serverName.end(), upperName.begin(), ::toupper);
+	_serverNameLabel->setText(upperName);
 }

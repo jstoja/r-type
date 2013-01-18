@@ -10,21 +10,17 @@
 #include "GameJoin.h"
 #include "Graphic/Scene.h"
 
-Menu::GameJoin::GameJoin(Graphic::Scene *scene, IMenuDelegate* delegate, std::string const& serverName, std::string const& gameName) :
+Menu::GameJoin::GameJoin(Graphic::Scene *scene, IMenuDelegate* delegate) :
 	Menu(scene, delegate) {
 	_previousMenu = new Widget::Button(scene, this, "button-left-arrow.png");
 
-	std::string upperName = serverName;
-    std::transform(serverName.begin(), serverName.end(), upperName.begin(), ::toupper);
-    _serverNameLabel = new Widget::Label(scene, upperName);
+    _serverNameLabel = new Widget::Label(scene, "");
 
 	_labelsBackground = new Widget::GraphicWidget(scene, "group-background.png");
 
 	_joiningGameLabel = new Widget::Label(scene, "JOINING GAME:");
 
-	upperName = gameName;
-    std::transform(gameName.begin(), gameName.end(), upperName.begin(), ::toupper);
-	_gameNameLabel = new Widget::Label(scene, upperName);
+	_gameNameLabel = new Widget::Label(scene, "");
 
 	_joiningStateLabel = new Widget::Label(scene, "LOADING RESOURCES...");
 
@@ -93,5 +89,13 @@ void	Menu::GameJoin::_update() {
 }
 
 void Menu::GameJoin::setServerName(std::string const& serverName) {
-	_serverNameLabel->setText(serverName);
+    std::string upperName = serverName;
+    std::transform(serverName.begin(), serverName.end(), upperName.begin(), ::toupper);
+	_serverNameLabel->setText(upperName);
+}
+
+void Menu::GameJoin::setGameName(std::string const& gameName) {
+    std::string upperName = gameName;
+    std::transform(gameName.begin(), gameName.end(), upperName.begin(), ::toupper);
+	_serverNameLabel->setText(upperName);
 }

@@ -51,12 +51,11 @@ namespace Widget {
         void                setCurrentFrame(uint32);
 
         Graphic::Sprite     *getSprite() const;
-        
-        Rect2  getRect() const;
 
 		virtual void		setVisible(bool visible);
 
-		virtual void		update();
+		virtual void		setPosition(Vec3 const& pos);
+		virtual void		setSize(Vec2 const& size);
 
     private:
         Graphic::Scene*     _scene;

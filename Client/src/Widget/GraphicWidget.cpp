@@ -84,10 +84,6 @@ Graphic::Sprite *Widget::GraphicWidget::getSprite() const {
     return _element.getSprite();
 }
 
-Rect2 Widget::GraphicWidget::getRect() const {
-    return _element.getRect();
-}
-
 void    Widget::GraphicWidget::setSprite(Graphic::Sprite* sprite) {
     _element.setSprite(sprite);
 	setNeedUpdate(true);
@@ -99,11 +95,16 @@ void    Widget::GraphicWidget::setElement(Graphic::Element* element) {
 }
 
 void	Widget::GraphicWidget::setVisible(bool visible) {
-	getElement()->setVisible(visible);
 	Widget::setVisible(visible);
+	getElement()->setVisible(visible);
 }
 
-void Widget::GraphicWidget::update() {
-	_element.setSize(getSize());
-	_element.setPosition(getPosition());
+void	Widget::GraphicWidget::setPosition(Vec3 const& pos) {
+	_element.setPosition(pos);
+	Widget::setPosition(pos);
+}
+
+void	Widget::GraphicWidget::setSize(Vec2 const& size) {
+	_element.setSize(size);
+	Widget::setSize(size);
 }

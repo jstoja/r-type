@@ -19,13 +19,13 @@ class ASocket;
 
 class COMMON_EXPORT_IMPORT ISocketDelegate {
  public:
-  virtual void newConnection(ASocket*) = 0;
-  virtual void readFinished(ASocket*, ByteArray&, const HostAddress& hostAddress, uint16 port) = 0;
-  virtual void dataReceived(ASocket*, ByteArray&, uint32) = 0;
-  virtual void dataSent(ASocket*, ByteArray const&, uint32) = 0;
-  virtual void writeFinished(ASocket*, ByteArray const&) = 0;
-  virtual void disconnection(ASocket*) = 0;
-  virtual void connectionFinished(ASocket*, bool success) = 0;
+    virtual void newConnection(ASocket*) {};
+    virtual void readFinished(ASocket*, ByteArray&, const HostAddress& hostAddress, uint16 port) {};
+    virtual void dataReceived(ASocket*, ByteArray&, uint32) {};
+    virtual void dataSent(ASocket*, ByteArray const&, uint32) {};
+    virtual void writeFinished(ASocket*, ByteArray const&) {};
+    virtual void disconnection(ASocket*) {};
+    virtual void connectionFinished(ASocket*, bool success) {};
 };
 
 }

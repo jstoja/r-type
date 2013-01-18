@@ -38,7 +38,6 @@ Widget::Table::Table(uint32 columnCount, std::string const& backgroundImage, Gra
 	_headerBackground->getElement()->setCurrentFrame(3);
 	_lineByPages = 0;
 	setLineNumberByPage(6);
-	update();
 	Event::Manager::getInstance().addEventListener(_listener);
 }
 
@@ -168,8 +167,7 @@ void	Widget::Table::nextPage() {
 		++_currentPage;
 	else
 		_currentPage = 0;
-	_changed = true;
-	update();
+	setNeedUpdate(true);
 }
 
 bool	Widget::Table::hasPreviousPage() const {
@@ -293,4 +291,16 @@ void	Widget::Table::processEvent(Event::Event const& event) {
 			_currentBackground->getElement()->setCurrentFrame(0);
 		}
 	}
+}
+
+void	Widget::Table::setVisible(bool visible) {
+	_headerBackground->setVisible(visible);
+	for (unsigned int i = 0; i < _cells.size(); ++i)
+		for (uint32 j = 0; j < _columnCount; ++j)
+			_cells[i][j]->setVisible(visible);
+	for (uint32 i = 0; i < _lineByPages; ++i)
+		_lineBackgrounds[i]->setVisible(visible);
+	for (uint32 i = 0; i < _columnCount; ++i)
+		_columnNames[i]->setVisible(visible);
+	Widget::setVisible(visible);
 }

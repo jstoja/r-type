@@ -165,7 +165,7 @@ void Graphic::Renderer::render(void) {
     for (std::list<Element*>::const_iterator it = elements.begin(),
          end = elements.end(); it != end; ++it) {
         Element* element = *it;
-        if (!element->isVisible() || !(element->getType() == Element::Static
+        if (!(element->getType() == Element::Static
               || element->getType() == Element::Dynamic))
             continue;
         // Set element transformation matrix
@@ -187,7 +187,7 @@ void Graphic::Renderer::render(void) {
     for (std::list<Element*>::const_iterator it = elements.begin(),
          end = elements.end(); it != end; ++it) {
         Element* element = *it;
-        if (!element->isVisible() || !(element->getType() == Element::Floating))
+        if (!(element->getType() == Element::Floating))
             continue;
         // Set element transformation matrix
         glUniformMatrix4fv(_transformationMatrixLocation, 1, GL_FALSE,
@@ -214,11 +214,12 @@ std::list<Graphic::Element*> Graphic::Renderer::_getElementsToRender(void) {
     for (std::vector<Graphic::Element*>::const_iterator it = sceneElements.begin(),
          end = sceneElements.end(); it != end; ++it) {
         Rect2 rect = (*it)->getRect();
-        if ((*it)->getType() == Graphic::Element::Floating
+		if ((*it)->isVisible() && (*it)->getSprite() != NULL
+			&& ((*it)->getType() == Graphic::Element::Floating
             || (rect.pos.x + rect.size.x >= _scene->getViewportPosition().x
                 && rect.pos.x < _scene->getViewportPosition().x + _scene->getViewport().x
                 && rect.pos.y + rect.size.y >= _scene->getViewportPosition().y
-                && rect.pos.y < _scene->getViewportPosition().y + _scene->getViewport().y)) {
+                && rect.pos.y < _scene->getViewportPosition().y + _scene->getViewport().y))) {
                 std::list<Graphic::Element*>::iterator it2 = elements.begin(),
                 end2 = elements.end();
                 for (; it2 != end2; ++it2) {

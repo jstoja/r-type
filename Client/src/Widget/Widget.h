@@ -46,6 +46,7 @@ namespace Widget {
             //! Set Widget size
             virtual void        setSize(Vec2 const&);
             
+	        virtual Rect2 const&		getRect() const;
             //! Set focus
             virtual void        setFocus(bool);
         
@@ -70,6 +71,7 @@ namespace Widget {
             Widget*             _parent;
             Vec2                _size;
             Vec3                _position;
+			Rect2				_rect;
             bool                _focus;
 			bool				_visible;
 			bool				_needUpdate;

@@ -21,7 +21,7 @@ namespace Menu {
     
     class GameJoin : public Menu, public Widget::IButtonDelegate {
     public:
-        GameJoin(Graphic::Scene *scene, IMenuDelegate* delegate, std::string const& serverName, std::string const& gameName);
+        GameJoin(Graphic::Scene *scene, IMenuDelegate* delegate);
         virtual ~GameJoin(void);
 
 		void setProgress(float32 progress);
@@ -31,7 +31,9 @@ namespace Menu {
 		virtual void setVisible(bool visible);
 
 		virtual void setServerName(std::string const& serverName);
-    private:
+		virtual void setGameName(std::string const& gameName);
+
+	private:
 		void	_update();
 		Widget::Button*			_previousMenu;
 		Widget::Label*			_serverNameLabel;

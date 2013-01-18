@@ -23,7 +23,6 @@ namespace Menu {
     public:
         
         GamePrepare(Graphic::Scene *scene, IMenuDelegate* delegate,
-                    std::string const& serverName, std::string const& gameName,
                     uint32 nbPlayers, uint32 nbSlots);
         virtual ~GamePrepare(void);
         
