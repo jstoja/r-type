@@ -33,6 +33,8 @@ public:
   virtual void  sendResources(uint32 gameId, Player* player);
   virtual void  playerReady(uint32 gameId, Player* player);
   virtual void  gameStart(uint32 gameId);
+  virtual void  listPlayers(uint32 gameId, Player* player);
+
   int			run();
 
   void          sendGameInfo(uint32 gameId, Player* player);

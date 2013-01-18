@@ -66,6 +66,12 @@ void  Server::playerReady(uint32 gameId, Player* player) {
     }
 }
 
+void  Server::listPlayers(uint32 gameId, Player* player) {
+    if (_games.find(gameId) != _games.end()) {
+        _games[gameId]->sendPlayerList(player);
+    }
+}
+
 void  Server::sendResources(uint32 gameId, Player* player) {
     if (_games.find(gameId) != _games.end()) {
         Network::TcpPacket *packet = new Network::TcpPacket();

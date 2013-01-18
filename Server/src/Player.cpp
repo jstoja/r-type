@@ -24,6 +24,7 @@ Player::Player(Network::ASocket* socket, IServerDelegate* server) : _isReady(fal
     _commands[Network::Proxy<Network::TcpPacket>::GameJoin] = &Player::joinGame;
     _commands[Network::Proxy<Network::TcpPacket>::GameCreate] = &Player::createGame;
     _commands[Network::Proxy<Network::TcpPacket>::GameReady] = &Player::readyToStart;
+    _commands[Network::Proxy<Network::TcpPacket>::PlayerList] = &Player::playerList;
 }
 
 Player::~Player() {
@@ -137,6 +138,15 @@ void Player::listGame(Network::TcpPacket* packet) {
     _attributesMutex[eProxy]->lock();
     _proxy.sendPacket(toSend);
     _attributesMutex[eProxy]->unlock();
+}
+
+void Player::playerList(Network::TcpPacket* packet) {
+    uint32 gameId;
+
+    *packet >> gameId;
+    _attributesMutex[eServer]->lock();
+    _server->listPlayers(gameId, this);
+    _attributesMutex[eServer]->unlock();
 }
 
 void Player::readyToStart(Network::TcpPacket* packet) {

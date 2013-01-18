@@ -29,6 +29,7 @@ public:
     void    packetSent(Network::TcpPacket const*);
     void    connectionClosed(Network::Proxy<Network::TcpPacket>*);
     void    sendPacket(Network::Proxy<Network::TcpPacket>::ToSend const& toSend);
+    void    playerList(Network::TcpPacket* packet);
 
     // Protocol functions
     void  connection(Network::TcpPacket*);

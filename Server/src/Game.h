@@ -54,6 +54,7 @@ public:
     void	sendInfo(Player* player);
     void	start(void);
     void	update();
+    void    sendPlayerList(Player* player);
 
     virtual void                addGraphicElement(IGraphicElement* element);
     virtual IGraphicElement*    createGraphicElement() const;

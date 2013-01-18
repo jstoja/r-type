@@ -23,7 +23,7 @@ namespace Network {
     template <typename T>
     class COMMON_EXPORT_IMPORT_REMOVED Proxy : public ISocketDelegate {
     public:
-        
+
         enum TcpActions {
             // Client - Server
             AuthenficitationConnection  = 0x00000000,
@@ -32,12 +32,13 @@ namespace Network {
             GameQuit                    = 0x00020100,
             GameCreate                  = 0x00020200,
             GameReady                   = 0x00020300,
-            
+            PlayerList                  = 0x00020600,
+
             // Server - client
             AuthenficitationConnectionSuccess           = 0x01000000,
             AuthenficitationConnectionIncorrectLogin    = 0x01000001
         };
-        
+
         enum UdpActions {
             GRAPHIC_ELEMENTS,
             PHYSIC_ELEMENTS,

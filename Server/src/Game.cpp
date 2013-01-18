@@ -150,6 +150,27 @@ void     Game::playerReady(Player* player) {
     delete packet;
 }
 
+void    Game::sendPlayerList(Player* player) {
+    std::list<Player*> playerList;
+
+    for (int i = 0; i < _players.size(); ++i) {
+        if (_players[i] != player) {
+            playerList.push_back(_players[i]);
+        }
+    }
+
+    Network::TcpPacket *packet = new Network::TcpPacket();
+    _attributesMutex[ePlayers]->lock();
+
+    packet->setCode(0x01020600);
+    *packet << playerList;
+    Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
+    player->sendPacket(toSend);
+    delete packet;
+
+    _attributesMutex[ePlayers]->unlock();
+}
+
 void     Game::sendInfo(Player* player) {
     std::list<Player*> playerList;
 
@@ -169,8 +190,8 @@ void     Game::sendInfo(Player* player) {
     for (int i = 0; i < _players.size(); ++i) {
         if (_players[i] != player && _players[i]->isReady()) {
             Network::TcpPacket *packet = new Network::TcpPacket();
-            packet->setCode(0x01020600);
-            *packet <<  _players[i]->getId();
+            packet->setCode(0x01020500);
+            *packet << _players[i]->getId();
             Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
             player->sendPacket(toSend);
             delete packet;
