@@ -20,6 +20,7 @@ _nextMenu(NULL), _messageLabel(NULL), _mutex(new Threading::Mutex()) {
     // Create the sceneries used in all the user interface
     _createSceneries();
     
+    // Create all menus
 	Menu::GameList*	menu = new Menu::GameList(_delegate->getScene(), this, "Server of the death");
 
 	Menu::GamePrepare*	menu2 = new Menu::GamePrepare(_delegate->getScene(), this, "Server of the death", "Auto generated game", 3, 4);
@@ -37,6 +38,14 @@ _nextMenu(NULL), _messageLabel(NULL), _mutex(new Threading::Mutex()) {
 		it->second->setVisible(false);
     _currentMenu = _menus["Welcome"];
 	_currentMenu->setVisible(true);
+    
+    // Create the message label
+    _messageLabel = new Widget::Label(_delegate->getScene());
+    _messageLabel->setPosition(Vec3(_delegate->getScene()->getViewport().x,
+                                    _delegate->getScene()->getViewport().y)
+                               /2);
+    _messageLabel->setSize(Vec2(_delegate->getScene()->getViewport().x, 0.6));
+    _messageLabel->setVisible(false);
     
     _eventListener = new Event::Listener(Event::Close, this);
     Event::Manager::getInstance().addEventListener(_eventListener);
@@ -64,26 +73,27 @@ void UserInterface::update(void) {
 
     // Switch menu if requested
     if (_nextMenu) {
-        _currentMenu->setVisible(false);
-        _currentMenu = _nextMenu;
-        _currentMenu->setVisible(true);
+        if (_currentMenu)
+            _currentMenu->setVisible(false);
+        if (_nextMenu != (Menu::Menu*)-1) {
+            _currentMenu = _nextMenu;
+            _currentMenu->setVisible(true);
+        } else {
+            _currentMenu = NULL;
+        }
     }
 }
 
 void UserInterface::presentMessage(std::string const& message) {
     Threading::MutexLocker lock(_mutex);
-    _messageLabel = new Widget::Label(_delegate->getScene());
+    _nextMenu = (Menu::Menu*)-1;
     _messageLabel->setText(message);
-    _messageLabel->setPosition(Vec3(_delegate->getScene()->getViewport().x,
-                                    _delegate->getScene()->getViewport().y)
-                               /2);
-    _messageLabel->setSize(Vec2(_delegate->getScene()->getViewport().x, 0.6));
+    _messageLabel->setVisible(true);
 }
 
 void UserInterface::hideMessage(void) {
     Threading::MutexLocker lock(_mutex);
-    if (_messageLabel)
-        delete _messageLabel;
+    _messageLabel->setVisible(false);
 }
 
 Menu::Menu* UserInterface::getCurrentMenu(void) const {

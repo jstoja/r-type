@@ -27,7 +27,7 @@ class IGame;
 class IPlugin {
 public:
 	typedef IPlugin	*(*CreatorPrototype)(RTYPE_PLUGIN_PARAMS);
-	~IPlugin() {}
+	virtual ~IPlugin() {}
 
 	virtual bool	init(IGame* game, ByteArray const& params, float32 xStart) = 0;
 	virtual void	update() = 0;

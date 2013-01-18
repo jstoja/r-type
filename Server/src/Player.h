@@ -28,13 +28,14 @@ public:
     void	packetReceived(Network::TcpPacket*);
     void	packetSent(Network::TcpPacket const*);
     void	connectionClosed(Network::Proxy<Network::TcpPacket>*);
-    void  sendPacket(Network::Proxy<Network::TcpPacket>::ToSend const& toSend);
+    void    sendPacket(Network::Proxy<Network::TcpPacket>::ToSend const& toSend);
 
     // Protocol functions
-    void  connection(Network::TcpPacket*);
+    void  connection(Network::TcpPacket* packet);
+    void  serverInfos(Network::TcpPacket* packet);
+    void  listGame(Network::TcpPacket* packet);
     void  createGame(Network::TcpPacket*);
     void  joinGame(Network::TcpPacket*);
-    void  listGame(Network::TcpPacket* packet);
     void  readyToStart(Network::TcpPacket* packet);
 
     typedef void (Player::* commandPointer)(Network::TcpPacket*);

@@ -17,7 +17,7 @@
 
 Client::Client(void) :
 _scene(), _framerateLimit(30), _time(), _ui(), _tcpSocket(NULL), _proxy(NULL),
-_commands(), _userId(0) {
+_commands(), _login(""), _userId(0) {
     
     _commands[Network::Proxy<Network::TcpPacket>::AuthenficitationConnectionSuccess] = &Client::connectionResponse;
     
@@ -85,8 +85,10 @@ void Client::loginCompleted(std::string const& login, std::string const& ipAdres
     delete _tcpSocket;
     delete _proxy;
     _proxy = NULL;
-    _tcpSocket = new Network::TcpSocket();
+    _login = login;
+    _tcpSocket = new Network::TcpSocket(this);
 	_tcpSocket->connect(ipAdress, std::atoi(port.c_str()));
+    _ui->presentMessage("Connecting...");
     //if (_tcpSocket->connect(ipAdress, std::atoi(port.c_str()))) {
     //    Log("Connected to server");
     //    _proxy = new Network::Proxy<Network::TcpPacket>(_tcpSocket, this);
@@ -111,6 +113,11 @@ void Client::packetReceived(Network::TcpPacket* packet) {
     delete packet;
 }
 
+
+void Client::packetSent(Network::TcpPacket const* packet) {
+    
+}
+
 void Client::connectionResponse(Network::TcpPacket* packet) {
     if ((packet->getCode() & 0xFF) == 1) {
         Log("Connection error");
@@ -119,18 +126,35 @@ void Client::connectionResponse(Network::TcpPacket* packet) {
         *packet >> id;
         
         _userId = id;
+        
+        // Request server infos and games list
+        Network::TcpPacket* packet = new Network::TcpPacket();
+        packet->setCode(Network::TcpProxy::InformationsGeneral);
+        _proxy->sendPacket(packet);
+        packet = new Network::TcpPacket();
+        packet->setCode(Network::TcpProxy::InformationsGameList);
+        _proxy->sendPacket(packet);
+        
         _ui->goToMenu("Game");
     }
-}
-
-void Client::packetSent(Network::TcpPacket const* packet) {
-    Log("Packet sent");
 }
 
 void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* packet) {
     Log("Connection closed");
 }
 
-void Client::connectionFinished(Network::Proxy<Network::TcpPacket>* packet, bool success) {
-
+void Client::connectionFinished(Network::ASocket* socket, bool success) {
+    if (success) {
+        Log("Connected to server");
+        _proxy = new Network::Proxy<Network::TcpPacket>(_tcpSocket, this);
+        Network::TcpPacket* packet = new Network::TcpPacket();
+        packet->setCode(Network::Proxy<Network::TcpPacket>::AuthenficitationConnection);
+        *packet << _login;
+        _proxy->sendPacket(packet);
+    }
+    else {
+        _ui->hideMessage();
+        _ui->goToMenu("Login");
+        Log("Connection failed");
+    }
 }
