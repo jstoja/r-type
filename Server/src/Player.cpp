@@ -20,8 +20,8 @@ Player::Player(Network::ASocket* socket, IServerDelegate* server) : _isReady(fal
     Log("New Player");
 
     _commands[Network::Proxy<Network::TcpPacket>::AuthenficitationConnection] = &Player::connection;
+    _commands[Network::Proxy<Network::TcpPacket>::InformationsGeneral] = &Player::serverInfos;    
     _commands[Network::Proxy<Network::TcpPacket>::InformationsGameList] = &Player::listGame;
-    _commands[Network::Proxy<Network::TcpPacket>::InformationsGeneral] = &Player::serverInfos;
     _commands[Network::Proxy<Network::TcpPacket>::GameJoin] = &Player::joinGame;
     _commands[Network::Proxy<Network::TcpPacket>::GameCreate] = &Player::createGame;
     _commands[Network::Proxy<Network::TcpPacket>::GameReady] = &Player::readyToStart;
@@ -39,6 +39,7 @@ void Player::packetReceived(Network::TcpPacket* packet) {
     uint32 code, size;
 
     *packet >> code >> size;
+    Log("Packet received 0x" << std::setfill('0') << std::setw(8) << std::hex << code);
     _attributesMutex[eCommands]->lock();
     std::map<int, commandPointer>::iterator it = _commands.find(code & 0xFFFFFF00);
     if (it != _commands.end())
@@ -127,10 +128,10 @@ void Player::serverInfos(Network::TcpPacket* packet) {
     _attributesMutex[eServer]->unlock();
     
     Network::TcpPacket *tcpPacket = new Network::TcpPacket();
-    tcpPacket->setCode(Network::TcpProxy::InformationsGameListResponse);
+    tcpPacket->setCode(Network::TcpProxy::InformationsGameGeneralResponse);
     *tcpPacket << name;
     Network::Proxy<Network::TcpPacket>::ToSend toSend(tcpPacket, Network::HostAddress::AnyAddress, 0);
-    
+
     _attributesMutex[eProxy]->lock();
     _proxy.sendPacket(toSend);
     _attributesMutex[eProxy]->unlock();
@@ -179,7 +180,7 @@ void Player::readyToStart(Network::TcpPacket* packet) {
 }
 
 
-Network::APacket&       operator<<(Network::APacket& packet, Player const& player) {
+Network::APacket& operator<<(Network::APacket& packet, Player const& player) {
     packet << player.getId();
     return packet;
 }

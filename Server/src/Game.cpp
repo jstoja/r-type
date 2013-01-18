@@ -17,14 +17,19 @@
 #include "Sprite.h"
 #include "GameObject.h"
 
-Game::Game(Network::TcpPacket* packet) : _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waiting) {
-	_loadMap("Levels/Level_1/Level_1.map");
+Game::Game(Network::TcpPacket* packet) :
+_attributesMutex(), _players(), _nbSlots(0), _name(), _currentLevel(),
+_updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waiting) {
+    _attributesMutex.resize(eLastAttribute);
     for (uint32 i = 0; i < eLastAttribute; ++i) {
         _attributesMutex[i] = new Threading::Mutex();
     }
+	//_loadMap("Levels/Level_1/Level_1.map");
 
-    *packet >> _name;
-    *packet >> _nbSlots;
+    if (packet) {
+        *packet >> _name;
+        *packet >> _nbSlots;
+    }
 	_viewPort = new ViewPort(0.1);
 }
 
@@ -39,6 +44,11 @@ Game::~Game() {
 std::string const&     Game::getName(void) const {
     Threading::MutexLocker locker(_attributesMutex[eName]);
     return _name;
+}
+
+void Game::setName(std::string const& name) {
+    Threading::MutexLocker locker(_attributesMutex[eName]);
+    _name = name;
 }
 
 Game::State     Game::getState(void) const {
@@ -287,7 +297,7 @@ IScenery*		Game::addScenery() {
 }
 
 void		Game::_loadMap(std::string const& fileName) {
-    //Using MutexLockers to avoid duplication of unlocks in each throwing cases
+    // Using MutexLockers to avoid duplication of unlocks in each throwing cases
     Threading::MutexLocker locker(_attributesMutex[eCurrentLevel]);
     Threading::MutexLocker locker1(_attributesMutex[eLevelSprites]);
     Threading::MutexLocker locker2(_attributesMutex[eGameSprites]);

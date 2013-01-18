@@ -20,6 +20,8 @@ _scene(), _framerateLimit(30), _time(), _ui(), _tcpSocket(NULL), _proxy(NULL),
 _commands(), _login(""), _userId(0) {
     
     _commands[Network::Proxy<Network::TcpPacket>::AuthenficitationConnectionSuccess] = &Client::connectionResponse;
+    _commands[Network::Proxy<Network::TcpPacket>::InformationsGameGeneralResponse] = &Client::receiveGeneralInformations;
+    _commands[Network::Proxy<Network::TcpPacket>::InformationsGameListResponse] = &Client::receiveGameList;
     
     Graphic::Renderer::getInstance().init();
     Graphic::Renderer::getInstance().setScene(&_scene);
@@ -33,8 +35,6 @@ _commands(), _login(""), _userId(0) {
     
     // Create the ui
     _ui = new UserInterface(this);
-    
-    //loginCompleted("aurao", "127.0.0.1", "4242");
 
     mainLoop();
 }
@@ -89,16 +89,6 @@ void Client::loginCompleted(std::string const& login, std::string const& ipAdres
     _tcpSocket = new Network::TcpSocket(this);
 	_tcpSocket->connect(ipAdress, std::atoi(port.c_str()));
     _ui->presentMessage("Connecting...");
-    //if (_tcpSocket->connect(ipAdress, std::atoi(port.c_str()))) {
-    //    Log("Connected to server");
-    //    _proxy = new Network::Proxy<Network::TcpPacket>(_tcpSocket, this);
-    //    Network::TcpPacket* packet = new Network::TcpPacket();
-    //    packet->setCode(Network::Proxy<Network::TcpPacket>::AuthenficitationConnection);
-    //    *packet << login;
-    //    _proxy->sendPacket(packet);
-    //} else {
-    //    Log("Connection failed");
-    //}
 }
 
 void Client::packetReceived(Network::TcpPacket* packet) {
@@ -109,13 +99,13 @@ void Client::packetReceived(Network::TcpPacket* packet) {
     if (it != _commands.end())
         (this->*(it->second))(packet);
     else
-        Log("Received unknown command " << code);
+        Log("Received unknown command 0x" << std::setfill('0') << std::setw(8) << std::hex << code);
     delete packet;
 }
 
 
 void Client::packetSent(Network::TcpPacket const* packet) {
-    
+    Log("Packet sent");
 }
 
 void Client::connectionResponse(Network::TcpPacket* packet) {
@@ -137,6 +127,23 @@ void Client::connectionResponse(Network::TcpPacket* packet) {
         
         _ui->goToMenu("Game");
     }
+}
+
+void Client::receiveGeneralInformations(Network::TcpPacket* packet) {
+    std::string serverName;
+    *packet >> serverName;
+    _ui->setServerName(serverName);
+}
+
+void Client::receiveGameList(Network::TcpPacket* packet) {
+    uint32 nbGames = 0;
+    *packet >> nbGames;
+    std::list<Game*> games;
+    for (uint32 i = 0; i < nbGames; ++i) {
+        Game* game = Game::newGame(*packet);
+        games.push_front(game);
+    }
+    _ui->setGameList(games);    
 }
 
 void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* packet) {

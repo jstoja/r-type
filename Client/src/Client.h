@@ -49,7 +49,11 @@ class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Ne
     void packetReceived(Network::TcpPacket* packet);
     void packetSent(Network::TcpPacket const* packet);
     void connectionClosed(Network::Proxy<Network::TcpPacket>* packet);
+    
+    // Protocol commands
     void connectionResponse(Network::TcpPacket* packet);
+    void receiveGeneralInformations(Network::TcpPacket* packet);
+    void receiveGameList(Network::TcpPacket* packet);
     
     typedef void (Client::* commandPointer)(Network::TcpPacket*);
     

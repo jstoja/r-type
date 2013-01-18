@@ -21,6 +21,16 @@ Server::Server() {
   _tcpServer.setDelegate(this);
   if (_tcpServer.listen())
     Log("Server started on port : " << _tcpServer.getLocalPort());
+    
+    Game* game = new Game();
+    game->setName("Game one");
+    _games[game->getId()] = game;
+    game = new Game();
+    game->setName("Game two");
+    _games[game->getId()] = game;
+    game = new Game();
+    game->setName("Game three");
+    _games[game->getId()] = game;
 }
 
 Server::~Server() {

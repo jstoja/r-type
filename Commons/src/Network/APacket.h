@@ -21,6 +21,7 @@
 # include "ByteArray.h"
 # include "ASocket.h"
 # include "HostAddress.h"
+# include "Debug.h"
 
 namespace Network {
 

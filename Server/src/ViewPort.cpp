@@ -10,6 +10,7 @@
 #include "ViewPort.h"
 
 ViewPort::ViewPort(float32 speed) : _x(0), _width(16), _speed(speed) {
+    _attributesMutex.resize(eLastAttribute);
     for (uint32 i = 0; i < eLastAttribute; ++i) {
         _attributesMutex[i] = new Threading::Mutex();
     }

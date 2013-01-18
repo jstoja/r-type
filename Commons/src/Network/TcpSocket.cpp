@@ -130,7 +130,6 @@ void Network::TcpSocket::read(ByteArray& biteArray, bool all, uint32 start) {
     _bufferToReadMutex.unlock();
     _bufferMutex.unlock();
     if (_delegate)
-      //_delegate->dataReceived(this, biteArray, _buffer.getSize());
         _delegate->dataReceived(this, _buffer, biteArray.getSize());
     return;
   }
@@ -199,13 +198,13 @@ void Network::TcpSocket::canWrite() {
     if (_delegate)
       _delegate->dataSent(this, *_bufferToWrite, _writePosition);
     if (_writePosition == _bufferToWrite->getSize()) {
-      _bufferToWriteMutex.unlock();
-      if (_delegate)
-          _delegate->writeFinished(this, *_bufferToWrite);
-      _bufferToWriteMutex.lock();
       _writing = false;
       _bufferToWrite = NULL;
       _writePosition = 0;
+    _bufferToWriteMutex.unlock();
+        if (_delegate)
+            _delegate->writeFinished(this, *_bufferToWrite);
+    _bufferToWriteMutex.lock();
     }
   }
   _bufferToWriteMutex.unlock();

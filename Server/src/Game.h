@@ -39,10 +39,11 @@ class Game : public IGame, public Object//, public Network::IProxyDelegate<Netwo
 public:
     enum State {Stopped, Waiting, Started};
 
-    Game(Network::TcpPacket* packet);
+    Game(Network::TcpPacket* packet=NULL);
     virtual ~Game();
 
     std::string const&      getName(void) const;
+    void                    setName(std::string const& name);
     State					getState(void) const;
     uint32                  getNbPlayers(void) const;
     uint32                  getNbSlots(void) const;
