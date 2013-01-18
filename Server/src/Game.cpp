@@ -213,9 +213,8 @@ void     Game::sendInfo(Player* player) {
 
 void     Game::quit(Player* player) {
     _attributesMutex[ePlayers]->lock();
-    _players.erase(std::remove(_players.begin(), _players.end(), player), _players.end());
+    std::remove(_players.begin(), _players.end(), player);
     _attributesMutex[ePlayers]->unlock();
-
 }
 
 void                Game::addGraphicElement(IGraphicElement* element) {

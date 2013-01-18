@@ -16,6 +16,7 @@
 # include "Network/Proxy.hpp"
 # include "Network/TcpSocket.h"
 # include "Network/TcpPacket.h"
+# include "Game.h"
 
 class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Network::TcpPacket>, public Network::ISocketDelegate {
     public:
@@ -57,6 +58,7 @@ class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Ne
     void connectionResponse(Network::TcpPacket* packet);
     void receiveGeneralInformations(Network::TcpPacket* packet);
     void receiveGameList(Network::TcpPacket* packet);
+    void gameCreatedResponse(Network::TcpPacket* packet);
     
     typedef void (Client::* commandPointer)(Network::TcpPacket*);
     
@@ -72,6 +74,7 @@ class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Ne
 
     std::string                         _login;
     uint32                              _userId;
+    std::list<Game*>                    _games;
 };
 
 #endif

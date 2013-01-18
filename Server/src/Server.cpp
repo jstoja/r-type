@@ -47,6 +47,11 @@ void Server::newConnection(Network::ASocket* socket) {
 bool Server::createGame(Game* game, Player* player) {
     uint32 id = game->getId();
 
+    for (std::map<uint32, Game*>::iterator it = _games.begin(), end = _games.end();
+         it != end; ++it) {
+        if (it->second->getName() == game->getName())
+            return false;
+    }
     if (_games.find(id) == _games.end()) {
         _games[id] = game;
         game->join(player);
@@ -100,9 +105,11 @@ void  Server::sendGameInfo(uint32 gameId, Player* player) {
 }
 
 void Server::quitGame(Player* player) {
+    Log("Player " << player->getName() << " leaved");
     for(std::map<uint32, Game*>::iterator it = _games.begin(); it != _games.end(); it++) {
         it->second->quit(player);
     }
+    delete player;
 }
 
 void Server::gameStart(uint32 gameId) {

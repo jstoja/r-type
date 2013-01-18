@@ -76,6 +76,7 @@ void UserInterface::update(void) {
         } else {
             _currentMenu = NULL;
         }
+        _nextMenu = NULL;
     }
 	Widget::Manager::getInstance().update();
 }

@@ -121,6 +121,7 @@
 		269D620816A9C732006B328F /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D620216A9C732006B328F /* Player.cpp */; };
 		269D620916A9C732006B328F /* Server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D620316A9C732006B328F /* Server.cpp */; };
 		269D620C16A9C741006B328F /* GameList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D620A16A9C741006B328F /* GameList.cpp */; };
+		269D621816A9EA72006B328F /* Manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D621516A9EA72006B328F /* Manager.cpp */; };
 		26B59C4B1685E67200BC64D7 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B59C4A1685E67200BC64D7 /* icon@2x.png */; };
 		26B59C4E1685E6D500BC64D7 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B59C4D1685E6D500BC64D7 /* icon.png */; };
 		26BEB5E716A7EBEF00E6CC83 /* GameJoin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26BEB5E216A7EBEF00E6CC83 /* GameJoin.cpp */; };
@@ -350,6 +351,9 @@
 		269D620616A9C732006B328F /* Server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Server.h; path = ../../../Client/src/Server.h; sourceTree = "<group>"; };
 		269D620A16A9C741006B328F /* GameList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameList.cpp; sourceTree = "<group>"; };
 		269D620B16A9C741006B328F /* GameList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameList.h; sourceTree = "<group>"; };
+		269D621516A9EA72006B328F /* Manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Manager.cpp; sourceTree = "<group>"; };
+		269D621616A9EA72006B328F /* ITableDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITableDelegate.h; sourceTree = "<group>"; };
+		269D621716A9EA72006B328F /* Manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manager.h; sourceTree = "<group>"; };
 		26B59C4A1685E67200BC64D7 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../icon@2x.png"; sourceTree = "<group>"; };
 		26B59C4D1685E6D500BC64D7 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
 		26BEB5E216A7EBEF00E6CC83 /* GameJoin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameJoin.cpp; sourceTree = "<group>"; };
@@ -477,6 +481,9 @@
 		266F074D16A4884D004F5554 /* Widget */ = {
 			isa = PBXGroup;
 			children = (
+				269D621516A9EA72006B328F /* Manager.cpp */,
+				269D621616A9EA72006B328F /* ITableDelegate.h */,
+				269D621716A9EA72006B328F /* Manager.h */,
 				26BEB5E916A7EC0700E6CC83 /* ProgressBar.cpp */,
 				26BEB5EA16A7EC0700E6CC83 /* ProgressBar.h */,
 				266F074E16A4884D004F5554 /* Button.cpp */,
@@ -969,6 +976,7 @@
 				269D620816A9C732006B328F /* Player.cpp in Sources */,
 				269D620916A9C732006B328F /* Server.cpp in Sources */,
 				269D620C16A9C741006B328F /* GameList.cpp in Sources */,
+				269D621816A9EA72006B328F /* Manager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
