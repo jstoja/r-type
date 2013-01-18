@@ -91,6 +91,14 @@ void Client::loginCompleted(std::string const& login, std::string const& ipAdres
     _ui->presentMessage("Connecting...");
 }
 
+void Client::newGameCompleted(std::string const& name, uint32 nbPlayers) {
+    Network::TcpPacket* packet = new Network::TcpPacket();
+    packet->setCode(Network::TcpProxy::GameCreate);
+    *packet << name;
+    *packet << nbPlayers;
+    _proxy->sendPacket(packet);
+}
+
 void Client::packetReceived(Network::TcpPacket* packet) {
     uint32 code, size;
     
