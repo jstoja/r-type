@@ -17,7 +17,7 @@
 #include "Sprite.h"
 #include "GameObject.h"
 
-Game::Game(Network::TcpPacket* packet) : _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::WAITING) {
+Game::Game(Network::TcpPacket* packet) : _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waiting) {
 	_loadMap("Levels/Level_1/Level_1.map");
     for (uint32 i = 0; i < eLastAttribute; ++i) {
         _attributesMutex[i] = new Threading::Mutex();
@@ -70,7 +70,7 @@ void     Game::start(void) {
     
     //state
     _attributesMutex[eState]->lock();
-	_state = STARTED;
+	_state = Started;
     _attributesMutex[eState]->unlock();
     
     //clock

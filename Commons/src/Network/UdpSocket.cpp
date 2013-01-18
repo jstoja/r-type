@@ -55,7 +55,7 @@ void Network::UdpSocket::read(ByteArray& biteArray, bool all, uint32) {
   (void)all;
 }
 
-void Network::UdpSocket::write(ByteArray& biteArray, const HostAddress& hostAddress, uint16 port) {
+void Network::UdpSocket::write(ByteArray const& biteArray, const HostAddress& hostAddress, uint16 port) {
   Threading::MutexLocker(&(this->_writeMutex));  
 
   _writing = true;
@@ -102,7 +102,7 @@ void  Network::UdpSocket::canWrite() {
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = _writeAddress.toIPv4Address();
     addr.sin_port = htons(_writePort);
-    int ret = ::sendto(_fd, &(((char*)(*_writeBuffer))[_writePosition]), size, 0, (struct sockaddr*)&addr, sizeof(addr));
+    int ret = ::sendto(_fd, &(((char const*)(*_writeBuffer))[_writePosition]), size, 0, (struct sockaddr*)&addr, sizeof(addr));
     if (ret == -1)
       size = 0;
     else
