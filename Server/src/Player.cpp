@@ -101,7 +101,8 @@ void Player::createGame(Network::TcpPacket* packet) {
     Network::TcpPacket *tcpPacket = new Network::TcpPacket();
     tcpPacket->setCode(gameCreated ? Network::TcpProxy::GameCreatedSuccess
                        : Network::TcpProxy::GameCreatedBadName);
-    *tcpPacket << *game;
+    if (gameCreated)
+        *tcpPacket << *game;
     Network::Proxy<Network::TcpPacket>::ToSend toSend(tcpPacket, Network::HostAddress::AnyAddress, 0);
     _attributesMutex[eProxy]->lock();
     _proxy.sendPacket(toSend);
@@ -112,8 +113,9 @@ void Player::joinGame(Network::TcpPacket* packet) {
     uint32 id;
 
     *packet >> id;
-    _attributesMutex[eProxy]->lock();
-    int code = 0x01020000 + _server->joinGame(id, this);
+    _attributesMutex[eServer]->lock();
+    int code = _server->joinGame(id, this);
+    _attributesMutex[eServer]->unlock();
 
     Network::TcpPacket *tcpPacket = new Network::TcpPacket();
     tcpPacket->setCode(code);
@@ -124,8 +126,10 @@ void Player::joinGame(Network::TcpPacket* packet) {
     _proxy.sendPacket(toSend);
     _attributesMutex[eProxy]->unlock();
 
-    _server->sendGameInfo(id, this);
-    _server->sendResources(id, this);
+    if (code == Network::TcpProxy::GameJoinSuccess) {
+        _server->sendGameInfo(id, this);
+        _server->sendResources(id, this);
+    }
     _attributesMutex[eServer]->unlock();
 }
 
@@ -146,12 +150,13 @@ void Player::serverInfos(Network::TcpPacket* packet) {
 
 void Player::listGame(Network::TcpPacket* packet) {
     _attributesMutex[eServer]->lock();
-    std::map<uint32, Game*> games = _server->getGames();
+    std::map<uint32, Game*> const& games = _server->getGames();
     _attributesMutex[eServer]->unlock();
 
     std::list<Game*> newGamesList;
-    for (int i = 0; i < games.size(); ++i) {
-        newGamesList.push_back(games[i]);
+    for (std::map<uint32, Game*>::const_iterator it = games.begin(), end = games.end();
+         it != end; ++it) {
+        newGamesList.push_back(it->second);
     }
 
     Network::TcpPacket *tcpPacket = new Network::TcpPacket();

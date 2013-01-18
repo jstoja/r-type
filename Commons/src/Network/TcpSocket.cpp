@@ -185,29 +185,29 @@ void Network::TcpSocket::canRead() {
 }
 
 void Network::TcpSocket::canWrite() {
-  _bufferToWriteMutex.lock();
-  if (_writing && _bufferToWrite) {
-    uint32 size = (_bufferToWrite->getSize() - _writePosition < writeSize) ? _bufferToWrite->getSize() - _writePosition : writeSize;
-
-    int ret = ::send(_fd, &(((const char*)(*_bufferToWrite))[_writePosition]), size, 0);
-    if (ret == -1)
-      size = 0;
-    else
-      size = ret;
-    _writePosition += size;
-    if (_delegate)
-      _delegate->dataSent(this, *_bufferToWrite, _writePosition);
-    if (_writePosition == _bufferToWrite->getSize()) {
-      _writing = false;
-      _bufferToWrite = NULL;
-      _writePosition = 0;
-    _bufferToWriteMutex.unlock();
-        if (_delegate)
-            _delegate->writeFinished(this, *_bufferToWrite);
     _bufferToWriteMutex.lock();
+    if (_writing && _bufferToWrite) {
+        uint32 size = (_bufferToWrite->getSize() - _writePosition < writeSize) ? _bufferToWrite->getSize() - _writePosition : writeSize;
+
+        int ret = ::send(_fd, &(((const char*)(*_bufferToWrite))[_writePosition]), size, 0);
+        if (ret == -1)
+            size = 0;
+        else
+            size = ret;
+        _writePosition += size;
+        if (_delegate)
+            _delegate->dataSent(this, *_bufferToWrite, _writePosition);
+        if (_writePosition == _bufferToWrite->getSize()) {
+            _writing = false;
+            _bufferToWrite = NULL;
+            _writePosition = 0;
+            _bufferToWriteMutex.unlock();
+            if (_delegate)
+                _delegate->writeFinished(this, *_bufferToWrite);
+            _bufferToWriteMutex.lock();
+        }
     }
-  }
-  _bufferToWriteMutex.unlock();
+    _bufferToWriteMutex.unlock();
 }
 
 uint16 Network::TcpSocket::getLocalPort() const {

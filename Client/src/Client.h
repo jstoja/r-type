@@ -46,6 +46,7 @@ class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Ne
                                    std::string const& port);
     virtual void    newGameCompleted(std::string const& name,
                                      uint32 nbPlayers);
+    virtual void    gameSelected(uint32 gameIndex);
     
     
     // Socket delegate
@@ -62,6 +63,7 @@ class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Ne
     void receiveGeneralInformations(Network::TcpPacket* packet);
     void receiveGameList(Network::TcpPacket* packet);
     void gameCreatedResponse(Network::TcpPacket* packet);
+    void gameJoinResponse(Network::TcpPacket* packet);
     
     typedef void (Client::* commandPointer)(Network::TcpPacket*);
     

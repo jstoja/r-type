@@ -47,9 +47,10 @@ public:
     State					getState(void) const;
     uint32                  getNbPlayers(void) const;
     uint32                  getNbSlots(void) const;
+    void                    setNbSlots(uint32 slots);
 
     void	join(Player* player);
-    bool	canJoin() const;
+    bool	canJoin(Player* player=NULL) const;
     void	quit(Player* player);
     void    playerReady(Player* player);
     void	sendInfo(Player* player);

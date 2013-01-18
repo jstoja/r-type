@@ -25,7 +25,7 @@ public:
     
     virtual void    newGameCompleted(std::string const& name,
                                      uint32 nbPlayers) = 0;    
-    
+    virtual void    gameSelected(uint32 gameIndex) = 0;
 };
 
 #endif

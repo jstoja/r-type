@@ -13,7 +13,7 @@
 
 void Widget::Label::_init(void) {    
     _font = [[UIFont fontWithName:@"Transformers" size:142] retain];
-    update();
+    _isInit = true;
 }
 
 void Widget::Label::_destroy(void) {

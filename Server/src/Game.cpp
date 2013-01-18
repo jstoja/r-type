@@ -66,6 +66,11 @@ uint32                 Game::getNbSlots(void) const {
     return _nbSlots;
 }
 
+void                    Game::setNbSlots(uint32 slots) {
+    Threading::MutexLocker locker(_attributesMutex[eNbSlots]);
+    _nbSlots = slots;
+}
+
 void     Game::start(void) {
     _attributesMutex[ePlayers]->lock();
     for (int i=0; i < _players.size(); i++) {
@@ -119,10 +124,11 @@ void	Game::update() {
     _attributesMutex[eUpdatePool]->unlock();
 }
 
-bool     Game::canJoin(void) const {
+bool     Game::canJoin(Player* player) const {
     Threading::MutexLocker locker(_attributesMutex[ePlayers]);
     Threading::MutexLocker locker2(_attributesMutex[eNbSlots]);
-    return _nbSlots > _players.size();
+    return ((!player && _nbSlots > _players.size())
+            || std::find(_players.begin(), _players.end(), player) == _players.end());
 }
 
 void     Game::join(Player* player) {
@@ -213,7 +219,7 @@ void     Game::sendInfo(Player* player) {
 
 void     Game::quit(Player* player) {
     _attributesMutex[ePlayers]->lock();
-    std::remove(_players.begin(), _players.end(), player);
+    _players.erase(std::remove(_players.begin(), _players.end(), player), _players.end());
     _attributesMutex[ePlayers]->unlock();
 }
 
