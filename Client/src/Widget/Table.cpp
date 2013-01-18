@@ -304,3 +304,10 @@ void	Widget::Table::setVisible(bool visible) {
 		_columnNames[i]->setVisible(visible);
 	Widget::setVisible(visible);
 }
+
+Vec2 const&    Widget::Table::getSize() {
+	float32 width = 0, height = _headerHeight + _lineHeight * _lineByPages;
+	for (std::vector<float32>::iterator it = _columnSizes.begin(); it != _columnSizes.end(); ++it)
+		width += *it;
+	return (Vec2(width, height));
+}

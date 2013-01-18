@@ -77,6 +77,7 @@ namespace Widget {
 
         virtual void    setVisible(bool visible);
         virtual void    update();
+        virtual Vec2 const&    getSize();
 		virtual void processEvent(Event::Event const& event);
     private:
 		uint32	_lineByPosition(Vec2 const& pos) const;
