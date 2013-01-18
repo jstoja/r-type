@@ -38,6 +38,13 @@ void Graphic::Scene::addScenery(Scenery* scenery) {
     _sceneries.push_back(scenery);
 }
 
+void Graphic::Scene::removeScenery(Scenery* scenery) {
+    Threading::MutexLocker lock(_mutex);
+    std::vector<Scenery*>::iterator it = std::find(_sceneries.begin(), _sceneries.end(),
+                                                   scenery);
+    _sceneries.erase(it);
+}
+
 void Graphic::Scene::addElement(Element* element) {
     Threading::MutexLocker lock(_mutex);
     _elements.push_back(element);

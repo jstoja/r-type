@@ -15,7 +15,7 @@
 const float32 UserInterface::_maxViewportX = 1000000000.0;
 
 UserInterface::UserInterface(IUserInterfaceDelegate* delegate) :
-_delegate(delegate), _time(), _sceneries(), _currentMenu(NULL),
+_delegate(delegate), _time(), _eventListener(NULL), _sceneries(), _currentMenu(NULL),
 _messageLabel(NULL), _mutex(new Threading::Mutex()) {
     // Create the sceneries used in all the user interface
     _createSceneries();
@@ -49,11 +49,20 @@ _messageLabel(NULL), _mutex(new Threading::Mutex()) {
 		it->second->setVisible(false);
     _currentMenu = _menus["Welcome"];
 	_currentMenu->setVisible(true);
+    
+    _eventListener = new Event::Listener(Event::Close, this);
+    Event::Manager::getInstance().addEventListener(_eventListener);
 }
 
 UserInterface::~UserInterface(void) {
 	for (std::map<std::string, Menu::Menu*>::iterator it = _menus.begin(); it != _menus.end(); ++it)
 		delete it->second;
+	for (std::vector<Graphic::Scenery*>::iterator it = _sceneries.begin(); it != _sceneries.end(); ++it) {
+        _delegate->getScene()->removeScenery(*it);
+		delete *it;
+    }
+    
+    delete _eventListener;
 }
 
 void UserInterface::update(void) {
@@ -97,6 +106,13 @@ void UserInterface::hideMessage(void) {
 Menu::Menu* UserInterface::getCurrentMenu(void) const {
     Threading::MutexLocker lock(_mutex);
     return _currentMenu;
+}
+
+void UserInterface::processEvent(Event::Event const &event) {
+    Threading::MutexLocker lock(_mutex);
+    if (event.type & Event::Close) {
+        exit(EXIT_SUCCESS);
+    }
 }
 
 void UserInterface::welcomeCompleted(void) {
