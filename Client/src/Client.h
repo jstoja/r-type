@@ -48,14 +48,21 @@ class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Ne
     void connectionClosed(Network::Proxy<Network::TcpPacket>* packet);
 	void connectionFinished(Network::Proxy<Network::TcpPacket>* packet, bool success);
     
+    void connectionResponse(Network::TcpPacket* packet);
+    
+    typedef void (Client::* commandPointer)(Network::TcpPacket*);
+    
     private:
     Graphic::Scene  _scene;
     uint32          _framerateLimit;
     Clock           _time;
-    UserInterface*   _ui;
+    UserInterface*  _ui;
     
     Network::TcpSocket*                 _tcpSocket;
     Network::Proxy<Network::TcpPacket>* _proxy;
+    std::map<int, commandPointer>       _commands;
+    
+    uint32                              _userId;
 };
 
 #endif

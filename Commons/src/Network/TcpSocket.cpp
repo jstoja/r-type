@@ -41,6 +41,7 @@ Network::TcpSocket::TcpSocket(int fd) : _hostAddress(HostAddress::AnyAddress), _
 }
 
 Network::TcpSocket::~TcpSocket() {
+    NetworkManager::getInstance().unregisterSocket(this);    
   if (_fd != -1)
     ::closesocket(_fd);
 }

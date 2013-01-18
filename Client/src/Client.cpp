@@ -16,7 +16,10 @@
 #include "Graphic/Image.h"
 
 Client::Client(void) :
-_scene(), _framerateLimit(30), _time(), _ui(), _tcpSocket(NULL), _proxy(NULL) {
+_scene(), _framerateLimit(30), _time(), _ui(), _tcpSocket(NULL), _proxy(NULL),
+_commands(), _userId(0) {
+    
+    _commands[Network::Proxy<Network::TcpPacket>::AuthenficitationConnectionSuccess] = &Client::connectionResponse;
     
     Graphic::Renderer::getInstance().init();
     Graphic::Renderer::getInstance().setScene(&_scene);
@@ -28,10 +31,10 @@ _scene(), _framerateLimit(30), _time(), _ui(), _tcpSocket(NULL), _proxy(NULL) {
     viewport.x = viewport.y * (screen.x / screen.y);
     _scene.setViewport(viewport);
     
-    loginCompleted("aurao", "127.0.0.1", "4242");
-    
     // Create the ui
     _ui = new UserInterface(this);
+    
+    //loginCompleted("aurao", "127.0.0.1", "4242");
 
     mainLoop();
 }
@@ -81,6 +84,7 @@ void Client::loginCompleted(std::string const& login, std::string const& ipAdres
                             std::string const& port) {
     delete _tcpSocket;
     delete _proxy;
+    _proxy = NULL;
     _tcpSocket = new Network::TcpSocket();
 	_tcpSocket->connect(ipAdress, std::atoi(port.c_str()));
     //if (_tcpSocket->connect(ipAdress, std::atoi(port.c_str()))) {
@@ -96,7 +100,27 @@ void Client::loginCompleted(std::string const& login, std::string const& ipAdres
 }
 
 void Client::packetReceived(Network::TcpPacket* packet) {
-    Log("Packet received");
+    uint32 code, size;
+    
+    *packet >> code >> size;
+    std::map<int, commandPointer>::iterator it = _commands.find(code & 0xFFFFFF00);
+    if (it != _commands.end())
+        (this->*(it->second))(packet);
+    else
+        Log("Received unknown command " << code);
+    delete packet;
+}
+
+void Client::connectionResponse(Network::TcpPacket* packet) {
+    if ((packet->getCode() & 0xFF) == 1) {
+        Log("Connection error");
+    } else {
+        uint32 id;
+        *packet >> id;
+        
+        _userId = id;
+        _ui->goToMenu("Game");
+    }
 }
 
 void Client::packetSent(Network::TcpPacket const* packet) {

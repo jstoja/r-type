@@ -57,7 +57,7 @@ void Player::connection(Network::TcpPacket* packet) {
     std::string login;
 
     *packet >> login;
-    Log("Connection with login " << login);
+    Log("Connection with login " << login << ", id: " << getId());
 
     Network::TcpPacket *tcpPacket = new Network::TcpPacket();
     tcpPacket->setCode(Network::Proxy<Network::TcpPacket>::AuthenficitationConnectionSuccess);
