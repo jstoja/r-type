@@ -1,9 +1,9 @@
 //
 // TcpServer.cpp for r-type in /home/michar_l//r-type/Commons/src/Network
-// 
+//
 // Made by loick michard
 // Login   <michar_l@epitech.net>
-// 
+//
 // Started on  Tue Dec 18 15:35:02 2012 loick michard
 //
 
