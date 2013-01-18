@@ -35,7 +35,7 @@ void	Widget::Manager::update() {
 		if ((*it)->isVisible() && (*it)->needUpdate()) {
 			(*it)->setNeedUpdate(false);
 			(*it)->update();
-			++it;
 		}
+		++it;
 	}
 }
