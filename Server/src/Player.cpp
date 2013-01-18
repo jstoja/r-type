@@ -10,18 +10,20 @@
 #include <iostream>
 #include "Game.h"
 #include "Player.h"
+#include "Debug.h"
 
 Player::Player(Network::ASocket* socket, IServerDelegate* server) : _isReady(false), _socket(socket), _proxy(socket, this), _server(server) {
     for (uint32 i = 0; i < eLastAttribute; ++i) {
         _attributesMutex.push_back(new Threading::Mutex());
     }
-  std::cout << "New Player" << std::endl;
+    
+    Log("New Player");
 
-  _commands[0x00000000] = &Player::connection;
-  _commands[0x00010000] = &Player::listGame;
-  _commands[0x00020000] = &Player::joinGame;
-  _commands[0x00020200] = &Player::createGame;
-  _commands[0x00020300] = &Player::readyToStart;
+    _commands[Network::Proxy<Network::TcpPacket>::AuthenficitationConnection] = &Player::connection;
+    _commands[Network::Proxy<Network::TcpPacket>::InformationsGameList] = &Player::listGame;
+    _commands[Network::Proxy<Network::TcpPacket>::GameJoin] = &Player::joinGame;
+    _commands[Network::Proxy<Network::TcpPacket>::GameCreate] = &Player::createGame;
+    _commands[Network::Proxy<Network::TcpPacket>::GameReady] = &Player::readyToStart;
 }
 
 Player::~Player() {

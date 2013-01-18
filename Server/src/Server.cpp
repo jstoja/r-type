@@ -12,6 +12,7 @@
 
 #include "Server.h"
 #include "GameObject.h"
+#include "Debug.h"
 
 std::string	Server::_pluginDirectory = "Plugins";
 
@@ -19,7 +20,7 @@ Server::Server() {
 	Application::getInstance().setRelativeResourcesPath("Resources");
   _tcpServer.setDelegate(this);
   if (_tcpServer.listen())
-    std::cout << "Server started on port : " << _tcpServer.getLocalPort() << std::endl;
+    Log("Server started on port : " << _tcpServer.getLocalPort());
 }
 
 Server::~Server() {

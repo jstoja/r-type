@@ -19,7 +19,7 @@
 # ifdef DEBUG_ENABLED
 #  define Log(x) (*Debug::logStream << x << std::endl)
 # else
-#  define Log(x)
+#  define Log(x) {}
 # endif
 
 class COMMON_EXPORT_IMPORT Debug {

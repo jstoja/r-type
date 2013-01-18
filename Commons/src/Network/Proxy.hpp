@@ -16,14 +16,33 @@
 # include "IProxyDelegate.h"
 # include "Threading/Mutex.h"
 # include "HostAddress.h"
+# include "Debug.h"
 
 namespace Network {
 
     template <typename T>
     class COMMON_EXPORT_IMPORT_REMOVED Proxy : public ISocketDelegate {
     public:
-        enum UdpActions {GRAPHIC_ELEMENTS, PHYSIC_ELEMENTS, PLAY_SOUND, STOP_SOUND,
-            TIME, UPDATE_LIFE, UPDATE_SCORE, GAME_FINISHED};
+        
+        enum TcpActions {
+            AuthenficitationConnection  = 0x00000000,
+            InformationsGameList        = 0x00010000,
+            GameJoin                    = 0x00020000,
+            GameQuit                    = 0x00020100,
+            GameCreate                  = 0x00020200,
+            GameReady                   = 0x00020300
+        };
+        
+        enum UdpActions {
+            GRAPHIC_ELEMENTS,
+            PHYSIC_ELEMENTS,
+            PLAY_SOUND,
+            STOP_SOUND,
+            TIME,
+            UPDATE_LIFE,
+            UPDATE_SCORE,
+            GAME_FINISHED
+        };
 
         struct		ToSend {
             ToSend(T const* packet, const HostAddress& hostAddress, uint16 port)
@@ -81,8 +100,8 @@ namespace Network {
                 _packet->read(_socket);
         }
 
-        void dataReceived(ASocket*, ByteArray&, uint32) {
-
+        void dataReceived(ASocket* socket, ByteArray& data, uint32 totalSize) {
+            Log("Received " << data.getSize());
         }
 
         void dataSent(ASocket*, ByteArray const&, uint32) {
