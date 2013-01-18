@@ -35,10 +35,10 @@ class GameObject;
 class Game : public IGame, public Object
 {
 public:
-    enum State {STOPPED, WAITING, STARTED};
+    enum State {Stopped, Waiting, Started};
 
     Game(Network::TcpPacket* packet);
-    ~Game();
+    virtual ~Game();
 
     std::string const&      getName(void) const;
     State					getState(void) const;

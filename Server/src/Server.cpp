@@ -106,7 +106,7 @@ int	Server::run() {
 	while (1) {
 		clock.reset();
 		for (std::map<uint32, Game*>::iterator it = _games.begin(); it != _games.end(); ++it)
-			if (it->second->getState() == Game::STARTED)
+			if (it->second->getState() == Game::Started)
 				it->second->update();
 		uint32 sleeping = (1000 / _sendFramerate) - clock.getEllapsedTime();
 		std::cout << "FPS: " << clock.getEllapsedTime() << " " << sleeping;

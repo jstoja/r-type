@@ -28,7 +28,7 @@ _scene(), _framerateLimit(30), _time(), _ui(), _tcpSocket(NULL), _proxy(NULL) {
     viewport.x = viewport.y * (screen.x / screen.y);
     _scene.setViewport(viewport);
     
-    loginCompleted("aurao", "127.0.0.1", "4242");
+    loginCompleted("aurao", "10.17.73.64", "4242");
     
     // Create the ui
     _ui = new UserInterface(this);
@@ -82,12 +82,12 @@ void Client::loginCompleted(std::string const& login, std::string const& ipAdres
     delete _tcpSocket;
     delete _proxy;
     _tcpSocket = new Network::TcpSocket();
-    if (_tcpSocket->connect(std::string("127.0.0.1"), std::atoi(port.c_str()))) {
+    if (_tcpSocket->connect(ipAdress, std::atoi(port.c_str()))) {
         Log("Connected to server");
         _proxy = new Network::Proxy<Network::TcpPacket>(_tcpSocket, this);
         Network::TcpPacket* packet = new Network::TcpPacket();
         *packet << login;
-        _proxy->sendPacket(packet);
+        //_proxy->sendPacket(packet);
     } else {
         Log("Connection failed");
     }
