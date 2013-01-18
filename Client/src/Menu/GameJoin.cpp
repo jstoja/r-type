@@ -89,13 +89,9 @@ void	Menu::GameJoin::_update() {
 }
 
 void Menu::GameJoin::setServerName(std::string const& serverName) {
-    std::string upperName = serverName;
-    std::transform(serverName.begin(), serverName.end(), upperName.begin(), ::toupper);
-	_serverNameLabel->setText(upperName);
+	_serverNameLabel->setText(serverName);
 }
 
 void Menu::GameJoin::setGameName(std::string const& gameName) {
-    std::string upperName = gameName;
-    std::transform(gameName.begin(), gameName.end(), upperName.begin(), ::toupper);
-	_serverNameLabel->setText(upperName);
+	_serverNameLabel->setText(gameName);
 }

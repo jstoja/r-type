@@ -125,6 +125,7 @@ void Client::connectionResponse(Network::TcpPacket* packet) {
         packet->setCode(Network::TcpProxy::InformationsGameList);
         _proxy->sendPacket(packet);
         
+        _ui->hideMessage();
         _ui->goToMenu("GameList");
     }
 }
