@@ -12,6 +12,7 @@
 #include "Graphic/Renderer.h"
 #include "Event/Manager.h"
 #include "Application.h"
+#include "ObjectManager.h"
 
 #include "Graphic/Image.h"
 
@@ -118,6 +119,10 @@ void Client::packetSent(Network::TcpPacket const* packet) {
     Log("Packet sent");
 }
 
+void Client::packetInProgress(uint32 code, float32 progress) {
+	Log(code << progress);
+}
+	
 void Client::connectionResponse(Network::TcpPacket* packet) {
     if ((packet->getCode() & 0xFF) == 1) {
         Log("Connection error");
@@ -194,3 +199,43 @@ void Client::connectionFinished(Network::ASocket* socket, bool success) {
         Log("Connection failed");
     }
 }
+
+Resource*		Client::createResource(Network::TcpPacket& packet) {
+	uint32		id;
+	Resource	*res;
+	ByteArray	data;
+
+	packet >> id >> data;
+	res = new Resource(id);
+	res->setData(data);
+	return (res);
+}
+
+Graphic::Texture*		Client::createTexture(Network::TcpPacket& packet) {
+	uint32		id, resourceId;
+
+	packet >> id >> resourceId;
+	Resource *resource = dynamic_cast<Resource*>(ObjectManager::getInstance().getObject(resourceId));
+	if (resource)
+		return (new Graphic::Texture(id, resource));
+	return (NULL);
+}
+
+Graphic::Sprite*		Client::createSprite(Network::TcpPacket& packet) {
+	uint32		id, textureId;
+
+	packet >> id >> textureId;
+	Graphic::Texture *texture = dynamic_cast<Graphic::Texture*>(ObjectManager::getInstance().getObject(textureId));
+	if (texture) {
+		std::list<Graphic::Sprite::Frame> frames;
+
+		packet >> frames;
+		Graphic::Sprite* res = new Graphic::Sprite(id);
+		res->setTexture(texture);
+		for (std::list<Graphic::Sprite::Frame>::iterator it = frames.begin(); it != frames.end(); ++it)
+			res->addFrame(*it);
+		return (res);
+	}
+	return (NULL);
+}
+

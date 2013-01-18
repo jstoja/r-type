@@ -15,6 +15,7 @@
 # include "Network/Proxy.hpp"
 # include "Network/TcpSocket.h"
 # include "Network/TcpPacket.h"
+# include "Resource.h"
 # include "Game.h"
 # include "Threading/Mutex.h"
 # include "Threading/MutexLocker.h"
@@ -29,6 +30,7 @@ public:
     void	packetSent(Network::TcpPacket const*);
     void	connectionClosed(Network::Proxy<Network::TcpPacket>*);
     void    sendPacket(Network::Proxy<Network::TcpPacket>::ToSend const& toSend);
+	void    packetInProgress(uint32 code, float32 progress) {}
     void    playerList(Network::TcpPacket* packet);
 
     // Protocol functions

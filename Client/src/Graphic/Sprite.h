@@ -26,6 +26,7 @@ namespace Graphic {
             
             //! Create a Frame with ???
             Frame(Vec2 const& p1, Vec2 const& p2);
+            Frame();
             
             Vec2    p1;
             Vec2    p2;

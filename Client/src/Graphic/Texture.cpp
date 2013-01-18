@@ -22,13 +22,17 @@ Graphic::Texture::Texture() : Object(false), _glID(0), _size(0) {
 }
 
 
-Graphic::Texture::Texture(uint32 id) : Object(id), _glID(0), _size(0) {
+Graphic::Texture::Texture(uint32 id, Resource* resource) : Object(id), _glID(0), _size(0) {
     glGenTextures(1, &_glID);
     
     // Configure the texture
     bind();
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	Graphic::Image image;
+	image.loadFromData(resource->getData());
+    setData(image.getWidth(), image.getHeight(), image.getPixelsPtr());
 }
 
 Graphic::Texture::Texture(const std::string& resourceImage, bool generateId)

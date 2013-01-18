@@ -16,6 +16,8 @@
 # include "Network/Proxy.hpp"
 # include "Network/TcpSocket.h"
 # include "Network/TcpPacket.h"
+# include "Resource.h"
+# include "Graphic/Texture.h"
 # include "Game.h"
 
 class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Network::TcpPacket>, public Network::ISocketDelegate {
@@ -53,7 +55,8 @@ class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Ne
     void packetReceived(Network::TcpPacket* packet);
     void packetSent(Network::TcpPacket const* packet);
     void connectionClosed(Network::Proxy<Network::TcpPacket>* packet);
-    
+	void packetInProgress(uint32 code, float32 progress);
+
     // Protocol commands
     void connectionResponse(Network::TcpPacket* packet);
     void receiveGeneralInformations(Network::TcpPacket* packet);
@@ -62,7 +65,11 @@ class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Ne
     
     typedef void (Client::* commandPointer)(Network::TcpPacket*);
     
-    private:
+	static Resource*	createResource(Network::TcpPacket& packet);
+	static Graphic::Texture* createTexture(Network::TcpPacket& packet);
+	static Graphic::Sprite*	createSprite(Network::TcpPacket& packet);
+
+private:
     Graphic::Scene  _scene;
     uint32          _framerateLimit;
     Clock           _time;

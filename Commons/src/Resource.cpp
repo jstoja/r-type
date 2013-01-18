@@ -19,6 +19,10 @@ Resource::Resource() : Object(true) {
     _name = new std::string();
 }
 
+Resource::Resource(uint32 id) : Object(id) {
+    _name = new std::string();
+}
+
 Resource::Resource(std::string const& name, bool generateId) : Object(generateId) {
     _name = new std::string(name);
     _readFile();

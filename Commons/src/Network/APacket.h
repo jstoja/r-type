@@ -107,6 +107,7 @@ namespace Network {
 		  *this >> element;
 		  elements.push_front(element);
 		}
+		return *this;
 	}
 
 	template<class T>

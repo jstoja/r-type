@@ -18,7 +18,9 @@
 # include "OpenGL.h"
 # include "Types.h"
 # include "Object.h"
+# include "Resource.h"
 # include "Vec2.h"
+
 # include "Image.h"
 
 namespace Graphic {
@@ -31,7 +33,7 @@ namespace Graphic {
         Texture();
         
         //! Create a new texture with a given id
-        Texture(uint32 id);
+        Texture(uint32 id, Resource* resource);
         
         //! Create a new texture from a resource image
         Texture(const std::string& resourceImage, bool generateId = false);

@@ -114,7 +114,11 @@ namespace Network {
         }
 
         void dataReceived(ASocket* socket, ByteArray& data, uint32 totalSize) {
+			uint32 code;
+			bool ok = T::getHeaderInfos(data, code);
 
+			if (ok)
+				_delegate->packetInProgress(code, (float32)data.getSize() / totalSize);
         }
 
         void dataSent(ASocket*, ByteArray const&, uint32) {

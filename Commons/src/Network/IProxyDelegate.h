@@ -24,6 +24,7 @@ namespace Network {
     virtual void packetReceived(T*) = 0;
     virtual void packetSent(T const*) = 0;
     virtual void connectionClosed(Network::Proxy<T>*) = 0;
+	virtual void packetInProgress(uint32 code, float32 progress) = 0;
   };
 
 }

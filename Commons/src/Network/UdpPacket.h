@@ -11,6 +11,7 @@
 # define _UDP_PACKET_H_
 
 # include "APacket.h"
+# include "ByteArray.h"
 
 namespace Network {
 
@@ -25,6 +26,8 @@ namespace Network {
 
     void    setCode(uint32 code);
     uint32  getCode();
+
+	static bool	getHeaderInfos(ByteArray const& data, uint32& code);
   };
 
 }

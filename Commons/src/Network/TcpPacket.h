@@ -27,6 +27,8 @@ namespace Network {
     void	setCode(uint32 code);
     uint32     	getCode();      
 
+	static bool	getHeaderInfos(ByteArray const& data, uint32& code);
+
   private:
     enum State {
       Empty,

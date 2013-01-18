@@ -15,6 +15,10 @@ Graphic::Sprite::Frame::Frame(Vec2 const& p1, Vec2 const& p2)
 : p1(p1), p2(p2) {
 }
 
+Graphic::Sprite::Frame::Frame()
+: p1(), p2() {
+}
+
 Graphic::Sprite::Sprite() :
 Object(false), _texture(NULL), _frames(),
 _textureCoords(NULL), _needRebuildTextureCoords(true) {
@@ -24,7 +28,6 @@ Graphic::Sprite::Sprite(uint32 id) :
 Object(id), _texture(NULL), _frames(),
 _textureCoords(NULL), _needRebuildTextureCoords(true) {
 }
-
 
 Graphic::Sprite::~Sprite() {
 }

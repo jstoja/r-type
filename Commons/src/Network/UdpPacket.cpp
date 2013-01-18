@@ -45,3 +45,8 @@ uint32 Network::UdpPacket::getCode() {
     return *((int*)(&((char*)_data)[0]));
   return 0;
 }
+
+bool	Network::UdpPacket::getHeaderInfos(ByteArray const& data, uint32& code) {
+	code = 0;
+	return (false);
+}

@@ -27,6 +27,8 @@ class COMMON_EXPORT_IMPORT Resource : public Object {
         //! Copy constructor
         Resource(Resource const&);
 
+		Resource(uint32 id);
+
         //! Destructor
         ~Resource();
     

@@ -65,3 +65,11 @@ void Network::TcpPacket::updateData() {
     if (_data.getSize() >= 8)
         *((int*)(&((char*)_data)[4])) = _size;
 }
+
+bool	Network::TcpPacket::getHeaderInfos(ByteArray const& data, uint32& code) {
+	if (data.getSize() >= 4) {
+		code = *((int*)(&((char const*)data)[0]));
+		return true;
+	}
+	return false;
+}
