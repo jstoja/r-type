@@ -21,6 +21,7 @@ namespace Network {
 
     void	read(ASocket*);
     void	update();
+    void    updateData();
     bool        isComplete() const;
 
     void	setCode(uint32 code);

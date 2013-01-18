@@ -37,7 +37,6 @@ void Player::packetReceived(Network::TcpPacket* packet) {
     uint32 code, size;
 
     *packet >> code >> size;
-    std::cout << code << " -> Size : " << size << std::endl;
     _attributesMutex[eCommands]->lock();
     std::map<int, commandPointer>::iterator it = _commands.find(code & 0xFFFFFF00);
     if (it != _commands.end())
@@ -58,16 +57,15 @@ void Player::connection(Network::TcpPacket* packet) {
     std::string login;
 
     *packet >> login;
-    std::cout << "Connection with login " << login << std::endl;
+    Log("Connection with login " << login);
 
     Network::TcpPacket *tcpPacket = new Network::TcpPacket();
-    tcpPacket->setCode(0x01000000);
-    *tcpPacket << (uint32)42;
+    tcpPacket->setCode(Network::Proxy<Network::TcpPacket>::AuthenficitationConnectionSuccess);
+    *tcpPacket << (uint32)getId();
     Network::Proxy<Network::TcpPacket>::ToSend toSend(tcpPacket, Network::HostAddress::AnyAddress, 0);
     _attributesMutex[eProxy]->lock();
     _proxy.sendPacket(toSend);
     _attributesMutex[eProxy]->unlock();
-    delete packet;
 }
 
 void  Player::sendPacket(Network::Proxy<Network::TcpPacket>::ToSend const& toSend) {
@@ -94,7 +92,6 @@ void Player::createGame(Network::TcpPacket* packet) {
     _attributesMutex[eProxy]->lock();
     _proxy.sendPacket(toSend);
     _attributesMutex[eProxy]->unlock();
-    delete packet;
 }
 
 void Player::joinGame(Network::TcpPacket* packet) {
@@ -115,7 +112,6 @@ void Player::joinGame(Network::TcpPacket* packet) {
 
     _server->sendResources(id, this);
     _attributesMutex[eServer]->unlock();
-    delete packet;
 }
 
 void Player::listGame(Network::TcpPacket* packet) {
@@ -136,7 +132,6 @@ void Player::listGame(Network::TcpPacket* packet) {
     _attributesMutex[eProxy]->lock();
     _proxy.sendPacket(toSend);
     _attributesMutex[eProxy]->unlock();
-    delete packet;
 }
 
 void Player::readyToStart(Network::TcpPacket* packet) {

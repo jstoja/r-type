@@ -9,8 +9,9 @@
 
 #include <iostream>
 #include "TcpPacket.h"
+#include "Debug.h"
 
-Network::TcpPacket::TcpPacket() : _state(Empty) {
+Network::TcpPacket::TcpPacket() : APacket(), _state(Empty) {
 
 }
 
@@ -49,12 +50,18 @@ bool Network::TcpPacket::isComplete() const {
 void Network::TcpPacket::setCode(uint32 code) {
   if (_data.getSize() < 8)
     _data.resize(8);
-  *((int*)(&((char*)_data)[0])) = code;
-  *((int*)(&((char*)_data)[4])) = _size;
+
+//  *((int*)(&((char*)_data)[0])) = code;
+//  *((int*)(&((char*)_data)[4])) = _size;
 }
 
 uint32 Network::TcpPacket::getCode() {
   if (_data.getSize() >= 4)
     return *((int*)(&((char*)_data)[0]));
   return 0;
+}
+
+void Network::TcpPacket::updateData() {
+    if (_data.getSize() >= 8)
+        *((int*)(&((char*)_data)[4])) = _size;
 }

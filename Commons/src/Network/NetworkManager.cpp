@@ -96,9 +96,11 @@ void Network::NetworkManager::operator()() {
 	    _socketsMutex.lock();
 	  }
         // Crappy patch, if the socket is deleted during canRead()
-        if (_sockets->size() != size) {
+        if (_sockets->size() < size) {
             size = _sockets->size();
             --i;
+        } else if (_sockets->size() < size) {
+            size = _sockets->size();
         } else if (_sockets->at(i)->isWriting() && FD_ISSET(_sockets->at(i)->getId(), &writeSockets)) {
 	    _socketsMutex.unlock();
 	    _sockets->at(i)->canWrite();

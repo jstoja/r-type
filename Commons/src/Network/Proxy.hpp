@@ -25,12 +25,17 @@ namespace Network {
     public:
         
         enum TcpActions {
+            // Client - Server
             AuthenficitationConnection  = 0x00000000,
             InformationsGameList        = 0x00010000,
             GameJoin                    = 0x00020000,
             GameQuit                    = 0x00020100,
             GameCreate                  = 0x00020200,
-            GameReady                   = 0x00020300
+            GameReady                   = 0x00020300,
+            
+            // Server - client
+            AuthenficitationConnectionSuccess           = 0x01000000,
+            AuthenficitationConnectionIncorrectLogin    = 0x01000001
         };
         
         enum UdpActions {
@@ -101,7 +106,7 @@ namespace Network {
         }
 
         void dataReceived(ASocket* socket, ByteArray& data, uint32 totalSize) {
-            Log("Received " << data.getSize());
+
         }
 
         void dataSent(ASocket*, ByteArray const&, uint32) {

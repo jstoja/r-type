@@ -8,6 +8,7 @@
 //
 
 #include "APacket.h"
+#include "Debug.h"
 
 Network::APacket::APacket() : _data(0), _size(0), _curser(0) {
 
@@ -57,29 +58,38 @@ Network::APacket& Network::APacket::operator<<(char character) {
 Network::APacket& Network::APacket::operator<<(const std::string& str) {
 	*this << (uint32)str.size();
 	write(str.c_str(), str.size());
+    this->updateData();
 	return *this;
 }
 
 Network::APacket& Network::APacket::operator<<(Vec2 const& pos) {
-	return *this << pos.x << pos.y;
+    *this << pos.x << pos.y;
+    this->updateData();
+	return *this;
 }
 
 Network::APacket& Network::APacket::operator<<(Vec3 const& pos) {
-	return *this << pos.x << pos.y << pos.z;
+    *this << pos.x << pos.y << pos.z;
+    this->updateData();
+	return *this;
 }
 
 Network::APacket& Network::APacket::operator<<(Rect2 const& pos) {
-	return *this << pos.pos << pos.size;
+    *this << pos.pos << pos.size;
+    this->updateData();
+	return *this;
 }
 
 Network::APacket& Network::APacket::operator<<(Resource const& resource) {
 	*this << resource.getId() << resource.getData();
+    this->updateData();
 	return *this;
 }
 
 Network::APacket& Network::APacket::operator<<(ByteArray const& data) {
 	*this << data.getSize();
 	write(data.getData(), data.getSize());
+    this->updateData();
 	return *this;
 }
 
@@ -112,7 +122,6 @@ Network::APacket& Network::APacket::operator>>(std::string& str) {
   uint32 size;
 
   *this >> size;
-  std::cout << size << std::endl;
   std::string newStr(&_data[_curser], size);
   _curser += str.size();
   str = newStr;
@@ -156,11 +165,15 @@ void	Network::APacket::write(void const* data, uint32 size) {
 	_size += size;
 	_data.resize(_data.getSize() + size);
 	for (uint32 i = 0; i < size; ++i)
-		((char*)_data)[_data.getSize() - i - 1] = ((char const*)data)[i];
+		((char*)_data)[_data.getSize() - size + i] = ((char const*)data)[i];
 }
 
 void	Network::APacket::read(void* data, uint32 size) {
 	for (uint32 i = 0; i < size; ++i)
 		((char*)data)[i] = ((char*)_data)[_curser + i];
 	_curser += size;
+}
+
+void    Network::APacket::updateData() {
+    
 }

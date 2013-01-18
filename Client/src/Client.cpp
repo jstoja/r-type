@@ -103,5 +103,5 @@ void Client::packetSent(Network::TcpPacket const* packet) {
 }
 
 void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* packet) {
-    
+    Log("Connection closed");
 }

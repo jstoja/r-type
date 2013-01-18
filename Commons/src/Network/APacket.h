@@ -36,6 +36,7 @@ namespace Network {
     virtual void	read(ASocket*) = 0;
     virtual void	update() = 0;
     virtual bool	isComplete() const = 0;
+    virtual void    updateData();
 
 
     APacket&		operator<<(const std::string&);

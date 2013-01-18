@@ -21,13 +21,14 @@ typedef int socklen_t;
 # define closesocket(x) close(x)
 #endif
 #include "TcpSocket.h"
+#include "Debug.h"
 
 Network::TcpSocket::TcpSocket() : _hostAddress(HostAddress::AnyAddress), _hostPort(0),
 				  _toRead(0), _bufferToRead(NULL),
 				  _bufferToWrite(NULL), _writePosition(0) {
   _fd = socket(AF_INET, SOCK_STREAM, 0); //  | SOCK_NONBLOCK
   if (_fd == -1)
-    std::cout << "Failed to create TcpSocket" << std::endl;
+    Log("Failed to create TcpSocket");
 }
 
 Network::TcpSocket::TcpSocket(int fd) : _hostAddress(HostAddress::AnyAddress), _hostPort(0),
@@ -117,7 +118,8 @@ void Network::TcpSocket::read(ByteArray& biteArray, bool all, uint32 start) {
     _bufferToReadMutex.unlock();
     _bufferMutex.unlock();
     if (_delegate)
-      _delegate->dataReceived(this, biteArray, _buffer.getSize());
+      //_delegate->dataReceived(this, biteArray, _buffer.getSize());
+        _delegate->dataReceived(this, _buffer, biteArray.getSize());
     return;
   }
   _toRead = 0;
