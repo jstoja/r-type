@@ -126,9 +126,7 @@ void UserInterface::createGame() {
 }
 
 void UserInterface::joinGame(uint32 idx) {
-    std::stringstream str;
-    str << "GAME " << idx;
-    goToMenu("GameJoin");
+    _delegate->gameSelected(idx);
 }
 
 void UserInterface::previous() {

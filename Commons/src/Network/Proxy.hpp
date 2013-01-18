@@ -44,6 +44,9 @@ namespace Network {
             InformationsGameListResponse                = 0x01010100,
             GameCreatedSuccess                          = 0x01020300,
             GameCreatedBadName                          = 0x01020301,
+            GameJoinSuccess                             = 0x01020000,
+            GameJoinIsFull                              = 0x01020001,
+            GameJoinInvalid                             = 0x01020002,
         };
 
         enum UdpActions {

@@ -113,8 +113,9 @@ void Player::joinGame(Network::TcpPacket* packet) {
     uint32 id;
 
     *packet >> id;
-    _attributesMutex[eProxy]->lock();
-    int code = 0x01020000 + _server->joinGame(id, this);
+    _attributesMutex[eServer]->lock();
+    int code = _server->joinGame(id, this);
+    _attributesMutex[eServer]->unlock();
 
     Network::TcpPacket *tcpPacket = new Network::TcpPacket();
     tcpPacket->setCode(code);
@@ -125,8 +126,10 @@ void Player::joinGame(Network::TcpPacket* packet) {
     _proxy.sendPacket(toSend);
     _attributesMutex[eProxy]->unlock();
 
-    _server->sendGameInfo(id, this);
-    _server->sendResources(id, this);
+    if (code == Network::TcpProxy::GameJoinSuccess) {
+        _server->sendGameInfo(id, this);
+        _server->sendResources(id, this);
+    }
     _attributesMutex[eServer]->unlock();
 }
 

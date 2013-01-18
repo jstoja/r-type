@@ -23,6 +23,8 @@ _commands(), _login(""), _userId(0) {
     _commands[Network::TcpProxy::InformationsGameGeneralResponse] = &Client::receiveGeneralInformations;
     _commands[Network::TcpProxy::InformationsGameListResponse] = &Client::receiveGameList;
     _commands[Network::TcpProxy::GameCreatedSuccess] = &Client::gameCreatedResponse;
+    _commands[Network::TcpProxy::GameJoinSuccess] = &Client::gameJoinResponse;
+    
     
     Graphic::Renderer::getInstance().init();
     Graphic::Renderer::getInstance().setScene(&_scene);
@@ -101,6 +103,22 @@ void Client::newGameCompleted(std::string const& name, uint32 nbPlayers) {
     _ui->presentMessage("Creating game...");
 }
 
+void Client::gameSelected(uint32 gameIndex) {
+    if (gameIndex < _games.size()) {
+        std::list<Game*>::iterator it = _games.begin();
+        std::advance(it, gameIndex);
+        Game* game = *it;
+        
+        Network::TcpPacket* packet = new Network::TcpPacket();
+        packet->setCode(Network::TcpProxy::GameJoin);
+        *packet << game->getId();
+        _proxy->sendPacket(packet);
+        Log("Joining game " << game->getName());
+    } else {
+        Log("Tried to join game with invalid index");
+    }
+}
+
 void Client::packetReceived(Network::TcpPacket* packet) {
     uint32 code, size;
     
@@ -172,7 +190,19 @@ void Client::gameCreatedResponse(Network::TcpPacket* packet) {
         _games.push_back(game);
         _ui->setGameList(_games);
         _ui->goToMenu("GameList");
-        Log("Created game: " << game->getName());
+        Log("Created game: " << game->getName() << ", id: " << game->getId());
+    }
+}
+
+void Client::gameJoinResponse(Network::TcpPacket* packet) {
+    if ((packet->getCode() & 0xff) == 0) {
+        _ui->goToMenu("GameJoin");
+    } else if ((packet->getCode() & 0xff) == 1) {
+        Log("Cannot join game: game is full");
+    } else if ((packet->getCode() & 0xff) == 2) {
+        Log("Cannot join game: invalid game");
+    } else {
+        Log("Cannot join game: invalid error");
     }
 }
 

@@ -25,6 +25,7 @@ Server::Server() {
     Game* game = new Game();
     game->setName("Game one");
     _games[game->getId()] = game;
+    game->setNbSlots(4);
     game = new Game();
     game->setName("Game two");
     _games[game->getId()] = game;
@@ -64,14 +65,14 @@ int Server::joinGame(uint32 gameId, Player* player) {
     uint32 code;
 
     if (_games.find(gameId) != _games.end()) {
-        if (_games[gameId]->canJoin()) {
+        if (_games[gameId]->canJoin(player)) {
             _games[gameId]->join(player);
-            code = 0;
+            code = Network::TcpProxy::GameJoinSuccess;
         } else {
-            code = 1;
+            code = Network::TcpProxy::GameJoinIsFull;
         }
-    }
-    code = 2;
+    } else
+        code = Network::TcpProxy::GameJoinInvalid;
     return code;
 }
 
