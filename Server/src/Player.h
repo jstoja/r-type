@@ -39,7 +39,8 @@ public:
     void  joinGame(Network::TcpPacket*);
     void  readyToStart(Network::TcpPacket* packet);
 
-    bool isReady(void);
+    bool                isReady(void);
+    std::string const&  getName(void) const;
 
     typedef void (Player::* commandPointer)(Network::TcpPacket*);
 
@@ -57,6 +58,7 @@ private:
     std::vector<Threading::Mutex*>        _attributesMutex;
 
     bool                                  _isReady;
+    std::string                           _name;
     Network::ASocket*                     _socket;
     Network::Proxy<Network::TcpPacket>    _proxy;
     IServerDelegate*                      _server;

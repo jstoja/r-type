@@ -19,9 +19,10 @@ Client::Client(void) :
 _scene(), _framerateLimit(30), _time(), _ui(), _tcpSocket(NULL), _proxy(NULL),
 _commands(), _login(""), _userId(0) {
     
-    _commands[Network::Proxy<Network::TcpPacket>::AuthenficitationConnectionSuccess] = &Client::connectionResponse;
-    _commands[Network::Proxy<Network::TcpPacket>::InformationsGameGeneralResponse] = &Client::receiveGeneralInformations;
-    _commands[Network::Proxy<Network::TcpPacket>::InformationsGameListResponse] = &Client::receiveGameList;
+    _commands[Network::TcpProxy::AuthenficitationConnectionSuccess] = &Client::connectionResponse;
+    _commands[Network::TcpProxy::InformationsGameGeneralResponse] = &Client::receiveGeneralInformations;
+    _commands[Network::TcpProxy::InformationsGameListResponse] = &Client::receiveGameList;
+    _commands[Network::TcpProxy::GameCreatedSuccess] = &Client::gameCreatedResponse;
     
     Graphic::Renderer::getInstance().init();
     Graphic::Renderer::getInstance().setScene(&_scene);
@@ -97,6 +98,7 @@ void Client::newGameCompleted(std::string const& name, uint32 nbPlayers) {
     *packet << name;
     *packet << nbPlayers;
     _proxy->sendPacket(packet);
+    _ui->presentMessage("Creating game...");
 }
 
 void Client::packetReceived(Network::TcpPacket* packet) {
@@ -150,9 +152,27 @@ void Client::receiveGameList(Network::TcpPacket* packet) {
     std::list<Game*> games;
     for (uint32 i = 0; i < nbGames; ++i) {
         Game* game = Game::newGame(*packet);
-        games.push_front(game);
+        games.push_back(game);
     }
     _ui->setGameList(games);
+    for (std::list<Game*>::iterator it = _games.begin(), end = _games.end();
+         it != end; ++it) {
+        delete *it;
+    }
+    _games = games;
+}
+
+void Client::gameCreatedResponse(Network::TcpPacket* packet) {
+    if ((packet->getCode() & 0xff) == 1) {
+        _ui->goToMenu("NewGame");
+        Log("Game not created");
+    } else {
+        Game* game = Game::newGame(*packet);
+        _games.push_back(game);
+        _ui->setGameList(_games);
+        _ui->goToMenu("GameList");
+        Log("Created game: " << game->getName());
+    }
 }
 
 void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* packet) {
