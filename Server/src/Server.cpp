@@ -109,10 +109,8 @@ int	Server::run() {
 			if (it->second->getState() == Game::STARTED)
 				it->second->update();
 		uint32 sleeping = (1000 / _sendFramerate) - clock.getEllapsedTime();
-		std::cout << "FPS: " << clock.getEllapsedTime() << " " << sleeping;
 		if (sleeping > 0)
 			Clock::sleep(sleeping);
-		std::cout << " " << clock.getEllapsedTime() << std::endl;
 	}
 	return (0);
 }
