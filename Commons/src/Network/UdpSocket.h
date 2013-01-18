@@ -38,9 +38,10 @@ namespace Network {
 
     int   getId() const;
 
-    bool	bind(const HostAddress& address = HostAddress::AnyAddress, uint16 port = 0);
-    void	read(ByteArray&, bool all = true, uint32 start = 0);
-    void	write(ByteArray&, const HostAddress& hostAddress = HostAddress::AnyAddress, uint16 port = 0);
+    bool            bind(const HostAddress& address = HostAddress::AnyAddress,
+                         uint16 port = 0);
+    void            read(ByteArray&, bool all = true, uint32 start = 0);
+    virtual  void   write(ByteArray const&, const HostAddress& hostAddress = HostAddress::AnyAddress, uint16 port = 0);
     void	close();
 
     void	canRead();
@@ -50,14 +51,14 @@ namespace Network {
   private:
     int				_fd;
 
-    ByteArray*			_readBuffer;
+    ByteArray*              _readBuffer;
     Threading::Mutex		_readMutex;
 
-    ByteArray*			_writeBuffer;
+    ByteArray const*        _writeBuffer;
     Threading::Mutex		_writeMutex;
-    HostAddress			_writeAddress;
-    uint16			_writePort;
-    uint32			_writePosition;
+    HostAddress             _writeAddress;
+    uint16                  _writePort;
+    uint32                  _writePosition;
   };
 
 }

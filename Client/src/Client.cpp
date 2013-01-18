@@ -28,7 +28,7 @@ _scene(), _framerateLimit(30), _time(), _ui(), _tcpSocket(NULL), _proxy(NULL) {
     viewport.x = viewport.y * (screen.x / screen.y);
     _scene.setViewport(viewport);
     
-    loginCompleted("aurao", "10.17.73.64", "4242");
+    loginCompleted("aurao", "127.0.0.1", "4242");
     
     // Create the ui
     _ui = new UserInterface(this);
