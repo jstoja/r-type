@@ -163,6 +163,7 @@ void Client::receiveGameList(Network::TcpPacket* packet) {
 }
 
 void Client::gameCreatedResponse(Network::TcpPacket* packet) {
+    _ui->hideMessage();    
     if ((packet->getCode() & 0xff) == 1) {
         _ui->goToMenu("NewGame");
         Log("Game not created");

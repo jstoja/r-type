@@ -14,6 +14,7 @@
 
 void Widget::Label::_init(void) {
     _font = new Graphic::FreetypeFont("transformers-font.ttf", 26, _color);
+    _isInit = true;
 }
 
 void Widget::Label::_destroy(void) {
@@ -27,10 +28,9 @@ Graphic::Texture* Widget::Label::_getStringTexture(void) {
 # endif
 
 Widget::Label::Label(Graphic::Scene* scene, std::string const& text, Vec3 color) :
-GraphicWidget(scene), _text(), _alignment(TextAlignCenter), _color(color),
+GraphicWidget(scene), _isInit(false), _text(), _alignment(TextAlignCenter), _color(color),
 _colorChanged(false) {
     setText(text);
-    _init();
 }
 
 Widget::Label::~Label() {
@@ -40,6 +40,9 @@ Widget::Label::~Label() {
 void Widget::Label::update() {
     if (getSize().x + getSize().y == 0)
         return ;
+    
+    if (!_isInit)
+        _init();
     
     // Reload font if color changed
     if (_colorChanged) {

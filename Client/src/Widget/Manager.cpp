@@ -22,7 +22,8 @@ void	Widget::Manager::registerWidget(Widget* widget) {
 }
 
 void	Widget::Manager::unregisterWidget(Widget* widget) {
-	_widgets.remove(widget);
+    if (!widget->needDelete())
+        _widgets.remove(widget);
 }
 
 void	Widget::Manager::update() {

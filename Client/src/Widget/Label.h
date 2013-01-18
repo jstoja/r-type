@@ -71,6 +71,7 @@ namespace   Widget {
 # else
         Graphic::FreetypeFont*          _font;
 # endif
+        bool                            _isInit;
         std::string                     _text;
         TextAlignment                   _alignment;
         Vec3                            _color;

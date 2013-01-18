@@ -109,6 +109,7 @@ void Server::quitGame(Player* player) {
     for(std::map<uint32, Game*>::iterator it = _games.begin(); it != _games.end(); it++) {
         it->second->quit(player);
     }
+    _players.erase(std::remove(_players.begin(), _players.end(), player), _players.end());
     delete player;
 }
 

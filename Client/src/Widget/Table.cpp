@@ -57,7 +57,7 @@ Widget::Table::~Table() {
 void	Widget::Table::clearDatas() {
 	for (unsigned int i = 0; i < _cells.size(); ++i)
 		for (uint32 j = 0; j < _columnCount; ++j)
-			delete _cells[i][j];
+			_cells[i][j]->deleteLater();
 	_cells.clear();
 	_currentPage = 0;
 	_currentLine = -1;
