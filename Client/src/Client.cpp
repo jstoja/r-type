@@ -143,7 +143,7 @@ void Client::receiveGameList(Network::TcpPacket* packet) {
         Game* game = Game::newGame(*packet);
         games.push_front(game);
     }
-    _ui->setGameList(games);    
+    _ui->setGameList(games);
 }
 
 void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* packet) {
