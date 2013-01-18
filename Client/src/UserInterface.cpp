@@ -117,10 +117,7 @@ void UserInterface::loginCompleted(std::string const& login,
 
 void UserInterface::newGameCompleted(std::string const& name,
                                      uint32 nbPlayers) {
-    std::stringstream str;
-    str << "CREATING GAME " << name << " WITH " << nbPlayers << " PLAYERS...";
-	_currentMenu->setVisible(false);
-    presentMessage(str.str());
+    _delegate->newGameCompleted(name, nbPlayers);
 }
 
 void UserInterface::createGame() {

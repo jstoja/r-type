@@ -23,6 +23,9 @@ public:
                                 std::string const& ipAdress,
                                 std::string const& port) = 0;
     
+    virtual void    newGameCompleted(std::string const& name,
+                                     uint32 nbPlayers) = 0;    
+    
 };
 
 #endif
