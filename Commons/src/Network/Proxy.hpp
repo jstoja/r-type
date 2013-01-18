@@ -134,6 +134,10 @@ namespace Network {
             _delegate->connectionClosed(this);
         }
 
+		void connectionFinished(ASocket*, bool success) {
+			_delegate->connectionFinished(this, success);
+		}
+
     private:
         void		_write() {
             _toSendMutex.lock();

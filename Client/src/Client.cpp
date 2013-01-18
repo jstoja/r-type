@@ -82,16 +82,17 @@ void Client::loginCompleted(std::string const& login, std::string const& ipAdres
     delete _tcpSocket;
     delete _proxy;
     _tcpSocket = new Network::TcpSocket();
-    if (_tcpSocket->connect(ipAdress, std::atoi(port.c_str()))) {
-        Log("Connected to server");
-        _proxy = new Network::Proxy<Network::TcpPacket>(_tcpSocket, this);
-        Network::TcpPacket* packet = new Network::TcpPacket();
-        packet->setCode(Network::Proxy<Network::TcpPacket>::AuthenficitationConnection);
-        *packet << login;
-        _proxy->sendPacket(packet);
-    } else {
-        Log("Connection failed");
-    }
+	_tcpSocket->connect(ipAdress, std::atoi(port.c_str()));
+    //if (_tcpSocket->connect(ipAdress, std::atoi(port.c_str()))) {
+    //    Log("Connected to server");
+    //    _proxy = new Network::Proxy<Network::TcpPacket>(_tcpSocket, this);
+    //    Network::TcpPacket* packet = new Network::TcpPacket();
+    //    packet->setCode(Network::Proxy<Network::TcpPacket>::AuthenficitationConnection);
+    //    *packet << login;
+    //    _proxy->sendPacket(packet);
+    //} else {
+    //    Log("Connection failed");
+    //}
 }
 
 void Client::packetReceived(Network::TcpPacket* packet) {
@@ -104,4 +105,8 @@ void Client::packetSent(Network::TcpPacket const* packet) {
 
 void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* packet) {
     Log("Connection closed");
+}
+
+void Client::connectionFinished(Network::Proxy<Network::TcpPacket>* packet, bool success) {
+
 }

@@ -33,7 +33,7 @@ public:
 
   int	getId() const;
 
-  bool		connect(const HostAddress& address, uint16 port);
+  void		connect(const HostAddress& address, uint16 port);
   bool		listen(const HostAddress& address, uint16 port);
   void		read(ByteArray&, bool all = true, uint32 start = 0);
   void		write(ByteArray const&, const HostAddress& hostAddress = HostAddress::AnyAddress, uint16 port = 0);
@@ -42,6 +42,8 @@ public:
 
   void	canRead();
   void	canWrite();
+
+  void operator()();
   
 private:
   int               _fd;
@@ -60,6 +62,9 @@ private:
   ByteArray const*	_bufferToWrite;
   uint32            _writePosition;
   Threading::Mutex	_bufferToWriteMutex;
+
+  HostAddress			_connectionAddress;
+  uint16				_connectionPort;
 };
 
 }

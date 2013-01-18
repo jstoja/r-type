@@ -46,6 +46,7 @@ class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Ne
     void packetReceived(Network::TcpPacket* packet);
     void packetSent(Network::TcpPacket const* packet);
     void connectionClosed(Network::Proxy<Network::TcpPacket>* packet);
+	void connectionFinished(Network::Proxy<Network::TcpPacket>* packet, bool success);
     
     private:
     Graphic::Scene  _scene;
