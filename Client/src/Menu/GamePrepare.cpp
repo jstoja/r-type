@@ -94,12 +94,9 @@ void Menu::GamePrepare::setPlayerList(std::list<Player*> const& players) {
 }
 
 void Menu::GamePrepare::_addPlayer(const std::string &name, bool ready) {
-    std::string upperName = name;
-    std::transform(upperName.begin(), upperName.end(), upperName.begin(), ::toupper);
-    
     std::vector<std::string>	line;
     line.reserve(2);
-	line.push_back(upperName);
+	line.push_back(name);
     line.push_back(ready ? "READY" : "NOT READY");
 	uint32 idx = _playerList->addLine(line);
 	if (ready)
@@ -121,7 +118,5 @@ void Menu::GamePrepare::setVisible(bool visible) {
 }
 
 void Menu::GamePrepare::setServerName(std::string const& serverName) {
-    std::string upperName = serverName;
-    std::transform(serverName.begin(), serverName.end(), upperName.begin(), ::toupper);
-	_serverNameLabel->setText(upperName);
+	_serverNameLabel->setText(serverName);
 }

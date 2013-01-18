@@ -185,23 +185,16 @@ void	Widget::Table::previousPage() {
 void	Widget::Table::setColor(uint32 y, uint32 x, Vec3 const& color) {
 	if (y >= _cells.size() || x >= _columnCount)
 		return ;
-	Label *previous = _cells[y][x];
-	_cells[y][x] = new Label(_scene, previous->getText(), color);
-	delete previous;
+	_cells[y][x]->setColor(color);
 	setNeedUpdate(true);
 }
 
 void	Widget::Table::setColor(uint32 y, Vec3 const& color) {
 	if (y >= _cells.size())
 		return ;
-	std::vector<Label*>	previous = _cells[y];
-	std::vector<Label*> current;
-	current.resize(_columnCount);
 	for (int i = 0; i < _columnCount; ++i) {
-		current[i] = new Label(_scene, _cells[y][i]->getText(), color);
-		delete _cells[y][i];
+		_cells[y][i]->setColor(color);
 	}
-	_cells[y] = current;
 	setNeedUpdate(true);
 }
 

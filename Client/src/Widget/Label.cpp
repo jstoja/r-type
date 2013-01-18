@@ -8,6 +8,7 @@
 
 #include "Label.h"
 #include "Graphic/Texture.h"
+#include <algorithm>
 
 # ifndef OS_IOS
 
@@ -25,8 +26,10 @@ Graphic::Texture* Widget::Label::_getStringTexture(void) {
 
 # endif
 
-Widget::Label::Label(Graphic::Scene* scene, std::string const& text, Vec3 color)
-: GraphicWidget(scene), _text(text), _alignment(TextAlignCenter), _color(color) {
+Widget::Label::Label(Graphic::Scene* scene, std::string const& text, Vec3 color) :
+GraphicWidget(scene), _text(), _alignment(TextAlignCenter), _color(color),
+_colorChanged(false) {
+    setText(text);
     _init();
 }
 
@@ -37,6 +40,13 @@ Widget::Label::~Label() {
 void Widget::Label::update() {
     if (getSize().x + getSize().y == 0)
         return ;
+    
+    // Reload font if color changed
+    if (_colorChanged) {
+        _destroy();
+        _init();
+    }
+    
     Graphic::Texture *texture = _getStringTexture();
     if (getSprite() && getSprite()->getTexture())
         delete getSprite()->getTexture();
@@ -67,6 +77,7 @@ std::string const&  Widget::Label::getText() const {
 
 void    Widget::Label::setText(std::string const& text) {
     _text = text;
+    std::transform(_text.begin(), _text.end(), _text.begin(), ::toupper);
 	setNeedUpdate(true);
 }
 

@@ -74,6 +74,7 @@ namespace   Widget {
         std::string                     _text;
         TextAlignment                   _alignment;
         Vec3                            _color;
+        bool                            _colorChanged;
     };
 };
 

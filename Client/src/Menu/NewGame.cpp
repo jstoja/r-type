@@ -127,7 +127,5 @@ void Menu::NewGame::setVisible(bool visible) {
 }
 
 void Menu::NewGame::setServerName(std::string const& serverName) {
-    std::string upperName = serverName;
-    std::transform(serverName.begin(), serverName.end(), upperName.begin(), ::toupper);
-	_serverNameLabel->setText(upperName);
+	_serverNameLabel->setText(serverName);
 }
