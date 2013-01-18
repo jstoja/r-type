@@ -20,21 +20,21 @@ _messageLabel(NULL), _mutex(new Threading::Mutex()) {
     // Create the sceneries used in all the user interface
     _createSceneries();
     
-	Menu::Game*	menu = new Menu::Game(_delegate->getScene(), this, "Server of the death");
-	menu->addGame("FIRST GAME", 3, 4);
-	menu->addGame("SECOND GAME", 0, 4);
-	menu->addGame("THIRD GAME", 4, 4);
-	menu->addGame("FOURTH GAME", 4, 4);
-	menu->addGame("FIFTH GAME", 2, 4);
-	menu->addGame("FOURTH GAME", 4, 4);
-	menu->addGame("FIFTH GAME", 2, 4);
-	menu->addGame("LAST GAME", 0, 4);
+	Menu::GameList*	menu = new Menu::GameList(_delegate->getScene(), this, "Server of the death");
+	//menu->addGame("FIRST GAME", 3, 4);
+	//menu->addGame("SECOND GAME", 0, 4);
+	//menu->addGame("THIRD GAME", 4, 4);
+	//menu->addGame("FOURTH GAME", 4, 4);
+	//menu->addGame("FIFTH GAME", 2, 4);
+	//menu->addGame("FOURTH GAME", 4, 4);
+	//menu->addGame("FIFTH GAME", 2, 4);
+	//menu->addGame("LAST GAME", 0, 4);
 
 	Menu::GamePrepare*	menu2 = new Menu::GamePrepare(_delegate->getScene(), this, "Server of the death", "Auto generated game", 3, 4);
-    menu2->addPlayer("Aurao", true);
-    menu2->addPlayer("Astow", false);
-    menu2->addPlayer("Helfar", true);
-    menu2->addPlayer("Skanight", false);
+    //menu2->addPlayer("Aurao", true);
+    //menu2->addPlayer("Astow", false);
+    //menu2->addPlayer("Helfar", true);
+    //menu2->addPlayer("Skanight", false);
 
 	Menu::GameJoin*	menu3 = new Menu::GameJoin(_delegate->getScene(), this, "Server of the death", "The Game");
     
@@ -218,4 +218,23 @@ void UserInterface::_createSceneries(void) {
     scenery->setOpacity(0.8);
     _delegate->getScene()->addScenery(scenery);
     _sceneries.push_back(scenery);
+}
+
+void	UserInterface::setServerName(std::string const& serverName) {
+	for (std::map<std::string, Menu::Menu*>::iterator it = _menus.begin(); it != _menus.end(); ++it)
+		it->second->setServerName(serverName);
+}
+
+void	UserInterface::setGameList(std::list<Game*> const& list) {
+	Menu::GameList* menu = dynamic_cast<Menu::GameList*>(_menus["GameList"]);
+
+	if (menu)
+		menu->setGameList(list);
+}
+
+void	UserInterface::setPlayerList(std::list<Player*> const& list) {
+	Menu::GamePrepare* menu = dynamic_cast<Menu::GamePrepare*>(_menus["GamePrepare"]);
+
+	if (menu)
+		menu->setPlayerList(list);
 }

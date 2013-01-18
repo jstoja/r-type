@@ -91,3 +91,7 @@ void	Menu::GameJoin::_update() {
 		_progressBar->setSize(Vec2(getScene()->getViewport().x - 2 * 0.3, 1.2));
 		_progressBar->setPosition(Vec3(getScene()->getViewport().x / 2, getScene()->getViewport().y / 2 - _progressBar->getSize().y / 2, 0.2));
 }
+
+void Menu::GameJoin::setServerName(std::string const& serverName) {
+	_serverNameLabel->setText(serverName);
+}

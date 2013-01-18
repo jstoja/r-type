@@ -19,7 +19,7 @@
 # include "Menu/Welcome.h"
 # include "Menu/Login.h"
 # include "Menu/NewGame.h"
-# include "Menu/Game.h"
+# include "Menu/GameList.h"
 # include "Menu/GamePrepare.h"
 # include "Threading/Mutex.h"
 
@@ -36,6 +36,10 @@ public:
     
     Menu::Menu* getCurrentMenu(void) const;
     
+	void	setServerName(std::string const& serverName);
+	void	setGameList(std::list<Game*> const& list);
+	void	setPlayerList(std::list<Player*> const& list);
+
     // IMenuDelegate implementation
     virtual void welcomeCompleted(void);
     virtual void loginCompleted(std::string const& login,
@@ -55,7 +59,7 @@ private:
     
     IUserInterfaceDelegate* _delegate;
     Clock                   _time;
-    
+    std::string				_serverName;
     std::vector<Graphic::Scenery*>      _sceneries;
 	std::map<std::string, Menu::Menu*>  _menus;
     Menu::Menu*                         _currentMenu;

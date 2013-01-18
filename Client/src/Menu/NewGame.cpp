@@ -128,3 +128,7 @@ void Menu::NewGame::setVisible(bool visible) {
 		_playersSelect[i]->setVisible(visible);
 	Menu::setVisible(visible);
 }
+
+void Menu::NewGame::setServerName(std::string const& serverName) {
+	_serverNameLabel->setText(serverName);
+}

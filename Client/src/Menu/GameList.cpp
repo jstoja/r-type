@@ -1,5 +1,5 @@
 //
-//  Game.cpp
+//  GameList.cpp
 //  R-Type
 //
 //  Copyright (c) 2013 EPITECH. All rights reserved.
@@ -7,10 +7,10 @@
 
 #include <sstream>
 
-#include "Game.h"
+#include "GameList.h"
 #include "Graphic/Scene.h"
 
-Menu::Game::Game(Graphic::Scene *scene, IMenuDelegate* delegate,
+Menu::GameList::GameList(Graphic::Scene *scene, IMenuDelegate* delegate,
                 std::string const& serverName) : Menu(scene, delegate) {
 	std::string upperName = serverName;
     std::transform(serverName.begin(), serverName.end(), upperName.begin(), ::toupper);
@@ -44,7 +44,7 @@ Menu::Game::Game(Graphic::Scene *scene, IMenuDelegate* delegate,
 	_createGame->setPosition(Vec3(_createGame->getSize().x / 2 + 0.425, y - _gameList->getSize().y / 2 - _createGame->getSize().y / 2 - 0.2));
 }
 
-Menu::Game::~Game(void) {
+Menu::GameList::~GameList(void) {
 	delete _serverNameLabel;
 	delete _gameList;
 	delete _nextPageButton;
@@ -53,7 +53,13 @@ Menu::Game::~Game(void) {
 	delete _previousMenu;
 }
 
-void Menu::Game::addGame(std::string const& gameName, uint32 gamePlayerNumber, uint32 gamePlayerSlot) {
+void	Menu::GameList::setGameList(std::list<Game*> const& gameList) {
+	_gameList->clearDatas();
+	for (std::list<Game*>::const_iterator it = gameList.begin(); it != gameList.end(); ++it)
+		_addGame((*it)->getName(), (*it)->getNbPlayer(), (*it)->getNbSlot());
+}
+
+void Menu::GameList::_addGame(std::string const& gameName, uint32 gamePlayerNumber, uint32 gamePlayerSlot) {
 	std::stringstream tmp;
 	tmp << gamePlayerNumber << "/" << gamePlayerSlot;
 	std::vector<std::string>	line;
@@ -65,7 +71,7 @@ void Menu::Game::addGame(std::string const& gameName, uint32 gamePlayerNumber, u
 	_updatePageButtons();
 }
 
-void Menu::Game::buttonReleased(Widget::Button* instance) {
+void Menu::GameList::buttonReleased(Widget::Button* instance) {
 	if (instance == _nextPageButton && _gameList->hasNextPage())
 		_gameList->nextPage();
 	else if (instance == _previousPageButton && _gameList->hasPreviousPage())
@@ -80,20 +86,24 @@ void Menu::Game::buttonReleased(Widget::Button* instance) {
 	_updatePageButtons();
 }
 
-void Menu::Game::linePushed(Widget::Table* instance, uint32 line) {
+void Menu::GameList::linePushed(Widget::Table* instance, uint32 line) {
 	getDelegate()->joinGame(line);
 }
 
-void Menu::Game::_updatePageButtons() {
+void Menu::GameList::_updatePageButtons() {
 	_nextPageButton->getElement()->setVisible(isVisible() ? _gameList->hasNextPage() : false);
 	_previousPageButton->getElement()->setVisible(isVisible() ? _gameList->hasPreviousPage() : false);
 }
 
-void Menu::Game::setVisible(bool visible) {
+void Menu::GameList::setVisible(bool visible) {
 	Menu::setVisible(visible);
 	_serverNameLabel->setVisible(visible);
 	_gameList->setVisible(visible);
 	_createGame->setVisible(visible);
 	_previousMenu->setVisible(visible);
 	_updatePageButtons();
+}
+
+void Menu::GameList::setServerName(std::string const& serverName) {
+	_serverNameLabel->setText(serverName);
 }

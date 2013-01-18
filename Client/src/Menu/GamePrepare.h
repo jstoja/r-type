@@ -15,6 +15,7 @@
 # include "Widget/Button.h"
 # include "Widget/Table.h"
 # include "Widget/ITableDelegate.h"
+# include "../Player.h"
 
 namespace Menu {
     
@@ -28,12 +29,15 @@ namespace Menu {
         
         virtual void buttonReleased(Widget::Button* instance);
         
-        void addPlayer(std::string const& name, bool ready);
+        void setPlayerList(std::list<Player*> const& players);
         
         virtual void setVisible(bool visible);
 
+		virtual void	setServerName(std::string const& serverName);
     private:
-        Widget::Button*		_previousMenu;
+        void _addPlayer(std::string const& name, bool ready);
+
+		Widget::Button*		_previousMenu;
         
         Widget::Label*      _serverNameLabel;
         Widget::Label*      _gameLabel;

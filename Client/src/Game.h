@@ -13,6 +13,8 @@
 # include <Object.h>
 # include <Network/TcpPacket.h>
 
+# include "Player.h"
+
 class Game : public Object {
 public:
 	Game(uint32 id);
@@ -26,11 +28,14 @@ public:
 	void	setNbSlot(uint32 nbSlot);
 	uint32	getNbSlot() const;
 
+	void	addPlayer(Player* player);
+
 	static Game*	newGame(Network::TcpPacket& packet);
 private:
-	std::string	_name;
-	uint32		_nbPlayer;
-	uint32		_nbSlot;
+	std::string			_name;
+	uint32				_nbPlayer;
+	uint32				_nbSlot;
+	std::list<Player*>	_players;
 };
 
 #endif

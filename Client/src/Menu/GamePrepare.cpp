@@ -93,7 +93,13 @@ void Menu::GamePrepare::buttonReleased(Widget::Button* instance) {
     }
 }
 
-void Menu::GamePrepare::addPlayer(const std::string &name, bool ready) {
+void Menu::GamePrepare::setPlayerList(std::list<Player*> const& players) {
+	_playerList->clearDatas();
+	for (std::list<Player*>::const_iterator it = players.begin(); it != players.end(); ++it)
+		_addPlayer((*it)->getName(), (*it)->isReady());
+}
+
+void Menu::GamePrepare::_addPlayer(const std::string &name, bool ready) {
     std::string upperName = name;
     std::transform(upperName.begin(), upperName.end(), upperName.begin(), ::toupper);
     
@@ -118,4 +124,8 @@ void Menu::GamePrepare::setVisible(bool visible) {
     _playerList->setVisible(visible);
     _readyButton->setVisible(visible);
     _waitingLabel->setVisible(false);
+}
+
+void Menu::GamePrepare::setServerName(std::string const& serverName) {
+	_serverNameLabel->setText(serverName);
 }

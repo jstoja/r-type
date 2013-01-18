@@ -9,8 +9,7 @@
 
 #include "Game.h"
 
-Game::Game(uint32 id) {
-
+Game::Game(uint32 id) : _nbPlayer(0), _nbSlot(0) {
 }
 
 void	Game::setName(std::string const& name) {
@@ -35,6 +34,11 @@ void	Game::setNbSlot(uint32 nbSlot) {
 
 uint32	Game::getNbSlot() const {
 	return (_nbSlot);
+}
+
+void	Game::addPlayer(Player* player) {
+	_players.push_back(player);
+	_nbPlayer = _players.size();
 }
 
 Game*	Game::newGame(Network::TcpPacket& packet) {

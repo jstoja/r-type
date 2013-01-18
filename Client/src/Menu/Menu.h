@@ -24,7 +24,7 @@ namespace Menu {
         IMenuDelegate*  getDelegate(void) const;
 		virtual void	setVisible(bool visible);
 		virtual bool	isVisible() const;
-
+		virtual void	setServerName(std::string const& serverName) {}
     private:
         Graphic::Scene* _scene;
         IMenuDelegate*  _delegate;

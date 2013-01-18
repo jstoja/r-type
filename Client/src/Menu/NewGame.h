@@ -31,6 +31,8 @@ namespace Menu {
         virtual void buttonReleased(Widget::Button* instance);
       
 		virtual void setVisible(bool visible);
+
+		virtual void	setServerName(std::string const& serverName);
     private:        
         uint32              _nbPlayers;
         

@@ -30,6 +30,7 @@ namespace Menu {
       
 		virtual void setVisible(bool visible);
 
+		virtual void setServerName(std::string const& serverName);
     private:
 		void	_update();
 		Widget::Button*			_previousMenu;
