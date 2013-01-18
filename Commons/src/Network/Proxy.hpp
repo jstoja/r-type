@@ -16,6 +16,8 @@
 # include "IProxyDelegate.h"
 # include "Threading/Mutex.h"
 # include "HostAddress.h"
+# include "TcpPacket.h"
+# include "UdpPacket.h"
 # include "Debug.h"
 
 namespace Network {
@@ -27,7 +29,8 @@ namespace Network {
         enum TcpActions {
             // Client - Server
             AuthenficitationConnection  = 0x00000000,
-            InformationsGameList        = 0x00010000,
+            InformationsGeneral         = 0x00010000,
+            InformationsGameList        = 0x00010100,
             GameJoin                    = 0x00020000,
             GameQuit                    = 0x00020100,
             GameCreate                  = 0x00020200,
@@ -36,7 +39,9 @@ namespace Network {
 
             // Server - client
             AuthenficitationConnectionSuccess           = 0x01000000,
-            AuthenficitationConnectionIncorrectLogin    = 0x01000001
+            AuthenficitationConnectionIncorrectLogin    = 0x01000001,
+            InformationsGameGeneralResponse             = 0x01010000,
+            InformationsGameListResponse                = 0x01010100,
         };
 
         enum UdpActions {
@@ -135,6 +140,9 @@ namespace Network {
             _delegate->connectionClosed(this);
         }
 
+		void connectionFinished(ASocket*, bool success) {
+		}
+
     private:
         void		_write() {
             _toSendMutex.lock();
@@ -155,6 +163,9 @@ namespace Network {
         bool                    _writing;
         Threading::Mutex        _toSendMutex;
     };
+    
+    typedef Network::Proxy<TcpPacket> TcpProxy;
+    typedef Network::Proxy<UdpPacket> UdpProxy;
 }
 
 #endif

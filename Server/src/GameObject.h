@@ -24,7 +24,7 @@ class IGame;
 class GameObject : public Object{
 public:
 	GameObject(std::string const& name);
-	~GameObject();
+	virtual ~GameObject();
 	
 	bool	init(IGame* game, ByteArray const& params, float32 xStart);
 	void	update(void *params);

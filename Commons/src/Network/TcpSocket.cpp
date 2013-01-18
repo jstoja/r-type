@@ -22,10 +22,12 @@ typedef int socklen_t;
 #endif
 #include "TcpSocket.h"
 #include "Debug.h"
+#include "Threading/Thread.h"
 
-Network::TcpSocket::TcpSocket() : _hostAddress(HostAddress::AnyAddress), _hostPort(0),
-				  _toRead(0), _bufferToRead(NULL),
-				  _bufferToWrite(NULL), _writePosition(0) {
+Network::TcpSocket::TcpSocket(ISocketDelegate* delegate) :
+_hostAddress(HostAddress::AnyAddress), _hostPort(0), _toRead(0),
+_bufferToRead(NULL), _bufferToWrite(NULL), _writePosition(0), _connectionAddress("") {
+    setDelegate(delegate);
   _fd = socket(AF_INET, SOCK_STREAM, 0); //  | SOCK_NONBLOCK
   if (_fd == -1)
     Log("Failed to create TcpSocket");
@@ -33,13 +35,14 @@ Network::TcpSocket::TcpSocket() : _hostAddress(HostAddress::AnyAddress), _hostPo
 
 Network::TcpSocket::TcpSocket(int fd) : _hostAddress(HostAddress::AnyAddress), _hostPort(0),
 					_toRead(0), _bufferToRead(NULL),
-					_bufferToWrite(NULL), _writePosition(0) {
+					_bufferToWrite(NULL), _writePosition(0), _connectionAddress("") {
   _fd = fd;
   _reading = true;
   _listening = false;
 }
 
 Network::TcpSocket::~TcpSocket() {
+    NetworkManager::getInstance().unregisterSocket(this);    
   if (_fd != -1)
     ::closesocket(_fd);
 }
@@ -48,21 +51,30 @@ int Network::TcpSocket::getId() const {
   return _fd;
 }
 
-bool Network::TcpSocket::connect(const HostAddress& address, uint16 port) {
-  struct sockaddr_in addr;
+void Network::TcpSocket::operator()() {
+    struct sockaddr_in addr;
 
-  memset(&addr, 0, sizeof(addr));
-  addr.sin_family = AF_INET;
-  addr.sin_addr.s_addr = address.toIPv4Address();
-  addr.sin_port = htons(port);
-  if (::connect(_fd, (struct sockaddr*)&addr, sizeof(addr)) == -1)
-    return (false);
+    memset(&addr, 0, sizeof(addr));
+    addr.sin_family = AF_INET;
+    addr.sin_addr.s_addr = _connectionAddress.toIPv4Address();
+    addr.sin_port = htons(_connectionPort);
+    if (::connect(_fd, (struct sockaddr*)&addr, sizeof(addr)) == -1) {
+        _delegate->connectionFinished(this, false);
+        return;
+    }
 
-  _reading = true;
-  _listening = false;
-  _hostAddress = address;
-  _hostPort = port;
-  return (true);
+    _reading = true;
+    _listening = false;
+    _hostAddress = _connectionAddress;
+    _hostPort = _connectionPort;
+    _delegate->connectionFinished(this, true);
+}
+
+void Network::TcpSocket::connect(const HostAddress& address, uint16 port) {
+  _connectionAddress = address;
+  _connectionPort = port;
+  Threading::Thread<Network::TcpSocket> thread(this);
+  thread.run();
 }
 
 bool Network::TcpSocket::listen(const HostAddress& address, uint16 port) {

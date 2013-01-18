@@ -27,6 +27,7 @@ Network::UdpSocket::UdpSocket(int fd) : _fd(fd), _readBuffer(NULL), _readMutex()
 }
 
 Network::UdpSocket::~UdpSocket() {
+    NetworkManager::getInstance().unregisterSocket(this);
   if (_fd != -1)
     ::closesocket(_fd);
 }

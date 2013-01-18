@@ -9,14 +9,15 @@
 
 #include "ASocket.h"
 #include "NetworkManager.h"
-#include <iostream>
+#include "Debug.h"
+
 
 Network::ASocket::ASocket() : _reading(false), _listening(false), _writing(false), _delegate(NULL) {
   NetworkManager::getInstance().registerSocket(this);
 }
 
 Network::ASocket::~ASocket() {
-  NetworkManager::getInstance().unregisterSocket(this);
+  
 }
 
 bool Network::ASocket::isListening() const {

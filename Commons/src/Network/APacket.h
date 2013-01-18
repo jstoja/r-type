@@ -54,6 +54,7 @@ namespace Network {
 		for (it = elements.begin(); it != elements.end(); ++it) {
 			*this << *(*it);
 		}
+        updateData();
 		return (*this);
 	}
 
@@ -65,14 +66,17 @@ namespace Network {
 		for (it = elements.begin(); it != elements.end(); ++it) {
 		  *this << (*it);
 		}
+        updateData();
 		return (*this);
 	}
 
 	template<class T>
 	APacket&		operator<<(T val) {
 		write(&val, sizeof(val));
+        updateData();
 		return *this;
 	}
+      
     //APacket&		operator>>(uint32&);
     //APacket&		operator>>(uint64&);
     //APacket&		operator>>(int32&);

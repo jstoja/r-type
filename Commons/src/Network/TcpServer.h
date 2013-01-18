@@ -34,6 +34,7 @@ namespace Network {
   void	dataSent(ASocket*, ByteArray const&, uint32) {}
   void	writeFinished(ASocket*, ByteArray const&) {}
   void	disconnection(ASocket*) {}
+  void	connectionFinished(ASocket*, bool) {}
 
  private:
   TcpSocket             _socket;
