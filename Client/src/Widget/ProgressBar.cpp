@@ -30,30 +30,16 @@ float32  Widget::ProgressBar::getProgress() const {
 
 void    Widget::ProgressBar::setProgress(float32 progress) {
 	_progress = progress;
-	_update();
-}
-
-void Widget::ProgressBar::setSize(Vec2 const& size) {
-    GraphicWidget::setSize(size);
-	_update();
-}
-
-void Widget::ProgressBar::setPosition(Vec3 const& pos) {
-    GraphicWidget::setPosition(pos);
-	_update();
+	setNeedUpdate(true);
 }
 
 void Widget::ProgressBar::setVisible(bool visible) {
-	_bar->setVisible(visible);
 	GraphicWidget::setVisible(visible);
+	_bar->setVisible(visible);
 }
 
-void Widget::ProgressBar::_update() {
-	if (isVisible() == false)
-		return ;
+void Widget::ProgressBar::update() {
 	float32 x = 0.2;
-	//_bar->setVisible(false);
 	_bar->setSize(Vec2((getSize().x - 2 * x) * _progress, getSize().y));
 	_bar->setPosition(getPosition() - Vec3((1 - _progress) * (getSize().x / 2 - x), 0, 0.1));
-	//_bar->setPosition(getPosition() - Vec3(0, 0, 0.1));
 }

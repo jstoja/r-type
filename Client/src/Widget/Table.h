@@ -75,11 +75,8 @@ namespace Widget {
 		void	setColor(uint32 y, uint32 x, Vec3 const& color);
 		void	setColor(uint32 y, Vec3 const& color);
 
-		virtual void	setPosition(Vec3 const&);
         virtual void    update();
 		virtual void processEvent(Event::Event const& event);
-
-		virtual void	setVisible(bool visible);
     private:
 		uint32	_lineByPosition(Vec2 const& pos) const;
 

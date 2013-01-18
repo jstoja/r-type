@@ -38,13 +38,7 @@ namespace Widget {
         Vec2 const&         getElementSize() const;
         
         void    setSprite(Graphic::Sprite*);
-        
-        //! Set Widget position
-        virtual void        setPosition(Vec3 const&);
-        
-        //! Set Widget size
-        virtual void        setSize(Vec2 const&);
-        
+                
         //! Get Element
         Graphic::Element    *getElement();
         
@@ -61,6 +55,8 @@ namespace Widget {
         Rect2  getRect() const;
 
 		virtual void		setVisible(bool visible);
+
+		virtual void		update();
 
     private:
         Graphic::Scene*     _scene;

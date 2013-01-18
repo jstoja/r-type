@@ -7,6 +7,7 @@
 //
 
 #include <sstream>
+#include "Widget/Manager.h"
 #include "UserInterface.h"
 #include "Menu/GameJoin.h"
 #include "Graphic/Image.h"
@@ -66,7 +67,8 @@ UserInterface::~UserInterface(void) {
 }
 
 void UserInterface::update(void) {
-    Threading::MutexLocker lock(_mutex);    
+    Threading::MutexLocker lock(_mutex);
+	Widget::Manager::getInstance().update();
     float32 xPos = (float32)_time.getEllapsedTime() / 1000;
     if (xPos > _maxViewportX)
         xPos = 0;

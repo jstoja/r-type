@@ -21,8 +21,6 @@ Widget::Table::Table(uint32 columnCount, std::string const& backgroundImage, Gra
 	_currentPage = 0;
 	_currentLine = -1;
 	_currentBackground = NULL;
-	_init = true;
-	_changed = true;
 	_scene = scene;
 	_columnCount = columnCount;
 	setLineHeight(0.93);
@@ -40,7 +38,6 @@ Widget::Table::Table(uint32 columnCount, std::string const& backgroundImage, Gra
 	_headerBackground->getElement()->setCurrentFrame(3);
 	_lineByPages = 0;
 	setLineNumberByPage(6);
-	_init = false;
 	update();
 	Event::Manager::getInstance().addEventListener(_listener);
 }
@@ -66,60 +63,53 @@ void	Widget::Table::clearDatas() {
 	_currentPage = 0;
 	_currentLine = -1;
 	_currentBackground = NULL;
+	setNeedUpdate(true);
 }
 
 void	Widget::Table::setHeaderNames(std::vector<std::string> const& names) {
 	for (uint32 i = 0; i < _columnCount; ++i)
 		_columnNames[i]->setText(i < names.size() ? names[i] : "");
-	_changed = true;
-	update();
+	setNeedUpdate(true);
 }
 
 void	Widget::Table::setHeaderName(std::string const& name, uint32 idx) {
 	if (idx < _columnCount)
 		_columnNames[idx]->setText(name);
-	_changed = true;
-	update();
+	setNeedUpdate(true);
 }
 
 void	Widget::Table::setColumnSizes(std::vector<float32> const& sizes) {
 	for (uint32 i = 0; i < _columnCount; ++i)
 		_columnSizes[i] = i < sizes.size() ? sizes[i] : 1;
-	_changed = true;
-	update();
+	setNeedUpdate(true);
 }
 
 void	Widget::Table::setColumnSize(uint32 size, uint32 idx) {
 	if (idx < _columnCount)
 		_columnSizes[idx] = size;
-	_changed = true;
-	update();
+	setNeedUpdate(true);
 }
 
 void	Widget::Table::setColumnAlignements(std::vector<Align> const& aligns) {
 	for (uint32 i = 0; i < _columnCount; ++i)
 		_columnAligns[i] = i < aligns.size() ? aligns[i] : Left;
-	_changed = true;
-	update();
+	setNeedUpdate(true);
 }
 
 void	Widget::Table::setColumnAlignement(Align align, uint32 idx) {
 	if (idx < _columnCount)
 		_columnAligns[idx] = align;
-	_changed = true;
-	update();
+	setNeedUpdate(true);
 }
 
 void	Widget::Table::setLineHeight(float32 lineHeight) {
 	_lineHeight = lineHeight;
-	_changed = true;
-	update();
+	setNeedUpdate(true);
 }
 
 void	Widget::Table::setHeaderHeight(float32 headerHeight) {
 	_headerHeight = headerHeight;
-	_changed = true;
-	update();
+	setNeedUpdate(true);
 }
 
 void	Widget::Table::setLineNumberByPage(uint32 nbr) {
@@ -135,32 +125,27 @@ void	Widget::Table::setLineNumberByPage(uint32 nbr) {
 			_lineBackgrounds[_lineByPages] = tmp;
 		}
 	}
-	_changed = true;
-	update();
+	setNeedUpdate(true);
 }
 
 void	Widget::Table::setWidthHeaderPadding(float32 pad) {
 	_widthHeaderPadding = pad;
-	_changed = true;
-	update();
+	setNeedUpdate(true);
 }
 
 void	Widget::Table::setHeightHeaderPadding(float32 pad) {
 	_heightHeaderPadding = pad;
-	_changed = true;
-	update();
+	setNeedUpdate(true);
 }
 
 void	Widget::Table::setWidthCellPadding(float32 pad) {
 	_widthCellPadding = pad;
-	_changed = true;
-	update();
+	setNeedUpdate(true);
 }
 
 void	Widget::Table::setHeightCellPadding(float32 pad) {
 	_heightCellPadding = pad;
-	_changed = true;
-	update();
+	setNeedUpdate(true);
 }
 
 uint32	Widget::Table::addLine(std::vector<std::string> const& names) {
@@ -170,8 +155,7 @@ uint32	Widget::Table::addLine(std::vector<std::string> const& names) {
 	for (uint32 i = 0; i < _columnCount; ++i)
 		toAdd[i] = new Label(_scene, i < names.size() ? names[i] : "");
 	_cells.push_back(toAdd);
-	_changed = true;
-	update();
+	setNeedUpdate(true);
 	return (_cells.size() - 1);
 }
 
@@ -197,8 +181,7 @@ void	Widget::Table::previousPage() {
 		--_currentPage;
 	else
 		_currentPage = _cells.size() / _lineByPages + ((_cells.size() % _lineByPages) == 0 ? 0 : 1);
-	_changed = true;
-	update();
+	setNeedUpdate(true);
 }
 
 void	Widget::Table::setColor(uint32 y, uint32 x, Vec3 const& color) {
@@ -207,8 +190,7 @@ void	Widget::Table::setColor(uint32 y, uint32 x, Vec3 const& color) {
 	Label *previous = _cells[y][x];
 	_cells[y][x] = new Label(_scene, previous->getText(), color);
 	delete previous;
-	_changed = true;
-	update();
+	setNeedUpdate(true);
 }
 
 void	Widget::Table::setColor(uint32 y, Vec3 const& color) {
@@ -222,14 +204,10 @@ void	Widget::Table::setColor(uint32 y, Vec3 const& color) {
 		delete _cells[y][i];
 	}
 	_cells[y] = current;
-	_changed = true;
-	update();
+	setNeedUpdate(true);
 }
 
 void    Widget::Table::update() {
-	if (_init || _changed == false)
-		return;
-	_changed = false;
 	float32 width = 0, height = _headerHeight + _lineHeight * _lineByPages;
 	for (std::vector<float32>::iterator it = _columnSizes.begin(); it != _columnSizes.end(); ++it)
 		width += *it;
@@ -274,12 +252,6 @@ void    Widget::Table::update() {
 	}
 }
 
-void	Widget::Table::setPosition(Vec3 const& pos) {
-	Widget::setPosition(pos);
-	_changed = true;
-	update();
-}
-
 uint32	Widget::Table::_lineByPosition(Vec2 const& pos) const {
 	float32	y = (pos.y - _listener->getRect().pos.y) / _listener->getRect().size.y;
 	int32 nbLine = _cells.size() - _currentPage * _lineByPages;
@@ -321,10 +293,4 @@ void	Widget::Table::processEvent(Event::Event const& event) {
 			_currentBackground->getElement()->setCurrentFrame(0);
 		}
 	}
-}
-
-void	Widget::Table::setVisible(bool visible) {
-	Widget::setVisible(visible);
-	_changed = true;
-	update();
 }

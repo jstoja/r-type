@@ -40,14 +40,11 @@ namespace Widget {
 
 		//! Set the field value
 		void	setProgress(float32 progress);
-                
-		virtual void setSize(Vec2 const&);
-		virtual void setPosition(Vec3 const& pos);
-        
+
 		virtual void setVisible(bool visible);
+		virtual void update();
         
     private:
-		void	_update();
         float32			_progress;
 		GraphicWidget*	_bar;
     };

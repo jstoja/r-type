@@ -41,19 +41,13 @@ namespace   Widget {
         virtual ~Label();
         
         //! Update the label with its actual text
-        void update();
+        virtual void update();
         
         //! Text getter
         std::string const&  getText() const;
 
         //! Text setter
         void    setText(std::string const&);
-        
-        //! Overriding of setter to update font
-        virtual void setPosition(Vec3 const&);
-        
-        //! Overriding of setter to update font
-        virtual void setSize(Vec2 const&);
         
         //! Set the text alignment
         void setTextAligment(TextAlignment alignment);

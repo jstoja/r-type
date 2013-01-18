@@ -36,10 +36,6 @@ Widget::Label::~Label() {
 }
 
 void Widget::Label::update() {
-	if (isVisible() == false) {
-		getElement()->setVisible(false);
-		return ;
-	}
     if (getSize().x + getSize().y == 0)
         return ;
     
@@ -73,25 +69,15 @@ std::string const&  Widget::Label::getText() const {
 
 void    Widget::Label::setText(std::string const& text) {
     _text = text;
-    update();
-}
-
-void Widget::Label::setPosition(Vec3 const&p) {
-    GraphicWidget::setPosition(p);
-    update();
-}
-
-void Widget::Label::setSize(Vec2 const&s) {
-    GraphicWidget::setSize(s);
-    update();
+	setNeedUpdate(true);
 }
 
 void Widget::Label::setTextAligment(TextAlignment alignment) {
     _alignment = alignment;
-    update();
+	setNeedUpdate(true);
 }
 
 void Widget::Label::setColor(Vec3 const& color) {
     _color = color;
-    update();
+	setNeedUpdate(true);
 }

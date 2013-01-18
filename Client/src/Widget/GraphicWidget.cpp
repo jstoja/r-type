@@ -62,21 +62,13 @@ bool    Widget::GraphicWidget::loadImage(const std::string &image_path) {
     Graphic::Sprite* buttonSprite = new Graphic::Sprite();
     buttonSprite->setTexture(buttonTexture);
     _element.setSprite(buttonSprite);
+	setNeedUpdate(true);
     return true;
-}
-
-void    Widget::GraphicWidget::setPosition(Vec3 const& pos) {
-    _element.setPosition(pos);
-    Widget::setPosition(pos);
-}
-
-void    Widget::GraphicWidget::setSize(Vec2 const& size) {
-    _element.setSize(size);
-    Widget::setSize(size);
 }
 
 void    Widget::GraphicWidget::setScene(Graphic::Scene* scene) {
     _scene = scene;
+	setNeedUpdate(true);
 }
 
 Graphic::Scene*  Widget::GraphicWidget::getScene() const {
@@ -85,6 +77,7 @@ Graphic::Scene*  Widget::GraphicWidget::getScene() const {
 
 void    Widget::GraphicWidget::setCurrentFrame(uint32 index) {
     _element.setCurrentFrame(index);
+	setNeedUpdate(true);
 }
 
 Graphic::Sprite *Widget::GraphicWidget::getSprite() const {
@@ -97,13 +90,20 @@ Rect2 Widget::GraphicWidget::getRect() const {
 
 void    Widget::GraphicWidget::setSprite(Graphic::Sprite* sprite) {
     _element.setSprite(sprite);
+	setNeedUpdate(true);
 }
 
 void    Widget::GraphicWidget::setElement(Graphic::Element* element) {
     _element = *element;
+	setNeedUpdate(true);
 }
 
 void	Widget::GraphicWidget::setVisible(bool visible) {
 	getElement()->setVisible(visible);
 	Widget::setVisible(visible);
+}
+
+void Widget::GraphicWidget::update() {
+	_element.setSize(getSize());
+	_element.setPosition(getPosition());
 }

@@ -57,6 +57,12 @@ namespace Widget {
             
             //! Get Visibility
 			virtual bool		isVisible() const;
+
+			virtual void		update();
+
+			bool		needUpdate();
+
+			void		setNeedUpdate(bool value);
             
             //! Parent widget getter
             Widget* getParent() const;
@@ -66,6 +72,7 @@ namespace Widget {
             Vec3                _position;
             bool                _focus;
 			bool				_visible;
+			bool				_needUpdate;
     };
 };
 

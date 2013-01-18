@@ -24,7 +24,7 @@ namespace Widget {
     class IButtonDelegate;
 
     class Button : public GraphicWidget, public Event::IListenerDelegate {
-        public:
+    public:
 
             //! Create a button with position/size and image
             Button(Graphic::Scene*,
@@ -40,10 +40,10 @@ namespace Widget {
             // Event Listener Virtual Methods
             virtual void processEvent(Event::Event const& event);
 			virtual void setVisible(bool visible);
-        private:
+
+	private:
             IButtonDelegate*    _delegate;
             Event::Listener*    _eventListener;
-
     };
 }
 
