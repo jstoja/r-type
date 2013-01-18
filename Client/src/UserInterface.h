@@ -22,8 +22,9 @@
 # include "Menu/GameList.h"
 # include "Menu/GamePrepare.h"
 # include "Threading/Mutex.h"
+# include "Event/IListenerDelegate.h"
 
-class UserInterface : public Menu::IMenuDelegate {
+class UserInterface : public Menu::IMenuDelegate, public Event::IListenerDelegate {
 public:
     
     UserInterface(IUserInterfaceDelegate* delegate);
@@ -40,6 +41,9 @@ public:
 	void	setGameList(std::list<Game*> const& list);
 	void	setPlayerList(std::list<Player*> const& list);
 
+    // IListener delegate implementation
+    virtual void processEvent(Event::Event const &event);
+    
     // IMenuDelegate implementation
     virtual void welcomeCompleted(void);
     virtual void loginCompleted(std::string const& login,
@@ -60,6 +64,8 @@ private:
     IUserInterfaceDelegate* _delegate;
     Clock                   _time;
     std::string				_serverName;
+    Event::Listener*        _eventListener;
+    
     std::vector<Graphic::Scenery*>      _sceneries;
 	std::map<std::string, Menu::Menu*>  _menus;
     Menu::Menu*                         _currentMenu;

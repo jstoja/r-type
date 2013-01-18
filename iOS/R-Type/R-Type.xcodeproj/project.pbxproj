@@ -106,6 +106,17 @@
 		269AFFB516A5A8E8005BB638 /* stars-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 269AFFB416A5A8E8005BB638 /* stars-background.png */; };
 		269AFFF616A5F75E005BB638 /* iOSTextEdit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 269AFFF516A5F75E005BB638 /* iOSTextEdit.mm */; };
 		269AFFFA16A5F7C7005BB638 /* TextInputViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 269AFFF916A5F7C7005BB638 /* TextInputViewController.mm */; };
+		269D61E316A95E2E006B328F /* APacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D61CA16A95E2E006B328F /* APacket.cpp */; };
+		269D61E416A95E2E006B328F /* ASocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D61CB16A95E2E006B328F /* ASocket.cpp */; };
+		269D61E516A95E2E006B328F /* HostAddress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D61CC16A95E2E006B328F /* HostAddress.cpp */; };
+		269D61E616A95E2E006B328F /* NetworkManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D61CD16A95E2E006B328F /* NetworkManager.cpp */; };
+		269D61E716A95E2E006B328F /* TcpPacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D61CE16A95E2E006B328F /* TcpPacket.cpp */; };
+		269D61E816A95E2E006B328F /* TcpServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D61CF16A95E2E006B328F /* TcpServer.cpp */; };
+		269D61E916A95E2E006B328F /* TcpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D61D016A95E2E006B328F /* TcpSocket.cpp */; };
+		269D61EA16A95E2E006B328F /* UdpPacket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D61D116A95E2E006B328F /* UdpPacket.cpp */; };
+		269D61EB16A95E2E006B328F /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D61D216A95E2E006B328F /* UdpSocket.cpp */; };
+		269D61EC16A95E2E006B328F /* WinTcpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D61D316A95E2E006B328F /* WinTcpSocket.cpp */; };
+		269D61ED16A95E2E006B328F /* ThreadPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D61E116A95E2E006B328F /* ThreadPool.cpp */; };
 		26B59C4B1685E67200BC64D7 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B59C4A1685E67200BC64D7 /* icon@2x.png */; };
 		26B59C4E1685E6D500BC64D7 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B59C4D1685E6D500BC64D7 /* icon.png */; };
 		26BEB5E616A7EBEF00E6CC83 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26BEB5E016A7EBEF00E6CC83 /* Game.cpp */; };
@@ -303,6 +314,31 @@
 		269AFFF516A5F75E005BB638 /* iOSTextEdit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iOSTextEdit.mm; path = ../../../iOS/src/Widget/iOSTextEdit.mm; sourceTree = "<group>"; };
 		269AFFF816A5F7C7005BB638 /* TextInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextInputViewController.h; sourceTree = "<group>"; };
 		269AFFF916A5F7C7005BB638 /* TextInputViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TextInputViewController.mm; sourceTree = "<group>"; };
+		269D61CA16A95E2E006B328F /* APacket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = APacket.cpp; path = ../../../Commons/src/Network/APacket.cpp; sourceTree = "<group>"; };
+		269D61CB16A95E2E006B328F /* ASocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ASocket.cpp; path = ../../../Commons/src/Network/ASocket.cpp; sourceTree = "<group>"; };
+		269D61CC16A95E2E006B328F /* HostAddress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HostAddress.cpp; path = ../../../Commons/src/Network/HostAddress.cpp; sourceTree = "<group>"; };
+		269D61CD16A95E2E006B328F /* NetworkManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetworkManager.cpp; path = ../../../Commons/src/Network/NetworkManager.cpp; sourceTree = "<group>"; };
+		269D61CE16A95E2E006B328F /* TcpPacket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TcpPacket.cpp; path = ../../../Commons/src/Network/TcpPacket.cpp; sourceTree = "<group>"; };
+		269D61CF16A95E2E006B328F /* TcpServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TcpServer.cpp; path = ../../../Commons/src/Network/TcpServer.cpp; sourceTree = "<group>"; };
+		269D61D016A95E2E006B328F /* TcpSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TcpSocket.cpp; path = ../../../Commons/src/Network/TcpSocket.cpp; sourceTree = "<group>"; };
+		269D61D116A95E2E006B328F /* UdpPacket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UdpPacket.cpp; path = ../../../Commons/src/Network/UdpPacket.cpp; sourceTree = "<group>"; };
+		269D61D216A95E2E006B328F /* UdpSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UdpSocket.cpp; path = ../../../Commons/src/Network/UdpSocket.cpp; sourceTree = "<group>"; };
+		269D61D316A95E2E006B328F /* WinTcpSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WinTcpSocket.cpp; path = ../../../Commons/src/Network/WinTcpSocket.cpp; sourceTree = "<group>"; };
+		269D61D416A95E2E006B328F /* Proxy.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Proxy.hpp; path = ../../../Commons/src/Network/Proxy.hpp; sourceTree = "<group>"; };
+		269D61D516A95E2E006B328F /* APacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APacket.h; path = ../../../Commons/src/Network/APacket.h; sourceTree = "<group>"; };
+		269D61D616A95E2E006B328F /* ASocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ASocket.h; path = ../../../Commons/src/Network/ASocket.h; sourceTree = "<group>"; };
+		269D61D716A95E2E006B328F /* HostAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HostAddress.h; path = ../../../Commons/src/Network/HostAddress.h; sourceTree = "<group>"; };
+		269D61D816A95E2E006B328F /* IProxyDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IProxyDelegate.h; path = ../../../Commons/src/Network/IProxyDelegate.h; sourceTree = "<group>"; };
+		269D61D916A95E2E006B328F /* ISocketDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISocketDelegate.h; path = ../../../Commons/src/Network/ISocketDelegate.h; sourceTree = "<group>"; };
+		269D61DA16A95E2E006B328F /* ITcpServerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ITcpServerDelegate.h; path = ../../../Commons/src/Network/ITcpServerDelegate.h; sourceTree = "<group>"; };
+		269D61DB16A95E2E006B328F /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetworkManager.h; path = ../../../Commons/src/Network/NetworkManager.h; sourceTree = "<group>"; };
+		269D61DC16A95E2E006B328F /* TcpPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TcpPacket.h; path = ../../../Commons/src/Network/TcpPacket.h; sourceTree = "<group>"; };
+		269D61DD16A95E2E006B328F /* TcpServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TcpServer.h; path = ../../../Commons/src/Network/TcpServer.h; sourceTree = "<group>"; };
+		269D61DE16A95E2E006B328F /* TcpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TcpSocket.h; path = ../../../Commons/src/Network/TcpSocket.h; sourceTree = "<group>"; };
+		269D61DF16A95E2E006B328F /* UdpPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UdpPacket.h; path = ../../../Commons/src/Network/UdpPacket.h; sourceTree = "<group>"; };
+		269D61E016A95E2E006B328F /* UdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UdpSocket.h; path = ../../../Commons/src/Network/UdpSocket.h; sourceTree = "<group>"; };
+		269D61E116A95E2E006B328F /* ThreadPool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ThreadPool.cpp; path = ../../../Commons/src/Threading/ThreadPool.cpp; sourceTree = "<group>"; };
+		269D61E216A95E2E006B328F /* ThreadPool.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ThreadPool.hpp; path = ../../../Commons/src/Threading/ThreadPool.hpp; sourceTree = "<group>"; };
 		26B59C4A1685E67200BC64D7 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../icon@2x.png"; sourceTree = "<group>"; };
 		26B59C4D1685E6D500BC64D7 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
 		26BEB5E016A7EBEF00E6CC83 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
@@ -610,6 +646,31 @@
 		2699AA821684AEDC0092AC40 /* Commons */ = {
 			isa = PBXGroup;
 			children = (
+				269D61CA16A95E2E006B328F /* APacket.cpp */,
+				269D61CB16A95E2E006B328F /* ASocket.cpp */,
+				269D61CC16A95E2E006B328F /* HostAddress.cpp */,
+				269D61CD16A95E2E006B328F /* NetworkManager.cpp */,
+				269D61CE16A95E2E006B328F /* TcpPacket.cpp */,
+				269D61CF16A95E2E006B328F /* TcpServer.cpp */,
+				269D61D016A95E2E006B328F /* TcpSocket.cpp */,
+				269D61D116A95E2E006B328F /* UdpPacket.cpp */,
+				269D61D216A95E2E006B328F /* UdpSocket.cpp */,
+				269D61D316A95E2E006B328F /* WinTcpSocket.cpp */,
+				269D61D416A95E2E006B328F /* Proxy.hpp */,
+				269D61D516A95E2E006B328F /* APacket.h */,
+				269D61D616A95E2E006B328F /* ASocket.h */,
+				269D61D716A95E2E006B328F /* HostAddress.h */,
+				269D61D816A95E2E006B328F /* IProxyDelegate.h */,
+				269D61D916A95E2E006B328F /* ISocketDelegate.h */,
+				269D61DA16A95E2E006B328F /* ITcpServerDelegate.h */,
+				269D61DB16A95E2E006B328F /* NetworkManager.h */,
+				269D61DC16A95E2E006B328F /* TcpPacket.h */,
+				269D61DD16A95E2E006B328F /* TcpServer.h */,
+				269D61DE16A95E2E006B328F /* TcpSocket.h */,
+				269D61DF16A95E2E006B328F /* UdpPacket.h */,
+				269D61E016A95E2E006B328F /* UdpSocket.h */,
+				269D61E116A95E2E006B328F /* ThreadPool.cpp */,
+				269D61E216A95E2E006B328F /* ThreadPool.hpp */,
 				2613B34416A3337600CF84AA /* Clock.cpp */,
 				2613B34516A3337600CF84AA /* Clock.h */,
 				2613B34616A3337600CF84AA /* Library.cpp */,
@@ -879,6 +940,17 @@
 				26BEB5E716A7EBEF00E6CC83 /* GameJoin.cpp in Sources */,
 				26BEB5E816A7EBEF00E6CC83 /* GamePrepare.cpp in Sources */,
 				26BEB5EB16A7EC0800E6CC83 /* ProgressBar.cpp in Sources */,
+				269D61E316A95E2E006B328F /* APacket.cpp in Sources */,
+				269D61E416A95E2E006B328F /* ASocket.cpp in Sources */,
+				269D61E516A95E2E006B328F /* HostAddress.cpp in Sources */,
+				269D61E616A95E2E006B328F /* NetworkManager.cpp in Sources */,
+				269D61E716A95E2E006B328F /* TcpPacket.cpp in Sources */,
+				269D61E816A95E2E006B328F /* TcpServer.cpp in Sources */,
+				269D61E916A95E2E006B328F /* TcpSocket.cpp in Sources */,
+				269D61EA16A95E2E006B328F /* UdpPacket.cpp in Sources */,
+				269D61EB16A95E2E006B328F /* UdpSocket.cpp in Sources */,
+				269D61EC16A95E2E006B328F /* WinTcpSocket.cpp in Sources */,
+				269D61ED16A95E2E006B328F /* ThreadPool.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

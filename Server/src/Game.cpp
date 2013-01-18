@@ -22,7 +22,7 @@ Game::Game(Network::TcpPacket* packet) : _updatePool(new Threading::ThreadPool(_
     for (uint32 i = 0; i < eLastAttribute; ++i) {
         _attributesMutex[i] = new Threading::Mutex();
     }
-    
+
     *packet >> _name;
     *packet >> _nbSlots;
 	_viewPort = new ViewPort(0.1);
@@ -67,22 +67,22 @@ void     Game::start(void) {
         delete packet;
     }
     _attributesMutex[ePlayers]->unlock();
-    
+
     //state
     _attributesMutex[eState]->lock();
 	_state = Started;
     _attributesMutex[eState]->unlock();
-    
+
     //clock
     _attributesMutex[eClock]->lock();
     _clock.reset();
     _attributesMutex[eClock]->unlock();
-    
+
     //gameclock
     _attributesMutex[eGameClock]->lock();
     _gameClock.reset();
     _attributesMutex[eGameClock]->unlock();
-    
+
     //viewport
     _attributesMutex[eViewPort]->lock();
 	_viewPort->setPosition(0);
@@ -96,13 +96,13 @@ void	Game::update() {
     _attributesMutex[eClock]->lock();
     _attributesMutex[eObjects]->lock();
     _attributesMutex[eUpdatePool]->lock();
-    
+
 	_viewPort->update(_clock);
 	for (std::list<GameObject*>::iterator it = _objects.begin();
 		it != _objects.end(); ++it)
 		if (_viewPort->isInViewport((*it)->getXStart()))
 			_updatePool->addTask(*it, &GameObject::update, NULL);
-	_udpHandler();
+	//_udpHandler();
     _attributesMutex[eViewPort]->unlock();
     _attributesMutex[eClock]->unlock();
     _attributesMutex[eObjects]->unlock();
@@ -207,7 +207,7 @@ ISound*			Game::loadSound(std::string const& name, std::string const& pluginName
 	Sound *res= new Sound("Plugins" + Application::getInstance().getDirectorySeparator() +
 			pluginName + Application::getInstance().getDirectorySeparator() + name);
     _attributesMutex[eApplication]->unlock();
-    
+
     _attributesMutex[eGameSounds]->lock();
 	_gameSounds.push_back(res);
     _attributesMutex[eGameSounds]->unlock();
@@ -228,7 +228,7 @@ ISound*			Game::loadSound(std::string const& name) {
 
 IScenery*		Game::addScenery() {
 	Scenery	*res = new Scenery();
-    
+
     _attributesMutex[eGameSceneries]->lock();
 	_gameSceneries.push_back(res);
     _attributesMutex[eGameSceneries]->lock();
@@ -241,20 +241,20 @@ void		Game::_loadMap(std::string const& fileName) {
     Threading::MutexLocker locker1(_attributesMutex[eLevelSprites]);
     Threading::MutexLocker locker2(_attributesMutex[eGameSprites]);
     Threading::MutexLocker locker3(_attributesMutex[eGameTextures]);
-    
+
 	if (_currentLevel.load(fileName) == false)
 		throw new Exception("Cannot load map: " + _currentLevel.getError());
 	std::list<Map::Object> const& objects = _currentLevel.getObjects();
 	std::map<std::string, Texture*> const&	textures = _currentLevel.getTextures();
-    
+
 	_levelSprites = _currentLevel.getSprites();
 
 	for (std::map<std::string, Texture*>::const_iterator it = textures.begin(); it != textures.end(); ++it)
 		_gameTextures.push_back(it->second);
-	
+
     for (std::map<std::string, Sprite*>::const_iterator it = _levelSprites.begin(); it != _levelSprites.end(); ++it)
 		_gameSprites.push_back(it->second);
-	
+
     for (std::list<Map::Object>::const_iterator it = objects.begin(); it != objects.end(); ++it) {
 		try {
 			GameObject	*obj = new GameObject(it->name);
@@ -283,14 +283,14 @@ void	Game::sendResources(Network::TcpPacket &packet) {
 	packet << resources << _gameTextures << _gameSprites;
     _attributesMutex[eGameSprites]->unlock();
     _attributesMutex[eGameTextures]->unlock();
-    
+
     _attributesMutex[eGraphicScene]->lock();
     _attributesMutex[ePhysicScene]->lock();
 	_graphicScene.sendStaticElements(packet);
 	_physicScene.sendStaticElements(packet);
     _attributesMutex[eGraphicScene]->unlock();
     _attributesMutex[ePhysicScene]->unlock();
-    
+
     _attributesMutex[eGameSceneries]->lock();
 	packet << _gameSceneries << _gameSounds;
     _attributesMutex[eGameSceneries]->unlock();
@@ -298,89 +298,89 @@ void	Game::sendResources(Network::TcpPacket &packet) {
 
 }
 
-void    Game::_sendSound(void) {
-    _attributesMutex[eGameSounds]->lock();
-    _attributesMutex[ePlayers]->lock();
+// void    Game::_sendSound(void) {
+//     _attributesMutex[eGameSounds]->lock();
+//     _attributesMutex[ePlayers]->lock();
 
-    for (std::list<Sound*>::const_iterator it = _gameSounds.begin(); it != _gameSounds.end(); ++it) {
-        if ((*it)->hasChanged()) {
-            Network::UdpPacket *udpPacket = new Network::UdpPacket();
-            *udpPacket << (*it)->getId();
+//     for (std::list<Sound*>::const_iterator it = _gameSounds.begin(); it != _gameSounds.end(); ++it) {
+//         if ((*it)->hasChanged()) {
+//             Network::UdpPacket *udpPacket = new Network::UdpPacket();
+//             *udpPacket << (*it)->getId();
 
-            if ((*it)->isPlaying()) {
-                udpPacket->setCode(Network::Proxy<Network::UdpPacket>::PLAY_SOUND);
-            } else {
-                udpPacket->setCode(Network::Proxy<Network::UdpPacket>::STOP_SOUND);
-            }
-            Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
+//             if ((*it)->isPlaying()) {
+//                 udpPacket->setCode(Network::Proxy<Network::UdpPacket>::PLAY_SOUND);
+//             } else {
+//                 udpPacket->setCode(Network::Proxy<Network::UdpPacket>::STOP_SOUND);
+//             }
+//             Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
 
-            for (int i=0; i < _players.size(); i++) {
-                _players[i]->sendPacket(toSend);
-            }
-            (*it)->setChanged(false);
-            delete udpPacket;
-        }
-    }
-    _attributesMutex[eGameSounds]->unlock();
-    _attributesMutex[ePlayers]->unlock();
-}
+//             for (int i=0; i < _players.size(); i++) {
+//                 _players[i]->sendPacket(toSend);
+//             }
+//             (*it)->setChanged(false);
+//             delete udpPacket;
+//         }
+//     }
+//     _attributesMutex[eGameSounds]->unlock();
+//     _attributesMutex[ePlayers]->unlock();
+// }
 
-void    Game::_sendGraphicElements(void) {
-    Network::UdpPacket *udpPacket = new Network::UdpPacket();
-    udpPacket->setCode(Network::Proxy<Network::UdpPacket>::GRAPHIC_ELEMENTS);
-    _attributesMutex[eGraphicScene]->lock();
-    _attributesMutex[eViewPort]->lock();
-    _graphicScene.sendElements(*udpPacket, _viewPort);
-    _attributesMutex[eGraphicScene]->unlock();
-    _attributesMutex[eViewPort]->unlock();
+// void    Game::_sendGraphicElements(void) {
+//     Network::UdpPacket *udpPacket = new Network::UdpPacket();
+//     udpPacket->setCode(Network::Proxy<Network::UdpPacket>::GRAPHIC_ELEMENTS);
+//     _attributesMutex[eGraphicScene]->lock();
+//     _attributesMutex[eViewPort]->lock();
+//     _graphicScene.sendElements(*udpPacket, _viewPort);
+//     _attributesMutex[eGraphicScene]->unlock();
+//     _attributesMutex[eViewPort]->unlock();
 
-    
-    Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
 
-    _attributesMutex[ePlayers]->lock();
-    for (int i=0; i < _players.size(); i++) {
-        _players[i]->sendPacket(toSend);
-    }
-    _attributesMutex[ePlayers]->unlock();
-    delete udpPacket;
-}
+//     Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
 
-void    Game::_sendPhysicElements(void) {
-    Network::UdpPacket *udpPacket = new Network::UdpPacket();
-    udpPacket->setCode(Network::Proxy<Network::UdpPacket>::PHYSIC_ELEMENTS);
-    _attributesMutex[ePhysicScene]->lock();
-    _attributesMutex[eViewPort]->lock();
-    _physicScene.sendElements(*udpPacket, _viewPort);
-    _attributesMutex[ePhysicScene]->unlock();
-    _attributesMutex[eViewPort]->unlock();
-    Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
+//     _attributesMutex[ePlayers]->lock();
+//     for (int i=0; i < _players.size(); i++) {
+//         _players[i]->sendPacket(toSend);
+//     }
+//     _attributesMutex[ePlayers]->unlock();
+//     delete udpPacket;
+// }
 
-    _attributesMutex[ePlayers]->lock();
-    for (int i=0; i < _players.size(); i++) {
-        _players[i]->sendPacket(toSend);
-    }
-    _attributesMutex[ePlayers]->unlock();
-    delete udpPacket;
-}
+// void    Game::_sendPhysicElements(void) {
+//     Network::UdpPacket *udpPacket = new Network::UdpPacket();
+//     udpPacket->setCode(Network::Proxy<Network::UdpPacket>::PHYSIC_ELEMENTS);
+//     _attributesMutex[ePhysicScene]->lock();
+//     _attributesMutex[eViewPort]->lock();
+//     _physicScene.sendElements(*udpPacket, _viewPort);
+//     _attributesMutex[ePhysicScene]->unlock();
+//     _attributesMutex[eViewPort]->unlock();
+//     Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
 
-void    Game::_sendTime(void) {
-    Network::UdpPacket *udpPacket = new Network::UdpPacket();
-	udpPacket->setCode(Network::Proxy<Network::UdpPacket>::TIME);
-	*udpPacket << _gameClock.getEllapsedTime();
-    Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
+//     _attributesMutex[ePlayers]->lock();
+//     for (int i=0; i < _players.size(); i++) {
+//         _players[i]->sendPacket(toSend);
+//     }
+//     _attributesMutex[ePlayers]->unlock();
+//     delete udpPacket;
+// }
 
-    for (int i=0; i < _players.size(); i++) {
-        _players[i]->sendPacket(toSend);
-    }
-    delete udpPacket;
-}
+// void    Game::_sendTime(void) {
+//     Network::UdpPacket *udpPacket = new Network::UdpPacket();
+// 	udpPacket->setCode(Network::Proxy<Network::UdpPacket>::TIME);
+// 	*udpPacket << _gameClock.getEllapsedTime();
+//     Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
 
-void    Game::_udpHandler(void) {
-	this->_sendTime();
-    this->_sendGraphicElements();
-    this->_sendPhysicElements();
-    this->_sendSound();
-}
+//     for (int i=0; i < _players.size(); i++) {
+//         _players[i]->sendPacket(toSend);
+//     }
+//     delete udpPacket;
+// }
+
+// void    Game::_udpHandler(void) {
+// 	this->_sendTime();
+//     this->_sendGraphicElements();
+//     this->_sendPhysicElements();
+//     this->_sendSound();
+// }
 
 Network::APacket&       operator<<(Network::APacket& packet, Game const& game) {
     packet << game.getId() << game.getName() << game.getNbPlayers() << game.getNbSlots();

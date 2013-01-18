@@ -34,6 +34,9 @@ namespace Graphic {
 
         //! Add a Scenery to the Scene
         void addScenery(Scenery* scenery);
+        
+        //! Remove a Scenery from the Scene
+        void removeScenery(Scenery* scenery);
 
         //! Add an Element to the Scene
         void addElement(Element* element);

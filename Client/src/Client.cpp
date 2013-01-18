@@ -86,8 +86,9 @@ void Client::loginCompleted(std::string const& login, std::string const& ipAdres
         Log("Connected to server");
         _proxy = new Network::Proxy<Network::TcpPacket>(_tcpSocket, this);
         Network::TcpPacket* packet = new Network::TcpPacket();
+        packet->setCode(Network::Proxy<Network::TcpPacket>::AuthenficitationConnection);
         *packet << login;
-        //_proxy->sendPacket(packet);
+        _proxy->sendPacket(packet);
     } else {
         Log("Connection failed");
     }

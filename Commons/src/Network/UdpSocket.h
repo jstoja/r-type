@@ -1,9 +1,9 @@
 /*
 ** UdpSocket.h for r-type in /home/michar_l//r-type/Commons/src/Network
-** 
+**
 ** Made by loick michard
 ** Login   <michar_l@epitech.net>
-** 
+**
 ** Started on  Thu Dec 20 18:10:53 2012 loick michard
 */
 
@@ -26,12 +26,12 @@
 # include "Threading/MutexLocker.h"
 
 namespace Network {
-  
+
   class COMMON_EXPORT_IMPORT UdpSocket : public ASocket {
   public:
     const static uint32 readSize = 32768;
     const static uint32 writeSize = 2048;
-    
+
     UdpSocket();
     UdpSocket(int fd);
     ~UdpSocket();

@@ -12,8 +12,10 @@
 
 # include <OS.h>
 # include <Object.h>
+# include <Network/Proxy.hpp>
 # include <Network/TcpPacket.h>
 # include <Network/UdpPacket.h>
+# include <Network/UdpSocket.h>
 # include <Threading/ThreadPool.hpp>
 # include "Threading/Mutex.h"
 # include "Threading/MutexLocker.h"
@@ -32,7 +34,7 @@
 class Player;
 class GameObject;
 
-class Game : public IGame, public Object
+class Game : public IGame, public Object//, public Network::IProxyDelegate<Network::UdpPacket>
 {
 public:
     enum State {Stopped, Waiting, Started};
@@ -72,7 +74,7 @@ public:
     void                        sendResources(Network::TcpPacket &packet);
 
 private:
-    void                        _udpHandler(void);
+    //void                        _udpHandler(void);
     void                        _sendSound(void);
     void                        _sendGraphicElements(void);
     void                        _sendPhysicElements(void);
@@ -100,7 +102,7 @@ private:
         eLastAttribute
     };
     std::vector<Threading::Mutex*>	_attributesMutex;
-    
+
 	std::vector<Player*>            _players;
 	uint32                          _nbSlots;
 	std::string                     _name;
@@ -118,6 +120,8 @@ private:
 	Clock							_clock;
 	Clock							_gameClock;
 	ViewPort*						_viewPort;
+ //    Network::Proxy<Network::UdpPacket> _proxy;
+ //    Network::UdpSocket              _udpSocket;
 
 #ifdef OS_MAC
 	static const int					_updateThreadNumber = 7;
