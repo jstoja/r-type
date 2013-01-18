@@ -14,12 +14,21 @@
 #include "Manager.h"
 
 Widget::Widget::Widget(Widget* parent)
-    : _parent(parent), _focus(false), _visible(true), _needUpdate(true) {
+    : _parent(parent), _focus(false), _visible(true),
+	_needUpdate(true), _needDelete(false) {
 	Manager::getInstance().registerWidget(this);
 }
 
 Widget::Widget::~Widget() {
 	Manager::getInstance().unregisterWidget(this);
+}
+
+void Widget::Widget::deleteLater() {
+	_needDelete = true;
+}
+
+bool Widget::Widget::needDelete() const {
+	return (_needDelete);
 }
 
 void    Widget::Widget::setFocus(bool focus) {
@@ -56,8 +65,10 @@ Widget::Widget*  Widget::Widget::getParent() const {
 }
 
 void Widget::Widget::setVisible(bool visible) {
-	_visible = visible;
-	setNeedUpdate(true);
+	if (_visible != visible) {
+		_visible = visible;
+		setNeedUpdate(true);
+	}
 }
 
 bool Widget::Widget::isVisible() const {

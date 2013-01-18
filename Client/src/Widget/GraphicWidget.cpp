@@ -100,11 +100,11 @@ void	Widget::GraphicWidget::setVisible(bool visible) {
 }
 
 void	Widget::GraphicWidget::setPosition(Vec3 const& pos) {
-	_element.setPosition(pos);
 	Widget::setPosition(pos);
+	_element.setPosition(pos);
 }
 
 void	Widget::GraphicWidget::setSize(Vec2 const& size) {
-	_element.setSize(size);
 	Widget::setSize(size);
+	_element.setSize(size);
 }

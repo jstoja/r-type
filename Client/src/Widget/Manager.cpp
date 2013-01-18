@@ -26,10 +26,16 @@ void	Widget::Manager::unregisterWidget(Widget* widget) {
 }
 
 void	Widget::Manager::update() {
-	for (std::list<Widget*>::iterator it = _widgets.begin(); it != _widgets.end(); ++it) {
+	for (std::list<Widget*>::iterator it = _widgets.begin(); it != _widgets.end();) {
+		if ((*it)->needDelete()) {
+			delete *it;
+			it = _widgets.erase(it);
+			continue;
+		}
 		if ((*it)->isVisible() && (*it)->needUpdate()) {
 			(*it)->setNeedUpdate(false);
 			(*it)->update();
+			++it;
 		}
 	}
 }

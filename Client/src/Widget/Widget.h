@@ -32,6 +32,10 @@ namespace Widget {
 
             //! Destructor
             virtual ~Widget();
+
+			void deleteLater();
+
+			bool needDelete() const;
         
             //! Pos getter
             Vec3 const&         getPosition() const;
@@ -75,6 +79,7 @@ namespace Widget {
             bool                _focus;
 			bool				_visible;
 			bool				_needUpdate;
+			bool				_needDelete;
     };
 };
 

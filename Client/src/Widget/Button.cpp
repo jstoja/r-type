@@ -66,6 +66,8 @@ void            Widget::Button::setSize(Vec2 const& size) {
 }
 
 void			Widget::Button::setVisible(bool visible) {
-	GraphicWidget::setVisible(visible);
-	setCurrentFrame(2);
+	if (visible != isVisible()) {
+		setCurrentFrame(2);
+		GraphicWidget::setVisible(visible);
+	}
 }
