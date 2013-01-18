@@ -117,9 +117,12 @@
 		269D61EB16A95E2E006B328F /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D61D216A95E2E006B328F /* UdpSocket.cpp */; };
 		269D61EC16A95E2E006B328F /* WinTcpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D61D316A95E2E006B328F /* WinTcpSocket.cpp */; };
 		269D61ED16A95E2E006B328F /* ThreadPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D61E116A95E2E006B328F /* ThreadPool.cpp */; };
+		269D620716A9C732006B328F /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D620116A9C732006B328F /* Game.cpp */; };
+		269D620816A9C732006B328F /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D620216A9C732006B328F /* Player.cpp */; };
+		269D620916A9C732006B328F /* Server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D620316A9C732006B328F /* Server.cpp */; };
+		269D620C16A9C741006B328F /* GameList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D620A16A9C741006B328F /* GameList.cpp */; };
 		26B59C4B1685E67200BC64D7 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B59C4A1685E67200BC64D7 /* icon@2x.png */; };
 		26B59C4E1685E6D500BC64D7 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B59C4D1685E6D500BC64D7 /* icon.png */; };
-		26BEB5E616A7EBEF00E6CC83 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26BEB5E016A7EBEF00E6CC83 /* Game.cpp */; };
 		26BEB5E716A7EBEF00E6CC83 /* GameJoin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26BEB5E216A7EBEF00E6CC83 /* GameJoin.cpp */; };
 		26BEB5E816A7EBEF00E6CC83 /* GamePrepare.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26BEB5E416A7EBEF00E6CC83 /* GamePrepare.cpp */; };
 		26BEB5EB16A7EC0800E6CC83 /* ProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26BEB5E916A7EC0700E6CC83 /* ProgressBar.cpp */; };
@@ -339,10 +342,16 @@
 		269D61E016A95E2E006B328F /* UdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UdpSocket.h; path = ../../../Commons/src/Network/UdpSocket.h; sourceTree = "<group>"; };
 		269D61E116A95E2E006B328F /* ThreadPool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ThreadPool.cpp; path = ../../../Commons/src/Threading/ThreadPool.cpp; sourceTree = "<group>"; };
 		269D61E216A95E2E006B328F /* ThreadPool.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ThreadPool.hpp; path = ../../../Commons/src/Threading/ThreadPool.hpp; sourceTree = "<group>"; };
+		269D620116A9C732006B328F /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = ../../../Client/src/Game.cpp; sourceTree = "<group>"; };
+		269D620216A9C732006B328F /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Player.cpp; path = ../../../Client/src/Player.cpp; sourceTree = "<group>"; };
+		269D620316A9C732006B328F /* Server.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Server.cpp; path = ../../../Client/src/Server.cpp; sourceTree = "<group>"; };
+		269D620416A9C732006B328F /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = ../../../Client/src/Game.h; sourceTree = "<group>"; };
+		269D620516A9C732006B328F /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = ../../../Client/src/Player.h; sourceTree = "<group>"; };
+		269D620616A9C732006B328F /* Server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Server.h; path = ../../../Client/src/Server.h; sourceTree = "<group>"; };
+		269D620A16A9C741006B328F /* GameList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameList.cpp; sourceTree = "<group>"; };
+		269D620B16A9C741006B328F /* GameList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameList.h; sourceTree = "<group>"; };
 		26B59C4A1685E67200BC64D7 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../icon@2x.png"; sourceTree = "<group>"; };
 		26B59C4D1685E6D500BC64D7 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
-		26BEB5E016A7EBEF00E6CC83 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
-		26BEB5E116A7EBEF00E6CC83 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		26BEB5E216A7EBEF00E6CC83 /* GameJoin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameJoin.cpp; sourceTree = "<group>"; };
 		26BEB5E316A7EBEF00E6CC83 /* GameJoin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameJoin.h; sourceTree = "<group>"; };
 		26BEB5E416A7EBEF00E6CC83 /* GamePrepare.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GamePrepare.cpp; sourceTree = "<group>"; };
@@ -389,6 +398,12 @@
 		2613B35B16A358B400CF84AA /* Client */ = {
 			isa = PBXGroup;
 			children = (
+				269D620116A9C732006B328F /* Game.cpp */,
+				269D620216A9C732006B328F /* Player.cpp */,
+				269D620316A9C732006B328F /* Server.cpp */,
+				269D620416A9C732006B328F /* Game.h */,
+				269D620516A9C732006B328F /* Player.h */,
+				269D620616A9C732006B328F /* Server.h */,
 				2613B35816A358AB00CF84AA /* Client.cpp */,
 				266F06C516A41579004F5554 /* UserInterface.cpp */,
 				266F06C616A41579004F5554 /* UserInterface.h */,
@@ -439,8 +454,8 @@
 		266F070216A43519004F5554 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				26BEB5E016A7EBEF00E6CC83 /* Game.cpp */,
-				26BEB5E116A7EBEF00E6CC83 /* Game.h */,
+				269D620A16A9C741006B328F /* GameList.cpp */,
+				269D620B16A9C741006B328F /* GameList.h */,
 				26BEB5E216A7EBEF00E6CC83 /* GameJoin.cpp */,
 				26BEB5E316A7EBEF00E6CC83 /* GameJoin.h */,
 				26BEB5E416A7EBEF00E6CC83 /* GamePrepare.cpp */,
@@ -936,7 +951,6 @@
 				269AFFFA16A5F7C7005BB638 /* TextInputViewController.mm in Sources */,
 				269A002716A62C48005BB638 /* Menu.cpp in Sources */,
 				269A002816A62C48005BB638 /* NewGame.cpp in Sources */,
-				26BEB5E616A7EBEF00E6CC83 /* Game.cpp in Sources */,
 				26BEB5E716A7EBEF00E6CC83 /* GameJoin.cpp in Sources */,
 				26BEB5E816A7EBEF00E6CC83 /* GamePrepare.cpp in Sources */,
 				26BEB5EB16A7EC0800E6CC83 /* ProgressBar.cpp in Sources */,
@@ -951,6 +965,10 @@
 				269D61EB16A95E2E006B328F /* UdpSocket.cpp in Sources */,
 				269D61EC16A95E2E006B328F /* WinTcpSocket.cpp in Sources */,
 				269D61ED16A95E2E006B328F /* ThreadPool.cpp in Sources */,
+				269D620716A9C732006B328F /* Game.cpp in Sources */,
+				269D620816A9C732006B328F /* Player.cpp in Sources */,
+				269D620916A9C732006B328F /* Server.cpp in Sources */,
+				269D620C16A9C741006B328F /* GameList.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

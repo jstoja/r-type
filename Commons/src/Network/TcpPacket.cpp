@@ -62,7 +62,6 @@ uint32 Network::TcpPacket::getCode() {
 }
 
 void Network::TcpPacket::updateData() {
-    Log("Updated");
     if (_data.getSize() >= 8)
         *((int*)(&((char*)_data)[4])) = _size;
 }
