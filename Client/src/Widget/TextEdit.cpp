@@ -36,7 +36,8 @@ Widget::TextEdit::TextEdit(Graphic::Scene* scene,
         // Listen on all the scene, in order to determine when we loose focus
         _eventListener = new Event::Listener(Event::PointerPushed | Event::TextEntered,
                                              this);
-        Event::Manager::getInstance().addEventListener(_eventListener);
+		if (isVisible())
+	        Event::Manager::getInstance().addEventListener(_eventListener);
 }
 
 Widget::TextEdit::~TextEdit() {
@@ -76,8 +77,6 @@ void Widget::TextEdit::setSize(Vec2 const& size) {
 }
 
 void Widget::TextEdit::processEvent(Event::Event const& event) {
-	if (isVisible() == false)
-		return ;
     if (event.type == Event::PointerPushed) {
         if (!hasFocus() && getRect().in(event.pos)) {
             setFocus(true);
@@ -98,6 +97,12 @@ void Widget::TextEdit::processEvent(Event::Event const& event) {
 }
 
 void Widget::TextEdit::setVisible(bool visible) {
+	if (visible == isVisible())
+		return ;
+	if (visible)
+	    Event::Manager::getInstance().addEventListener(_eventListener);
+	else
+	    Event::Manager::getInstance().removeEventListener(_eventListener);
 	_label.setVisible(visible);
 	GraphicWidget::setVisible(visible);
 }

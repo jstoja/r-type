@@ -71,6 +71,7 @@ class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Ne
     void receivePlayerList(Network::TcpPacket* packet);
     void receiveNewPlayer(Network::TcpPacket* packet);
 	void receivePlayerReady(Network::TcpPacket* packet);
+	void startGame(Network::TcpPacket* packet);
 
     typedef void (Client::* commandPointer)(Network::TcpPacket*);
     

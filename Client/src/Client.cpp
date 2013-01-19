@@ -29,7 +29,7 @@ _commands(), _login(""), _userId(0) {
 	_commands[Network::TcpProxy::GamePlayerList] = &Client::receivePlayerList;
 	_commands[Network::TcpProxy::GameNewPlayer] = &Client::receiveNewPlayer;
 	_commands[Network::TcpProxy::GamePlayerReady] = &Client::receivePlayerReady;
-    
+    _commands[Network::TcpProxy::GameStart] = &Client::startGame;
     Graphic::Renderer::getInstance().init();
     Graphic::Renderer::getInstance().setScene(&_scene);
     
@@ -339,6 +339,10 @@ void Client::receivePlayerReady(Network::TcpPacket* packet) {
 				_ui->setCurrentGame(_currentGame);
 			return ;
 		}
+}
+
+void Client::startGame(Network::TcpPacket* packet) {
+
 }
 
 void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* packet) {

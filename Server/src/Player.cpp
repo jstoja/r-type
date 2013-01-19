@@ -26,7 +26,7 @@ _proxy(socket, this), _server(server), _commands() {
     _commands[Network::TcpProxy::InformationsGameList] = &Player::listGame;
     _commands[Network::TcpProxy::GameJoin] = &Player::joinGame;
     _commands[Network::TcpProxy::GameCreate] = &Player::createGame;
-    _commands[Network::TcpProxy::GameReady] = &Player::readyToStart;
+    _commands[Network::TcpProxy::PlayerReady] = &Player::readyToStart;
     _commands[Network::TcpProxy::PlayerList] = &Player::playerList;
     _commands[Network::TcpProxy::GameQuit] = &Player::quitGame;
 }
