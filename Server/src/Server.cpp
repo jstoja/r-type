@@ -9,6 +9,7 @@
 
 #include "Game.h"
 #include <Application.h>
+#include <algorithm>
 
 #include "Server.h"
 #include "GameObject.h"
@@ -21,7 +22,7 @@ Server::Server() {
   _tcpServer.setDelegate(this);
   if (_tcpServer.listen())
     Log("Server started on port : " << _tcpServer.getLocalPort());
-    
+
     Game* game = new Game();
     game->setName("Game one");
     _games[game->getId()] = game;
