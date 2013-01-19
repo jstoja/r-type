@@ -12,6 +12,7 @@
 
 # include <list>
 # include <vector>
+# include <map>
 # include "APacket.h"
 # include "IProxyDelegate.h"
 # include "Threading/Mutex.h"
@@ -19,6 +20,7 @@
 # include "TcpPacket.h"
 # include "UdpPacket.h"
 # include "Debug.h"
+# include "CriticalPacket.h"
 
 namespace Network {
 
@@ -85,6 +87,15 @@ namespace Network {
         virtual ~Proxy() {
         }
 
+        void    checkCriticalPackets(void) {
+            for (std::map<uint32, Network::CriticalPacket*>::iterator it = _criticalPackets.begin(); it != _criticalPackets.end(); ++it) {
+                if (it->second->needResend(0)) {
+                    sendPacket(it->second->getPacket());
+                    it->second->resent();
+                }
+            }
+        }
+
         void sendPacket(const ToSend& toSend) {
             _toSendMutex.lock();
             _toSend->push_back(toSend);
@@ -112,8 +123,19 @@ namespace Network {
         void readFinished(ASocket*, ByteArray&, const HostAddress&, uint16) {
             _packet->update();
             if (_packet->isComplete()) {
-                if (_delegate)
+                if (_delegate) {
                     _delegate->packetReceived(_packet);
+
+                    uint32 code, id, size;
+                    *_packet >> code >> id >> size;
+
+                    std::map<uint32, Network::CriticalPacket*>::iterator it = _criticalPackets.find(id);
+
+                    if (it != _criticalPackets.end()) {
+                        delete _criticalPackets[id];
+                        _criticalPackets.erase(it);
+                    }
+                }
                 _packet = new T();
                 _packet->read(_socket);
             }
@@ -170,12 +192,13 @@ namespace Network {
             _toSendMutex.unlock();
         }
 
-        ASocket*                _socket;
-        IProxyDelegate<T>*      _delegate;
-        T*                      _packet;
-        std::list<ToSend>       *_toSend;
-        bool                    _writing;
-        Threading::Mutex        _toSendMutex;
+        ASocket*                                     _socket;
+        IProxyDelegate<T>*                           _delegate;
+        T*                                           _packet;
+        std::list<ToSend>                            *_toSend;
+        bool                                         _writing;
+        Threading::Mutex                             _toSendMutex;
+        std::map<uint32, Network::CriticalPacket*>   _criticalPackets;
     };
 
     typedef Network::Proxy<TcpPacket> TcpProxy;

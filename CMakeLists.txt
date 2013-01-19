@@ -175,6 +175,8 @@ TARGET_LINK_LIBRARIES (
 	Commons
 )
 
+TARGET_LINK_LIBRARIES (Commons m)
+
 IF (UNIX)
     TARGET_LINK_LIBRARIES (Commons pthread)
 
@@ -378,7 +380,7 @@ FOREACH (TEST_FILE ${TESTS_FILES})
         TARGET ${TEST_NAME}
         PROPERTY RUNTIME_OUTPUT_DIRECTORY_RELEASE ${RTYPE_TESTS_PATH}
     )
-	
+
 ENDFOREACH ()
 
 # Creating all plugins projects
@@ -390,19 +392,19 @@ FOREACH (PLUGIN_DIR ${PLUGIN_DIRS})
         ${PLUGIN_DIR}
         NAME_WE
     )
-	
+
 	FILE (GLOB_RECURSE PLUGIN_SRC ${PLUGIN_DIR}/src/*)
     ADD_LIBRARY (
         ${PLUGIN_NAME} SHARED
         ${PLUGIN_SRC}
         ${SERVER_COMMONS_SOURCE}
     )
-    
+
     TARGET_LINK_LIBRARIES (
         ${PLUGIN_NAME}
         Commons
     )
-	
+
 	ADD_CUSTOM_COMMAND (
 		TARGET ${PLUGIN_NAME} POST_BUILD
 		COMMAND ${CMAKE_COMMAND} -E copy_directory
