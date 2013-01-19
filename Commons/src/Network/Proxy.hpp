@@ -176,7 +176,7 @@ namespace Network {
         bool                    _writing;
         Threading::Mutex        _toSendMutex;
     };
-    
+
     typedef Network::Proxy<TcpPacket> TcpProxy;
     typedef Network::Proxy<UdpPacket> UdpProxy;
 }

@@ -137,7 +137,7 @@ void Player::serverInfos(Network::TcpPacket* packet) {
     _attributesMutex[eServer]->lock();
     std::string name = _server->getName();
     _attributesMutex[eServer]->unlock();
-    
+
     Network::TcpPacket *tcpPacket = new Network::TcpPacket();
     tcpPacket->setCode(Network::TcpProxy::InformationsGameGeneralResponse);
     *tcpPacket << name;

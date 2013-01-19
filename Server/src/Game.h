@@ -34,7 +34,7 @@
 class Player;
 class GameObject;
 
-class Game : public IGame, public Object//, public Network::IProxyDelegate<Network::UdpPacket>
+class Game : public IGame, public Object, public Network::IProxyDelegate<Network::UdpPacket>
 {
 public:
     enum State {Stopped, Waiting, Started};
@@ -49,6 +49,8 @@ public:
     uint32                  getNbSlots(void) const;
     void                    setNbSlots(uint32 slots);
 
+
+    void    packetInProgress(uint32 code, float32 progress) {}
     void	join(Player* player);
     bool	canJoin(Player* player=NULL) const;
     void	quit(Player* player);
@@ -57,6 +59,10 @@ public:
     void	start(void);
     void	update();
     void    sendPlayerList(Player* player);
+
+    void    connectionClosed(Network::Proxy<Network::UdpPacket>*);
+    void    packetSent(Network::UdpPacket const* packet);
+    void    packetReceived(Network::UdpPacket* packet);
 
     virtual void                addGraphicElement(IGraphicElement* element);
     virtual IGraphicElement*    createGraphicElement() const;
@@ -78,7 +84,7 @@ public:
     void                        sendResources(Network::TcpPacket &packet);
 
 private:
-    //void                        _udpHandler(void);
+    void                        _udpHandler(void);
     void                        _sendSound(void);
     void                        _sendGraphicElements(void);
     void                        _sendPhysicElements(void);
@@ -124,8 +130,8 @@ private:
 	Clock							_clock;
 	Clock							_gameClock;
 	ViewPort*						_viewPort;
- //    Network::Proxy<Network::UdpPacket> _proxy;
- //    Network::UdpSocket              _udpSocket;
+    Network::Proxy<Network::UdpPacket> *_proxy;
+    Network::UdpSocket              *_udpSocket;
 
 #ifdef OS_MAC
 	static const int					_updateThreadNumber = 7;

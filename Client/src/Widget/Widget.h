@@ -65,9 +65,9 @@ namespace Widget {
 
 			virtual void		update();
 
-			bool		needUpdate();
+			bool            needUpdate();
 
-			void		setNeedUpdate(bool value);
+			virtual void    setNeedUpdate(bool value);
             
             //! Parent widget getter
             Widget* getParent() const;
