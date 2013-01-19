@@ -16,23 +16,24 @@
 # include "Widget/Table.h"
 # include "Widget/ITableDelegate.h"
 # include "../Player.h"
+# include "../Game.h"
 
 namespace Menu {
     
     class GamePrepare : public Menu, public Widget::IButtonDelegate, public Widget::ITableDelegate {
     public:
         
-        GamePrepare(Graphic::Scene *scene, IMenuDelegate* delegate,
-                    uint32 nbPlayers, uint32 nbSlots);
+        GamePrepare(Graphic::Scene *scene, IMenuDelegate* delegate);
         virtual ~GamePrepare(void);
         
         virtual void buttonReleased(Widget::Button* instance);
         
-        void setPlayerList(std::list<Player*> const& players);
+        void setCurrentGame(Game* game);
         
         virtual void setVisible(bool visible);
 
 		virtual void	setServerName(std::string const& serverName);
+		virtual void	setGameName(std::string const& gameName);
     private:
         void _addPlayer(std::string const& name, bool ready);
 

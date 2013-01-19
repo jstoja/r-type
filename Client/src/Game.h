@@ -18,6 +18,7 @@
 class Game : public Object {
 public:
 	Game(uint32 id);
+	~Game();
 
 	void				setName(std::string const& name);
 	std::string const&	getName() const;
@@ -28,10 +29,17 @@ public:
 	void	setNbSlot(uint32 nbSlot);
 	uint32	getNbSlot() const;
 
+	void	addPlayer(Network::TcpPacket& packet);
 	void	addPlayer(Player* player);
+	void	setPlayers(std::list<Player*> const& players);
+	void	setPlayers(Network::TcpPacket& packet);
+	void	setPlayerReady(uint32 playerId, bool value);
+	std::list<Player*> const& getPlayers() const;
 
 	static Game*	newGame(Network::TcpPacket& packet);
 private:
+	void	_clear();
+
 	std::string			_name;
 	uint32				_nbPlayer;
 	uint32				_nbSlot;

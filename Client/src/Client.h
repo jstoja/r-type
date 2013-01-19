@@ -19,6 +19,7 @@
 # include "Resource.h"
 # include "Graphic/Texture.h"
 # include "Game.h"
+#include "Sound/Sound.h"
 
 class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Network::TcpPacket>, public Network::ISocketDelegate {
     public:
@@ -64,15 +65,25 @@ class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Ne
     void receiveGameList(Network::TcpPacket* packet);
     void gameCreatedResponse(Network::TcpPacket* packet);
     void gameJoinResponse(Network::TcpPacket* packet);
-    
+    void receiveResources(Network::TcpPacket* packet);
+    void receivePlayerList(Network::TcpPacket* packet);
+    void receiveNewPlayer(Network::TcpPacket* packet);
+	void receivePlayerReady(Network::TcpPacket* packet);
+
     typedef void (Client::* commandPointer)(Network::TcpPacket*);
     
-	static Resource*	createResource(Network::TcpPacket& packet);
-	static Graphic::Texture* createTexture(Network::TcpPacket& packet);
-	static Graphic::Sprite*	createSprite(Network::TcpPacket& packet);
+	static Resource*			createResource(Network::TcpPacket& packet);
+	static Graphic::Texture*	createTexture(Network::TcpPacket& packet);
+	static Graphic::Sprite*		createSprite(Network::TcpPacket& packet);
+	static Graphic::Element*	createGraphicElement(Network::TcpPacket& packet);
+	static Graphic::Scenery*	createScenery(Network::TcpPacket& packet);
+	static Sound::Sound*		createSound(Network::TcpPacket& packet);
 
 private:
-    Graphic::Scene  _scene;
+	void	_initGame();
+	void	_clearGame();
+
+	Graphic::Scene  _scene;
     uint32          _framerateLimit;
     Clock           _time;
     UserInterface*  _ui;
@@ -84,6 +95,13 @@ private:
     std::string                         _login;
     uint32                              _userId;
     std::list<Game*>                    _games;
+	Game*								_currentGame;
+	std::list<Resource*>				_gameResources;
+	std::list<Graphic::Texture*>		_gameTextures;
+	std::list<Graphic::Sprite*>			_gameSprites;
+	std::list<Graphic::Element*>		_gameElements;
+	std::list<Graphic::Scenery*>		_gameSceneries;
+	std::list<Sound::Sound*>			_gameSounds;
 };
 
 #endif

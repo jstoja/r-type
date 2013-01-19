@@ -93,5 +93,5 @@ void Menu::GameJoin::setServerName(std::string const& serverName) {
 }
 
 void Menu::GameJoin::setGameName(std::string const& gameName) {
-	_serverNameLabel->setText(gameName);
+	_gameNameLabel->setText(gameName);
 }

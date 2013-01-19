@@ -40,8 +40,9 @@ public:
     Menu::Menu* getCurrentMenu(void) const;
     
 	void	setServerName(std::string const& serverName);
+	void	setGameName(std::string const& gameName);
 	void	setGameList(std::list<Game*> const& list);
-	void	setPlayerList(std::list<Player*> const& list);
+	void	setCurrentGame(Game* game);
 
     // IListener delegate implementation
     virtual void processEvent(Event::Event const &event);

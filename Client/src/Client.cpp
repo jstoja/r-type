@@ -25,7 +25,10 @@ _commands(), _login(""), _userId(0) {
     _commands[Network::TcpProxy::InformationsGameListResponse] = &Client::receiveGameList;
     _commands[Network::TcpProxy::GameCreatedSuccess] = &Client::gameCreatedResponse;
     _commands[Network::TcpProxy::GameJoinSuccess] = &Client::gameJoinResponse;
-    
+	_commands[Network::TcpProxy::GameResources] = &Client::receiveResources;
+	_commands[Network::TcpProxy::GamePlayerList] = &Client::receivePlayerList;
+	_commands[Network::TcpProxy::GameNewPlayer] = &Client::receiveNewPlayer;
+	_commands[Network::TcpProxy::GamePlayerReady] = &Client::receivePlayerReady;
     
     Graphic::Renderer::getInstance().init();
     Graphic::Renderer::getInstance().setScene(&_scene);
@@ -202,13 +205,105 @@ void Client::gameCreatedResponse(Network::TcpPacket* packet) {
 void Client::gameJoinResponse(Network::TcpPacket* packet) {
     if ((packet->getCode() & 0xff) == 0) {
         _ui->goToMenu("GameJoin");
-    } else if ((packet->getCode() & 0xff) == 1) {
+		uint32 id;
+		*packet >> id;
+		_currentGame = NULL;
+		for (std::list<Game*>::iterator it = _games.begin(); it != _games.end(); ++it)
+			if ((*it)->getId() == id) {
+				_currentGame = *it;
+				break;
+			}
+		if (_currentGame == NULL) {
+	        Log("Cannot join game: unknown Game Id on client Side");
+			return ;
+		}
+		_ui->setGameName(_currentGame->getName());
+		_ui->setCurrentGame(_currentGame);
+	} else if ((packet->getCode() & 0xff) == 1) {
         Log("Cannot join game: game is full");
     } else if ((packet->getCode() & 0xff) == 2) {
         Log("Cannot join game: invalid game");
     } else {
         Log("Cannot join game: invalid error");
     }
+}
+
+void Client::receiveResources(Network::TcpPacket* packet) {
+    uint32 nb;
+    *packet >> nb;
+    for (uint32 i = 0; i < nb; ++i) {
+		Resource* resource = createResource(*packet);
+		if (resource)
+			_gameResources.push_back(resource);
+    }
+    *packet >> nb;
+    for (uint32 i = 0; i < nb; ++i) {
+		Graphic::Texture* texture = createTexture(*packet);
+		if (texture)
+			_gameTextures.push_back(texture);
+    }
+    *packet >> nb;
+    for (uint32 i = 0; i < nb; ++i) {
+		Graphic::Sprite* sprite = createSprite(*packet);
+		if (sprite)
+			_gameSprites.push_back(sprite);
+    }
+    *packet >> nb;
+    for (uint32 i = 0; i < nb; ++i) {
+		Graphic::Element* element = createGraphicElement(*packet);
+		if (element)
+			_gameElements.push_back(element);
+    }
+    *packet >> nb;
+    for (uint32 i = 0; i < nb; ++i) {
+		Graphic::Scenery* scenery = createScenery(*packet);
+		if (scenery) {
+			_gameSceneries.push_back(scenery);
+		}
+    }
+    *packet >> nb;
+    for (uint32 i = 0; i < nb; ++i) {
+		Sound::Sound* sound = createSound(*packet);
+		if (sound)
+			_gameSounds.push_back(sound);
+    }
+}
+
+void Client::receivePlayerList(Network::TcpPacket* packet) {
+	uint32 id;
+	*packet >> id;
+	for (std::list<Game*>::iterator it = _games.begin(); it != _games.end(); ++it)
+		if ((*it)->getId() == id) {
+			(*it)->setPlayers(*packet);
+			if (_currentGame)
+				_ui->setCurrentGame(_currentGame);
+			return ;
+		}
+}
+
+void Client::receiveNewPlayer(Network::TcpPacket* packet) {
+	uint32 id;
+	*packet >> id;
+	for (std::list<Game*>::iterator it = _games.begin(); it != _games.end(); ++it)
+		if ((*it)->getId() == id) {
+			(*it)->addPlayer(*packet);
+			if (_currentGame)
+				_ui->setCurrentGame(_currentGame);
+			return ;
+		}
+}
+
+void Client::receivePlayerReady(Network::TcpPacket* packet) {
+	uint32 id;
+	*packet >> id;
+	for (std::list<Game*>::iterator it = _games.begin(); it != _games.end(); ++it)
+		if ((*it)->getId() == id) {
+			*packet >> id;
+			(*it)->setPlayerReady(id, true);
+			if (_currentGame)
+				_ui->setCurrentGame(_currentGame);
+			return ;
+		}
 }
 
 void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* packet) {
@@ -270,3 +365,98 @@ Graphic::Sprite*		Client::createSprite(Network::TcpPacket& packet) {
 	return (NULL);
 }
 
+Graphic::Element*	Client::createGraphicElement(Network::TcpPacket& packet) {
+	uint32 id, spriteId;
+	Vec3 position;
+	float32 rotation;
+	Vec2 size;
+	char spriteFrame, type;
+
+	packet >> id >> position >> rotation >> size >> spriteId >> spriteFrame >> type;
+	Graphic::Sprite* sprite = dynamic_cast<Graphic::Sprite*>(ObjectManager::getInstance().getObject(spriteId));
+	if (sprite) {
+		Graphic::Element* res = new Graphic::Element(id);
+		res->setPosition(position);
+		res->setRotation(rotation);
+		res->setSize(size);
+		res->setSprite(sprite);
+		res->setCurrentFrame(spriteFrame);
+		Graphic::Element::Type newType = Graphic::Element::Dynamic;
+		if (type == 0)
+			newType = Graphic::Element::Static;
+		else if (type == 2)
+			newType = Graphic::Element::Floating;
+		res->setType(newType);
+		return (res);
+	}
+	return (NULL);
+}
+
+Graphic::Scenery*	Client::createScenery(Network::TcpPacket& packet) {
+	uint32 id, textureId;
+	float32 speed, width, xStart, xEnd;
+
+	packet >> id >> textureId >> speed >> width >> xStart >> xEnd;
+	Graphic::Texture *texture = dynamic_cast<Graphic::Texture*>(ObjectManager::getInstance().getObject(textureId));
+	if (texture) {
+		Graphic::Scenery*	res = new Graphic::Scenery(id);
+		res->setTexture(texture);
+		res->setSpeed(speed);
+		res->setWidth(width);
+		res->setRange(Vec2(xStart, xEnd));
+		return (res);
+	}
+	return (NULL);
+}
+
+Sound::Sound*		Client::createSound(Network::TcpPacket& packet) {
+	uint32	id, resourceId;
+	int32	repeat;
+
+	packet >> id >> resourceId;
+	Resource *resource = dynamic_cast<Resource*>(ObjectManager::getInstance().getObject(resourceId));
+	if (resource) {
+		Sound::Sound* res = new Sound::Sound(resource);
+		return (res);
+	}
+	return (NULL);
+}
+
+void Client::_initGame() {
+	for (std::list<Graphic::Element*>::iterator it = _gameElements.begin(); it != _gameElements.end(); ++it) {
+		if (*it) {
+			(*it)->setVisible(true);
+			_scene.addElement(*it);
+		}
+	}
+	for (std::list<Graphic::Scenery*>::iterator it = _gameSceneries.begin(); it != _gameSceneries.end(); ++it) {
+		if (*it) {
+			_scene.addScenery(*it);
+		}
+	}
+}
+
+void Client::_clearGame() {
+	for (std::list<Resource*>::iterator it = _gameResources.begin(); it != _gameResources.end(); ++it)
+		delete *it;
+	_gameResources.clear();
+	for (std::list<Graphic::Texture*>::iterator it = _gameTextures.begin(); it != _gameTextures.end(); ++it)
+		delete *it;
+	_gameTextures.clear();
+	for (std::list<Graphic::Sprite*>::iterator it = _gameSprites.begin(); it != _gameSprites.end(); ++it)
+		delete *it;
+	_gameSprites.clear();
+	for (std::list<Graphic::Element*>::iterator it = _gameElements.begin(); it != _gameElements.end(); ++it) {
+		_scene.removeElement(*it);
+		delete *it;
+	}
+	_gameElements.clear();
+	for (std::list<Graphic::Scenery*>::iterator it = _gameSceneries.begin(); it != _gameSceneries.end(); ++it) {
+		_scene.removeScenery(*it);
+		delete *it;
+	}
+	_gameSceneries.clear();
+	for (std::list<Sound::Sound*>::iterator it = _gameSounds.begin(); it != _gameSounds.end(); ++it)
+		delete *it;
+	_gameSounds.clear();
+}

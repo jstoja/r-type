@@ -10,8 +10,7 @@
 
 #include <sstream>
 
-Menu::GamePrepare::GamePrepare(Graphic::Scene *scene, IMenuDelegate* delegate,
-                               uint32 nbPlayers, uint32 nbSlots)
+Menu::GamePrepare::GamePrepare(Graphic::Scene *scene, IMenuDelegate* delegate)
 : Menu(scene, delegate) {
     
 	_previousMenu = new Widget::Button(scene, this, "button-left-arrow.png");
@@ -38,9 +37,7 @@ Menu::GamePrepare::GamePrepare(Graphic::Scene *scene, IMenuDelegate* delegate,
 	_nbPlayersLabel->setSize(Vec2(1, 0.475));
     _nbPlayersLabel->setTextAligment(Widget::Label::TextAlignLeft);
     
-    std::stringstream nbPlayersStr;
-    nbPlayersStr << nbPlayers << " / " << nbSlots;
-    _nbPlayersValueLabel = new Widget::Label(scene, nbPlayersStr.str());
+    _nbPlayersValueLabel = new Widget::Label(scene, "");
     _nbPlayersValueLabel->setPosition(Vec3(5.2, scene->getViewport().y - 2.7));
 	_nbPlayersValueLabel->setSize(Vec2(1, 0.475));
     _nbPlayersValueLabel->setTextAligment(Widget::Label::TextAlignLeft);
@@ -87,10 +84,15 @@ void Menu::GamePrepare::buttonReleased(Widget::Button* instance) {
     }
 }
 
-void Menu::GamePrepare::setPlayerList(std::list<Player*> const& players) {
+void Menu::GamePrepare::setCurrentGame(Game* game) {
+	setGameName(game->getName());
 	_playerList->clearDatas();
+	std::list<Player*> const& players = game->getPlayers();
 	for (std::list<Player*>::const_iterator it = players.begin(); it != players.end(); ++it)
 		_addPlayer((*it)->getName(), (*it)->isReady());
+    std::stringstream nbPlayersStr;
+	nbPlayersStr << game->getNbPlayer() << " / " << game->getNbSlot();
+	_nbPlayersValueLabel->setText(nbPlayersStr.str());
 }
 
 void Menu::GamePrepare::_addPlayer(const std::string &name, bool ready) {
@@ -119,4 +121,8 @@ void Menu::GamePrepare::setVisible(bool visible) {
 
 void Menu::GamePrepare::setServerName(std::string const& serverName) {
 	_serverNameLabel->setText(serverName);
+}
+
+void Menu::GamePrepare::setGameName(std::string const& gameName) {
+	_gameNameLabel->setText(gameName);
 }

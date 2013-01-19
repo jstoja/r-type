@@ -12,6 +12,10 @@
 Game::Game(uint32 id) : Object(id), _nbPlayer(0), _nbSlot(0) {
 }
 
+Game::~Game() {
+	_clear();
+}
+
 void	Game::setName(std::string const& name) {
 	_name = name;
 }
@@ -39,6 +43,46 @@ uint32	Game::getNbSlot() const {
 void	Game::addPlayer(Player* player) {
 	_players.push_back(player);
 	_nbPlayer = _players.size();
+}
+
+void	Game::addPlayer(Network::TcpPacket& packet) {
+	_players.push_back(Player::newPlayer(packet));
+	_nbPlayer = _players.size();
+}
+
+std::list<Player*> const& Game::getPlayers() const {
+	return (_players);
+}
+
+void	Game::setPlayers(std::list<Player*> const& players) {
+	_clear();
+	_players = players;
+	_nbPlayer = _players.size();
+}
+
+void	Game::setPlayers(Network::TcpPacket& packet) {
+	uint32 size;
+
+	_clear();
+	packet >> size;
+	for (uint32 i = 0; i < size; ++i) {
+		Player* player = Player::newPlayer(packet);
+		_players.push_back(player);
+	}
+	_nbPlayer = _players.size();
+}
+
+void	Game::_clear() {
+	for (std::list<Player*>::iterator it = _players.begin(); it != _players.end(); ++it)
+		delete *it;
+	_players.clear();
+	_nbPlayer = 0;
+}
+
+void	Game::setPlayerReady(uint32 playerId, bool value) {
+	for (std::list<Player*>::iterator it = _players.begin(); it != _players.end(); ++it)
+		if ((*it)->getId() == playerId)
+			(*it)->setIsReady(value);
 }
 
 Game*	Game::newGame(Network::TcpPacket& packet) {

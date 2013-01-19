@@ -353,7 +353,7 @@ void	Game::sendResources(Network::TcpPacket &packet) {
     _attributesMutex[eGraphicScene]->lock();
     _attributesMutex[ePhysicScene]->lock();
 	_graphicScene.sendStaticElements(packet);
-	_physicScene.sendStaticElements(packet);
+	//_physicScene.sendStaticElements(packet);
     _attributesMutex[eGraphicScene]->unlock();
     _attributesMutex[ePhysicScene]->unlock();
 

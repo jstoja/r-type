@@ -27,7 +27,7 @@ _nextMenu(NULL), _messageLabel(NULL), _mutex(new Threading::Mutex()) {
 	_menus["GameList"] = new Menu::GameList(_delegate->getScene(), this);
 	_menus["NewGame"] = new Menu::NewGame(_delegate->getScene(), this);
 	_menus["GamePrepare"] = new Menu::GameJoin(_delegate->getScene(), this);
-	_menus["GameJoin"] = new Menu::GamePrepare(_delegate->getScene(), this, 3, 4);
+	_menus["GameJoin"] = new Menu::GamePrepare(_delegate->getScene(), this);
     
 	for (std::map<std::string, Menu::Menu*>::iterator it = _menus.begin(); it != _menus.end(); ++it)
 		it->second->setVisible(false);
@@ -224,6 +224,11 @@ void	UserInterface::setServerName(std::string const& serverName) {
 		it->second->setServerName(serverName);
 }
 
+void	UserInterface::setGameName(std::string const& gameName) {
+	for (std::map<std::string, Menu::Menu*>::iterator it = _menus.begin(); it != _menus.end(); ++it)
+		it->second->setGameName(gameName);
+}
+
 void	UserInterface::setGameList(std::list<Game*> const& list) {
 	Menu::GameList* menu = dynamic_cast<Menu::GameList*>(_menus["GameList"]);
 
@@ -231,9 +236,9 @@ void	UserInterface::setGameList(std::list<Game*> const& list) {
 		menu->setGameList(list);
 }
 
-void	UserInterface::setPlayerList(std::list<Player*> const& list) {
+void	UserInterface::setCurrentGame(Game* game) {
 	Menu::GamePrepare* menu = dynamic_cast<Menu::GamePrepare*>(_menus["GamePrepare"]);
 
 	if (menu)
-		menu->setPlayerList(list);
+		menu->setCurrentGame(game);
 }
