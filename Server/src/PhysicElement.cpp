@@ -25,21 +25,19 @@ PhysicElement::~PhysicElement() {
 }
 
 void	PhysicElement::setPosition(Vec2 const& pos) {
-    _attributesMutex[ePosition]->lock();
+    Threading::MutexLocker locker(_attributesMutex[ePosition]);
 	if (pos != _pos) {
 		_pos = pos;
 		setChanged(true);
 	}
-    _attributesMutex[ePosition]->unlock();
 }
 
 void	PhysicElement::move(Vec2 const& move) {
-    _attributesMutex[ePosition]->lock();
+    Threading::MutexLocker locker(_attributesMutex[ePosition]);
 	if (move != Vec2(0, 0)) {
 		_pos = _pos + move;
 		setChanged(true);
 	}
-    _attributesMutex[ePosition]->unlock();
 }
 
 Vec2 const& PhysicElement::getPosition() const {
@@ -48,12 +46,11 @@ Vec2 const& PhysicElement::getPosition() const {
 }
 
 void	PhysicElement::setSize(Vec2 const& size) {
-    _attributesMutex[eSize]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eSize]);
 	if (size != _size) {
 		_size = size;
 		setChanged(true);
 	}
-    _attributesMutex[eSize]->unlock();
 }
 
 Vec2 const&	PhysicElement::getSize() const {
@@ -62,12 +59,11 @@ Vec2 const&	PhysicElement::getSize() const {
 }
 
 void	PhysicElement::setRotation(float32 rotation) {
-    _attributesMutex[eRotation]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eRotation]);
 	if (_rotation != rotation) {
 		_rotation = rotation;
 		setChanged(true);
 	}
-    _attributesMutex[eRotation]->unlock();
 }
 
 float32	PhysicElement::getRotation() const {
@@ -81,15 +77,13 @@ bool	PhysicElement::hasChanged() const {
 }
 
 void	PhysicElement::setChanged(bool changed) {
-    _attributesMutex[eHasChanged]->lock();
+    Threading::MutexLocker  locker(_attributesMutex[eHasChanged]);
 	_hasChanged = changed;
-    _attributesMutex[eHasChanged]->unlock();
 }
 
 void	PhysicElement::setType(Type c) {
-    _attributesMutex[eType]->lock();
+    Threading::MutexLocker  locker(_attributesMutex[eType]);
 	_type = c;
-    _attributesMutex[eType]->unlock();
 }
 
 IPhysicElement::Type	PhysicElement::getType() const {
