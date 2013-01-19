@@ -117,6 +117,10 @@ IGraphicElement::Type	GraphicElement::getType() const {
 	return ((Type)_type);
 }
 
+Rect2            GraphicElement::getRect(void) const {
+    return Rect2(Vec2(_pos) - _size / 2, _size);
+}
+
 Network::APacket&		operator<<(Network::APacket& packet, GraphicElement& element) {
 	element.setChanged(false);
 	packet << element.getId() << element.getPosition() << element.getRotation()

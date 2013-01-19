@@ -47,6 +47,8 @@ public:
 
 	virtual void	setType(Type c) = 0;
 	virtual Type	getType() const = 0;
+    
+    virtual Rect2            getRect(void) const;
 };
 
 #endif
