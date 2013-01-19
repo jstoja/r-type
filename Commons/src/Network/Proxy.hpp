@@ -34,7 +34,7 @@ namespace Network {
             GameJoin                    = 0x00020000,
             GameQuit                    = 0x00020100,
             GameCreate                  = 0x00020200,
-            GameReady                   = 0x00020300,
+            PlayerReady                 = 0x00020300,
             PlayerList                  = 0x00020600,
 
             // Server - client
@@ -42,15 +42,16 @@ namespace Network {
             AuthenficitationConnectionIncorrectLogin    = 0x01000001,
             InformationsGameGeneralResponse             = 0x01010000,
             InformationsGameListResponse                = 0x01010100,
-            GameCreatedSuccess                          = 0x01020300,
-            GameCreatedBadName                          = 0x01020301,
             GameJoinSuccess                             = 0x01020000,
             GameJoinIsFull                              = 0x01020001,
             GameJoinInvalid                             = 0x01020002,
+			GameStart                                   = 0x01020100,
             GameResources                               = 0x01020200,
-			GamePlayerList                              = 0x01020600,
+            GameCreatedSuccess                          = 0x01020300,
+            GameCreatedBadName                          = 0x01020301,
 			GameNewPlayer                               = 0x01020400,
 			GamePlayerReady                             = 0x01020500,
+			GamePlayerList                              = 0x01020600,
         };
 
         enum UdpActions {

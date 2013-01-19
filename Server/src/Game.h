@@ -52,6 +52,7 @@ public:
 
     void    packetInProgress(uint32 code, float32 progress) {}
     void	join(Player* player);
+    bool    hasPlayer(Player* player) const;
     bool	canJoin(Player* player=NULL) const;
     void	quit(Player* player);
     void    playerReady(Player* player);

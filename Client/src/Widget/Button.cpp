@@ -29,7 +29,8 @@ GraphicWidget(scene), _delegate(delegate) {
                                          | Event::PointerReleased,
                                          getRect(),
                                          this);
-    Event::Manager::getInstance().addEventListener(_eventListener);
+	if (isVisible())
+	    Event::Manager::getInstance().addEventListener(_eventListener);
 }
 
 Widget::Button::~Button() {
@@ -38,8 +39,6 @@ Widget::Button::~Button() {
 }
 
 void    Widget::Button::processEvent(Event::Event const& event) {
-  if (isVisible() == false)
-		return ;
   if (event.type == Event::PointerReleased) {
       setCurrentFrame(1);
       _delegate->buttonReleased(this);
@@ -66,8 +65,12 @@ void            Widget::Button::setSize(Vec2 const& size) {
 }
 
 void			Widget::Button::setVisible(bool visible) {
-	if (visible != isVisible()) {
-		setCurrentFrame(2);
-		GraphicWidget::setVisible(visible);
-	}
+	if (visible == isVisible())
+		return ;
+	if (visible)
+	    Event::Manager::getInstance().addEventListener(_eventListener);
+	else
+	    Event::Manager::getInstance().removeEventListener(_eventListener);
+	setCurrentFrame(2);
+	GraphicWidget::setVisible(visible);
 }

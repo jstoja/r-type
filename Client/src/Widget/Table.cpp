@@ -38,7 +38,8 @@ Widget::Table::Table(uint32 columnCount, std::string const& backgroundImage, Gra
 	_headerBackground->getElement()->setCurrentFrame(3);
 	_lineByPages = 0;
 	setLineNumberByPage(6);
-	Event::Manager::getInstance().addEventListener(_listener);
+	if (isVisible())
+		Event::Manager::getInstance().addEventListener(_listener);
 }
 
 Widget::Table::~Table() {
@@ -258,8 +259,6 @@ uint32	Widget::Table::_lineByPosition(Vec2 const& pos) const {
 }
 
 void	Widget::Table::processEvent(Event::Event const& event) {
-	if (isVisible() == false)
-		return ;
 	if (event.type & Event::PointerMove) {
 		uint32 currentLine = _lineByPosition(event.pos);
 		if (_currentLine != currentLine && _currentBackground != NULL) {
@@ -288,6 +287,8 @@ void	Widget::Table::processEvent(Event::Event const& event) {
 }
 
 void	Widget::Table::setVisible(bool visible) {
+	if (visible == isVisible())
+		return ;
 	_headerBackground->setVisible(visible);
 	for (unsigned int i = 0; i < _cells.size(); ++i)
 		for (uint32 j = 0; j < _columnCount; ++j)
@@ -297,6 +298,10 @@ void	Widget::Table::setVisible(bool visible) {
 	for (uint32 i = 0; i < _columnCount; ++i)
 		_columnNames[i]->setVisible(visible);
 	Widget::setVisible(visible);
+	if (visible)
+		Event::Manager::getInstance().addEventListener(_listener);
+	else
+	    Event::Manager::getInstance().removeEventListener(_listener);
 }
 
 Vec2 const&    Widget::Table::getSize() {

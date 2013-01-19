@@ -17,7 +17,7 @@ const float32 UserInterface::_maxViewportX = 1000000000.0;
 
 UserInterface::UserInterface(IUserInterfaceDelegate* delegate) :
 _delegate(delegate), _time(), _eventListener(NULL), _sceneries(), _currentMenu(NULL),
-_nextMenu(NULL), _messageLabel(NULL), _mutex(new Threading::Mutex()) {
+_nextMenu(NULL), _messageLabel(NULL), _mutex(new Threading::Mutex()), _visible(true) {
     // Create the sceneries used in all the user interface
     _createSceneries();
 
@@ -132,16 +132,17 @@ void UserInterface::joinGame(uint32 idx) {
 void UserInterface::previous() {
     Menu::Menu* current = getCurrentMenu();
 	if (current == _menus["GameList"]) {
-        goToMenu("Login");
-	} else if (current == _menus["NewGame"]
-               || current == _menus["GameJoin"]
-               || current == _menus["GamePrepare"]) {
+        _delegate->leavedGameList();
+	} else if (current == _menus["NewGame"]) {
 		goToMenu("GameList");
-	}
+	} else if (current == _menus["GameJoin"]
+               || current == _menus["GamePrepare"]) {
+        _delegate->leavedGame();
+    }
 }
 
 void UserInterface::playerReady(void) {
-    
+	_delegate->playerReady();
 }
 
 void UserInterface::goToMenu(std::string const& menu) {
@@ -241,4 +242,27 @@ void	UserInterface::setCurrentGame(Game* game) {
 
 	if (menu)
 		menu->setCurrentGame(game);
+}
+
+void	UserInterface::setVisible(bool visible) {
+	if (visible == _visible)
+		return ;
+	_mutex->lock();
+	_visible = visible;
+	if (_visible == true) {
+		for (std::vector<Graphic::Scenery*>::iterator it = _sceneries.begin(); it != _sceneries.end(); ++it)
+			_delegate->getScene()->addScenery(*it);
+		for (std::map<std::string, Menu::Menu*>::iterator it = _menus.begin(); it != _menus.end(); ++it)
+			it->second->setVisible(it->second == _currentMenu);
+		_messageLabel->setVisible(false);
+		Event::Manager::getInstance().addEventListener(_eventListener);
+	} else {
+		for (std::vector<Graphic::Scenery*>::iterator it = _sceneries.begin(); it != _sceneries.end(); ++it)
+			_delegate->getScene()->removeScenery(*it);
+		for (std::map<std::string, Menu::Menu*>::iterator it = _menus.begin(); it != _menus.end(); ++it)
+			it->second->setVisible(false);
+		_messageLabel->setVisible(false);
+		Event::Manager::getInstance().removeEventListener(_eventListener);
+	}
+	_mutex->unlock();
 }

@@ -11,11 +11,12 @@
 # include <iostream>
 # include <string>
 # include "Types.h"
+# include "OS.h"
 
 # if (defined OS_IOS)
 #  define AUDIO_IOS
 # else
-# define AUDIO_SFML
+#  define AUDIO_SFML
 # endif
 
 # ifdef AUDIO_SFML
@@ -32,7 +33,7 @@ namespace Sound {
             Sound(Resource *);
 
 			//! Destructor
-			~Sound();
+			~Sound(void);
 
 			//! Load a sound
 			void				load(Resource *);

@@ -29,7 +29,7 @@ _commands(), _login(""), _userId(0) {
 	_commands[Network::TcpProxy::GamePlayerList] = &Client::receivePlayerList;
 	_commands[Network::TcpProxy::GameNewPlayer] = &Client::receiveNewPlayer;
 	_commands[Network::TcpProxy::GamePlayerReady] = &Client::receivePlayerReady;
-    
+    _commands[Network::TcpProxy::GameStart] = &Client::startGame;
     Graphic::Renderer::getInstance().init();
     Graphic::Renderer::getInstance().setScene(&_scene);
     
@@ -117,10 +117,45 @@ void Client::gameSelected(uint32 gameIndex) {
         packet->setCode(Network::TcpProxy::GameJoin);
         *packet << game->getId();
         _proxy->sendPacket(packet);
+
         Log("Joining game " << game->getName());
     } else {
         Log("Tried to join game with invalid index");
     }
+}
+
+void Client::playerReady() {
+	if (_currentGame) {
+		Network::TcpPacket* packet = new Network::TcpPacket();
+		packet->setCode(Network::TcpProxy::PlayerReady);
+        *packet << _currentGame->getId();
+        _proxy->sendPacket(packet);
+		_currentGame->setPlayerReady(_userId, true);
+		_ui->setCurrentGame(_currentGame);
+    }
+}
+
+void Client::leavedGameList(void) {
+    _ui->goToMenu("Login");
+    delete _proxy;
+    _proxy = NULL;
+    delete _tcpSocket;
+    _tcpSocket = NULL;
+}
+
+void Client::leavedGame(void) {
+    // Inform the server we leaved the game
+    Network::TcpPacket* packet = new Network::TcpPacket();
+    packet->setCode(Network::TcpProxy::GameQuit);
+    *packet << _currentGame->getId();
+    _proxy->sendPacket(packet);
+    // Re-request game list
+    packet = new Network::TcpPacket();
+    packet->setCode(Network::TcpProxy::InformationsGameList);
+    _proxy->sendPacket(packet);
+    
+    _currentGame = NULL;
+    _ui->goToMenu("GameList");
 }
 
 void Client::packetReceived(Network::TcpPacket* packet) {
@@ -146,7 +181,9 @@ void Client::packetInProgress(uint32 code, float32 progress) {
 	
 void Client::connectionResponse(Network::TcpPacket* packet) {
     if ((packet->getCode() & 0xFF) == 1) {
-        Log("Connection error");
+        Log("Connection error: incorrect login");
+        _ui->hideMessage();
+        _ui->goToMenu("Login");
     } else {
         uint32 id;
         *packet >> id;
@@ -307,6 +344,10 @@ void Client::receivePlayerReady(Network::TcpPacket* packet) {
 		}
 }
 
+void Client::startGame(Network::TcpPacket* packet) {
+	_ui->setVisible(false);
+}
+
 void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* packet) {
     Log("Connection closed");
 }
@@ -395,9 +436,9 @@ Graphic::Element*	Client::createGraphicElement(Network::TcpPacket& packet) {
 
 Graphic::Scenery*	Client::createScenery(Network::TcpPacket& packet) {
 	uint32 id, textureId;
-	float32 speed, width, xStart, xEnd;
+	float32 speed, width, xStart, xEnd, depth, opacity;
 
-	packet >> id >> textureId >> speed >> width >> xStart >> xEnd;
+	packet >> id >> textureId >> speed >> width >> xStart >> xEnd >> depth >> opacity;
 	Graphic::Texture *texture = dynamic_cast<Graphic::Texture*>(ObjectManager::getInstance().getObject(textureId));
 	if (texture) {
 		Graphic::Scenery*	res = new Graphic::Scenery(id);
@@ -405,6 +446,8 @@ Graphic::Scenery*	Client::createScenery(Network::TcpPacket& packet) {
 		res->setSpeed(speed);
 		res->setWidth(width);
 		res->setRange(Vec2(xStart, xEnd));
+		res->setDepth(depth);
+		res->setOpacity(opacity);
 		return (res);
 	}
 	return (NULL);
@@ -414,7 +457,7 @@ Sound::Sound*		Client::createSound(Network::TcpPacket& packet) {
 	uint32	id, resourceId;
 	int32	repeat;
 
-	packet >> id >> resourceId;
+	packet >> id >> resourceId >> repeat;
 	Resource *resource = dynamic_cast<Resource*>(ObjectManager::getInstance().getObject(resourceId));
 	if (resource) {
 		Sound::Sound* res = new Sound::Sound(resource);

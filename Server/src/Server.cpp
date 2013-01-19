@@ -42,9 +42,16 @@ Server::~Server() {
 }
 
 void Server::newConnection(Network::ASocket* socket) {
-  _players.push_back(new Player(socket, this));
+    _players.push_back(new Player(socket, this));
 }
 
+bool Server::canAddPlayer(std::string const& name) {
+    for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
+         it != end; ++it)
+        if ((*it)->getName() == name)
+            return false;
+    return true;
+}
 
 bool Server::createGame(Game* game, Player* player) {
     uint32 id = game->getId();
@@ -105,13 +112,41 @@ void  Server::sendGameInfo(uint32 gameId, Player* player) {
     }
 }
 
-void Server::quitGame(Player* player) {
-    Log("Player " << player->getName() << " leaved");
+void Server::quitServer(Player* player) {
+    Log("Player " << player->getName() << " leaved server");
     for(std::map<uint32, Game*>::iterator it = _games.begin(); it != _games.end(); it++) {
-        it->second->quit(player);
+        if (it->second->hasPlayer(player)) {
+            it->second->quit(player);
+            informGameQuit(player, it->second);
+        }
     }
     _players.erase(std::remove(_players.begin(), _players.end(), player), _players.end());
     delete player;
+}
+
+void Server::quitGame(Player *player, uint32 gameId) {
+    std::map<uint32, Game*>::iterator it = _games.find(gameId);
+    if (it != _games.end()) {
+        // Remove player from game
+        Game* game = it->second;
+        game->quit(player);
+        Log("Player " << player->getName() << " leaved game " << game->getName());
+        
+        informGameQuit(player, game);
+    }
+}
+
+void Server::informGameQuit(Player* player, Game* game) {
+    for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
+         it != end; ++it) {
+        if (*it != player) {
+            if (game->hasPlayer(*it))
+                game->sendPlayerList(*it);
+            else {
+                (*it)->sendGamesList();
+            }
+        }
+    }
 }
 
 void Server::gameStart(uint32 gameId) {

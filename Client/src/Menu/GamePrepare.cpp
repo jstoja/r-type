@@ -80,6 +80,7 @@ void Menu::GamePrepare::buttonReleased(Widget::Button* instance) {
 		getDelegate()->previous();
     if (instance == _readyButton) {
         _readyButton->setVisible(false);
+		getDelegate()->playerReady();
         _waitingLabel->setVisible(true);
     }
 }
