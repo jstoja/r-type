@@ -35,10 +35,9 @@ bool	GameObject::init(IGame* game, ByteArray const& params, float32 xStart) {
 }
 
 void	GameObject::update(void *params) {
-    _pluginMutex->lock();
+    Threading::MutexLocker locker(_pluginMutex);
 	if (_plugin)
 		_plugin->update();
-    _pluginMutex->unlock();
 }
 
 float32	GameObject::getXStart() const {
@@ -51,6 +50,7 @@ float32	GameObject::getXStart() const {
 void	GameObject::_loadPlugin() {
 	Library	*lib = LibraryFactory::getInstance().load(Application::getInstance().getRelativePath(Server::getPluginDirectory()), _pluginName);
 
+    Threading::MutexLocker locker(_pluginMutex);
 	if (lib == NULL)
 		throw new Exception("Plugin " + _pluginName + " can't  be loaded");
 	IPlugin::CreatorPrototype	creator = (IPlugin::CreatorPrototype)lib->resolve("newPlugin");

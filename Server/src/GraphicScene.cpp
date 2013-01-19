@@ -10,37 +10,35 @@
 #include "GraphicScene.h"
 
 GraphicScene::GraphicScene() {
+    _graphicElementsMutex = new Threading::Mutex();
 }
 
 GraphicScene::~GraphicScene() {
 }
 
 void	GraphicScene::addElement(GraphicElement *element) {
-    _graphicElementsMutex.lock();
+    Threading::MutexLocker locker(_graphicElementsMutex);
 	_graphicElements.push_back(element);
-    _graphicElementsMutex.unlock();
 }
 
 void	GraphicScene::sendStaticElements(Network::TcpPacket& packet) {
 	std::list<GraphicElement*>	toSend;
 
-    _graphicElementsMutex.lock();
+    Threading::MutexLocker locker(_graphicElementsMutex);
 	for (std::list<GraphicElement*>::iterator it = _graphicElements.begin();
 		it != _graphicElements.end(); ++it)
 		if ((*it)->getType() == IGraphicElement::Static)
 			toSend.push_back(*it);
-    _graphicElementsMutex.unlock();
 	packet << toSend;
 }
 
 void	GraphicScene::sendElements(Network::UdpPacket& packet, ViewPort* viewport) {
 	std::list<GraphicElement*>	toSend;
 
-    _graphicElementsMutex.lock();
+    Threading::MutexLocker locker(_graphicElementsMutex);
 	for (std::list<GraphicElement*>::iterator it = _graphicElements.begin();
 		it != _graphicElements.end(); ++it)
 		if ((*it)->hasChanged() && viewport->isInViewport(Rect2((*it)->getPosition(), (*it)->getSize())))
 			toSend.push_back(*it);
-    _graphicElementsMutex.unlock();
 	packet << toSend;
 }
