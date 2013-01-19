@@ -159,7 +159,7 @@ void     Game::join(Player* player) {
             if (_players[i] != player) {
                 Network::TcpPacket *packet = new Network::TcpPacket();
                 packet->setCode(Network::TcpProxy::GameNewPlayer);
-                *packet << *player;
+                *packet << getId() << *player;
                 Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
                 _players[i]->sendPacket(toSend);
             }
@@ -171,7 +171,7 @@ void     Game::join(Player* player) {
 void     Game::playerReady(Player* player) {
     Network::TcpPacket *packet = new Network::TcpPacket();
     packet->setCode(0x01020500);
-    *packet << (uint32)player->getId();
+    *packet << getId() << (uint32)player->getId();
     Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
 
     _attributesMutex[ePlayers]->lock();
@@ -196,7 +196,7 @@ void    Game::sendPlayerList(Player* player) {
     _attributesMutex[ePlayers]->lock();
 
     packet->setCode(0x01020600);
-    *packet << playerList;
+    *packet << getId() << playerList;
     Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
     player->sendPacket(toSend);
 
@@ -204,25 +204,13 @@ void    Game::sendPlayerList(Player* player) {
 }
 
 void     Game::sendInfo(Player* player) {
-    std::list<Player*> playerList;
-
-    for (int i = 0; i < _players.size(); ++i) {
-        if (_players[i] != player) {
-            playerList.push_back(_players[i]);
-        }
-    }
-
-    Network::TcpPacket *packet = new Network::TcpPacket();
-    packet->setCode(0x01020600);
-    *packet << playerList;
-    Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
-    player->sendPacket(toSend);
+    sendPlayerList(player);
 
     for (int i = 0; i < _players.size(); ++i) {
         if (_players[i] != player && _players[i]->isReady()) {
             Network::TcpPacket *packet = new Network::TcpPacket();
             packet->setCode(0x01020500);
-            *packet << _players[i]->getId();
+            *packet << getId() << _players[i]->getId();
             Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
             player->sendPacket(toSend);
         }
