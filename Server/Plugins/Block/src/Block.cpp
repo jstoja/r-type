@@ -15,7 +15,8 @@
 #include <IGraphicElement.h>
 #include <IPhysicElement.h>
 
-Block::Block(std::string const& pluginName) : _game(NULL), _block(NULL), _name(pluginName) {
+Block::Block(std::string const& pluginName)
+    : _game(NULL), _graphicElement(NULL), _physicElement(NULL), _name(pluginName) {
 }
 
 Block::~Block() {
@@ -31,19 +32,26 @@ bool	Block::init(IGame* game, ByteArray const& params,
 	_xStart = xStart;
 	std::stringstream	data(std::stringstream::binary);
 	data.write(params.getData(), params.getSize());
+
 	Vec3	pos;
 	Vec2	size;
 	float32	rotation;
-	uint32	nbr;
+	uint32	spriteSize;
 	char	*spriteName;
 	char	idx;
+    
+    data.read(reinterpret_cast<char*>(&pos), sizeof(pos));
+    data.read(reinterpret_cast<char*>(&size), sizeof(size));
+    data.read(reinterpret_cast<char*>(&rotation), sizeof(rotation));
+    data.read(reinterpret_cast<char*>(&spriteSize), sizeof(spriteSize));
 
-	data >> pos.x >> pos.y >> pos.z >> size.x >> size.y >> rotation;
-	spriteName = new char[nbr];
-	data.read(spriteName, nbr);
-	data >> idx;
-	std::string name = std::string(spriteName, nbr);
+	spriteName = new char[spriteSize];
+	data.read(spriteName, spriteSize*sizeof(*spriteName));
+	std::string name = std::string(spriteName, spriteSize);
 	delete []spriteName;
+    
+	data.read(&idx, sizeof(idx));
+    
 	ISprite	*sprite = _game->getLevelSprite(name);
 	if (sprite == NULL)
 		return false;
