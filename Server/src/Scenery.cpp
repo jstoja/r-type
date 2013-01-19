@@ -23,9 +23,8 @@ Scenery::~Scenery() {
 }
 
 void		Scenery::setTexture(ITexture* texture) {
-    _attributesMutex[eTexture]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eTexture]);
 	_texture = dynamic_cast<Texture*>(texture);
-    _attributesMutex[eTexture]->unlock();
 }
 
 Texture*	Scenery::getTexture() const {
@@ -34,9 +33,8 @@ Texture*	Scenery::getTexture() const {
 }
 	
 void	Scenery::setSpeed(float32 speed) {
-    _attributesMutex[eSpeed]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eSpeed]);
 	_speed = speed;
-    _attributesMutex[eSpeed]->unlock();
 }
 
 float32	Scenery::getSpeed() const {
@@ -45,9 +43,8 @@ float32	Scenery::getSpeed() const {
 }
 
 void	Scenery::setWidth(float32 width) {
-    _attributesMutex[eWidth]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eWidth]);
 	_width = width;
-    _attributesMutex[eWidth]->unlock();
 }
 
 float32	Scenery::getWidth() const {
@@ -56,9 +53,8 @@ float32	Scenery::getWidth() const {
 }
 
 void	Scenery::setXStart(float32 xStart) {
-    _attributesMutex[eXStart]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eXStart]);
 	_xStart = xStart;
-    _attributesMutex[eXStart]->unlock();
 }
 
 float32	Scenery::getXStart() const {
@@ -67,9 +63,8 @@ float32	Scenery::getXStart() const {
 }
 
 void	Scenery::setXEnd(float32 xEnd) {
-    _attributesMutex[eXEnd]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eXEnd]);
 	_xEnd = xEnd;
-    _attributesMutex[eXEnd]->unlock();
 }
 
 float32	Scenery::getXEnd() const {
@@ -78,9 +73,8 @@ float32	Scenery::getXEnd() const {
 }
 
 void	Scenery::setDepth(float32 depth) {
-    _attributesMutex[eDepth]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eDepth]);
 	_depth = depth;
-    _attributesMutex[eDepth]->unlock();
 }
 
 float32	Scenery::getDepth() const {
@@ -89,9 +83,8 @@ float32	Scenery::getDepth() const {
 }
 
 void	Scenery::setOpacity(float32 opacity) {
-    _attributesMutex[eOpacity]->lock();
+    Threading::MutexLocker  locker(_attributesMutex[eOpacity]);
 	_opacity = opacity;
-    _attributesMutex[eOpacity]->unlock();
 }
 
 float32	Scenery::getOpacity() const {
