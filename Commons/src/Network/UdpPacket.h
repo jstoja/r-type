@@ -26,8 +26,14 @@ namespace Network {
 
     void    setCode(uint32 code);
     uint32  getCode();
+    void    setId(uint32 code);
+    uint32  getId();
+    void    generateId(void);
 
-	static bool	getHeaderInfos(ByteArray const& data, uint32& code);
+    static bool	getHeaderInfos(ByteArray const& data, uint32& code);
+
+  private:
+    uint32  _id;
   };
 
 }

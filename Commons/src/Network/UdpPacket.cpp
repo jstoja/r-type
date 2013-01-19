@@ -8,10 +8,11 @@
 //
 
 #include <iostream>
+#include "UUIDGenerator.h"
 #include "UdpPacket.h"
 
 Network::UdpPacket::UdpPacket() {
-
+    setId((uint32)-1);
 }
 
 Network::UdpPacket::~UdpPacket() {
@@ -25,12 +26,30 @@ void Network::UdpPacket::read(ASocket* socket) {
 }
 
 void Network::UdpPacket::update() {
+
 }
 
 bool Network::UdpPacket::isComplete() const {
   if (_data.getSize() == 0)
     return false;
   return true;
+}
+
+void Network::UdpPacket::setId(uint32 code) {
+  if (_data.getSize() < 16)
+    _data.resize(16);
+  *((int*)(&((char*)_data)[5])) = code;
+  *((int*)(&((char*)_data)[9])) = _size;
+}
+
+void Network::UdpPacket::generateId(void) {
+    setId(UUIDGenerator::getInstance().getUUID());
+}
+
+uint32 Network::UdpPacket::getId() {
+  if (_data.getSize() >= 8)
+    return *((int*)(&((char*)_data)[5]));
+  return 0;
 }
 
 void Network::UdpPacket::setCode(uint32 code) {
