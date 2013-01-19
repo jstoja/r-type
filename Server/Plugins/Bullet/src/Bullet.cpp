@@ -1,5 +1,5 @@
 //
-// Monster.cpp for R-Type in /home/bordel_/R-Type
+// Bullet.h for R-Type in /home/bordel_/R-Type
 //
 // Made by Julien Bordellier
 // Login   <bordel@epitech.net>
@@ -8,25 +8,28 @@
 //
 
 #include <sstream>
-#include "Monster.h"
+#include "Bullet.h"
 
-Monster::Monster(std::string const& pluginName)
-: _name(pluginName), _game(NULL) {
+Bullet::Bullet(std::string const& pluginName)
+: _game(NULL), _name(pluginName), _graphicElement(NULL), _physicElement(NULL) {
+
+}
+
+Bullet::~Bullet() {
     
 }
 
-Monster::~Monster() {
-}
-
-bool	Monster::init(IGame* game, ByteArray const& params, float32 xStart) {
- 	if ((_game = game) == NULL)
-		return false;
+bool	Bullet::init(IGame* game, ByteArray const& params, float32 xStart) {
+    if ((_game = game) == NULL) {
+        return (false);
+    }
+    
     std::stringstream	data(std::stringstream::binary);
 	data.write(params.getData(), params.getSize());
-
-    Vec3 pos;
+    
     Vec2 size;
-    float32 rotation;
+    Vec3 from;
+    Vec3 to;
     char *spriteName;
     uint32 spriteSize;
     char frameIndex;
@@ -39,8 +42,13 @@ bool	Monster::init(IGame* game, ByteArray const& params, float32 xStart) {
 	data.read(spriteName, spriteSize*sizeof(*spriteName));
 	std::string name = std::string(spriteName, spriteSize);
 	delete []spriteName;
-
+    
     data.read(reinterpret_cast<char*>(&frameIndex), sizeof(frameIndex));
+    
+    data.read(reinterpret_cast<char*>(&size), sizeof(size));
+    data.read(reinterpret_cast<char*>(&from), sizeof(from));
+    data.read(reinterpret_cast<char*>(&to), sizeof(to));
+    data.read(reinterpret_cast<char*>(&_speed), sizeof(_speed));
     
     ISprite	*sprite = _game->getLevelSprite(name);
 	if (sprite == NULL)
@@ -50,49 +58,46 @@ bool	Monster::init(IGame* game, ByteArray const& params, float32 xStart) {
 	if ((_physicElement = game->createPhysicElement()) == NULL)
 		return false;
     
-    data.read(reinterpret_cast<char*>(&pos), sizeof(pos));
-    data.read(reinterpret_cast<char*>(&size), sizeof(size));
-    data.read(reinterpret_cast<char*>(&rotation), sizeof(rotation));
-
+    _direction = to - from;
     
-    data.read(reinterpret_cast<char*>(&_speed), sizeof(_speed));
-
-	_graphicElement->setPosition(pos);
+	_graphicElement->setPosition(from);
 	_graphicElement->setSize(size);
-	_graphicElement->setRotation(rotation);
+	_graphicElement->setRotation(0);
 	_graphicElement->setSprite(sprite);
 	_graphicElement->setSpriteFrameIndex(frameIndex);
 	_graphicElement->setType(IGraphicElement::Static);
 	game->addGraphicElement(_graphicElement);
-	_physicElement->setPosition(pos);
+	_physicElement->setPosition(from);
 	_physicElement->setSize(size);
-	_physicElement->setRotation(rotation);
+	_physicElement->setRotation(0);
 	_physicElement->setType(IPhysicElement::Static);
 	game->addPhysicElement(_physicElement);
-	return true;
+    
+    return true;
 }
 
-void	Monster::update() {
+void	Bullet::update() {
     Vec3 newPosition = _graphicElement->getPosition();
     
-    newPosition.x += _speed*_game->getEllapsedTime()/1000;
+    newPosition.x += _direction.x*_speed*_game->getEllapsedTime()/1000;
+    newPosition.y += _direction.y*_speed*_game->getEllapsedTime()/1000;
     
     _graphicElement->setPosition(newPosition);
     _physicElement->setPosition(newPosition);
-    
+
     if (_game->getViewPort()->isInViewport(_graphicElement->getRect())) {
         _xStart = -1;
     }
 }
 
-float32	Monster::getXStart() const {
+float32	Bullet::getXStart() const {
     return (_xStart);
 }
 
-std::string const&	Monster::getName() const {
+std::string const&	Bullet::getName() const {
     return (_name);
 }
 
 RTYPE_PLUGIN_CREATE {
-	return (new Monster(name));
+	return (new Bullet(name));
 }

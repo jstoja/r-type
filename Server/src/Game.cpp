@@ -93,9 +93,10 @@ void                    Game::setNbSlots(uint32 slots) {
 
 void     Game::start(void) {
     _attributesMutex[ePlayers]->lock();
+    // Inform players that the game starts !
     for (int i=0; i < _players.size(); i++) {
         Network::TcpPacket *packet = new Network::TcpPacket();
-        packet->setCode(0x01020100);
+        packet->setCode(Network::TcpProxy::GameStart);
         *packet << getId();
         Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
         _players[i]->sendPacket(toSend);
@@ -168,13 +169,17 @@ void     Game::playerReady(Player* player) {
     *packet << getId() << (uint32)player->getId();
     Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
 
+    bool everybodyReady = true;
     _attributesMutex[ePlayers]->lock();
     for (int i=0; i < _players.size(); i++) {
         if (_players[i] != player) {
             _players[i]->sendPacket(toSend);
         }
+        everybodyReady = everybodyReady && _players[i]->isReady();
     }
     _attributesMutex[ePlayers]->unlock();
+    if (everybodyReady)
+        start();
 }
 
 void    Game::sendPlayerList(Player* player) {

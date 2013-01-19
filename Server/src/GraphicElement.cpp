@@ -11,6 +11,8 @@
 #include "Sprite.h"
 
 GraphicElement::GraphicElement() : _rotation(0), _hasChanged(true) {
+
+    _attributesMutex.resize(eLastAttribute);
     for (uint32 i = 0; i < eLastAttribute; ++i) {
         _attributesMutex[i] = new Threading::Mutex();
     }
@@ -115,6 +117,10 @@ void	GraphicElement::setType(Type c) {
 IGraphicElement::Type	GraphicElement::getType() const {
     Threading::MutexLocker locker(_attributesMutex[eType]);
 	return ((Type)_type);
+}
+
+Rect2            GraphicElement::getRect(void) const {
+    return Rect2(Vec2(_pos) - _size / 2, _size);
 }
 
 Network::APacket&		operator<<(Network::APacket& packet, GraphicElement& element) {

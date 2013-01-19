@@ -16,7 +16,7 @@
 const float32 UserInterface::_maxViewportX = 1000000000.0;
 
 UserInterface::UserInterface(IUserInterfaceDelegate* delegate) :
-_delegate(delegate), _time(), _eventListener(NULL), _sceneries(), _currentMenu(NULL),
+_delegate(delegate), _time(), _sceneries(), _currentMenu(NULL),
 _nextMenu(NULL), _messageLabel(NULL), _mutex(new Threading::Mutex()), _visible(true) {
     // Create the sceneries used in all the user interface
     _createSceneries();
@@ -41,9 +41,6 @@ _nextMenu(NULL), _messageLabel(NULL), _mutex(new Threading::Mutex()), _visible(t
                                /2);
     _messageLabel->setSize(Vec2(_delegate->getScene()->getViewport().x, 0.6));
     _messageLabel->setVisible(false);
-    
-    _eventListener = new Event::Listener(Event::Close, this);
-    Event::Manager::getInstance().addEventListener(_eventListener);
 }
 
 UserInterface::~UserInterface(void) {
@@ -53,8 +50,6 @@ UserInterface::~UserInterface(void) {
         _delegate->getScene()->removeScenery(*it);
 		delete *it;
     }
-    
-    delete _eventListener;
 }
 
 void UserInterface::update(void) {
@@ -255,14 +250,12 @@ void	UserInterface::setVisible(bool visible) {
 		for (std::map<std::string, Menu::Menu*>::iterator it = _menus.begin(); it != _menus.end(); ++it)
 			it->second->setVisible(it->second == _currentMenu);
 		_messageLabel->setVisible(false);
-		Event::Manager::getInstance().addEventListener(_eventListener);
 	} else {
 		for (std::vector<Graphic::Scenery*>::iterator it = _sceneries.begin(); it != _sceneries.end(); ++it)
 			_delegate->getScene()->removeScenery(*it);
 		for (std::map<std::string, Menu::Menu*>::iterator it = _menus.begin(); it != _menus.end(); ++it)
 			it->second->setVisible(false);
 		_messageLabel->setVisible(false);
-		Event::Manager::getInstance().removeEventListener(_eventListener);
 	}
 	_mutex->unlock();
 }
