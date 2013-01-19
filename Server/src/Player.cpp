@@ -117,6 +117,12 @@ void Player::createGame(Network::TcpPacket* packet) {
     _attributesMutex[eProxy]->lock();
     _proxy.sendPacket(toSend);
     _attributesMutex[eProxy]->unlock();
+    
+    // Send game infos
+    if (gameCreated) {
+        _server->sendResources(game->getId(), this);
+        _server->sendGameInfo(game->getId(), this);
+    }
 }
 
 void Player::joinGame(Network::TcpPacket* packet) {

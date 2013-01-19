@@ -64,6 +64,7 @@ bool Server::createGame(Game* game, Player* player) {
     if (_games.find(id) == _games.end()) {
         _games[id] = game;
         game->join(player);
+        informNewGame(game, player);
         return true;
     }
     return false;
@@ -164,6 +165,15 @@ void Server::informGameJoin(Player* player, Game* game) {
             else {
                 (*it)->sendGamesList();
             }
+        }
+    }
+}
+
+void Server::informNewGame(Game* game, Player* player) {
+    for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
+         it != end; ++it) {
+        if (*it != player) {
+            (*it)->sendGamesList();
         }
     }
 }

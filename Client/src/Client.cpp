@@ -236,14 +236,16 @@ void Client::gameCreatedResponse(Network::TcpPacket* packet) {
         Game* game = Game::newGame(*packet);
         _games.push_back(game);
         _ui->setGameList(_games);
-        _ui->goToMenu("GameList");
+        _currentGame = game;
+        _ui->setGameName(game->getName());
+        _ui->setCurrentGame(_currentGame);
+        _ui->goToMenu("GameJoin");
         Log("Created game: " << game->getName() << ", id: " << game->getId());
     }
 }
 
 void Client::gameJoinResponse(Network::TcpPacket* packet) {
-    if ((packet->getCode() & 0xff) == 0) {
-        _ui->goToMenu("GameJoin");
+    if ((packet->getCode() & 0xff) == 0) {        
 		uint32 id;
 		*packet >> id;
 		_currentGame = NULL;
@@ -258,6 +260,7 @@ void Client::gameJoinResponse(Network::TcpPacket* packet) {
 		}
 		_ui->setGameName(_currentGame->getName());
 		_ui->setCurrentGame(_currentGame);
+        _ui->goToMenu("GameJoin");        
 	} else if ((packet->getCode() & 0xff) == 1) {
         Log("Cannot join game: game is full");
     } else if ((packet->getCode() & 0xff) == 2) {
