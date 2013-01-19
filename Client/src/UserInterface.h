@@ -43,6 +43,7 @@ public:
 	void	setGameName(std::string const& gameName);
 	void	setGameList(std::list<Game*> const& list);
 	void	setCurrentGame(Game* game);
+    void	setVisible(bool visible);
 
     // IListener delegate implementation
     virtual void processEvent(Event::Event const &event);
@@ -57,7 +58,7 @@ public:
 	virtual void joinGame(uint32 idx);
 	virtual void previous(void);
     virtual void playerReady(void);
-    
+
 private:
     static const float32 _maxViewportX;
 
@@ -74,6 +75,7 @@ private:
     Menu::Menu*                         _nextMenu;
     Widget::Label*                      _messageLabel;
     Threading::Mutex*                   _mutex;
+	bool								_visible;
 };
 
 #endif /* defined(__R_Type__UserInterface__) */

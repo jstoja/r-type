@@ -345,7 +345,7 @@ void Client::receivePlayerReady(Network::TcpPacket* packet) {
 }
 
 void Client::startGame(Network::TcpPacket* packet) {
-
+	_ui->setVisible(false);
 }
 
 void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* packet) {
@@ -436,9 +436,9 @@ Graphic::Element*	Client::createGraphicElement(Network::TcpPacket& packet) {
 
 Graphic::Scenery*	Client::createScenery(Network::TcpPacket& packet) {
 	uint32 id, textureId;
-	float32 speed, width, xStart, xEnd;
+	float32 speed, width, xStart, xEnd, depth, opacity;
 
-	packet >> id >> textureId >> speed >> width >> xStart >> xEnd;
+	packet >> id >> textureId >> speed >> width >> xStart >> xEnd >> depth >> opacity;
 	Graphic::Texture *texture = dynamic_cast<Graphic::Texture*>(ObjectManager::getInstance().getObject(textureId));
 	if (texture) {
 		Graphic::Scenery*	res = new Graphic::Scenery(id);
@@ -446,6 +446,8 @@ Graphic::Scenery*	Client::createScenery(Network::TcpPacket& packet) {
 		res->setSpeed(speed);
 		res->setWidth(width);
 		res->setRange(Vec2(xStart, xEnd));
+		res->setDepth(depth);
+		res->setOpacity(opacity);
 		return (res);
 	}
 	return (NULL);
