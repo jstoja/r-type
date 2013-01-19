@@ -32,7 +32,8 @@ public:
 
     virtual bool    createGame(Game* game, Player* player);
     virtual int     joinGame(uint32 gameId, Player* player);
-    virtual void    quitGame(Player* player);
+    virtual void    quitGame(Player* player, uint32 gameId);
+    virtual void    quitServer(Player* player);
     virtual void    sendResources(uint32 gameId, Player* player);
     virtual void    playerReady(uint32 gameId, Player* player);
     virtual void    gameStart(uint32 gameId);

@@ -66,7 +66,7 @@ void Player::packetSent(Network::TcpPacket const* packet) {
 }
 
 void Player::connectionClosed(Network::Proxy<Network::TcpPacket>*) {
-    _server->quitGame(this);
+    _server->quitServer(this);
 }
 
 void Player::connection(Network::TcpPacket* packet) {
@@ -202,7 +202,10 @@ void Player::readyToStart(Network::TcpPacket* packet) {
 }
 
 void Player::quitGame(Network::TcpPacket* packet) {
-    _server->quitGame(this);
+    uint32 gameId;
+    
+    *packet >> gameId;
+    _server->quitGame(this, gameId);
 }
 
 Network::APacket& operator<<(Network::APacket& packet, Player const& player) {
