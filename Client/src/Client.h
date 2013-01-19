@@ -12,17 +12,16 @@
 
 # include "Graphic/Scene.h"
 # include "Clock.h"
+# include "Event/Listener.h"
 # include "UserInterface.h"
+# include "GameController.h"
 # include "Network/Proxy.hpp"
 # include "Network/TcpSocket.h"
 # include "Network/TcpPacket.h"
-# include "Resource.h"
-# include "Graphic/Texture.h"
 # include "Game.h"
-#include "Sound/Sound.h"
 
-class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Network::TcpPacket>, public Network::ISocketDelegate {
-    public:
+class Client : public Event::IListenerDelegate, public IUserInterfaceDelegate, public Network::IProxyDelegate<Network::TcpPacket>, public Network::ISocketDelegate {
+public:
     
     Client(void);
     virtual ~Client(void);
@@ -38,6 +37,9 @@ class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Ne
     void update(void);
     void render(void);
     
+    // Event listener delegate methods
+    virtual void processEvent(Event::Event const& event);
+    
     uint32  getFramerateLimit(void) const;
     
     // User interface delegate methods
@@ -51,14 +53,11 @@ class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Ne
     virtual void    playerReady();
     virtual void    leavedGameList(void);
     virtual void    leavedGame(void);
-    
-    // Socket delegate
-	void connectionFinished(Network::ASocket*, bool success);
-                    
+                        
     // Network proxy delegate methods
     void packetReceived(Network::TcpPacket* packet);
     void packetSent(Network::TcpPacket const* packet);
-    void connectionClosed(Network::Proxy<Network::TcpPacket>* packet);
+    void connectionClosed(Network::Proxy<Network::TcpPacket>* proxy);
 	void packetInProgress(uint32 code, float32 progress);
 
     // Protocol commands
@@ -72,24 +71,22 @@ class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Ne
     void receiveNewPlayer(Network::TcpPacket* packet);
 	void receivePlayerReady(Network::TcpPacket* packet);
 	void startGame(Network::TcpPacket* packet);
+    
+    // Socket delegate
+	void connectionFinished(Network::ASocket*, bool success);    
 
     typedef void (Client::* commandPointer)(Network::TcpPacket*);
     
-	static Resource*			createResource(Network::TcpPacket& packet);
-	static Graphic::Texture*	createTexture(Network::TcpPacket& packet);
-	static Graphic::Sprite*		createSprite(Network::TcpPacket& packet);
-	static Graphic::Element*	createGraphicElement(Network::TcpPacket& packet);
-	static Graphic::Scenery*	createScenery(Network::TcpPacket& packet);
-	static Sound::Sound*		createSound(Network::TcpPacket& packet);
-
 private:
-	void	_initGame();
+	void	_initGame(Game* game);
 	void	_clearGame();
 
-	Graphic::Scene  _scene;
-    uint32          _framerateLimit;
-    Clock           _time;
-    UserInterface*  _ui;
+    bool                _close;
+	Graphic::Scene      _scene;
+    uint32              _framerateLimit;
+    Clock               _time;
+    Event::Listener*    _eventListener;
+    UserInterface*      _ui;
     
     Network::TcpSocket*                 _tcpSocket;
     Network::Proxy<Network::TcpPacket>* _proxy;
@@ -99,12 +96,7 @@ private:
     uint32                              _userId;
     std::list<Game*>                    _games;
 	Game*								_currentGame;
-	std::list<Resource*>				_gameResources;
-	std::list<Graphic::Texture*>		_gameTextures;
-	std::list<Graphic::Sprite*>			_gameSprites;
-	std::list<Graphic::Element*>		_gameElements;
-	std::list<Graphic::Scenery*>		_gameSceneries;
-	std::list<Sound::Sound*>			_gameSounds;
+    GameController*                     _gameController;
 };
 
 #endif

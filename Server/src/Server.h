@@ -20,8 +20,9 @@
 
 class Server : public Network::ITcpServerDelegate, public IServerDelegate {
 public:
-  Server();
-  ~Server();
+
+    Server();
+    ~Server();
 
     int             run();
     void            newConnection(Network::ASocket*);

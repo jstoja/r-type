@@ -6,12 +6,16 @@
 //
 //
 
-#include "Debug.h"
 #include "Renderer.h"
-#include "Event/Manager.h"
-#include "Event/Event.h"
 
 #ifdef GRAPHIC_RENDERER_SFML
+
+#include "Debug.h"
+#include "Event/Manager.h"
+#include "Event/Event.h"
+#include <map>
+
+static std::map<sf::Keyboard::Key, Event::Key> SfmlKeys;
 
 void Graphic::Renderer::createContext(Settings const& settings) {
     sf::ContextSettings contextSettings;
@@ -31,6 +35,16 @@ void Graphic::Renderer::createContext(Settings const& settings) {
     
     Log("OpenGL Version " << contextSettings.majorVersion << "." << contextSettings.minorVersion
         << ", Antialiasing level: " << _antialiasingLevel);
+    
+    // Init the SfmlKeys map
+    SfmlKeys[sf::Keyboard::Up] = Event::ArrowUp;
+    SfmlKeys[sf::Keyboard::Down] = Event::ArrowDown;
+    SfmlKeys[sf::Keyboard::Left] = Event::ArrowLeft;
+    SfmlKeys[sf::Keyboard::Right] = Event::ArrowRight;
+    SfmlKeys[sf::Keyboard::Escape] = Event::Escape;
+    SfmlKeys[sf::Keyboard::Space] = Event::Space;
+    
+    _window->setKeyRepeatEnabled(false);
 }
 
 Graphic::Renderer::~Renderer() {
@@ -67,14 +81,21 @@ void Graphic::Renderer::processEvents(Event::Manager* manager) {
         } else if (sfEvent.type == sf::Event::TextEntered) {
 			Event::Event event(Event::TextEntered, sfEvent.text.unicode, this);
             manager->fire(event);
-        } else if (sfEvent.type == sf::Event::KeyPressed) {
+        } else if (sfEvent.type == sf::Event::KeyPressed
+                   || sfEvent.type == sf::Event::KeyReleased) {
 // Fixed Sfml Backspace Event Missing on textEntered
 #ifdef OS_MAC
-			if (sfEvent.key.code == sf::Keyboard::Back) {
+			if (sfEvent.type == sf::Event::KeyPressed
+                && sfEvent.key.code == sf::Keyboard::Back) {
                 Event::Event event(Event::TextEntered, '\b', this);
                 manager->fire(event);
             }
 #endif
+            std::map<sf::Keyboard::Key, Event::Key>::iterator it = SfmlKeys.find(sfEvent.key.code);
+            uint32 key = it != SfmlKeys.end() ? it->second : Event::UnknownKey;
+            Event::Event event(sfEvent.type == sf::Event::KeyPressed
+                               ? Event::KeyPressed : Event::KeyReleased, key);
+            manager->fire(event);
         }
         //! Update the viewport if window size has changed
         else if (sfEvent.type == sf::Event::Resized) {

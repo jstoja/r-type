@@ -1,0 +1,214 @@
+//
+//  GameController.cpp
+//  R-Type
+//
+//  Created by Gael du Plessix on 19/01/13.
+//
+//
+
+#include "GameController.h"
+
+#include "Event/Manager.h"
+#include "ObjectManager.h"
+
+GameController::GameController(Game* game, Graphic::Scene* scene) :
+_game(game), _scene(scene), _eventListener(NULL) {
+    
+    // Create the event listener to get user input
+    _eventListener = new Event::Listener(Event::KeyPressed | Event::KeyReleased, this);
+    Event::Manager::getInstance().addEventListener(_eventListener);
+    
+}
+
+GameController::~GameController(void) {
+    Event::Manager::getInstance().removeEventListener(_eventListener);
+    delete _eventListener;
+}
+
+void GameController::processEvent(Event::Event const& event) {
+    if (event.type & (Event::KeyPressed | Event::KeyReleased)) {
+        
+    }
+}
+
+#pragma mark Game creation
+
+void GameController::receiveResources(Network::TcpPacket* packet) {
+    uint32 nb;
+    *packet >> nb;
+    for (uint32 i = 0; i < nb; ++i) {
+		Resource* resource = createResource(*packet);
+		if (resource)
+			_resources.push_back(resource);
+    }
+    *packet >> nb;
+    for (uint32 i = 0; i < nb; ++i) {
+		Graphic::Texture* texture = createTexture(*packet);
+		if (texture)
+			_textures.push_back(texture);
+    }
+    *packet >> nb;
+    for (uint32 i = 0; i < nb; ++i) {
+		Graphic::Sprite* sprite = createSprite(*packet);
+		if (sprite)
+			_sprites.push_back(sprite);
+    }
+    *packet >> nb;
+    for (uint32 i = 0; i < nb; ++i) {
+		Graphic::Element* element = createGraphicElement(*packet);
+		if (element)
+			_elements.push_back(element);
+    }
+    *packet >> nb;
+    for (uint32 i = 0; i < nb; ++i) {
+		Graphic::Scenery* scenery = createScenery(*packet);
+		if (scenery) {
+			_sceneries.push_back(scenery);
+		}
+    }
+    *packet >> nb;
+    for (uint32 i = 0; i < nb; ++i) {
+		Sound::Sound* sound = createSound(*packet);
+		if (sound)
+			_sounds.push_back(sound);
+    }
+}
+
+Resource* GameController::createResource(Network::TcpPacket& packet) {
+	uint32		id;
+	Resource	*res;
+	ByteArray	data;
+    
+	packet >> id >> data;
+	res = new Resource(id);
+	res->setData(data);
+	return (res);
+}
+
+Graphic::Texture* GameController::createTexture(Network::TcpPacket& packet) {
+	uint32		id, resourceId;
+    
+	packet >> id >> resourceId;
+	Resource *resource = dynamic_cast<Resource*>(ObjectManager::getInstance().getObject(resourceId));
+	if (resource)
+		return (new Graphic::Texture(id, resource));
+	return (NULL);
+}
+
+Graphic::Sprite* GameController::createSprite(Network::TcpPacket& packet) {
+	uint32		id, textureId;
+    
+	packet >> id >> textureId;
+	Graphic::Texture *texture = dynamic_cast<Graphic::Texture*>(ObjectManager::getInstance().getObject(textureId));
+	if (texture) {
+		std::list<Graphic::Sprite::Frame> frames;
+        
+		packet >> frames;
+		Graphic::Sprite* res = new Graphic::Sprite(id);
+		res->setTexture(texture);
+		for (std::list<Graphic::Sprite::Frame>::iterator it = frames.begin(); it != frames.end(); ++it)
+			res->addFrame(*it);
+		return (res);
+	}
+	return (NULL);
+}
+
+Graphic::Element* GameController::createGraphicElement(Network::TcpPacket& packet) {
+	uint32 id, spriteId;
+	Vec3 position;
+	float32 rotation;
+	Vec2 size;
+	char spriteFrame, type;
+    
+	packet >> id >> position >> rotation >> size >> spriteId >> spriteFrame >> type;
+	Graphic::Sprite* sprite = dynamic_cast<Graphic::Sprite*>(ObjectManager::getInstance().getObject(spriteId));
+	if (sprite) {
+		Graphic::Element* res = new Graphic::Element(id);
+		res->setPosition(position);
+		res->setRotation(rotation);
+		res->setSize(size);
+		res->setSprite(sprite);
+		res->setCurrentFrame(spriteFrame);
+		Graphic::Element::Type newType = Graphic::Element::Dynamic;
+		if (type == 0)
+			newType = Graphic::Element::Static;
+		else if (type == 2)
+			newType = Graphic::Element::Floating;
+		res->setType(newType);
+		return (res);
+	}
+	return (NULL);
+}
+
+Graphic::Scenery* GameController::createScenery(Network::TcpPacket& packet) {
+	uint32 id, textureId;
+	float32 speed, width, xStart, xEnd, depth, opacity;
+    
+	packet >> id >> textureId >> speed >> width >> xStart >> xEnd >> depth >> opacity;
+	Graphic::Texture *texture = dynamic_cast<Graphic::Texture*>(ObjectManager::getInstance().getObject(textureId));
+	if (texture) {
+		Graphic::Scenery*	res = new Graphic::Scenery(id);
+		res->setTexture(texture);
+		res->setSpeed(speed);
+		res->setWidth(width);
+		res->setRange(Vec2(xStart, xEnd));
+		res->setDepth(depth);
+		res->setOpacity(opacity);
+		return (res);
+	}
+	return (NULL);
+}
+
+Sound::Sound* GameController::createSound(Network::TcpPacket& packet) {
+	uint32	id, resourceId;
+	int32	repeat;
+    
+	packet >> id >> resourceId >> repeat;
+	Resource *resource = dynamic_cast<Resource*>(ObjectManager::getInstance().getObject(resourceId));
+	if (resource) {
+		Sound::Sound* res = new Sound::Sound(resource);
+		return (res);
+	}
+	return (NULL);
+}
+
+#pragma mark Game actions
+
+void GameController::launchGame(void) {
+	for (std::list<Graphic::Element*>::iterator it = _elements.begin(); it != _elements.end(); ++it) {
+		if (*it) {
+			(*it)->setVisible(true);
+			_scene->addElement(*it);
+		}
+	}
+	for (std::list<Graphic::Scenery*>::iterator it = _sceneries.begin(); it != _sceneries.end(); ++it) {
+		if (*it) {
+			_scene->addScenery(*it);
+		}
+	}
+}
+
+void GameController::clearGame(void) {
+	for (std::list<Resource*>::iterator it = _resources.begin(); it != _resources.end(); ++it)
+		delete *it;
+	_resources.clear();
+	for (std::list<Graphic::Texture*>::iterator it = _textures.begin(); it != _textures.end(); ++it)
+		delete *it;
+	_textures.clear();
+	for (std::list<Graphic::Sprite*>::iterator it = _sprites.begin(); it != _sprites.end(); ++it)
+		delete *it;
+	_sprites.clear();
+	for (std::list<Graphic::Element*>::iterator it = _elements.begin(); it != _elements.end(); ++it) {
+		_scene->removeElement(*it);
+		delete *it;
+	}
+	_elements.clear();
+	for (std::list<Graphic::Scenery*>::iterator it = _sceneries.begin(); it != _sceneries.end(); ++it) {
+		_scene->removeScenery(*it);
+		delete *it;
+	}
+	_sceneries.clear();
+	for (std::list<Sound::Sound*>::iterator it = _sounds.begin(); it != _sounds.end(); ++it)
+		delete *it;
+	_sounds.clear();
+}

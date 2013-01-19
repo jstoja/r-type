@@ -12,13 +12,13 @@
 #include "Graphic/Renderer.h"
 #include "Event/Manager.h"
 #include "Application.h"
-#include "ObjectManager.h"
 
 #include "Graphic/Image.h"
 
 Client::Client(void) :
-_scene(), _framerateLimit(30), _time(), _ui(), _tcpSocket(NULL), _proxy(NULL),
-_commands(), _login(""), _userId(0), _currentGame(NULL) {
+_close(false), _scene(), _framerateLimit(30), _time(), _ui(), _tcpSocket(NULL),
+_proxy(NULL), _commands(), _login(""), _userId(0), _currentGame(NULL),
+_gameController(NULL) {
     
     _commands[Network::TcpProxy::AuthenficitationConnectionSuccess] = &Client::connectionResponse;
     _commands[Network::TcpProxy::InformationsGameGeneralResponse] = &Client::receiveGeneralInformations;
@@ -40,6 +40,10 @@ _commands(), _login(""), _userId(0), _currentGame(NULL) {
     viewport.x = viewport.y * (screen.x / screen.y);
     _scene.setViewport(viewport);
     
+    // Create the event listener to get the close event
+    _eventListener = new Event::Listener(Event::Close, this);
+    Event::Manager::getInstance().addEventListener(_eventListener);
+    
     // Create the ui
     _ui = new UserInterface(this);
 
@@ -49,11 +53,15 @@ _commands(), _login(""), _userId(0), _currentGame(NULL) {
 Client::~Client(void) {
     delete _tcpSocket;
     delete _proxy;
+    Event::Manager::getInstance().removeEventListener(_eventListener);
+    delete _eventListener;
 }
+
+#pragma mark Application main functions
 
 void Client::mainLoop(void) {
 #ifndef OS_IOS
-    while (true) {
+    while (!_close) {
         Clock frameClock;
         
         update();
@@ -82,6 +90,16 @@ void Client::render(void) {
 uint32 Client::getFramerateLimit(void) const {
     return _framerateLimit;
 }
+
+#pragma mark Event Listener delegate methods
+
+void Client::processEvent(Event::Event const& event) {
+    if (event.type & Event::Close) {
+        _close = true;
+    }
+}
+
+#pragma mark User interface delegate methods
 
 Graphic::Scene* Client::getScene(void) {
     return &_scene;
@@ -158,6 +176,8 @@ void Client::leavedGame(void) {
     _ui->goToMenu("GameList");
 }
 
+#pragma mark Network proxy delegate methods
+
 void Client::packetReceived(Network::TcpPacket* packet) {
     uint32 code, size;
     
@@ -175,9 +195,17 @@ void Client::packetSent(Network::TcpPacket const* packet) {
     Log("Packet sent");
 }
 
+void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* proxy) {
+    _ui->goToMenu("Login");
+    _currentGame = NULL;
+    Log("Connection closed");
+}
+
 void Client::packetInProgress(uint32 code, float32 progress) {
 	Log(code << progress);
 }
+
+#pragma mark Protocol commands
 	
 void Client::connectionResponse(Network::TcpPacket* packet) {
     if ((packet->getCode() & 0xFF) == 1) {
@@ -236,10 +264,7 @@ void Client::gameCreatedResponse(Network::TcpPacket* packet) {
         Game* game = Game::newGame(*packet);
         _games.push_back(game);
         _ui->setGameList(_games);
-        _currentGame = game;
-        _ui->setGameName(game->getName());
-        _ui->setCurrentGame(_currentGame);
-        _ui->goToMenu("GameJoin");
+        _initGame(game);
         Log("Created game: " << game->getName() << ", id: " << game->getId());
     }
 }
@@ -258,9 +283,7 @@ void Client::gameJoinResponse(Network::TcpPacket* packet) {
 	        Log("Cannot join game: unknown Game Id on client Side");
 			return ;
 		}
-		_ui->setGameName(_currentGame->getName());
-		_ui->setCurrentGame(_currentGame);
-        _ui->goToMenu("GameJoin");        
+        _initGame(_currentGame);        
 	} else if ((packet->getCode() & 0xff) == 1) {
         Log("Cannot join game: game is full");
     } else if ((packet->getCode() & 0xff) == 2) {
@@ -271,44 +294,8 @@ void Client::gameJoinResponse(Network::TcpPacket* packet) {
 }
 
 void Client::receiveResources(Network::TcpPacket* packet) {
-    uint32 nb;
-    *packet >> nb;
-    for (uint32 i = 0; i < nb; ++i) {
-		Resource* resource = createResource(*packet);
-		if (resource)
-			_gameResources.push_back(resource);
-    }
-    *packet >> nb;
-    for (uint32 i = 0; i < nb; ++i) {
-		Graphic::Texture* texture = createTexture(*packet);
-		if (texture)
-			_gameTextures.push_back(texture);
-    }
-    *packet >> nb;
-    for (uint32 i = 0; i < nb; ++i) {
-		Graphic::Sprite* sprite = createSprite(*packet);
-		if (sprite)
-			_gameSprites.push_back(sprite);
-    }
-    *packet >> nb;
-    for (uint32 i = 0; i < nb; ++i) {
-		Graphic::Element* element = createGraphicElement(*packet);
-		if (element)
-			_gameElements.push_back(element);
-    }
-    *packet >> nb;
-    for (uint32 i = 0; i < nb; ++i) {
-		Graphic::Scenery* scenery = createScenery(*packet);
-		if (scenery) {
-			_gameSceneries.push_back(scenery);
-		}
-    }
-    *packet >> nb;
-    for (uint32 i = 0; i < nb; ++i) {
-		Sound::Sound* sound = createSound(*packet);
-		if (sound)
-			_gameSounds.push_back(sound);
-    }
+    if (_gameController)
+        _gameController->receiveResources(packet);
 	_ui->goToMenu("GamePrepare");
 }
 
@@ -351,12 +338,10 @@ void Client::receivePlayerReady(Network::TcpPacket* packet) {
 
 void Client::startGame(Network::TcpPacket* packet) {
 	_ui->setVisible(false);
-	_initGame();
+	_gameController->launchGame();
 }
 
-void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* packet) {
-    Log("Connection closed");
-}
+#pragma mark Socket delegate
 
 void Client::connectionFinished(Network::ASocket* socket, bool success) {
     if (success) {
@@ -374,139 +359,17 @@ void Client::connectionFinished(Network::ASocket* socket, bool success) {
     }
 }
 
-Resource*		Client::createResource(Network::TcpPacket& packet) {
-	uint32		id;
-	Resource	*res;
-	ByteArray	data;
+#pragma mark Game functions
 
-	packet >> id >> data;
-	res = new Resource(id);
-	res->setData(data);
-	return (res);
-}
-
-Graphic::Texture*		Client::createTexture(Network::TcpPacket& packet) {
-	uint32		id, resourceId;
-
-	packet >> id >> resourceId;
-	Resource *resource = dynamic_cast<Resource*>(ObjectManager::getInstance().getObject(resourceId));
-	if (resource)
-		return (new Graphic::Texture(id, resource));
-	return (NULL);
-}
-
-Graphic::Sprite*		Client::createSprite(Network::TcpPacket& packet) {
-	uint32		id, textureId;
-
-	packet >> id >> textureId;
-	Graphic::Texture *texture = dynamic_cast<Graphic::Texture*>(ObjectManager::getInstance().getObject(textureId));
-	if (texture) {
-		std::list<Graphic::Sprite::Frame> frames;
-
-		packet >> frames;
-		Graphic::Sprite* res = new Graphic::Sprite(id);
-		res->setTexture(texture);
-		for (std::list<Graphic::Sprite::Frame>::iterator it = frames.begin(); it != frames.end(); ++it)
-			res->addFrame(*it);
-		return (res);
-	}
-	return (NULL);
-}
-
-Graphic::Element*	Client::createGraphicElement(Network::TcpPacket& packet) {
-	uint32 id, spriteId;
-	Vec3 position;
-	float32 rotation;
-	Vec2 size;
-	char spriteFrame, type;
-
-	packet >> id >> position >> rotation >> size >> spriteId >> spriteFrame >> type;
-	Graphic::Sprite* sprite = dynamic_cast<Graphic::Sprite*>(ObjectManager::getInstance().getObject(spriteId));
-	if (sprite) {
-		Graphic::Element* res = new Graphic::Element(id);
-		res->setPosition(position);
-		res->setRotation(rotation);
-		res->setSize(size);
-		res->setSprite(sprite);
-		res->setCurrentFrame(spriteFrame);
-		Graphic::Element::Type newType = Graphic::Element::Dynamic;
-		if (type == 0)
-			newType = Graphic::Element::Static;
-		else if (type == 2)
-			newType = Graphic::Element::Floating;
-		res->setType(newType);
-		return (res);
-	}
-	return (NULL);
-}
-
-Graphic::Scenery*	Client::createScenery(Network::TcpPacket& packet) {
-	uint32 id, textureId;
-	float32 speed, width, xStart, xEnd, depth, opacity;
-
-	packet >> id >> textureId >> speed >> width >> xStart >> xEnd >> depth >> opacity;
-	Graphic::Texture *texture = dynamic_cast<Graphic::Texture*>(ObjectManager::getInstance().getObject(textureId));
-	if (texture) {
-		Graphic::Scenery*	res = new Graphic::Scenery(id);
-		res->setTexture(texture);
-		res->setSpeed(speed);
-		res->setWidth(width);
-		res->setRange(Vec2(xStart, xEnd));
-		res->setDepth(depth);
-		res->setOpacity(opacity);
-		return (res);
-	}
-	return (NULL);
-}
-
-Sound::Sound*		Client::createSound(Network::TcpPacket& packet) {
-	uint32	id, resourceId;
-	int32	repeat;
-
-	packet >> id >> resourceId >> repeat;
-	Resource *resource = dynamic_cast<Resource*>(ObjectManager::getInstance().getObject(resourceId));
-	if (resource) {
-		Sound::Sound* res = new Sound::Sound(resource);
-		return (res);
-	}
-	return (NULL);
-}
-
-void Client::_initGame() {
-	for (std::list<Graphic::Element*>::iterator it = _gameElements.begin(); it != _gameElements.end(); ++it) {
-		if (*it) {
-			(*it)->setVisible(true);
-			_scene.addElement(*it);
-		}
-	}
-	for (std::list<Graphic::Scenery*>::iterator it = _gameSceneries.begin(); it != _gameSceneries.end(); ++it) {
-		if (*it) {
-			_scene.addScenery(*it);
-		}
-	}
+void Client::_initGame(Game* game) {
+    _currentGame = game;
+    _ui->setGameName(game->getName());
+    _ui->setCurrentGame(_currentGame);
+    _gameController = new GameController(_currentGame, &_scene);
+    _ui->goToMenu("GameJoin");
 }
 
 void Client::_clearGame() {
-	for (std::list<Resource*>::iterator it = _gameResources.begin(); it != _gameResources.end(); ++it)
-		delete *it;
-	_gameResources.clear();
-	for (std::list<Graphic::Texture*>::iterator it = _gameTextures.begin(); it != _gameTextures.end(); ++it)
-		delete *it;
-	_gameTextures.clear();
-	for (std::list<Graphic::Sprite*>::iterator it = _gameSprites.begin(); it != _gameSprites.end(); ++it)
-		delete *it;
-	_gameSprites.clear();
-	for (std::list<Graphic::Element*>::iterator it = _gameElements.begin(); it != _gameElements.end(); ++it) {
-		_scene.removeElement(*it);
-		delete *it;
-	}
-	_gameElements.clear();
-	for (std::list<Graphic::Scenery*>::iterator it = _gameSceneries.begin(); it != _gameSceneries.end(); ++it) {
-		_scene.removeScenery(*it);
-		delete *it;
-	}
-	_gameSceneries.clear();
-	for (std::list<Sound::Sound*>::iterator it = _gameSounds.begin(); it != _gameSounds.end(); ++it)
-		delete *it;
-	_gameSounds.clear();
+    if (_gameController)
+        _gameController->clearGame();
 }

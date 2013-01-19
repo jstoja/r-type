@@ -67,7 +67,6 @@ private:
     IUserInterfaceDelegate* _delegate;
     Clock                   _time;
     std::string				_serverName;
-    Event::Listener*        _eventListener;
     
     std::vector<Graphic::Scenery*>      _sceneries;
 	std::map<std::string, Menu::Menu*>  _menus;
