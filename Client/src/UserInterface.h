@@ -24,7 +24,7 @@
 # include "Threading/Mutex.h"
 # include "Event/IListenerDelegate.h"
 
-class UserInterface : public Menu::IMenuDelegate, public Event::IListenerDelegate {
+class UserInterface : public Menu::IMenuDelegate {
 public:
     
     UserInterface(IUserInterfaceDelegate* delegate);
@@ -44,9 +44,6 @@ public:
 	void	setGameList(std::list<Game*> const& list);
 	void	setCurrentGame(Game* game);
     void	setVisible(bool visible);
-
-    // IListener delegate implementation
-    virtual void processEvent(Event::Event const &event);
     
     // IMenuDelegate implementation
     virtual void welcomeCompleted(void);

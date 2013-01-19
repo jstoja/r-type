@@ -126,15 +126,15 @@ namespace Network {
                 if (_delegate) {
                     _delegate->packetReceived(_packet);
 
-                    uint32 code, id, size;
-                    *_packet >> code >> id >> size;
-
-                    std::map<uint32, Network::CriticalPacket*>::iterator it = _criticalPackets.find(id);
-
-                    if (it != _criticalPackets.end()) {
-                        delete _criticalPackets[id];
-                        _criticalPackets.erase(it);
-                    }
+//                    uint32 code, id, size;
+//                    *_packet >> code >> id >> size;
+//
+//                    std::map<uint32, Network::CriticalPacket*>::iterator it = _criticalPackets.find(id);
+//
+//                    if (it != _criticalPackets.end()) {
+//                        delete _criticalPackets[id];
+//                        _criticalPackets.erase(it);
+//                    }
                 }
                 _packet = new T();
                 _packet->read(_socket);
