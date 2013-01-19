@@ -18,6 +18,7 @@ public:
 	virtual ~ISprite() {}
 
 	virtual void	setTexture(ITexture *texture) = 0;
+	virtual ITexture*	getTexture() const = 0;
 	virtual void	addFrame(Vec2 const& p1, Vec2 const& p2) = 0;
 };
 
