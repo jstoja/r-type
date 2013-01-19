@@ -53,9 +53,9 @@ private:
 
     enum    _mutexVariable {
         eIsReady = 0,
+        eName,
         eSocket,
         eProxy,
-        eUdpProxy,
         eServer,
         eCommands,
         eLastAttribute
