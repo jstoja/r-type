@@ -26,8 +26,8 @@ _nextMenu(NULL), _messageLabel(NULL), _mutex(new Threading::Mutex()) {
 	_menus["Login"] = new Menu::Login(_delegate->getScene(), this);
 	_menus["GameList"] = new Menu::GameList(_delegate->getScene(), this);
 	_menus["NewGame"] = new Menu::NewGame(_delegate->getScene(), this);
-	_menus["GamePrepare"] = new Menu::GameJoin(_delegate->getScene(), this);
-	_menus["GameJoin"] = new Menu::GamePrepare(_delegate->getScene(), this);
+	_menus["GamePrepare"] = new Menu::GamePrepare(_delegate->getScene(), this);
+	_menus["GameJoin"] = new Menu::GameJoin(_delegate->getScene(), this);
     
 	for (std::map<std::string, Menu::Menu*>::iterator it = _menus.begin(); it != _menus.end(); ++it)
 		it->second->setVisible(false);

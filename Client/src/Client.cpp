@@ -267,6 +267,7 @@ void Client::receiveResources(Network::TcpPacket* packet) {
 		if (sound)
 			_gameSounds.push_back(sound);
     }
+	_ui->goToMenu("GamePrepare");
 }
 
 void Client::receivePlayerList(Network::TcpPacket* packet) {
