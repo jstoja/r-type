@@ -133,6 +133,7 @@ int	main(int ac, char **av) {
 
 	Test	map;
 	map.setName(name);
+	map.setSpeed(0.2);
 	map.addSprite("scenery1", "Images/Scenery1.png", frames);
 	map.addObject("Scenery", 0, createSceneryParams("scenery1", 0.1, 16, 1000, 3, 1));
 	map.save(Application::getInstance().getRelativePath(filename));

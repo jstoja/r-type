@@ -15,7 +15,7 @@
 bool	Library::load() {
 	if (isLoaded() == false) {
 		if ((_handle = LoadLibrary(TEXT(_fileName->c_str()))) == NULL)
-			_errorString->assign((char*)GetLastError());
+			_errorString->assign(std::string("Cannot load library: ") + *_fileName);
 		else
 			_load = true;
 	}
@@ -26,7 +26,7 @@ void*	Library::resolve(const char *name) {
     if (isLoaded()) {
         void *ptr = GetProcAddress(_handle, name);
 		if (ptr == NULL)
-			_errorString->assign((char*)GetLastError());
+			_errorString->assign(std::string("Cannot resolve symbol: ") + std::string(name));
         return ptr;
     }
 	_errorString->assign("Library is not loaded");
@@ -36,7 +36,7 @@ void*	Library::resolve(const char *name) {
 bool	Library::unload() {
     if (isLoaded()) {
 		if (FreeLibrary(_handle) == false) {
-			_errorString->assign((char*)GetLastError());
+			_errorString->assign(std::string("Cannot unload library: ") + *_fileName);
 			return (false);
 		}
 		else

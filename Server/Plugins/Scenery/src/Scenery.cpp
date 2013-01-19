@@ -10,6 +10,7 @@
 #include <sstream>
 
 #include "Scenery.h"
+#include "Debug.h"
 #include "ISprite.h"
 
 Scenery::Scenery(std::string const& pluginName)
@@ -37,10 +38,10 @@ bool                Scenery::init(IGame* game, ByteArray const& params, float32 
     float32 depth;
     float32 opacity;
     
-    std::stringstream	data(std::stringstream::binary);
+	std::stringstream	data(std::stringstream::binary | std::stringstream::in | std::stringstream::out);
 	data.write(params.getData(), params.getSize());
-    
-    data.read(reinterpret_cast<char*>(&spriteSize), sizeof(spriteSize));
+	data.seekg(0, std::ios::beg);
+	data.read(reinterpret_cast<char*>(&spriteSize), sizeof(spriteSize));
     
     spriteName = new char[spriteSize];
 	data.read(spriteName, spriteSize*sizeof(*spriteName));
@@ -77,3 +78,86 @@ float32             Scenery::getXStart() const {
 std::string const&	Scenery::getName() const {
     return (_name);
 }
+
+RTYPE_PLUGIN_CREATE {
+	return (new Scenery(name));
+}
+
+//
+// Scenery.cpp for R-Type in /home/bordel_/R-Type
+//
+// Made by Julien Bordellier
+// Login   <bordel@epitech.net>
+//
+// Started on  Sam. janv. 19 13:48:32 2013 Julien Bordellier
+//
+//
+//#include <sstream>
+//
+//#include "Scenery.h"
+//#include "Debug.h"
+//#include "ISprite.h"
+//
+//Scenery::Scenery(std::string const& pluginName)
+//    : _game(NULL), _name(pluginName), _scenery(NULL) {
+//    
+//}
+//
+//Scenery::~Scenery() {
+//}
+//
+//bool                Scenery::init(IGame* game, ByteArray const& params, float32 xStart) {
+// 	if ((_game = game) == NULL)
+//		return false;
+//    _scenery = _game->addScenery();
+//    
+//    if (_scenery == NULL) {
+//        return false;
+//    }
+//    
+//    uint32 spriteSize, cursor = 0;
+//    float32 speed, width, xEnd, depth, opacity;
+//	spriteSize = *((uint32*)params.getData());
+//	cursor += sizeof(spriteSize);
+//	std::string spriteVal(params.getData() + cursor, spriteSize);
+//	cursor += spriteSize;
+//	ISprite*	sprite = _game->getLevelSprite(spriteVal);
+//	if (sprite == NULL)
+//		return (false);
+//	ITexture*	texture = sprite->getTexture();
+//    if (texture == NULL)
+//        return false;
+//	speed = *((float32*)params.getData() + cursor);
+//	cursor += sizeof(speed);
+//	width = *((float32*)params.getData() + cursor);
+//	cursor += sizeof(width);
+//	xEnd = *((float32*)params.getData() + cursor);
+//	cursor += sizeof(xEnd);
+//	depth = *((float32*)params.getData() + cursor);
+//	cursor += sizeof(depth);
+//	opacity = *((float32*)params.getData() + cursor);
+//	cursor += sizeof(opacity);
+//    _scenery->setTexture(texture);
+//    _scenery->setWidth(width);
+//    _scenery->setXStart(xStart);
+//    _scenery->setXEnd(xEnd);
+//    _scenery->setSpeed(speed);
+//    _scenery->setDepth(depth);
+//    _scenery->setOpacity(opacity);
+//    return (true);
+//}
+//
+//void                Scenery::update() {
+//}
+//
+//float32             Scenery::getXStart() const {
+//    return (-1);
+//}
+//
+//std::string const&	Scenery::getName() const {
+//    return (_name);
+//}
+//
+//RTYPE_PLUGIN_CREATE {
+//	return (new Scenery(name));
+//}

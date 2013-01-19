@@ -24,7 +24,7 @@ _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waitin
     for (uint32 i = 0; i < eLastAttribute; ++i) {
         _attributesMutex[i] = new Threading::Mutex();
     }
-	//_loadMap("Levels/Level_1/Level_1.map");
+	_loadMap(App.getResourcesPath() + std::string("Levels/Level_1/Level_1.map"));
 
     if (packet) {
         *packet >> _name;

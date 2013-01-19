@@ -50,7 +50,7 @@ float32	GameObject::getXStart() const {
 }
 
 void	GameObject::_loadPlugin() {
-	Library	*lib = LibraryFactory::getInstance().load(Application::getInstance().getRelativePath(Server::getPluginDirectory()), "Block");
+	Library	*lib = LibraryFactory::getInstance().load(Application::getInstance().getRelativePath(Server::getPluginDirectory()), _pluginName);
 
 	if (lib == NULL)
 		throw new Exception("Plugin " + _pluginName + " can't  be loaded");

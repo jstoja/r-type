@@ -34,14 +34,14 @@ Library* LibraryFactory::load(std::string const& dir, std::string const& name) {
 #else
 	key += "lib" + name + ".so";
 #endif
-	Library	*lib = _libraries->at(key);
+	Library	*lib = (*_libraries)[key];
 	if (lib == NULL) {
 		lib = new Library(key);
 		if (lib->load() == false) {
 			delete lib;
 			return (NULL);
 		}
-		_libraries->at(key) = lib;
+		(*_libraries)[key] = lib;
 	}
 	return lib;
 }

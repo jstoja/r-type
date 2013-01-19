@@ -80,7 +80,7 @@ float32							Map::getSpeed() const {
 
 bool	Map::_getFilename(std::string const& filePath) {
     _attributesMutex[eApplication]->lock();
-	size_t idx = filePath.find_last_of(Application::getInstance().getDirectorySeparator());
+	size_t idx = filePath.find_last_of('/');
 	if (idx != std::string::npos)
 		++idx;
     _attributesMutex[eApplication]->unlock();
