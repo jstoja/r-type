@@ -199,7 +199,7 @@ void Network::TcpSocket::canWrite() {
             _delegate->dataSent(this, *_bufferToWrite, _writePosition);
         if (_writePosition == _bufferToWrite->getSize()) {
             _writing = false;
-            _bufferToWrite = NULL;
+            //_bufferToWrite = NULL;
             _writePosition = 0;
             _bufferToWriteMutex.unlock();
             if (_delegate)
