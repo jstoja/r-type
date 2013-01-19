@@ -53,7 +53,7 @@ void Player::packetReceived(Network::TcpPacket* packet) {
     delete packet;
 }
 
-bool Player::isReady(void) {
+bool Player::isReady(void) const {
     return _isReady;
 }
 
@@ -159,24 +159,7 @@ void Player::serverInfos(Network::TcpPacket* packet) {
 }
 
 void Player::listGame(Network::TcpPacket* packet) {
-    _attributesMutex[eServer]->lock();
-    std::map<uint32, Game*> const& games = _server->getGames();
-    _attributesMutex[eServer]->unlock();
-
-    std::list<Game*> newGamesList;
-    for (std::map<uint32, Game*>::const_iterator it = games.begin(), end = games.end();
-         it != end; ++it) {
-        newGamesList.push_back(it->second);
-    }
-
-    Network::TcpPacket *tcpPacket = new Network::TcpPacket();
-    tcpPacket->setCode(Network::TcpProxy::InformationsGameListResponse);
-    *tcpPacket << newGamesList;
-    Network::Proxy<Network::TcpPacket>::ToSend toSend(tcpPacket, Network::HostAddress::AnyAddress, 0);
-
-    _attributesMutex[eProxy]->lock();
-    _proxy.sendPacket(toSend);
-    _attributesMutex[eProxy]->unlock();
+    sendGamesList();
 }
 
 void Player::playerList(Network::TcpPacket* packet) {
@@ -208,7 +191,28 @@ void Player::quitGame(Network::TcpPacket* packet) {
     _server->quitGame(this, gameId);
 }
 
+void Player::sendGamesList(void) {
+    _attributesMutex[eServer]->lock();
+    std::map<uint32, Game*> const& games = _server->getGames();
+    _attributesMutex[eServer]->unlock();
+    
+    std::list<Game*> newGamesList;
+    for (std::map<uint32, Game*>::const_iterator it = games.begin(), end = games.end();
+         it != end; ++it) {
+        newGamesList.push_back(it->second);
+    }
+    
+    Network::TcpPacket *tcpPacket = new Network::TcpPacket();
+    tcpPacket->setCode(Network::TcpProxy::InformationsGameListResponse);
+    *tcpPacket << newGamesList;
+    Network::Proxy<Network::TcpPacket>::ToSend toSend(tcpPacket, Network::HostAddress::AnyAddress, 0);
+    
+    _attributesMutex[eProxy]->lock();
+    _proxy.sendPacket(toSend);
+    _attributesMutex[eProxy]->unlock();
+}
+
 Network::APacket& operator<<(Network::APacket& packet, Player const& player) {
-    packet << player.getId() << player.getName();
+    packet << player.getId() << player.getName() << (char)player.isReady();
     return packet;
 }

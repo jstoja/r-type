@@ -5,14 +5,17 @@
 //  Created by Franck Lavisse on 19/12/12.
 //
 //
-#include <SFML/Audio.hpp>
-#include <iostream>
-#include <stdexcept>
 
-#include "ByteArray.h"
-#include "UUIDGenerator.h"
-#include "Resource.h"
 #include "Sound.h"
+
+#ifdef AUDIO_SFML
+
+# include <iostream>
+# include <stdexcept>
+
+# include "ByteArray.h"
+# include "UUIDGenerator.h"
+# include "Resource.h"
 
 Sound::Sound::Sound(Resource *resource) {
 	try {
@@ -77,3 +80,5 @@ bool	Sound::Sound::operator==(Sound const& sound) {
 	}
 	return false;
 }
+
+# endif

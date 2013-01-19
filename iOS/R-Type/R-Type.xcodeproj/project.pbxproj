@@ -122,6 +122,10 @@
 		269D620916A9C732006B328F /* Server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D620316A9C732006B328F /* Server.cpp */; };
 		269D620C16A9C741006B328F /* GameList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D620A16A9C741006B328F /* GameList.cpp */; };
 		269D621816A9EA72006B328F /* Manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 269D621516A9EA72006B328F /* Manager.cpp */; };
+		26A0B44616AAD75100BEA56C /* Channel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26A0B43E16AAD75100BEA56C /* Channel.cpp */; };
+		26A0B44716AAD75100BEA56C /* ChannelGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26A0B44016AAD75100BEA56C /* ChannelGroup.cpp */; };
+		26A0B44916AAD75100BEA56C /* SoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26A0B44416AAD75100BEA56C /* SoundManager.cpp */; };
+		26A0B44E16AAD80500BEA56C /* iOSSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26A0B44C16AAD80400BEA56C /* iOSSound.cpp */; };
 		26B59C4B1685E67200BC64D7 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B59C4A1685E67200BC64D7 /* icon@2x.png */; };
 		26B59C4E1685E6D500BC64D7 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B59C4D1685E6D500BC64D7 /* icon.png */; };
 		26BEB5E716A7EBEF00E6CC83 /* GameJoin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26BEB5E216A7EBEF00E6CC83 /* GameJoin.cpp */; };
@@ -354,6 +358,14 @@
 		269D621516A9EA72006B328F /* Manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Manager.cpp; sourceTree = "<group>"; };
 		269D621616A9EA72006B328F /* ITableDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITableDelegate.h; sourceTree = "<group>"; };
 		269D621716A9EA72006B328F /* Manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manager.h; sourceTree = "<group>"; };
+		26A0B43E16AAD75100BEA56C /* Channel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Channel.cpp; sourceTree = "<group>"; };
+		26A0B43F16AAD75100BEA56C /* Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Channel.h; sourceTree = "<group>"; };
+		26A0B44016AAD75100BEA56C /* ChannelGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChannelGroup.cpp; sourceTree = "<group>"; };
+		26A0B44116AAD75100BEA56C /* ChannelGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelGroup.h; sourceTree = "<group>"; };
+		26A0B44316AAD75100BEA56C /* Sound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sound.h; sourceTree = "<group>"; };
+		26A0B44416AAD75100BEA56C /* SoundManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundManager.cpp; sourceTree = "<group>"; };
+		26A0B44516AAD75100BEA56C /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
+		26A0B44C16AAD80400BEA56C /* iOSSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = iOSSound.cpp; path = ../../../iOS/src/Sound/iOSSound.cpp; sourceTree = "<group>"; };
 		26B59C4A1685E67200BC64D7 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../icon@2x.png"; sourceTree = "<group>"; };
 		26B59C4D1685E6D500BC64D7 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
 		26BEB5E216A7EBEF00E6CC83 /* GameJoin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameJoin.cpp; sourceTree = "<group>"; };
@@ -545,6 +557,7 @@
 		2699A9EA1684AD400092AC40 /* R-Type */ = {
 			isa = PBXGroup;
 			children = (
+				26A0B43D16AAD75100BEA56C /* Sound */,
 				266F074D16A4884D004F5554 /* Widget */,
 				266F070216A43519004F5554 /* Menu */,
 				2613B35B16A358B400CF84AA /* Client */,
@@ -751,6 +764,22 @@
 				26B59C4A1685E67200BC64D7 /* icon@2x.png */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		26A0B43D16AAD75100BEA56C /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				26A0B43E16AAD75100BEA56C /* Channel.cpp */,
+				26A0B43F16AAD75100BEA56C /* Channel.h */,
+				26A0B44016AAD75100BEA56C /* ChannelGroup.cpp */,
+				26A0B44116AAD75100BEA56C /* ChannelGroup.h */,
+				26A0B44C16AAD80400BEA56C /* iOSSound.cpp */,
+				26A0B44316AAD75100BEA56C /* Sound.h */,
+				26A0B44416AAD75100BEA56C /* SoundManager.cpp */,
+				26A0B44516AAD75100BEA56C /* SoundManager.h */,
+			);
+			name = Sound;
+			path = ../../../Client/src/Sound;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -977,6 +1006,10 @@
 				269D620916A9C732006B328F /* Server.cpp in Sources */,
 				269D620C16A9C741006B328F /* GameList.cpp in Sources */,
 				269D621816A9EA72006B328F /* Manager.cpp in Sources */,
+				26A0B44616AAD75100BEA56C /* Channel.cpp in Sources */,
+				26A0B44716AAD75100BEA56C /* ChannelGroup.cpp in Sources */,
+				26A0B44916AAD75100BEA56C /* SoundManager.cpp in Sources */,
+				26A0B44E16AAD80500BEA56C /* iOSSound.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

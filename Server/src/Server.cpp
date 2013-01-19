@@ -115,7 +115,10 @@ void  Server::sendGameInfo(uint32 gameId, Player* player) {
 void Server::quitServer(Player* player) {
     Log("Player " << player->getName() << " leaved server");
     for(std::map<uint32, Game*>::iterator it = _games.begin(); it != _games.end(); it++) {
-        it->second->quit(player);
+        if (it->second->hasPlayer(player)) {
+            it->second->quit(player);
+            informGameQuit(player, it->second);
+        }
     }
     _players.erase(std::remove(_players.begin(), _players.end(), player), _players.end());
     delete player;
@@ -129,11 +132,19 @@ void Server::quitGame(Player *player, uint32 gameId) {
         game->quit(player);
         Log("Player " << player->getName() << " leaved game " << game->getName());
         
-        // Inform other players by re-sending game infos
-        for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
-             it != end; ++it) {
-            if (*it != player)
+        informGameQuit(player, game);
+    }
+}
+
+void Server::informGameQuit(Player* player, Game* game) {
+    for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
+         it != end; ++it) {
+        if (*it != player) {
+            if (game->hasPlayer(*it))
                 game->sendPlayerList(*it);
+            else {
+                (*it)->sendGamesList();
+            }
         }
     }
 }

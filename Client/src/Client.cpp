@@ -455,7 +455,7 @@ Sound::Sound*		Client::createSound(Network::TcpPacket& packet) {
 	uint32	id, resourceId;
 	int32	repeat;
 
-	packet >> id >> resourceId;
+	packet >> id >> resourceId >> repeat;
 	Resource *resource = dynamic_cast<Resource*>(ObjectManager::getInstance().getObject(resourceId));
 	if (resource) {
 		Sound::Sound* res = new Sound::Sound(resource);
