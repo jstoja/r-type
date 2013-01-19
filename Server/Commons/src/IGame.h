@@ -38,6 +38,8 @@ public:
 
 	virtual IScenery*			addScenery() = 0;
 	virtual IViewPort*			getViewPort() const = 0;
+    
+    virtual uint64              getEllapsedTime() const = 0;
 };
 
 #endif

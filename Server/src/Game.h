@@ -83,6 +83,8 @@ public:
 
 	void						_loadMap(std::string const& fileName);
     void                        sendResources(Network::TcpPacket &packet);
+    
+    virtual uint64              getEllapsedTime() const;
 
 private:
     void                        _udpHandler(void);

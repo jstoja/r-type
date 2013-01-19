@@ -421,3 +421,7 @@ IViewPort*	Game::getViewPort() const {
     Threading::MutexLocker locker(_attributesMutex[eViewPort]);
 	return (_viewPort);
 }
+
+uint64      Game::getEllapsedTime() const {
+    return _clock.getEllapsedTime();
+}

@@ -1,5 +1,5 @@
 //
-// Scenery.h for R-Type in /home/bordel_/R-Type
+// Scenery.cpp for R-Type in /home/bordel_/R-Type
 //
 // Made by Julien Bordellier
 // Login   <bordel@epitech.net>
