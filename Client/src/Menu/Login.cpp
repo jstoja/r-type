@@ -27,7 +27,7 @@ Menu(scene, delegate) {
 
     
     _ipField = new Widget::TextEdit(scene, this, "text-field.png");
-    _ipField->setValue("127.0.0.1");
+    _ipField->setValue("10.17.72.238");
     _ipField->setPosition(Vec3(scene->getViewport().x/2 + 2.6,
                                4.9, 0));
     _ipField->setSize(Vec2(6.5, 1.25));

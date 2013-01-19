@@ -19,6 +19,7 @@ void Widget::Label::_init(void) {
 
 void Widget::Label::_destroy(void) {
     delete _font;
+    _isInit = false;
 }
 
 Graphic::Texture* Widget::Label::_getStringTexture(void) {
@@ -40,7 +41,7 @@ Widget::Label::~Label() {
 void Widget::Label::update() {
     if (getSize().x + getSize().y == 0)
         return ;
-    
+        
     if (!_isInit)
         _init();
     
@@ -48,6 +49,7 @@ void Widget::Label::update() {
     if (_colorChanged) {
         _destroy();
         _init();
+        _colorChanged = false;
     }
     
     Graphic::Texture *texture = _getStringTexture();
@@ -72,6 +74,7 @@ void Widget::Label::update() {
     }
     getElement()->setSize(newSize);
     getElement()->setPosition(newPos);
+    setNeedUpdate(false);
 }
 
 std::string const&  Widget::Label::getText() const {

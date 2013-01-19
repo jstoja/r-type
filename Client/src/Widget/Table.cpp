@@ -14,7 +14,7 @@
 #include "ITableDelegate.h"
 #include "Table.h"
 
-Widget::Table::Table(uint32 columnCount, std::string const& backgroundImage, Graphic::Scene* scene, ITableDelegate* delegate) : Widget(NULL) {
+Widget::Table::Table(uint32 columnCount, std::string const& backgroundImage, Graphic::Scene* scene, ITableDelegate* delegate) : Widget(NULL), _size() {
 	_delegate = delegate;
 	_listener = new Event::Listener(Event::PointerPushed | Event::PointerReleased | Event::PointerMove | Event::PointerOut, Rect2(getPosition(), getSize()), this);
 	_backgroundImage = backgroundImage;
@@ -241,6 +241,7 @@ void    Widget::Table::update() {
 			}
 		}
 	}
+    setNeedUpdate(false);
 }
 
 uint32	Widget::Table::_lineByPosition(Vec2 const& pos) const {
@@ -302,5 +303,6 @@ Vec2 const&    Widget::Table::getSize() {
 	float32 width = 0, height = _headerHeight + _lineHeight * _lineByPages;
 	for (std::vector<float32>::iterator it = _columnSizes.begin(); it != _columnSizes.end(); ++it)
 		width += *it;
-	return (Vec2(width, height));
+    _size = Vec2(width, height);
+	return (_size);
 }

@@ -19,6 +19,7 @@ void Widget::Label::_init(void) {
 void Widget::Label::_destroy(void) {
     UIFont* font = (UIFont*)_font;
     [font release];
+    _isInit = false;
 }
 
 // Biwtise hack to upper a number to its nearest power of two
