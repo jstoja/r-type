@@ -40,6 +40,7 @@ public:
     void  createGame(Network::TcpPacket*);
     void  joinGame(Network::TcpPacket*);
     void  readyToStart(Network::TcpPacket* packet);
+    void  quitGame(Network::TcpPacket* packet);
 
     bool                isReady(void);
     std::string const&  getName(void) const;

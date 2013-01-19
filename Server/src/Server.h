@@ -26,8 +26,9 @@ public:
     int             run();
     void            newConnection(Network::ASocket*);
 
-    std::string                                 getName(void) const;
-    virtual std::map<uint32, Game*> const&      getGames(void) const;
+    virtual std::string                     getName(void) const;
+    virtual std::map<uint32, Game*> const&  getGames(void) const;
+    virtual bool                            canAddPlayer(std::string const& name);
 
     virtual bool    createGame(Game* game, Player* player);
     virtual int     joinGame(uint32 gameId, Player* player);

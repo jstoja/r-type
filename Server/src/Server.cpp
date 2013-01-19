@@ -42,9 +42,16 @@ Server::~Server() {
 }
 
 void Server::newConnection(Network::ASocket* socket) {
-  _players.push_back(new Player(socket, this));
+    _players.push_back(new Player(socket, this));
 }
 
+bool Server::canAddPlayer(std::string const& name) {
+    for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
+         it != end; ++it)
+        if ((*it)->getName() == name)
+            return false;
+    return true;
+}
 
 bool Server::createGame(Game* game, Player* player) {
     uint32 id = game->getId();

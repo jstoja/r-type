@@ -178,7 +178,9 @@ void Client::packetInProgress(uint32 code, float32 progress) {
 	
 void Client::connectionResponse(Network::TcpPacket* packet) {
     if ((packet->getCode() & 0xFF) == 1) {
-        Log("Connection error");
+        Log("Connection error: incorrect login");
+        _ui->hideMessage();
+        _ui->goToMenu("Login");
     } else {
         uint32 id;
         *packet >> id;

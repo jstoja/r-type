@@ -16,6 +16,7 @@ class IServerDelegate
 public:
     virtual std::string                     getName(void) const = 0;
     virtual std::map<uint32, Game*> const&  getGames(void) const = 0;
+    virtual bool                            canAddPlayer(std::string const& name) = 0;
     virtual bool                            createGame(Game* game, Player* player) = 0;
     virtual int                             joinGame(uint32 gameId, Player* player) = 0;
     virtual void                            quitGame(Player* player) = 0;

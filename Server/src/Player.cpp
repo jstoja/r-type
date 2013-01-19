@@ -28,6 +28,7 @@ _proxy(socket, this), _server(server), _commands() {
     _commands[Network::TcpProxy::GameCreate] = &Player::createGame;
     _commands[Network::TcpProxy::GameReady] = &Player::readyToStart;
     _commands[Network::TcpProxy::PlayerList] = &Player::playerList;
+    _commands[Network::TcpProxy::GameQuit] = &Player::quitGame;
 }
 
 Player::~Player() {
@@ -69,11 +70,20 @@ void Player::connectionClosed(Network::Proxy<Network::TcpPacket>*) {
 }
 
 void Player::connection(Network::TcpPacket* packet) {
-    *packet >> _name;
-    Log("Connection with login " << _name << ", id: " << getId());
-
+    std::string name;
+    *packet >> name;
+    Log("Connection with login " << name << ", id: " << getId());
+    
+    uint32 code = Network::TcpProxy::AuthenficitationConnectionSuccess;
+    
+    if (_server->canAddPlayer(name)) {
+        _name = name;
+    } else {
+        code = Network::TcpProxy::AuthenficitationConnectionIncorrectLogin;
+    }
+    
     Network::TcpPacket *tcpPacket = new Network::TcpPacket();
-    tcpPacket->setCode(Network::Proxy<Network::TcpPacket>::AuthenficitationConnectionSuccess);
+    tcpPacket->setCode(code);
     *tcpPacket << (uint32)getId();
     Network::Proxy<Network::TcpPacket>::ToSend toSend(tcpPacket, Network::HostAddress::AnyAddress, 0);
     _attributesMutex[eProxy]->lock();
@@ -191,6 +201,9 @@ void Player::readyToStart(Network::TcpPacket* packet) {
     _attributesMutex[eServer]->unlock();
 }
 
+void Player::quitGame(Network::TcpPacket* packet) {
+    _server->quitGame(this);
+}
 
 Network::APacket& operator<<(Network::APacket& packet, Player const& player) {
     packet << player.getId() << player.getName();
