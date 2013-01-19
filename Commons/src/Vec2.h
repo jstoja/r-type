@@ -31,6 +31,9 @@ struct COMMON_EXPORT_IMPORT Vec2 {
     bool operator==(Vec2 const& v2) const;
     bool operator!=(Vec2 const& v2) const;
     
+    float32 norm(void) const;
+    void    normalize(void);
+    
     float32 x;
     float32 y;
 };
