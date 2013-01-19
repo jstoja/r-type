@@ -39,11 +39,14 @@ public:
     virtual void    gameStart(uint32 gameId);
     virtual void    listPlayers(uint32 gameId, Player* player);
     virtual void    sendGameInfo(uint32, Player*);
+    
+    //! Inform other players that a player quit a game
+    virtual void    informGameQuit(Player* player, Game* game);
 
     static std::string const& getPluginDirectory();
     static void               setPluginDirectory(std::string const& dir);
 
-private:
+private:    
     static std::string      _pluginDirectory;
     Network::TcpServer      _tcpServer;
     std::vector<Player*>    _players;

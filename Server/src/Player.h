@@ -41,8 +41,10 @@ public:
     void  joinGame(Network::TcpPacket*);
     void  readyToStart(Network::TcpPacket* packet);
     void  quitGame(Network::TcpPacket* packet);
+    
+    void  sendGamesList(void);
 
-    bool                isReady(void);
+    bool                isReady(void) const;
     std::string const&  getName(void) const;
 
     typedef void (Player::* commandPointer)(Network::TcpPacket*);

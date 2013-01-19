@@ -31,10 +31,12 @@ bool	Player::isReady() const {
 Player*	Player::newPlayer(Network::TcpPacket& packet) {
 	uint32	id;
 	std::string name;
+    char isReady;
 	Player*	res;
 
-	packet >> id >> name;
+	packet >> id >> name >> isReady;
 	res = new Player(id);
 	res->setName(name);
+    res->setIsReady(isReady);
 	return (res);
 }
