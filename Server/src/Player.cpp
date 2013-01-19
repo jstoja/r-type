@@ -188,6 +188,7 @@ void Player::quitGame(Network::TcpPacket* packet) {
     uint32 gameId;
     
     *packet >> gameId;
+    _isReady = false;
     _server->quitGame(this, gameId);
 }
 

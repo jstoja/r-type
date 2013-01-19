@@ -75,6 +75,7 @@ int Server::joinGame(uint32 gameId, Player* player) {
     if (_games.find(gameId) != _games.end()) {
         if (_games[gameId]->canJoin(player)) {
             _games[gameId]->join(player);
+            informGameJoin(player, _games[gameId]);
             code = Network::TcpProxy::GameJoinSuccess;
         } else {
             code = Network::TcpProxy::GameJoinIsFull;
@@ -142,6 +143,24 @@ void Server::informGameQuit(Player* player, Game* game) {
         if (*it != player) {
             if (game->hasPlayer(*it))
                 game->sendPlayerList(*it);
+            else {
+                (*it)->sendGamesList();
+            }
+        }
+    }
+}
+
+void Server::informGameJoin(Player* player, Game* game) {
+    for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
+         it != end; ++it) {
+        if (*it != player) {
+            if (game->hasPlayer(*it)) {
+                Network::TcpPacket *packet = new Network::TcpPacket();
+                packet->setCode(Network::TcpProxy::GameNewPlayer);
+                *packet << game->getId() << *player;
+                Network::TcpProxy::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
+                (*it)->sendPacket(toSend);
+            }
             else {
                 (*it)->sendGamesList();
             }
