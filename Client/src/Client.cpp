@@ -147,11 +147,14 @@ void Client::leavedGame(void) {
     // Inform the server we leaved the game
     Network::TcpPacket* packet = new Network::TcpPacket();
     packet->setCode(Network::TcpProxy::GameQuit);
+    *packet << _currentGame->getId();
     _proxy->sendPacket(packet);
     // Re-request game list
     packet = new Network::TcpPacket();
     packet->setCode(Network::TcpProxy::InformationsGameList);
     _proxy->sendPacket(packet);
+    
+    _currentGame = NULL;
     _ui->goToMenu("GameList");
 }
 
