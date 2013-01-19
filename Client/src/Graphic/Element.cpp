@@ -13,7 +13,7 @@
 
 Graphic::Element::Element(void) :
 Object(false),
-_type(Dynamic), _position(), _rotation(0), _opacity(1), _size(),
+_type(Dynamic), _position(), _rotation(0.2), _opacity(1), _size(),
 _sprite(NULL), _currentFrame(0),
 _updateTransformationMatrix(true), _isVisible(true), _mutex(new Threading::Mutex()) {
 }
@@ -106,8 +106,6 @@ Graphic::Matrix4f const& Graphic::Element::getTransformationMatrix(void) {
     _transformationMatrix.translate(_position.x, _position.y, _position.z);
     if (_size.x != 0 || _size.y != 0)
         _transformationMatrix.scale(_size.x, _size.y);
-    if (_rotation != 0)
-        _transformationMatrix.rotate(_rotation);
     return _transformationMatrix;
 }
 
