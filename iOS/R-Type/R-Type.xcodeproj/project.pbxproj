@@ -130,6 +130,7 @@
 		26A0B47E16AB1AEC00BEA56C /* button-shoot.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A0B47B16AB1AEC00BEA56C /* button-shoot.png */; };
 		26A0B47F16AB1AEC00BEA56C /* joystick-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A0B47C16AB1AEC00BEA56C /* joystick-background.png */; };
 		26A0B48016AB1AEC00BEA56C /* joystick-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 26A0B47D16AB1AEC00BEA56C /* joystick-button.png */; };
+		26A0B4A616AB66F600BEA56C /* TextureManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26A0B4A416AB66F600BEA56C /* TextureManager.cpp */; };
 		26B59C4B1685E67200BC64D7 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B59C4A1685E67200BC64D7 /* icon@2x.png */; };
 		26B59C4E1685E6D500BC64D7 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 26B59C4D1685E6D500BC64D7 /* icon.png */; };
 		26BEB5E716A7EBEF00E6CC83 /* GameJoin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26BEB5E216A7EBEF00E6CC83 /* GameJoin.cpp */; };
@@ -375,6 +376,8 @@
 		26A0B47B16AB1AEC00BEA56C /* button-shoot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-shoot.png"; sourceTree = SOURCE_ROOT; };
 		26A0B47C16AB1AEC00BEA56C /* joystick-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-background.png"; sourceTree = SOURCE_ROOT; };
 		26A0B47D16AB1AEC00BEA56C /* joystick-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "joystick-button.png"; sourceTree = SOURCE_ROOT; };
+		26A0B4A416AB66F600BEA56C /* TextureManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureManager.cpp; sourceTree = "<group>"; };
+		26A0B4A516AB66F600BEA56C /* TextureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureManager.h; sourceTree = "<group>"; };
 		26B59C4A1685E67200BC64D7 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../icon@2x.png"; sourceTree = "<group>"; };
 		26B59C4D1685E6D500BC64D7 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../icon.png; sourceTree = "<group>"; };
 		26BEB5E216A7EBEF00E6CC83 /* GameJoin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameJoin.cpp; sourceTree = "<group>"; };
@@ -623,6 +626,8 @@
 		2699AA261684AE670092AC40 /* Graphic */ = {
 			isa = PBXGroup;
 			children = (
+				26A0B4A416AB66F600BEA56C /* TextureManager.cpp */,
+				26A0B4A516AB66F600BEA56C /* TextureManager.h */,
 				261F248416A06B34006C1CF4 /* Image.cpp */,
 				261F248716A06B64006C1CF4 /* iOSImage.mm */,
 				261F248516A06B34006C1CF4 /* Image.h */,
@@ -1028,6 +1033,7 @@
 				26A0B44916AAD75100BEA56C /* SoundManager.cpp in Sources */,
 				26A0B44E16AAD80500BEA56C /* iOSSound.cpp in Sources */,
 				26A0B46B16AB10C900BEA56C /* GameController.cpp in Sources */,
+				26A0B4A616AB66F600BEA56C /* TextureManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
