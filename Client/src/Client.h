@@ -49,7 +49,8 @@ class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Ne
                                      uint32 nbPlayers);
     virtual void    gameSelected(uint32 gameIndex);
     virtual void    playerReady();
-    
+    virtual void    leavedGameList(void);
+    virtual void    leavedGame(void);
     
     // Socket delegate
 	void connectionFinished(Network::ASocket*, bool success);

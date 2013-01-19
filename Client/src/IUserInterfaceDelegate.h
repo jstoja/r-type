@@ -27,6 +27,8 @@ public:
                                      uint32 nbPlayers) = 0;
     virtual void    gameSelected(uint32 gameIndex) = 0;
     virtual void    playerReady() = 0;
+    virtual void    leavedGameList(void) = 0;
+    virtual void    leavedGame(void) = 0;
 };
 
 #endif
