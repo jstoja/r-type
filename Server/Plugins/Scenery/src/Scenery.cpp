@@ -10,6 +10,7 @@
 #include <sstream>
 
 #include "Scenery.h"
+#include "ISprite.h"
 
 Scenery::Scenery(std::string const& pluginName)
     : _game(NULL), _name(pluginName), _scenery(NULL) {
@@ -43,19 +44,19 @@ bool                Scenery::init(IGame* game, ByteArray const& params, float32 
     
     spriteName = new char[spriteSize];
 	data.read(spriteName, spriteSize*sizeof(*spriteName));
-    ITexture	*texture = _game->createTexture(std::string(spriteName, spriteSize), _name);
+	std::string spriteVal(spriteName, spriteSize);
 	delete []spriteName;
-    
-    if (texture == NULL) {
+	ISprite*	sprite = _game->getLevelSprite(spriteVal);
+	if (sprite == NULL)
+		return (false);
+	ITexture*	texture = sprite->getTexture();
+    if (texture == NULL)
         return false;
-    }
-    
     data.read(reinterpret_cast<char*>(&speed), sizeof(speed));
     data.read(reinterpret_cast<char*>(&width), sizeof(width));
     data.read(reinterpret_cast<char*>(&xEnd), sizeof(xEnd));
     data.read(reinterpret_cast<char*>(&depth), sizeof(depth));
     data.read(reinterpret_cast<char*>(&opacity), sizeof(opacity));
-    
     _scenery->setTexture(texture);
     _scenery->setWidth(width);
     _scenery->setXStart(xStart);

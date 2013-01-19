@@ -32,7 +32,12 @@ void	Sprite::setTexture(ITexture *texture) {
     _attributesMutexTexture->unlock();
 }
 
-Texture*	Sprite::getTexture() const {
+Texture*	Sprite::_getTexture() const {
+    Threading::MutexLocker locker(_attributesMutexTexture);
+	return (_texture);
+}
+
+ITexture*	Sprite::getTexture() const {
     Threading::MutexLocker locker(_attributesMutexTexture);
 	return (_texture);
 }
@@ -49,6 +54,6 @@ std::list<Frame> const&	Sprite::getFrames() const {
 }
 
 Network::APacket&		operator<<(Network::APacket& packet, Sprite const& sprite) {
-	packet << sprite.getId() << sprite.getTexture()->getId() << sprite.getFrames();
+	packet << sprite.getId() << sprite._getTexture()->getId() << sprite.getFrames();
 	return packet;
 }

@@ -107,6 +107,20 @@ ByteArray	createBlockParams(Vec3 const& pos, Vec2 const& size, float32 rotation,
 	return res;
 }
 
+ByteArray	createSceneryParams(std::string const& sprite, float32 speed, float32 width, float32 xEnd, float32 depth, float32 opacity) {
+	ByteArray	res;
+	uint32		tmpSize = sprite.size();
+
+	res.append((char*)&tmpSize, sizeof(tmpSize));
+	res.append(sprite.c_str(), tmpSize);
+	res.append((char*)&speed, sizeof(speed));
+	res.append((char*)&width, sizeof(width));
+	res.append((char*)&xEnd, sizeof(xEnd));
+	res.append((char*)&depth, sizeof(depth));
+	res.append((char*)&opacity, sizeof(opacity));
+	return res;
+}
+
 int	main(int ac, char **av) {
 	Application::getInstance().init(ac, av);
 	std::string filename = "level.map";
@@ -119,8 +133,8 @@ int	main(int ac, char **av) {
 
 	Test	map;
 	map.setName(name);
-	map.addSprite("blockSprite", "Images/block.png", frames);
-	map.addObject("Block", 0, createBlockParams(Vec3(8, 8, 0), Vec2(2, 1), 0, "blockSprite", 0));
+	map.addSprite("scenery1", "Images/Scenery1.png", frames);
+	map.addObject("Scenery", 0, createSceneryParams("scenery1", 0.1, 16, 1000, 3, 1));
 	map.save(Application::getInstance().getRelativePath(filename));
 	return (0);
 }

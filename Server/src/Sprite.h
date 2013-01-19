@@ -29,7 +29,8 @@ public:
 	virtual ~Sprite();
 
 	virtual void	setTexture(ITexture* texture);
-	Texture*		getTexture() const;
+ 	virtual ITexture*	getTexture() const;
+ 	Texture*		_getTexture() const;
 
 	virtual void			addFrame(Vec2 const& p1, Vec2 const& p2);
 	std::list<Frame> const&	getFrames() const;
