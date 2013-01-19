@@ -81,7 +81,10 @@ void Client::mainLoop(void) {
 
 void Client::update(void) {
     Event::Manager::getInstance().processEvents();
-    _ui->update();
+    if (_gameController && _gameController->gameLaunched())
+        _gameController->update();
+    else
+        _ui->update();
     Graphic::TextureManager::getInstance().update();
 }
 

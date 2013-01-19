@@ -12,7 +12,7 @@
 #include "ObjectManager.h"
 
 GameController::GameController(Game* game, Graphic::Scene* scene) :
-_game(game), _scene(scene), _eventListener(NULL) {
+_game(game), _gameLaunched(false), _scene(scene), _eventListener(NULL) {
     
     // Create the event listener to get user input
     _eventListener = new Event::Listener(Event::KeyPressed | Event::KeyReleased, this);
@@ -186,6 +186,7 @@ void GameController::launchGame(void) {
 			_scene->addScenery(*it);
 		}
 	}
+    _gameLaunched = true;
 }
 
 void GameController::clearGame(void) {
@@ -211,4 +212,12 @@ void GameController::clearGame(void) {
 	for (std::list<Sound::Sound*>::iterator it = _sounds.begin(); it != _sounds.end(); ++it)
 		delete *it;
 	_sounds.clear();
+}
+
+void GameController::update(void) {
+    
+}
+
+bool GameController::gameLaunched(void) const {
+    return _gameLaunched;
 }

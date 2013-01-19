@@ -28,10 +28,9 @@ GameObject::~GameObject() {
 }
 
 bool	GameObject::init(IGame* game, ByteArray const& params, float32 xStart) {
-    _pluginMutex->lock();
+    Threading::MutexLocker locker(_pluginMutex);
 	if (_plugin)
 		return _plugin->init(game, params, xStart);
-    _pluginMutex->unlock();
 	return false;
 }
 
