@@ -399,6 +399,12 @@ FOREACH (PLUGIN_DIR ${PLUGIN_DIRS})
         ${PLUGIN_SRC}
         ${SERVER_COMMONS_SOURCE}
     )
+    
+    # Make the server dependent of the plugins
+    ADD_DEPENDENCIES (
+        Server
+        ${PLUGIN_NAME}
+    )
 
     TARGET_LINK_LIBRARIES (
         ${PLUGIN_NAME}
