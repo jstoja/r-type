@@ -11,6 +11,8 @@
 #include "Sprite.h"
 
 GraphicElement::GraphicElement() : _rotation(0), _hasChanged(true) {
+
+    _attributesMutex.resize(eLastAttribute);
     for (uint32 i = 0; i < eLastAttribute; ++i) {
         _attributesMutex[i] = new Threading::Mutex();
     }

@@ -92,3 +92,7 @@ float32	Monster::getXStart() const {
 std::string const&	Monster::getName() const {
     return (_name);
 }
+
+RTYPE_PLUGIN_CREATE {
+	return (new Monster(name));
+}

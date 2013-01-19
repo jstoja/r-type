@@ -13,6 +13,8 @@
 #include "Sound.h"
 
 Sound::Sound(std::string const& filepath) : _changed(false), _isPlaying(false), _repeat(0) {
+
+    _attributesMutex.resize(eLastAttribute);
     for (uint32 i = 0; i < eLastAttribute; ++i) {
         _attributesMutex[i] = new Threading::Mutex();
     }

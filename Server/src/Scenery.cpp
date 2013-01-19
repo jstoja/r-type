@@ -10,6 +10,7 @@
 #include "Scenery.h"
 
 Scenery::Scenery() : _texture(NULL), _speed(1), _width(0), _xStart(0), _xEnd(0) {
+    _attributesMutex.resize(eLastAttribute);
     for (uint32 i = 0; i < eLastAttribute; ++i) {
         _attributesMutex[i] = new Threading::Mutex();
     }
