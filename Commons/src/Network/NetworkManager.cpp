@@ -99,7 +99,7 @@ void Network::NetworkManager::operator()() {
         if (_sockets->size() < size) {
             size = _sockets->size();
             --i;
-        } else if (_sockets->size() < size) {
+        } else if (_sockets->size() > size) {
             size = _sockets->size();
         } else if (_sockets->at(i)->isWriting() && FD_ISSET(_sockets->at(i)->getId(), &writeSockets)) {
 	    _socketsMutex.unlock();

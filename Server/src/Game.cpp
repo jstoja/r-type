@@ -99,7 +99,6 @@ void     Game::start(void) {
         *packet << getId();
         Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
         _players[i]->sendPacket(toSend);
-        delete packet;
     }
     _attributesMutex[ePlayers]->unlock();
 
@@ -147,23 +146,22 @@ void	Game::update() {
 bool     Game::canJoin(Player* player) const {
     Threading::MutexLocker locker(_attributesMutex[ePlayers]);
     Threading::MutexLocker locker2(_attributesMutex[eNbSlots]);
-    return ((!player && _nbSlots > _players.size())
-            || std::find(_players.begin(), _players.end(), player) == _players.end());
+    return (_nbSlots > _players.size()
+            && (!player || std::find(_players.begin(), _players.end(), player) == _players.end()));
 }
 
 void     Game::join(Player* player) {
-    if (canJoin()) {
+    if (canJoin(player)) {
         _attributesMutex[ePlayers]->lock();
         _players.push_back(player);
 
         for (int i=0; i < _players.size(); i++) {
             if (_players[i] != player) {
                 Network::TcpPacket *packet = new Network::TcpPacket();
-                packet->setCode(0x01020400);
+                packet->setCode(Network::TcpProxy::GameNewPlayer);
                 *packet << *player;
                 Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
                 _players[i]->sendPacket(toSend);
-                delete packet;
             }
         }
         _attributesMutex[ePlayers]->unlock();
@@ -183,7 +181,6 @@ void     Game::playerReady(Player* player) {
         }
     }
     _attributesMutex[ePlayers]->unlock();
-    delete packet;
 }
 
 void    Game::sendPlayerList(Player* player) {
@@ -202,7 +199,6 @@ void    Game::sendPlayerList(Player* player) {
     *packet << playerList;
     Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
     player->sendPacket(toSend);
-    delete packet;
 
     _attributesMutex[ePlayers]->unlock();
 }
@@ -221,7 +217,6 @@ void     Game::sendInfo(Player* player) {
     *packet << playerList;
     Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
     player->sendPacket(toSend);
-    delete packet;
 
     for (int i = 0; i < _players.size(); ++i) {
         if (_players[i] != player && _players[i]->isReady()) {
@@ -230,7 +225,6 @@ void     Game::sendInfo(Player* player) {
             *packet << _players[i]->getId();
             Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
             player->sendPacket(toSend);
-            delete packet;
         }
     }
 
