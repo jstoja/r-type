@@ -123,6 +123,26 @@ void Client::gameSelected(uint32 gameIndex) {
     }
 }
 
+void Client::leavedGameList(void) {
+    _ui->goToMenu("Login");
+    delete _proxy;
+    _proxy = NULL;
+    delete _tcpSocket;
+    _tcpSocket = NULL;
+}
+
+void Client::leavedGame(void) {
+    // Inform the server we leaved the game
+    Network::TcpPacket* packet = new Network::TcpPacket();
+    packet->setCode(Network::TcpProxy::GameQuit);
+    _proxy->sendPacket(packet);
+    // Re-request game list
+    packet = new Network::TcpPacket();
+    packet->setCode(Network::TcpProxy::InformationsGameList);
+    _proxy->sendPacket(packet);
+    _ui->goToMenu("GameList");
+}
+
 void Client::packetReceived(Network::TcpPacket* packet) {
     uint32 code, size;
     

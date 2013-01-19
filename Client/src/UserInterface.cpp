@@ -132,12 +132,13 @@ void UserInterface::joinGame(uint32 idx) {
 void UserInterface::previous() {
     Menu::Menu* current = getCurrentMenu();
 	if (current == _menus["GameList"]) {
-        goToMenu("Login");
-	} else if (current == _menus["NewGame"]
-               || current == _menus["GameJoin"]
-               || current == _menus["GamePrepare"]) {
+        _delegate->leavedGameList();
+	} else if (current == _menus["NewGame"]) {
 		goToMenu("GameList");
-	}
+	} else if (current == _menus["GameJoin"]
+               || current == _menus["GamePrepare"]) {
+        _delegate->leavedGame();
+    }
 }
 
 void UserInterface::playerReady(void) {

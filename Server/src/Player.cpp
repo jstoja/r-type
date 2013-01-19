@@ -127,8 +127,8 @@ void Player::joinGame(Network::TcpPacket* packet) {
     _attributesMutex[eProxy]->unlock();
 
     if (code == Network::TcpProxy::GameJoinSuccess) {
+        _server->sendResources(id, this);        
         _server->sendGameInfo(id, this);
-        _server->sendResources(id, this);
     }
     _attributesMutex[eServer]->unlock();
 }
@@ -193,6 +193,6 @@ void Player::readyToStart(Network::TcpPacket* packet) {
 
 
 Network::APacket& operator<<(Network::APacket& packet, Player const& player) {
-    packet << player.getId();
+    packet << player.getId() << player.getName();
     return packet;
 }

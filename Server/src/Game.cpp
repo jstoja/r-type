@@ -187,9 +187,7 @@ void    Game::sendPlayerList(Player* player) {
     std::list<Player*> playerList;
 
     for (int i = 0; i < _players.size(); ++i) {
-        if (_players[i] != player) {
-            playerList.push_back(_players[i]);
-        }
+        playerList.push_back(_players[i]);
     }
 
     Network::TcpPacket *packet = new Network::TcpPacket();
