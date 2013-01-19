@@ -85,7 +85,8 @@ void UserInterface::presentMessage(std::string const& message) {
 
 void UserInterface::hideMessage(void) {
     Threading::MutexLocker lock(_mutex);
-    _messageLabel->setVisible(false);
+    if (_messageLabel->isVisible())
+        _messageLabel->setVisible(false);
 }
 
 Menu::Menu* UserInterface::getCurrentMenu(void) const {
@@ -142,6 +143,9 @@ void UserInterface::playerReady(void) {
 
 void UserInterface::goToMenu(std::string const& menu) {
     Threading::MutexLocker lock(_mutex);
+    lock.unlock();
+    hideMessage();
+    lock.relock();
     _nextMenu = _menus[menu];
 }
 

@@ -12,23 +12,49 @@
 #include "ObjectManager.h"
 
 GameController::GameController(Game* game, Graphic::Scene* scene) :
-_game(game), _gameLaunched(false), _scene(scene), _eventListener(NULL) {
+_game(game), _gameLaunched(false), _scene(scene), _eventListener(NULL),
+_udpSocket(NULL), _udpProxy(NULL) {
     
     // Create the event listener to get user input
     _eventListener = new Event::Listener(Event::KeyPressed | Event::KeyReleased, this);
     Event::Manager::getInstance().addEventListener(_eventListener);
+    
+    _udpSocket = new Network::UdpSocket();
+    _udpProxy = new Network::UdpProxy(_udpSocket, this);
     
 }
 
 GameController::~GameController(void) {
     Event::Manager::getInstance().removeEventListener(_eventListener);
     delete _eventListener;
+    delete _udpProxy;
+    delete _udpSocket;
 }
+
+#pragma mark Event listener delegate methods
 
 void GameController::processEvent(Event::Event const& event) {
     if (event.type & (Event::KeyPressed | Event::KeyReleased)) {
         
     }
+}
+
+#pragma mark UDP proxy delegate methods
+
+void GameController::packetReceived(Network::UdpPacket* packet) {
+    
+}
+
+void GameController::packetSent(Network::UdpPacket const* packet) {
+    
+}
+
+void GameController::connectionClosed(Network::Proxy<Network::UdpPacket>* proxy) {
+    
+}
+
+void GameController::packetInProgress(uint32 code, float32 progress) {
+    
 }
 
 #pragma mark Game creation
@@ -218,6 +244,12 @@ void GameController::update(void) {
     
 }
 
+#pragma mark Getters
+
 bool GameController::gameLaunched(void) const {
     return _gameLaunched;
+}
+
+uint8 GameController::getUdpSocketPort(void) const {
+    return _udpSocket->getLocalPort();
 }
