@@ -16,9 +16,9 @@ Library::Library(std::string& fileName) :
 }
 
 Library::~Library() {
+    unload();    
 	delete _errorString;
 	delete _fileName;
-    unload();
 }
 
 std::string const& Library::getErrorString() const {

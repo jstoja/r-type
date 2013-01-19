@@ -58,7 +58,7 @@ float32	Scenery::getWidth() const {
 void	Scenery::setXStart(float32 xStart) {
     _attributesMutex[eXStart]->lock();
 	_xStart = xStart;
-    _attributesMutex[eSpeed]->unlock();
+    _attributesMutex[eXStart]->unlock();
 }
 
 float32	Scenery::getXStart() const {

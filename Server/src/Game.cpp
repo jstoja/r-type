@@ -284,7 +284,7 @@ IScenery*		Game::addScenery() {
 
     _attributesMutex[eGameSceneries]->lock();
 	_gameSceneries.push_back(res);
-    _attributesMutex[eGameSceneries]->lock();
+    _attributesMutex[eGameSceneries]->unlock();
 	return (res);
 }
 
@@ -312,8 +312,16 @@ void		Game::_loadMap(std::string const& fileName) {
 		try {
 			GameObject	*obj = new GameObject(it->name);
 
+            locker.unlock();
+            locker1.unlock();
+            locker2.unlock();
+            locker3.unlock();
 			if (obj->init(this, it->params, it->xStart) == false)
 				throw new Exception("Cannot init plugin: " + it->name);
+            locker.relock();
+            locker1.relock();
+            locker2.relock();
+            locker3.relock();
 			_objects.push_back(obj);
 		} catch (Exception *e) {
 			throw e;
