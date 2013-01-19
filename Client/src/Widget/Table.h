@@ -17,6 +17,7 @@
 
 # include "Event/IListenerDelegate.h"
 # include "Event/Listener.h"
+# include "Widget/Widget.h"
 
 namespace Graphic {
     class Scene;
@@ -79,9 +80,11 @@ namespace Widget {
         virtual void    update();
         virtual Vec2 const&    getSize();
 		virtual void processEvent(Event::Event const& event);
+        
     private:
 		uint32	_lineByPosition(Vec2 const& pos) const;
 
+        Vec2                        _size;
 		std::string					_backgroundImage;
 		Graphic::Scene*				_scene;
 		uint32						_columnCount;
