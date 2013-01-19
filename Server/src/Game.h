@@ -16,6 +16,7 @@
 # include <Network/TcpPacket.h>
 # include <Network/UdpPacket.h>
 # include <Network/UdpSocket.h>
+# include <Network/CriticalPacket.h>
 # include <Threading/ThreadPool.hpp>
 # include "Threading/Mutex.h"
 # include "Threading/MutexLocker.h"
@@ -114,27 +115,27 @@ private:
         eApplication,
         eLastAttribute
     };
-    std::vector<Threading::Mutex*>	_attributesMutex;
+    std::vector<Threading::Mutex*>	            _attributesMutex;
 
-	std::vector<Player*>            _players;
-	uint32                          _nbSlots;
-	std::string                     _name;
-	Map                             _currentLevel;
-	std::list<GameObject*>          _objects;
-	std::list<Texture*>             _gameTextures;
-	std::map<std::string, Sprite*>	_levelSprites;
-	std::list<Sprite*>				_gameSprites;
-	std::list<Scenery*>				_gameSceneries;
-	std::list<Sound*>				_gameSounds;
-	GraphicScene					_graphicScene;
-	PhysicScene						_physicScene;
-	Threading::ThreadPool*			_updatePool;
-    State                           _state;
-	Clock							_clock;
-	Clock							_gameClock;
-	ViewPort*						_viewPort;
-    Network::Proxy<Network::UdpPacket> *_proxy;
-    Network::UdpSocket              *_udpSocket;
+	std::vector<Player*>                        _players;
+	uint32                                      _nbSlots;
+	std::string                                 _name;
+	Map                                         _currentLevel;
+	std::list<GameObject*>                      _objects;
+	std::list<Texture*>                         _gameTextures;
+	std::map<std::string, Sprite*>	            _levelSprites;
+	std::list<Sprite*>				            _gameSprites;
+	std::list<Scenery*>				            _gameSceneries;
+	std::list<Sound*>				            _gameSounds;
+	GraphicScene					            _graphicScene;
+	PhysicScene						            _physicScene;
+	Threading::ThreadPool*			            _updatePool;
+    State                                       _state;
+	Clock							            _clock;
+	Clock							            _gameClock;
+	ViewPort*						            _viewPort;
+    Network::Proxy<Network::UdpPacket>*         _proxy;
+    Network::UdpSocket*                         _udpSocket;
 
 #ifdef OS_MAC
 	static const int					_updateThreadNumber = 7;

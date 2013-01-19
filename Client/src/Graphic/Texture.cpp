@@ -8,6 +8,10 @@
 
 #include "Texture.h"
 
+# ifndef OS_WINDOWS
+#  include <string.h>
+# endif
+
 #include "Debug.h"
 #include "UUIDGenerator.h"
 #include "GraphicException.h"
@@ -24,7 +28,7 @@ Object(id), _isInit(false), _dataToLoad(NULL), _glID(0), _size(0) {
 	Graphic::Image image;
 	image.loadFromData(resource->getData());
     setData(image.getWidth(), image.getHeight(), image.getPixelsPtr());
-    
+
     Graphic::TextureManager::getInstance().registerTexture(this);
 }
 
@@ -33,7 +37,7 @@ Object(false), _isInit(false), _dataToLoad(NULL), _glID(0), _size(0) {
     Graphic::Image image;
     image.loadFromResource(resourceImage, generateId);
     setData(image.getWidth(), image.getHeight(), image.getPixelsPtr());
-    
+
     Graphic::TextureManager::getInstance().registerTexture(this);
 }
 
@@ -47,16 +51,16 @@ void Graphic::Texture::init(void) {
     // If we don't have data to load, we can't init the texture
     if (!_dataToLoad)
         return ;
-    
+
     _isInit = true;
-    
+
     glGenTextures(1, &_glID);
-    
+
     // Configure the texture
     bind();
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    
+
     // Send the data to the texture
     glTexImage2D(GL_TEXTURE_2D,     // Texture type
                  0,                 // Level of detail (0 = max)
@@ -68,7 +72,7 @@ void Graphic::Texture::init(void) {
                  GL_UNSIGNED_BYTE,  // Data type of the pixel datas
                  _dataToLoad);
     Graphic::Exception::checkOpenGLError();
-    
+
     delete[] _dataToLoad;
     _dataToLoad = NULL;
 }
@@ -92,7 +96,7 @@ void Graphic::Texture::setData(uint32 width, uint32 height, const uint8* data) {
     memcpy((void*)_dataToLoad, data, width * height * 4);
 }
 
-uint32 Graphic::Texture::getGLID(void) const {    
+uint32 Graphic::Texture::getGLID(void) const {
     return _glID;
 }
 

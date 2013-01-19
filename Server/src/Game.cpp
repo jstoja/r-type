@@ -8,6 +8,7 @@
 #include <Application.h>
 #include <Exception.h>
 #include <Resource.h>
+#include <algorithm>
 
 #include "Network/Proxy.hpp"
 #include "Game.h"
@@ -46,10 +47,11 @@ Game::~Game() {
 }
 
 void Game::packetReceived(Network::UdpPacket* packet) {
-    uint32 code, size;
+    uint32 code, id, size;
 
-    *packet >> code >> size;
+    *packet >> code >> id >> size;
     Log("UDP Packet received 0x" << std::setfill('0') << std::setw(8) << std::hex << code);
+
     delete packet;
 }
 
@@ -127,6 +129,8 @@ void     Game::start(void) {
 }
 
 void	Game::update() {
+    _proxy->checkCriticalPackets();
+
     _attributesMutex[eViewPort]->lock();
     _attributesMutex[eClock]->lock();
     _attributesMutex[eObjects]->lock();
