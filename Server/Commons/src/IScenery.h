@@ -31,6 +31,12 @@ public:
 
 	virtual void	setXEnd(float32 xEnd) = 0;
 	virtual float32	getXEnd() const = 0;
+    
+    virtual void	setDepth(float32 depth) = 0;
+	virtual float32	getDepth() const = 0;
+    
+	virtual void	setOpacity(float32 opacity) = 0;
+	virtual float32	getOpacity() const = 0;
 };
 
 #endif

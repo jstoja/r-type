@@ -40,6 +40,12 @@ public:
 	virtual void	setXEnd(float32 xEnd);
 	virtual float32	getXEnd() const;
 
+    virtual void	setDepth(float32 depth);
+	virtual float32	getDepth() const;
+
+	virtual void	setOpacity(float32 opacity);
+	virtual float32	getOpacity() const;
+    
 private:
     
     enum    _mutexVariable {
@@ -48,11 +54,15 @@ private:
         eWidth,
         eXStart,
         eXEnd,
+        eDepth,
+        eOpacity,
         eLastAttribute
     };
     std::vector<Threading::Mutex*>	_attributesMutex;
     
 	Texture*	_texture;
+    float32     _depth;
+    float32     _opacity;
 	float32		_speed;
 	float32		_width;
 	float32		_xStart;

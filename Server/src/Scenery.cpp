@@ -76,7 +76,31 @@ float32	Scenery::getXEnd() const {
 	return (_xEnd);
 }
 
+void	Scenery::setDepth(float32 depth) {
+    _attributesMutex[eDepth]->lock();
+	_depth = depth;
+    _attributesMutex[eDepth]->unlock();
+}
+
+float32	Scenery::getDepth() const {
+    Threading::MutexLocker  locker(_attributesMutex[eDepth]);
+	return (_depth);
+}
+
+void	Scenery::setOpacity(float32 opacity) {
+    _attributesMutex[eOpacity]->lock();
+	_opacity = opacity;
+    _attributesMutex[eOpacity]->unlock();
+}
+
+float32	Scenery::getOpacity() const {
+    Threading::MutexLocker  locker(_attributesMutex[eOpacity]);
+	return (_opacity);
+}
+
+
 Network::APacket&		operator<<(Network::APacket& packet, Scenery const& scenery) {
-	return packet << scenery.getId() << scenery.getTexture()->getId() << scenery.getSpeed()
-				  << scenery.getWidth() << scenery.getXStart() << scenery.getXEnd();
+	return (packet << scenery.getId() << scenery.getTexture()->getId() << scenery.getSpeed()
+				  << scenery.getWidth() << scenery.getXStart() << scenery.getXEnd()
+                  << scenery.getDepth() << scenery.getOpacity());
 }

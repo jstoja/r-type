@@ -31,17 +31,16 @@ public:
 	virtual std::string const&	getName() const;
 
 private:
-	enum Type {
+	/*enum Type {
 		SHIP = 0,
-	};
+	};*/
 
 	IGame*				_game;
-	IGraphicElement*	_block;
 	float32				_xStart;
-	IPhysicElement*		_physicElement;
 	IGraphicElement*	_graphicElement;
+	IPhysicElement*		_physicElement;
 	std::string			_name;
-	static std::map<Type, std::string>	_images;
+	//static std::map<Type, std::string>	_images;
 };
 
 #endif
