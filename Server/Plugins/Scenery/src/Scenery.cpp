@@ -40,7 +40,7 @@ bool                Scenery::init(IGame* game, ByteArray const& params, float32 
     
 	std::stringstream	data(std::stringstream::binary | std::stringstream::in | std::stringstream::out);
 	data.write(params.getData(), params.getSize());
-	data.seekg(0, std::ios::beg);
+	//data.seekg(0, std::ios::beg);
 	data.read(reinterpret_cast<char*>(&spriteSize), sizeof(spriteSize));
     
     spriteName = new char[spriteSize];

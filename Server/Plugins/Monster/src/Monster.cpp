@@ -21,7 +21,7 @@ Monster::~Monster() {
 bool	Monster::init(IGame* game, ByteArray const& params, float32 xStart) {
  	if ((_game = game) == NULL)
 		return false;
-    std::stringstream	data(std::stringstream::binary);
+    std::stringstream	data(std::stringstream::binary | std::stringstream::in | std::stringstream::out);
 	data.write(params.getData(), params.getSize());
 
     Vec3 pos;

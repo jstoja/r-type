@@ -11,7 +11,7 @@
 #include "Bullet.h"
 
 Bullet::Bullet(std::string const& pluginName)
-: _game(NULL), _name(pluginName), _graphicElement(NULL), _physicElement(NULL) {
+: _name(pluginName), _game(NULL), _graphicElement(NULL), _physicElement(NULL) {
 
 }
 
@@ -24,7 +24,7 @@ bool	Bullet::init(IGame* game, ByteArray const& params, float32 xStart) {
         return (false);
     }
     
-    std::stringstream	data(std::stringstream::binary);
+    std::stringstream	data(std::stringstream::binary | std::stringstream::in | std::stringstream::out);
 	data.write(params.getData(), params.getSize());
     
     Vec2 size;
