@@ -18,6 +18,8 @@
 # include "Network/Proxy.hpp"
 # include "Network/TcpSocket.h"
 # include "Network/TcpPacket.h"
+# include "Network/UdpSocket.h"
+# include "Network/UdpPacket.h"
 # include "Game.h"
 
 class Client : public Event::IListenerDelegate, public IUserInterfaceDelegate, public Network::IProxyDelegate<Network::TcpPacket>, public Network::ISocketDelegate {
@@ -54,7 +56,7 @@ public:
     virtual void    leavedGameList(void);
     virtual void    leavedGame(void);
                         
-    // Network proxy delegate methods
+    // Network TCP proxy delegate methods
     void packetReceived(Network::TcpPacket* packet);
     void packetSent(Network::TcpPacket const* packet);
     void connectionClosed(Network::Proxy<Network::TcpPacket>* proxy);
@@ -73,7 +75,7 @@ public:
 	void startGame(Network::TcpPacket* packet);
     
     // Socket delegate
-	void connectionFinished(Network::ASocket*, bool success);    
+	void connectionFinished(Network::ASocket*, bool success);
 
     typedef void (Client::* commandPointer)(Network::TcpPacket*);
     
@@ -89,7 +91,8 @@ private:
     UserInterface*      _ui;
     
     Network::TcpSocket*                 _tcpSocket;
-    Network::Proxy<Network::TcpPacket>* _proxy;
+    Network::TcpProxy*                  _proxy;
+    
     std::map<int, commandPointer>       _commands;
 
     std::string                         _login;

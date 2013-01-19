@@ -17,8 +17,9 @@
 #include "Graphic/Image.h"
 
 Client::Client(void) :
-_close(false), _scene(), _framerateLimit(30), _time(), _ui(), _tcpSocket(NULL),
-_proxy(NULL), _commands(), _login(""), _userId(0), _currentGame(NULL),
+_close(false), _scene(), _framerateLimit(30), _time(), _ui(),
+_tcpSocket(NULL), _proxy(NULL),
+_commands(), _login(""), _userId(0), _currentGame(NULL),
 _gameController(NULL) {
     
     _commands[Network::TcpProxy::AuthenficitationConnectionSuccess] = &Client::connectionResponse;
@@ -148,10 +149,10 @@ void Client::gameSelected(uint32 gameIndex) {
 }
 
 void Client::playerReady() {
-	if (_currentGame) {
+	if (_currentGame && _gameController) {
 		Network::TcpPacket* packet = new Network::TcpPacket();
 		packet->setCode(Network::TcpProxy::PlayerReady);
-        *packet << _currentGame->getId();
+        *packet << _currentGame->getId() << (uint16)_gameController->getUdpSocketPort();
         _proxy->sendPacket(packet);
 		_currentGame->setPlayerReady(_userId, true);
 		_ui->setCurrentGame(_currentGame);
