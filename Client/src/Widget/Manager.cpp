@@ -35,7 +35,9 @@ void	Widget::Manager::update() {
 	_mutex->lock();
 	for (std::list<Widget*>::iterator it = _widgets.begin(); it != _widgets.end();) {
 		if ((*it)->needDelete()) {
+            _mutex->unlock();
 			delete *it;
+            _mutex->lock();
 			it = _widgets.erase(it);
 			continue;
 		}

@@ -203,10 +203,10 @@ void				Server::setPluginDirectory(std::string const& dir) {
 int	Server::run() {
 	Clock	clock;
 	while (1) {
-		clock.reset();
 		for (std::map<uint32, Game*>::iterator it = _games.begin(); it != _games.end(); ++it)
 			if (it->second->getState() == Game::Started)
 				it->second->update();
+		clock.reset();        
 		uint32 sleeping = (1000 / _sendFramerate) - clock.getEllapsedTime();
 		if (sleeping > 0)
 			Clock::sleep(sleeping);

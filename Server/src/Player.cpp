@@ -133,6 +133,7 @@ void Player::joinGame(Network::TcpPacket* packet) {
     *packet >> id;
     _attributesMutex[eServer]->lock();
     int code = _server->joinGame(id, this);
+    _attributesMutex[eServer]->unlock();
 
     Network::TcpPacket *tcpPacket = new Network::TcpPacket();
     tcpPacket->setCode(code);

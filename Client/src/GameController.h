@@ -39,11 +39,17 @@ public:
 	static Graphic::Scenery*	createScenery(Network::TcpPacket& packet);
 	static Sound::Sound*		createSound(Network::TcpPacket& packet);
     
+    // Game actions
     void launchGame(void);
     void clearGame(void);
+    void update(void);
+    
+    // Getters
+    bool gameLaunched(void) const;
 
 private:
     Game*                               _game;
+    bool                                _gameLaunched;
     Graphic::Scene*                     _scene;
     Event::Listener*                    _eventListener;
 	std::list<Resource*>				_resources;
