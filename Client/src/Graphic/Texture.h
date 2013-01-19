@@ -41,6 +41,17 @@ namespace Graphic {
         //! Destruct the texture
         virtual ~Texture();
         
+        //! Init the texture
+        /*!
+         This function must be called from the main thread, because it create
+         the OpenGL texture. Usually, it is automatically called by the texture
+         manager.
+         */
+        void init(void);
+        
+        //! Return true if the texture is init
+        bool isInit(void) const;
+        
         //! Binds the texture
         /*!
          Binding a texture make it the 'current texture' for all following
@@ -57,11 +68,14 @@ namespace Graphic {
         //! Return the internal OpenGL id of the texture
         uint32      getGLID(void) const;
         
+        //! Return the texture size
         Vec2 const& getSize(void) const;
         
     private:
-        GLuint  _glID;
-        Vec2    _size;
+        bool            _isInit;
+        uint8*          _dataToLoad;
+        GLuint          _glID;
+        Vec2            _size;
     };
     
 }

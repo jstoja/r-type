@@ -29,7 +29,7 @@ namespace Widget {
             Manager();
 
             //! Destructor
-            ~Manager();
+            virtual ~Manager();
 
 			//! Register a new widget to the manager
 			void	registerWidget(Widget* widget);

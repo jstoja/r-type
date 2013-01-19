@@ -11,6 +11,7 @@
 
 #include "Graphic/Renderer.h"
 #include "Event/Manager.h"
+#include "Graphic/TextureManager.h"
 #include "Application.h"
 
 #include "Graphic/Image.h"
@@ -81,6 +82,7 @@ void Client::mainLoop(void) {
 void Client::update(void) {
     Event::Manager::getInstance().processEvents();
     _ui->update();
+    Graphic::TextureManager::getInstance().update();
 }
 
 void Client::render(void) {
