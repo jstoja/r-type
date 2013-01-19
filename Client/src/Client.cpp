@@ -18,7 +18,7 @@
 
 Client::Client(void) :
 _scene(), _framerateLimit(30), _time(), _ui(), _tcpSocket(NULL), _proxy(NULL),
-_commands(), _login(""), _userId(0) {
+_commands(), _login(""), _userId(0), _currentGame(NULL) {
     
     _commands[Network::TcpProxy::AuthenficitationConnectionSuccess] = &Client::connectionResponse;
     _commands[Network::TcpProxy::InformationsGameGeneralResponse] = &Client::receiveGeneralInformations;
@@ -215,6 +215,8 @@ void Client::receiveGameList(Network::TcpPacket* packet) {
     std::list<Game*> games;
     for (uint32 i = 0; i < nbGames; ++i) {
         Game* game = Game::newGame(*packet);
+		if (_currentGame && _currentGame->getId() == game->getId())
+			_currentGame = game;
         games.push_back(game);
     }
     _ui->setGameList(games);
@@ -346,6 +348,7 @@ void Client::receivePlayerReady(Network::TcpPacket* packet) {
 
 void Client::startGame(Network::TcpPacket* packet) {
 	_ui->setVisible(false);
+	_initGame();
 }
 
 void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* packet) {

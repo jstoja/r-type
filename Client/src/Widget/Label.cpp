@@ -29,7 +29,7 @@ Graphic::Texture* Widget::Label::_getStringTexture(void) {
 # endif
 
 Widget::Label::Label(Graphic::Scene* scene, std::string const& text, Vec3 color) :
-GraphicWidget(scene), _isInit(false), _text(), _alignment(TextAlignCenter), _color(color),
+GraphicWidget(scene), _font(NULL), _isInit(false), _text(), _alignment(TextAlignCenter), _color(color),
 _colorChanged(false) {
     setText(text);
 }

@@ -183,6 +183,15 @@ void	Widget::Table::previousPage() {
 	setNeedUpdate(true);
 }
 
+uint32	Widget::Table::getCurrentPage() const {
+	return (_currentPage);
+}
+
+void	Widget::Table::setCurrentPage(uint32 page) {
+	uint32 tmp = _cells.size() / _lineByPages + ((_cells.size() % _lineByPages) == 0 ? 0 : 1);
+	_currentPage = (page > tmp ? tmp : page);
+}
+
 void	Widget::Table::setColor(uint32 y, uint32 x, Vec3 const& color) {
 	if (y >= _cells.size() || x >= _columnCount)
 		return ;
