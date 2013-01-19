@@ -51,9 +51,12 @@ Menu::GameList::~GameList(void) {
 }
 
 void	Menu::GameList::setGameList(std::list<Game*> const& gameList) {
+	uint32 previous = _gameList->getCurrentPage();
 	_gameList->clearDatas();
 	for (std::list<Game*>::const_iterator it = gameList.begin(); it != gameList.end(); ++it)
 		_addGame((*it)->getName(), (*it)->getNbPlayer(), (*it)->getNbSlot());
+	_gameList->setCurrentPage(previous);
+	_updatePageButtons();
 }
 
 void Menu::GameList::_addGame(std::string const& gameName, uint32 gamePlayerNumber, uint32 gamePlayerSlot) {
@@ -65,7 +68,6 @@ void Menu::GameList::_addGame(std::string const& gameName, uint32 gamePlayerNumb
 	uint32 idx = _gameList->addLine(line);
 	if (gamePlayerNumber == gamePlayerSlot)
 		_gameList->setColor(idx, Vec3(0x9999CF));
-	_updatePageButtons();
 }
 
 void Menu::GameList::buttonReleased(Widget::Button* instance) {

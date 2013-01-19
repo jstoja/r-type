@@ -18,7 +18,7 @@
 
 Client::Client(void) :
 _scene(), _framerateLimit(30), _time(), _ui(), _tcpSocket(NULL), _proxy(NULL),
-_commands(), _login(""), _userId(0) {
+_commands(), _login(""), _userId(0), _currentGame(NULL) {
     
     _commands[Network::TcpProxy::AuthenficitationConnectionSuccess] = &Client::connectionResponse;
     _commands[Network::TcpProxy::InformationsGameGeneralResponse] = &Client::receiveGeneralInformations;
@@ -215,6 +215,8 @@ void Client::receiveGameList(Network::TcpPacket* packet) {
     std::list<Game*> games;
     for (uint32 i = 0; i < nbGames; ++i) {
         Game* game = Game::newGame(*packet);
+		if (_currentGame && _currentGame->getId() == game->getId())
+			_currentGame = game;
         games.push_back(game);
     }
     _ui->setGameList(games);
@@ -234,14 +236,16 @@ void Client::gameCreatedResponse(Network::TcpPacket* packet) {
         Game* game = Game::newGame(*packet);
         _games.push_back(game);
         _ui->setGameList(_games);
-        _ui->goToMenu("GameList");
+        _currentGame = game;
+        _ui->setGameName(game->getName());
+        _ui->setCurrentGame(_currentGame);
+        _ui->goToMenu("GameJoin");
         Log("Created game: " << game->getName() << ", id: " << game->getId());
     }
 }
 
 void Client::gameJoinResponse(Network::TcpPacket* packet) {
-    if ((packet->getCode() & 0xff) == 0) {
-        _ui->goToMenu("GameJoin");
+    if ((packet->getCode() & 0xff) == 0) {        
 		uint32 id;
 		*packet >> id;
 		_currentGame = NULL;
@@ -256,6 +260,7 @@ void Client::gameJoinResponse(Network::TcpPacket* packet) {
 		}
 		_ui->setGameName(_currentGame->getName());
 		_ui->setCurrentGame(_currentGame);
+        _ui->goToMenu("GameJoin");        
 	} else if ((packet->getCode() & 0xff) == 1) {
         Log("Cannot join game: game is full");
     } else if ((packet->getCode() & 0xff) == 2) {
@@ -346,6 +351,7 @@ void Client::receivePlayerReady(Network::TcpPacket* packet) {
 
 void Client::startGame(Network::TcpPacket* packet) {
 	_ui->setVisible(false);
+	_initGame();
 }
 
 void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* packet) {

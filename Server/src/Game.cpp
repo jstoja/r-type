@@ -158,23 +158,13 @@ void     Game::join(Player* player) {
     if (canJoin(player)) {
         _attributesMutex[ePlayers]->lock();
         _players.push_back(player);
-
-        for (int i=0; i < _players.size(); i++) {
-            if (_players[i] != player) {
-                Network::TcpPacket *packet = new Network::TcpPacket();
-                packet->setCode(Network::TcpProxy::GameNewPlayer);
-                *packet << getId() << *player;
-                Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
-                _players[i]->sendPacket(toSend);
-            }
-        }
         _attributesMutex[ePlayers]->unlock();
     }
 }
 
 void     Game::playerReady(Player* player) {
     Network::TcpPacket *packet = new Network::TcpPacket();
-    packet->setCode(Network::TcpProxy::PlayerReady);
+    packet->setCode(Network::TcpProxy::GamePlayerReady);
     *packet << getId() << (uint32)player->getId();
     Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
 

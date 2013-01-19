@@ -73,6 +73,9 @@ namespace Widget {
 		bool	hasPreviousPage() const;
 		void	previousPage();
 
+		uint32	getCurrentPage() const;
+		void	setCurrentPage(uint32 page);
+
 		void	setColor(uint32 y, uint32 x, Vec3 const& color);
 		void	setColor(uint32 y, Vec3 const& color);
 

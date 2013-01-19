@@ -42,6 +42,12 @@ public:
     
     //! Inform other players that a player quit a game
     virtual void    informGameQuit(Player* player, Game* game);
+    
+    //! Inform other players that a player joined a game
+    virtual void    informGameJoin(Player* player, Game* game);
+    
+    //! Inform other players a new game have been created by a player
+    virtual void    informNewGame(Game* game, Player* player);
 
     static std::string const& getPluginDirectory();
     static void               setPluginDirectory(std::string const& dir);
