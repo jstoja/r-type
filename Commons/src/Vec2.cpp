@@ -8,6 +8,8 @@
 
 #include "Vec2.h"
 
+#include <cmath>
+
 Vec2::Vec2(float32 x, float32 y) : x(x), y(y) {
 }
 
@@ -46,14 +48,24 @@ Vec2 Vec2::operator*(float32 v) const{
     return Vec2(x * v, y * v);
 }
 
-std::ostream& operator<<(std::ostream& stream, Vec2 const& v) {
-    return stream << "(" << v.x << ", " << v.y << ")";
-}
-
 bool    Vec2::operator==(Vec2 const& v) const {
     return (x == v.x && y == v.y);
 }
 
 bool    Vec2::operator!=(Vec2 const& v) const {
     return !(*this == v);
+}
+
+float32 Vec2::norm(void) const {
+    return (sqrt(x * x + y * y));
+}
+
+void    Vec2::normalize(void) {
+    float32 n = norm();
+    x /= n;
+    y /= n;
+}
+
+std::ostream& operator<<(std::ostream& stream, Vec2 const& v) {
+    return stream << "(" << v.x << ", " << v.y << ")";
 }

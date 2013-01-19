@@ -11,22 +11,28 @@
 
 template<> Widget::Manager *Singleton<Widget::Manager>::_instance = new Widget::Manager();
 
-Widget::Manager::Manager() {
+Widget::Manager::Manager() : _mutex(new Threading::Mutex()) {
 }
 
 Widget::Manager::~Manager() {
+	delete _mutex;
 }
 
 void	Widget::Manager::registerWidget(Widget* widget) {
+	_mutex->lock();
 	_widgets.push_back(widget);
+	_mutex->unlock();
 }
 
 void	Widget::Manager::unregisterWidget(Widget* widget) {
+	_mutex->lock();
     if (!widget->needDelete())
         _widgets.remove(widget);
+	_mutex->unlock();
 }
 
 void	Widget::Manager::update() {
+	_mutex->lock();
 	for (std::list<Widget*>::iterator it = _widgets.begin(); it != _widgets.end();) {
 		if ((*it)->needDelete()) {
 			delete *it;
@@ -39,4 +45,5 @@ void	Widget::Manager::update() {
 		}
 		++it;
 	}
+	_mutex->unlock();
 }

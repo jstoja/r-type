@@ -15,8 +15,10 @@
 Player::Player(Network::ASocket* socket, IServerDelegate* server) :
 _attributesMutex() ,_isReady(false), _name(), _socket(socket),
 _proxy(socket, this), _server(server), _commands() {
+    
+    _attributesMutex.reserve(eLastAttribute);
     for (uint32 i = 0; i < eLastAttribute; ++i) {
-        _attributesMutex.push_back(new Threading::Mutex());
+        _attributesMutex[i] = new Threading::Mutex();
     }
 
     Log("New Player");
@@ -131,7 +133,6 @@ void Player::joinGame(Network::TcpPacket* packet) {
     *packet >> id;
     _attributesMutex[eServer]->lock();
     int code = _server->joinGame(id, this);
-    _attributesMutex[eServer]->unlock();
 
     Network::TcpPacket *tcpPacket = new Network::TcpPacket();
     tcpPacket->setCode(code);
@@ -146,7 +147,6 @@ void Player::joinGame(Network::TcpPacket* packet) {
         _server->sendResources(id, this);        
         _server->sendGameInfo(id, this);
     }
-    _attributesMutex[eServer]->unlock();
 }
 
 void Player::serverInfos(Network::TcpPacket* packet) {

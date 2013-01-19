@@ -39,7 +39,7 @@ Library* LibraryFactory::load(std::string const& dir, std::string const& name) {
 		lib = new Library(key);
 		if (lib->load() == false) {
 			delete lib;
-			return (NULL);
+            lib = NULL;
 		}
 		(*_libraries)[key] = lib;
 	}

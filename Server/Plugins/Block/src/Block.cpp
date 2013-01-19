@@ -30,7 +30,7 @@ bool	Block::init(IGame* game, ByteArray const& params,
 	if ((_game = game) == NULL)
 		return false;
 	_xStart = xStart;
-	std::stringstream	data(std::stringstream::binary);
+	std::stringstream	data(std::stringstream::binary | std::stringstream::in | std::stringstream::out);
 	data.write(params.getData(), params.getSize());
 
 	Vec3	pos;

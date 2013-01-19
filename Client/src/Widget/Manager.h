@@ -15,6 +15,7 @@
 
 # include <Object.h>
 # include <Singleton.hpp>
+# include <Threading/Mutex.h>
 
 # include "Widget.h"
 
@@ -41,7 +42,8 @@ namespace Widget {
 
 	private:
 		std::list<Widget*>	_widgets;
-    };
+		Threading::Mutex*	_mutex;
+	};
 };
 
 #endif /* defined(__R_Type__Widget__) */
