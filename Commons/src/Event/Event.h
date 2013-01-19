@@ -23,13 +23,25 @@ namespace Event {
         PointerMove     =   1 << 4,
         PointerPushed   =   1 << 5,
         PointerReleased =   1 << 6,
-        TextEntered		=   1 << 7
+        TextEntered		=   1 << 7,
+        KeyPressed		=   1 << 8,
+        KeyReleased		=   1 << 9,
     };
     
     enum PointerButton {
         PointerLeft     =   0,
         PointerRight    =   1,
         PointerMiddle   =   2
+    };
+    
+    enum Key {
+        ArrowUp,
+        ArrowDown,
+        ArrowLeft,
+        ArrowRight,
+        Escape,
+        Space,
+        UnknownKey
     };
     
     struct COMMON_EXPORT_IMPORT Event {
