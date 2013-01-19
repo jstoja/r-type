@@ -55,8 +55,8 @@ void	Menu::GameList::setGameList(std::list<Game*> const& gameList) {
 	_gameList->clearDatas();
 	for (std::list<Game*>::const_iterator it = gameList.begin(); it != gameList.end(); ++it)
 		_addGame((*it)->getName(), (*it)->getNbPlayer(), (*it)->getNbSlot());
-	_updatePageButtons();
 	_gameList->setCurrentPage(previous);
+	_updatePageButtons();
 }
 
 void Menu::GameList::_addGame(std::string const& gameName, uint32 gamePlayerNumber, uint32 gamePlayerSlot) {

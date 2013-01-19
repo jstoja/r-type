@@ -190,6 +190,7 @@ uint32	Widget::Table::getCurrentPage() const {
 void	Widget::Table::setCurrentPage(uint32 page) {
 	uint32 tmp = _cells.size() / _lineByPages + ((_cells.size() % _lineByPages) == 0 ? 0 : 1);
 	_currentPage = (page > tmp ? tmp : page);
+	setNeedUpdate(true);
 }
 
 void	Widget::Table::setColor(uint32 y, uint32 x, Vec3 const& color) {
