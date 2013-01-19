@@ -36,6 +36,7 @@ namespace Network {
             GameCreate                  = 0x00020200,
             GameReady                   = 0x00020300,
             PlayerList                  = 0x00020600,
+            PlayerReady                 = 0x00020300,
 
             // Server - client
             AuthenficitationConnectionSuccess           = 0x01000000,

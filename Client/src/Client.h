@@ -48,6 +48,7 @@ class Client :  public IUserInterfaceDelegate, public Network::IProxyDelegate<Ne
     virtual void    newGameCompleted(std::string const& name,
                                      uint32 nbPlayers);
     virtual void    gameSelected(uint32 gameIndex);
+    virtual void    playerReady();
     
     
     // Socket delegate

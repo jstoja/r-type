@@ -9,7 +9,7 @@
 
 #include "Player.h"
 
-Player::Player(uint32 id) : _isReady(false) {
+Player::Player(uint32 id) : Object(id), _isReady(false) {
 }
 
 void	Player::setName(std::string const& name) {

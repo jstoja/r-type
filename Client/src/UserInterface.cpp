@@ -141,7 +141,7 @@ void UserInterface::previous() {
 }
 
 void UserInterface::playerReady(void) {
-    
+	_delegate->playerReady();
 }
 
 void UserInterface::goToMenu(std::string const& menu) {

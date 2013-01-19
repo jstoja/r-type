@@ -117,9 +117,21 @@ void Client::gameSelected(uint32 gameIndex) {
         packet->setCode(Network::TcpProxy::GameJoin);
         *packet << game->getId();
         _proxy->sendPacket(packet);
+
         Log("Joining game " << game->getName());
     } else {
         Log("Tried to join game with invalid index");
+    }
+}
+
+void Client::playerReady() {
+	if (_currentGame) {
+		Network::TcpPacket* packet = new Network::TcpPacket();
+		packet->setCode(Network::TcpProxy::PlayerReady);
+        *packet << _currentGame->getId();
+        _proxy->sendPacket(packet);
+		_currentGame->setPlayerReady(_userId, true);
+		_ui->setCurrentGame(_currentGame);
     }
 }
 
