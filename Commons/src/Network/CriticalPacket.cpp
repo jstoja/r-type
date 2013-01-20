@@ -3,12 +3,13 @@
 // 01-19-13
 //
 
-
 #include <vector>
+#include "OS.h"
+#include "Network/CriticalPacket.h"
+
 #ifdef OS_UNIX
 # include <cmath>
 #endif
-#include "Network/CriticalPacket.h"
 
 
 std::list<int>      Network::CriticalPacket::_allTimes = std::list<int>();
