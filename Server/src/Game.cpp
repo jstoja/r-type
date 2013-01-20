@@ -146,7 +146,9 @@ void	Game::update() {
     
     locker.unlock();
 	_udpHandler();
+    _graphicScene.updateFinished();
     locker.relock();
+    
     _clock.reset();
 }
 
