@@ -1,5 +1,5 @@
 //
-// ViewPort.h for R-Type in /home/olivie_a/R-Type
+// Viewport.h for R-Type in /home/olivie_a/R-Type
 //
 // Made by Samuel Olivier
 // Login   <olivie_a@epitech.net>
@@ -11,16 +11,16 @@
 # define _VIEWPORT_H_
 
 # include <Types.h>
-# include <IViewPort.h>
+# include <IViewport.h>
 # include <Clock.h>
 # include <vector>
 # include "Threading/Mutex.h"
 # include "Threading/MutexLocker.h"
 
-class ViewPort : public IViewPort {
+class Viewport : public IViewport {
 public:
-	ViewPort(float32 speed = 0.1);
-	virtual ~ViewPort();
+	Viewport(float32 speed = 0.1);
+	virtual ~Viewport();
 
 	virtual void	setPosition(float32 x);
 	virtual float32	getPosition() const;

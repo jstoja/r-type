@@ -44,10 +44,13 @@ void GameController::processEvent(Event::Event const& event) {
 #pragma mark UDP proxy delegate methods
 
 void GameController::packetReceived(Network::UdpPacket* packet) {
-    uint32 code, id, size;
+    uint32 code;
     
-    *packet >> code >> id >> size;
+    *packet >> code;
     Log("UDP Packet received 0x" << std::setfill('0') << std::setw(8) << std::hex << code);
+    float32 time = 0;
+    *packet >> time;
+    _scene->setViewportPosition(Vec2(time, 0));
 }
 
 void GameController::packetSent(Network::UdpPacket const* packet) {

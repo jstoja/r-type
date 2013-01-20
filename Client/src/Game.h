@@ -18,7 +18,7 @@
 class Game : public Object {
 public:
 	Game(uint32 id);
-	~Game();
+	virtual ~Game();
 
 	void				setName(std::string const& name);
 	std::string const&	getName() const;

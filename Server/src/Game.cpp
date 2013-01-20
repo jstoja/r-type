@@ -31,7 +31,7 @@ _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waitin
         *packet >> _name;
         *packet >> _nbSlots;
     }
-	_viewPort = new ViewPort(0.1);
+	_viewport = new Viewport(1);
 
     _udpSocket = new Network::UdpSocket();
     _proxy = new Network::Proxy<Network::UdpPacket>(_udpSocket, this);
@@ -39,7 +39,7 @@ _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waitin
 
 Game::~Game() {
     delete _udpSocket;
- 	delete _viewPort;
+ 	delete _viewport;
 	delete _updatePool;
     for (uint32 i = 0; i < eLastAttribute; ++i) {
         delete _attributesMutex[i];
@@ -123,38 +123,29 @@ void     Game::start(void) {
     _attributesMutex[eGameClock]->unlock();
 
     //viewport
-    _attributesMutex[eViewPort]->lock();
-	_viewPort->setPosition(0);
-	_viewPort->setWidth(16);
-	_viewPort->setSpeed(_currentLevel.getSpeed());
-    _attributesMutex[eViewPort]->unlock();
+    _attributesMutex[eViewport]->lock();
+	_viewport->setPosition(0);
+	_viewport->setWidth(16);
+	_viewport->setSpeed(_currentLevel.getSpeed());
+    _attributesMutex[eViewport]->unlock();
 }
 
 void	Game::update() {
     _proxy->checkCriticalPackets();
 
-    _attributesMutex[eViewPort]->lock();
+    _attributesMutex[eViewport]->lock();
     _attributesMutex[eClock]->lock();
     _attributesMutex[eObjects]->lock();
     _attributesMutex[eUpdatePool]->lock();
 
-	_viewPort->update(_clock);
+	_viewport->update(_clock);
 	for (std::list<GameObject*>::iterator it = _objects.begin();
 		it != _objects.end(); ++it)
-		if (_viewPort->isInViewport((*it)->getXStart()))
+		if (_viewport->isInViewport((*it)->getXStart()))
 			_updatePool->addTask(*it, &GameObject::update, NULL);
-	//_udpHandler();
+	_udpHandler();
     
-    for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
-         it != end; ++it) {
-        Player* player = *it;
-        Network::UdpPacket* packet = new Network::UdpPacket();
-        packet->setCode(Network::UdpProxy::TIME);
-        *packet << (float32)Clock::getCurrentTime();
-        Network::UdpProxy::ToSend toSend(packet, player->getAddress(), player->getPort());
-        _proxy->sendPacket(toSend);
-    }
-    _attributesMutex[eViewPort]->unlock();
+    _attributesMutex[eViewport]->unlock();
     _attributesMutex[eClock]->unlock();
     _attributesMutex[eObjects]->unlock();
     _attributesMutex[eUpdatePool]->unlock();
@@ -401,10 +392,10 @@ void    Game::_sendGraphicElements(void) {
     Network::UdpPacket *udpPacket = new Network::UdpPacket();
     udpPacket->setCode(Network::Proxy<Network::UdpPacket>::GRAPHIC_ELEMENTS);
     _attributesMutex[eGraphicScene]->lock();
-    _attributesMutex[eViewPort]->lock();
-    _graphicScene.sendElements(*udpPacket, _viewPort);
+    _attributesMutex[eViewport]->lock();
+    _graphicScene.sendElements(*udpPacket, _viewport);
     _attributesMutex[eGraphicScene]->unlock();
-    _attributesMutex[eViewPort]->unlock();
+    _attributesMutex[eViewport]->unlock();
 
 
     Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
@@ -416,10 +407,10 @@ void    Game::_sendPhysicElements(void) {
     Network::UdpPacket *udpPacket = new Network::UdpPacket();
     udpPacket->setCode(Network::Proxy<Network::UdpPacket>::PHYSIC_ELEMENTS);
     _attributesMutex[ePhysicScene]->lock();
-    _attributesMutex[eViewPort]->lock();
-    _physicScene.sendElements(*udpPacket, _viewPort);
+    _attributesMutex[eViewport]->lock();
+    _physicScene.sendElements(*udpPacket, _viewport);
     _attributesMutex[ePhysicScene]->unlock();
-    _attributesMutex[eViewPort]->unlock();
+    _attributesMutex[eViewport]->unlock();
     Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
     _proxy->sendPacket(toSend);
     delete udpPacket;
@@ -435,6 +426,18 @@ void    Game::_sendTime(void) {
 }
 
 void    Game::_udpHandler(void) {
+
+    for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
+         it != end; ++it) {
+        Player* player = *it;
+        Network::UdpPacket* packet = new Network::UdpPacket();
+        packet->setCode(Network::UdpProxy::TIME);
+        *packet << (float32)_viewport->getPosition();
+        Network::UdpProxy::ToSend toSend(packet, player->getAddress(), player->getPort());
+        _proxy->sendPacket(toSend);
+    }
+
+    return ;
 	this->_sendTime();
     this->_sendGraphicElements();
     this->_sendPhysicElements();
@@ -446,9 +449,9 @@ Network::APacket&       operator<<(Network::APacket& packet, Game const& game) {
     return packet;
 }
 
-IViewPort*	Game::getViewPort() const {
-    Threading::MutexLocker locker(_attributesMutex[eViewPort]);
-	return (_viewPort);
+IViewport*	Game::getViewport() const {
+    Threading::MutexLocker locker(_attributesMutex[eViewport]);
+	return (_viewport);
 }
 
 uint64      Game::getEllapsedTime() const {

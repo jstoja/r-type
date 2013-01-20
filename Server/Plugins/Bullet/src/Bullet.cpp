@@ -85,7 +85,7 @@ void	Bullet::update() {
     _graphicElement->setPosition(newPosition);
     _physicElement->setPosition(newPosition);
 
-    if (_game->getViewPort()->isInViewport(_graphicElement->getRect())) {
+    if (_game->getViewport()->isInViewport(_graphicElement->getRect())) {
         _xStart = -1;
     }
 }

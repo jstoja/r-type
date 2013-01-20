@@ -15,7 +15,7 @@
 # include <IGame.h>
 # include <IGraphicElement.h>
 # include <IPhysicElement.h>
-# include <IViewPort.h>
+# include <IViewport.h>
 
 class Monster: public IPlugin {
 public:
