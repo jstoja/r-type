@@ -51,6 +51,7 @@ public:
     uint32                  getNbPlayers(void) const;
     uint32                  getNbSlots(void) const;
     void                    setNbSlots(uint32 slots);
+    std::vector<Player*> const& getPlayers(void) const;
 
 
     void    packetInProgress(uint32 code, float32 progress) {}

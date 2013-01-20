@@ -33,6 +33,8 @@ Server::Server() {
     game = new Game();
     game->setName("Game three");
     _games[game->getId()] = game;
+
+    _gameStateMutex = new Threading::Mutex();
 }
 
 Server::~Server() {
@@ -119,13 +121,17 @@ void Server::quitServer(Player* player) {
     Log("Player " << player->getName() << " leaved server");
     for(std::map<uint32, Game*>::iterator it = _games.begin(); it != _games.end(); it++) {
         if (it->second->hasPlayer(player)) {
-            it->second->quit(player);
-            informGameQuit(player, it->second);
+            // UGLY DIRTY SHIT
+
+            quitGame(player, it->first);
+            break;
+
+            // UGLY DIRTY SHIT
         }
     }
 
-    _players.erase(std::remove(_players.begin(), _players.end(), player), _players.end());
-    delete player;
+    //_players.erase(std::remove(_players.begin(), _players.end(), player), _players.end());
+    //delete player;
 }
 
 void Server::quitGame(Player *player, uint32 gameId) {
@@ -137,15 +143,21 @@ void Server::quitGame(Player *player, uint32 gameId) {
         Game* game = it->second;
         bool stopGame = game->quit(player);
         Log("Player " << player->getName() << " leaved game " << game->getName());
+        Log("Referee is : " << game->getReferee()->getName());
 
         if (stopGame) {
+            Threading::MutexLocker locker(_gameStateMutex);
             Log("Referee logged out. Stopping " << game->getName()) << " (NOT IMPLEMENTED YET)";
-            // ugly
 
-            delete game;
+            std::vector<Player*>  playersToRemove =  game->getPlayers();
+
+            for (int i = 0; i < playersToRemove.size(); ++i) {
+                _players.erase(std::remove(_players.begin(), _players.end(), playersToRemove[i]), _players.end());
+                delete playersToRemove[i];
+            }
+
             _games.erase(it);
-
-            // ugly
+            delete game;
         } else {
             informGameQuit(player, game);
         }
@@ -217,13 +229,19 @@ void				Server::setPluginDirectory(std::string const& dir) {
 int	Server::run() {
 	Clock	clock;
 	while (true) {
-		for (std::map<uint32, Game*>::iterator it = _games.begin(); it != _games.end(); ++it)
+
+        _gameStateMutex->lock();
+		for (std::map<uint32, Game*>::iterator it = _games.begin(); it != _games.end(); ++it) {
 			if (it->second->getState() == Game::Started)
 				it->second->update();
-		int32 sleeping = (1000 / _sendFramerate) - clock.getEllapsedTime();
+        }
+        _gameStateMutex->unlock();
+
+        int32 sleeping = (1000 / _sendFramerate) - clock.getEllapsedTime();
 		if (sleeping > 0)
 			Clock::sleep(sleeping);
         clock.reset();
+
 	}
 	return (0);
 }

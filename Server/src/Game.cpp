@@ -42,7 +42,7 @@ _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waitin
 Game::~Game() {
     delete _udpSocket;
  	delete _viewport;
-	delete _updatePool;
+	//delete _updatePool;
     delete _attributesMutex;
 }
 
@@ -207,21 +207,14 @@ bool     Game::quit(Player* player) {
     Threading::MutexLocker locker(_attributesMutex);
     _players.erase(std::remove(_players.begin(), _players.end(), player), _players.end());
 
-    bool isReferee = (_referee == player);
-
-    if (isReferee) {
-        _referee = NULL;
-
-        // UGLY
-
-        for (int i = 0; i < _players.size(); ++i) {
-            delete _players[i];
-        }
-
-        // UGLY
-    }
-    return (isReferee);
+    return (_referee == player);
 }
+
+
+std::vector<Player*> const& Game::getPlayers(void) const {
+    return _players;
+}
+
 
 void    Game::addGraphicElement(IGraphicElement* element) {
     Threading::MutexLocker locker(_attributesMutex);
