@@ -41,7 +41,7 @@ public:
 	virtual IViewport*			getViewport() const = 0;
     
     virtual uint64              getEllapsedTime() const = 0;
-    virtual void createObject(std::string const &objectName, ByteArray const& params, float32 xStart) = 0;
+    virtual void                createObject(std::string const& objectName, ByteArray const& params, float32 xStart) = 0;
 };
 
 #endif

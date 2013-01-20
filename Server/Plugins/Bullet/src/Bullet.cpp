@@ -29,7 +29,7 @@ bool	Bullet::init(IGame* game, ByteArray const& params, float32 xStart) {
     
     Vec2 size;
     Vec3 from;
-    Vec3 to;
+    Vec2 to;
     char *spriteName;
     uint32 spriteSize;
     char frameIndex;
@@ -47,7 +47,8 @@ bool	Bullet::init(IGame* game, ByteArray const& params, float32 xStart) {
     
     data.read(reinterpret_cast<char*>(&size), sizeof(size));
     data.read(reinterpret_cast<char*>(&from), sizeof(from));
-    data.read(reinterpret_cast<char*>(&to), sizeof(to));
+    data.read(reinterpret_cast<char*>(&_direction), sizeof(_direction));
+    _direction.normalize();
     data.read(reinterpret_cast<char*>(&_speed), sizeof(_speed));
     
     ISprite	*sprite = _game->getLevelSprite(name);
@@ -58,7 +59,6 @@ bool	Bullet::init(IGame* game, ByteArray const& params, float32 xStart) {
 	if ((_physicElement = game->createPhysicElement()) == NULL)
 		return false;
     
-    _direction = to - from;
     
 	_graphicElement->setPosition(from);
 	_graphicElement->setSize(size);

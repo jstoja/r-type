@@ -69,7 +69,29 @@ bool	Monster::init(IGame* game, ByteArray const& params, float32 xStart) {
 	_physicElement->setRotation(rotation);
 	_physicElement->setType(IPhysicElement::Static);
 	game->addPhysicElement(_physicElement);
+    
+    _createBullet(pos);
+    
 	return true;
+}
+
+void    Monster::_createBullet(Vec3 const& from, float32 xStart, Vec2 const& to, float32 speed) {
+    ByteArray bullet;
+    
+    std::string spriteName("Bullet");
+    char ndx;
+    Vec2 size(1.0, 1.0);
+    Vec3 f(from);
+    Vec2 t(to);
+    
+    bullet.append(reinterpret_cast<char*>(spriteName.size()), sizeof(spriteName.size()));
+    bullet.append(spriteName.c_str(), sizeof(char) * spriteName.size());
+    bullet.append(reinterpret_cast<char*>(&ndx), sizeof(ndx));
+    bullet.append(reinterpret_cast<char*>(&size), sizeof(size));
+    bullet.append(reinterpret_cast<char*>(&f), sizeof(f));
+    bullet.append(reinterpret_cast<char*>(&t), sizeof(t));
+    bullet.append(reinterpret_cast<char*>(&speed), sizeof(speed));
+    _game->createObject("Bullet", bullet, -1);
 }
 
 void	Monster::update() {
@@ -80,6 +102,9 @@ void	Monster::update() {
     _graphicElement->setPosition(newPosition);
     _physicElement->setPosition(newPosition);
     
+    
+    _createBullet(newPosition, _xStart, newPosition);
+
 	_xStart = (_game->getViewport()->isInViewport(_graphicElement->getRect())) ? -1 : (_game->getViewport()->getPosition() + _game->getViewport()->getWidth() / 2);
 }
 

@@ -305,9 +305,9 @@ IScenery*		Game::addScenery() {
 }
 
 void        Game::createObject(std::string const &objectName, ByteArray const& params, float32 xStart) {
-    GameObject	*obj = new GameObject(it->name);
-    if (obj->init(this, it->params, it->xStart) == false)
-        throw new Exception("Cannot init plugin: " + it->name);
+    GameObject	*obj = new GameObject(objectName);
+    if (obj->init(this, params, xStart) == false)
+        throw new Exception("Cannot init plugin: " + objectName);
 
     Threading::MutexLocker locker(_attributesMutex);
     _objects.push_back(obj);

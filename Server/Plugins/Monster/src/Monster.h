@@ -28,6 +28,8 @@ public:
 	virtual std::string const&	getName() const;
     
 private:
+    void _createBullet(Vec3 const& from, float32 xStart = -1, Vec2 const& to = Vec2(1.0, 0.0), float32 speed = 0.01);
+    
     std::string         _name;
     IGame*				_game;
     float32             _xStart;
