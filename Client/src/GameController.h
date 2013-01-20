@@ -89,6 +89,8 @@ private:
 	
     Interpolated<Vec2>                  _viewportPosition;
     std::map<int, commandPointer>       _commands;
+    
+    std::map<uint32, Graphic::Element*> _graphicElements;
 };
 
 #endif /* defined(__R_Type__GameController__) */

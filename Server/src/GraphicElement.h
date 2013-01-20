@@ -16,7 +16,6 @@
 # include "Threading/Mutex.h"
 # include "Threading/MutexLocker.h"
 
-
 class Sprite;
 
 class GraphicElement : public IGraphicElement, public Object {
@@ -41,7 +40,7 @@ public:
 	Sprite*			getSprite() const;
 
 	virtual void	setSpriteFrameIndex(char idx);
-	virtual char	getSpriteFrameIndex() const;
+	virtual uint8	getSpriteFrameIndex() const;
 
 	virtual void	setType(Type c);
 	virtual Type	getType() const;
@@ -66,8 +65,8 @@ private:
 	float32                         _rotation;
 	bool                            _hasChanged;
 	Sprite	                        *_sprite;
-	char                            _spriteIndex;
-	char                            _type;
+	uint8                            _spriteIndex;
+	uint8                            _type;
 };
 
 Network::APacket&		operator<<(Network::APacket & packet, GraphicElement & element);
