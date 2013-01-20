@@ -55,7 +55,7 @@ public:
     
     // Getters
     bool    gameLaunched(void) const;
-    uint8   getUdpSocketPort(void) const;
+    uint16  getUdpSocketPort(void) const;
     Game*   getGame(void) const;
 
 private:
@@ -64,6 +64,7 @@ private:
     Graphic::Scene*                     _scene;
     Event::Listener*                    _eventListener;
     Network::UdpSocket*                 _udpSocket;
+    uint16                              _udpPort;
     Network::UdpProxy*                  _udpProxy;
 	std::list<Resource*>				_resources;
 	std::list<Graphic::Texture*>		_textures;

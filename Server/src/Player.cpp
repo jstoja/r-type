@@ -67,6 +67,10 @@ uint16              Player::getPort(void) const {
     return _port;
 }
 
+Network::HostAddress Player::getAddress(void) const {
+    return _socket->getRemoteAddress();
+}
+
 void Player::packetSent(Network::TcpPacket const* packet) {
     delete packet;
 }

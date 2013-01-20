@@ -152,6 +152,7 @@ void Client::playerReady() {
 	if (_currentGame && _gameController) {
 		Network::TcpPacket* packet = new Network::TcpPacket();
 		packet->setCode(Network::TcpProxy::PlayerReady);
+        Log("LOCAL PORT" << (uint16)_gameController->getUdpSocketPort());
         *packet << _currentGame->getId() << (uint16)_gameController->getUdpSocketPort();
         _proxy->sendPacket(packet);
 		_currentGame->setPlayerReady(_userId, true);
