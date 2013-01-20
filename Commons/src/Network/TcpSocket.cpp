@@ -130,7 +130,7 @@ void Network::TcpSocket::read(ByteArray& biteArray, bool all, uint32 start) {
     _bufferToReadMutex.unlock();
     _bufferMutex.unlock();
     if (_delegate)
-        _delegate->dataReceived(this, _buffer, biteArray.getSize());
+        _delegate->dataReceived(this, biteArray, biteArray.getSize());
     return;
   }
   _toRead = 0;

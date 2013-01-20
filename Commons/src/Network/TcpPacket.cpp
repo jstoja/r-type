@@ -68,7 +68,7 @@ void Network::TcpPacket::updateData() {
 
 bool	Network::TcpPacket::getHeaderInfos(ByteArray const& data, uint32& code) {
 	if (data.getSize() >= 4) {
-		code = *((int*)(&((char const*)data)[0]));
+		code = *((uint32*)((char const*)data));
 		return true;
 	}
 	return false;

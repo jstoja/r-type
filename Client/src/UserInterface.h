@@ -44,6 +44,7 @@ public:
 	void	setGameList(std::list<Game*> const& list);
 	void	setCurrentGame(Game* game);
     void	setVisible(bool visible);
+    void	setResourceProgress(float32 progress);
     
     // IMenuDelegate implementation
     virtual void welcomeCompleted(void);

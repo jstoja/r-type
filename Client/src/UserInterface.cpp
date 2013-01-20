@@ -62,17 +62,6 @@ void UserInterface::update(void) {
     _delegate->getScene()->setViewportPosition(Vec2(xPos, 0));
 
     // Switch menu if requested
-    if (_nextMenu) {
-        if (_currentMenu)
-            _currentMenu->setVisible(false);
-        if (_nextMenu != (Menu::Menu*)-1) {
-            _currentMenu = _nextMenu;
-            _currentMenu->setVisible(true);
-        } else {
-            _currentMenu = NULL;
-        }
-        _nextMenu = NULL;
-    }
 	Widget::Manager::getInstance().update();
 }
 
@@ -87,6 +76,7 @@ void UserInterface::hideMessage(void) {
     Threading::MutexLocker lock(_mutex);
     if (_messageLabel->isVisible())
         _messageLabel->setVisible(false);
+	_nextMenu = NULL;
 }
 
 Menu::Menu* UserInterface::getCurrentMenu(void) const {
@@ -139,7 +129,23 @@ void UserInterface::goToMenu(std::string const& menu) {
     lock.unlock();
     hideMessage();
     lock.relock();
-    _nextMenu = _menus[menu];
+    if (_currentMenu)
+       _currentMenu->setVisible(false);
+	_currentMenu = _menus[menu];
+    if (_currentMenu && _nextMenu != (Menu::Menu*)-1)
+       _currentMenu->setVisible(true);
+	else
+		_currentMenu = NULL;
+    //if (_nextMenu) {
+    // if (_nextMenu != (Menu::Menu*)-1) {
+    //        _currentMenu = _nextMenu;
+    //        _currentMenu->setVisible(true);
+    //    } else {
+    //        _currentMenu = NULL;
+    //    }
+    //    _nextMenu = NULL;
+    //}
+    //_nextMenu = _menus[menu];
 }
 
 void UserInterface::_createSceneries(void) {
@@ -255,4 +261,12 @@ void	UserInterface::setVisible(bool visible) {
 		_messageLabel->setVisible(false);
 	}
 	_mutex->unlock();
+}
+
+void	UserInterface::setResourceProgress(float32 progress) {
+	Menu::GameJoin* menu = dynamic_cast<Menu::GameJoin*>(_menus["GameJoin"]);
+
+	if (menu)
+		menu->setProgress(progress);
+
 }
