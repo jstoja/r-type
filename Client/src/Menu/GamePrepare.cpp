@@ -118,6 +118,7 @@ void Menu::GamePrepare::setVisible(bool visible) {
     _playerList->setVisible(visible);
     _readyButton->setVisible(visible);
     _waitingLabel->setVisible(false);
+    Menu::setVisible(visible);
 }
 
 void Menu::GamePrepare::setServerName(std::string const& serverName) {

@@ -58,8 +58,9 @@ void UserInterface::update(void) {
 	if (_visible) {
 		if (_currentMenu && _currentMenu->isVisible() && _showLabel)
 			_currentMenu->setVisible(false);
-		else if (_currentMenu && _currentMenu->isVisible() == false && _showLabel == false)
-			_currentMenu->setVisible(true);
+		else if (_currentMenu && _currentMenu->isVisible() == false && _showLabel == false) {
+            _currentMenu->setVisible(true);
+        }
 	}
     // Update the background (make it move !)
     float32 xPos = (float32)_time.getEllapsedTime() / 1000;
