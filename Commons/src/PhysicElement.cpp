@@ -96,3 +96,12 @@ Network::APacket&		operator<<(Network::APacket& packet, PhysicElement& element) 
 	packet << element.getId() << element.getPosition() << element.getRotation() << element.getSize();
 	return (packet);
 }
+
+PhysicElement::Box::Box(float32 posX, float32 posY, float32 w, float32 h, float32 angle) :
+  posX(posX), posY(posY), w(w), h(h), angle(angle) {
+}
+
+bool PhysicElement::collision(PhysicElement& elem1, PhysicElement& elem2) {
+  
+  return false;
+}

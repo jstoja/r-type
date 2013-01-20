@@ -23,6 +23,7 @@
 # include "Graphic/Scenery.h"
 # include "Sound/Sound.h"
 # include "Interpolated.hpp"
+# include "PhysicElement.h"
 
 class GameController : public Event::IListenerDelegate, public Network::IProxyDelegate<Network::UdpPacket> {
 
@@ -53,6 +54,7 @@ public:
     void launchGame(void);
     void clearGame(void);
     void update(void);
+    void updatePhysicElements(void);
     
     // Getters
     bool    gameLaunched(void) const;
@@ -88,7 +90,11 @@ private:
 	std::list<Sound::Sound*>			_sounds;
 	
     Interpolated<Vec2>                  _viewportPosition;
+
     std::map<int, commandPointer>       _commands;
+
+    Threading::Mutex						_physicElementsMutex;
+    std::map<uint32, std::pair<PhysicElement, float32> >	_physicElements;
 };
 
 #endif /* defined(__R_Type__GameController__) */
