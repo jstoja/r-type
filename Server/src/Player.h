@@ -73,6 +73,8 @@ private:
     std::map<int, commandPointer>         _commands;
     bool                                  _isReferee;
     uint16                                _port;
+
+    Vec2				  _speed;
 };
 
 Network::APacket&       operator<<(Network::APacket& packet, Player const& player);

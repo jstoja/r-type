@@ -12,12 +12,13 @@
 
 # include "APacket.h"
 # include "ByteArray.h"
+# include "HostAddress.h"
 
 namespace Network {
 
   class COMMON_EXPORT_IMPORT_REMOVED UdpPacket : public APacket {
   public:
-    UdpPacket();
+    UdpPacket(const HostAddress& hostAddress=HostAddress::AnyAddress, uint16 port=0);
     virtual ~UdpPacket();
 
     void    read(ASocket*);
@@ -29,11 +30,15 @@ namespace Network {
     void    setId(uint32 code);
     uint32  getId();
     void    generateId(void);
+    HostAddress getAddress() const;
+    uint16	getPort() const;
 
     static bool	getHeaderInfos(ByteArray const& data, uint32& code);
 
   private:
     uint32  _id;
+    HostAddress _hostAddress;
+    uint16 _port;
   };
 
 }

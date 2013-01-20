@@ -57,6 +57,7 @@ namespace Network {
         };
 
         enum UdpActions {
+	  // SERVER - CLIENT
             GRAPHIC_ELEMENTS,
             PHYSIC_ELEMENTS,
             PLAY_SOUND,
@@ -64,7 +65,12 @@ namespace Network {
             TIME,
             UPDATE_LIFE,
             UPDATE_SCORE,
-            GAME_FINISHED
+            GAME_FINISHED,
+
+	    // CLIENT - SERVER
+	    PLAYER_DIRECTION,
+	    PLAYER_SHOOT,
+	    PHYSIC_COLLISION
         };
 
         struct		ToSend {

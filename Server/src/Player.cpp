@@ -14,7 +14,7 @@
 
 Player::Player(Network::TcpSocket* socket, IServerDelegate* server) :
 _attributesMutex() ,_isReady(false), _name(), _socket(socket),
-_proxy(socket, this), _server(server), _commands(), _isReferee(false) {
+_proxy(socket, this), _server(server), _commands(), _speed(0, 0), _isReferee(false) {
 
     _attributesMutex.resize(eLastAttribute);
     for (uint32 i = 0; i < eLastAttribute; ++i) {
@@ -31,6 +31,7 @@ _proxy(socket, this), _server(server), _commands(), _isReferee(false) {
     _commands[Network::TcpProxy::PlayerReady] = &Player::readyToStart;
     _commands[Network::TcpProxy::PlayerList] = &Player::playerList;
     _commands[Network::TcpProxy::GameQuit] = &Player::quitGame;
+    
 }
 
 Player::~Player() {

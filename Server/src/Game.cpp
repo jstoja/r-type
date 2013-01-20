@@ -21,6 +21,11 @@
 Game::Game(Network::TcpPacket* packet) :
 _attributesMutex(), _players(), _nbSlots(0), _name(), _currentLevel(),
 _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waiting), _referee(NULL) {
+
+  _commands[Network::UdpProxy::PLAYER_DIRECTION] = &Game::updatePlayerDirection;
+  _commands[Network::UdpProxy::PLAYER_SHOOT] = &Game::playerShoot;
+  _commands[Network::UdpProxy::PHYSIC_COLLISION] = &Game::physicCollision;
+
     _attributesMutex = new Threading::Mutex();
     _loadMap(App.getResourcesPath() + std::string("Levels/Level_1/Level_1.map"));
 
@@ -42,11 +47,15 @@ Game::~Game() {
 }
 
 void Game::packetReceived(Network::UdpPacket* packet) {
-    uint32 code, id, size;
+    uint32 code;
 
-    *packet >> code >> id >> size;
-    Log("UDP Packet received 0x" << std::setfill('0') << std::setw(8) << std::hex << code);
-
+    *packet >> code;
+    std::map<int, commandPointer>::iterator it = _commands.find(code);
+    if (it != _commands.end())
+      (this->*(it->second))(packet);
+    else {
+      Log("Received unknown command 0x" << std::setfill('0') << std::setw(8) << std::hex << code);
+    }
     delete packet;
 }
 
@@ -396,4 +405,18 @@ IViewport*	Game::getViewport() const {
 uint64      Game::getEllapsedTime() const {
     Threading::MutexLocker lockerProxy(_attributesMutex);
     return _clock.getEllapsedTime();
+}
+
+#pragma mark Protocol udp calls
+
+void Game::updatePlayerDirection(Network::UdpPacket*) {
+  
+}
+
+void Game::playerShoot(Network::UdpPacket*) {
+
+}
+
+void Game::physicCollision(Network::UdpPacket*) {
+
 }

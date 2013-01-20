@@ -89,6 +89,12 @@ public:
 
     virtual uint64              getEllapsedTime() const;
 
+    void updatePlayerDirection(Network::UdpPacket*);
+    void playerShoot(Network::UdpPacket*);
+    void physicCollision(Network::UdpPacket*);
+
+    typedef void (Game::* commandPointer)(Network::UdpPacket*);
+
 private:
     void                        _udpHandler(void);
     void                        _sendTime(Player* player);
@@ -117,6 +123,8 @@ private:
 	Viewport*						            _viewport;
     Network::Proxy<Network::UdpPacket>*         _proxy;
     Network::UdpSocket*                         _udpSocket;
+
+    std::map<int, commandPointer>         _commands;
 
 #ifdef OS_MAC
 	static const int					_updateThreadNumber = 7;
