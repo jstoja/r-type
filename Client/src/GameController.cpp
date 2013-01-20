@@ -311,7 +311,8 @@ void GameController::receiveGraphicElements(Network::UdpPacket* packet) {
     *packet >> clock >> nbElements;
     for (uint32 i = 0; i < nbElements; ++i) {
         uint32 id, rotation, spriteId;
-        Vec3 position, size;
+        Vec3 position;
+        Vec2 size;
         uint8 currentFrame, type;
         Graphic::Element* element;
         
