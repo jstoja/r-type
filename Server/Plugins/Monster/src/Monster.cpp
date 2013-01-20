@@ -102,8 +102,9 @@ void	Monster::update() {
     _graphicElement->setPosition(newPosition);
     _physicElement->setPosition(newPosition);
     
-    
-    _createBullet(newPosition, _xStart, newPosition);
+    if (_game->getEllapsedTime()%2 == 0) {
+        _createBullet(newPosition, _xStart, newPosition);
+    }
 
 	_xStart = (_game->getViewport()->isInViewport(_graphicElement->getRect())) ? -1 : (_game->getViewport()->getPosition() + _game->getViewport()->getWidth() / 2);
 }
