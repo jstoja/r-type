@@ -37,7 +37,6 @@ void Application::init(int32 ac, char **av) {
 }
 
 #ifndef OS_IOS
-
 void	Application::_initBinaryPath() {
 # if defined OS_WINDOWS
     *_binaryPath = _argv[0];
@@ -55,7 +54,7 @@ void	Application::_initBinaryPath() {
         char* cwd = getcwd(NULL, 4096);
         if (!cwd)
             throw new Exception("Application cannot get current working directory");
-        *_binaryPath = std::string(cwd + '/' + cmd);
+        *_binaryPath = std::string(std::string(cwd) + std::string("/") + cmd);
         free(cwd);
     } else
         throw new Exception("Application cannot be launched from a PATH, the "
