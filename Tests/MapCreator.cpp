@@ -229,11 +229,11 @@ int	main(int ac, char **av) {
 	std::list<Frame> framesFull, framesBlock;
 	framesFull.push_back(Frame(Vec2(0, 0), Vec2(1, 1)));
 
-	framesBlock.push_back(getFrame(2./3, 0.194, 1./3));
-	framesBlock.push_back(getFrame(2./3, 0.2, 1./3));
-	framesBlock.push_back(getFrame(2./3, 0.202, 1./3));
-	framesBlock.push_back(getFrame(0, 0.202, 1.));
-	framesBlock.push_back(getFrame(1./3, 0.202, 2./3));
+	framesBlock.push_back(getFrame(2./3., 0.194, 1./3.));
+	framesBlock.push_back(getFrame(2./3., 0.2, 1./3.));
+	framesBlock.push_back(getFrame(2./3., 0.202, 1./3.));
+	framesBlock.push_back(getFrame(0., 0.202, 1.));
+	framesBlock.push_back(getFrame(1./3., 0.202, 2./3.));
 
 	map.setName(name);
 	map.setSpeed(1);
@@ -249,15 +249,18 @@ int	main(int ac, char **av) {
 	map.addObject("SceneryObject", 0, createSceneryParams("scenery4", 1.2, 16, 1000, 0.996, 1));
 	map.addObject("SceneryObject", 0, createSceneryParams("scenery5", 0.5, 16*3, 1000, 0.995, 0.8));
 	float32 tmp1 = 0;
-	for (int i = 0; i < 25; ++i) {
-		//uint32 idx = std::rand() % 5;
-		uint32 idx = i;
-		Frame current = getFrame(framesBlock, idx);
-		float32 width = (current.p2.x - current.p1.x) * 1.6 / 0.202,
+    for (int nbBlock = 0; nbBlock < 42; ++nbBlock) {
+        for (int i = 0; i < framesBlock.size(); ++i) {
+            //uint32 idx = std::rand() % 5;
+            uint32 idx = i;
+            Frame current = getFrame(framesBlock, idx);
+            float32 width = (current.p2.x - current.p1.x) * 1.6 / 0.202,
 			height = (current.p2.y - current.p1.y) * 0.4 / (1. / 3.);
-		map.addObject("Block", tmp1, createBlockParams(Vec3(tmp1 + width / 2, height / 2, 0), Vec2(width, height), 0, "block", idx));
-		tmp1 += width;
-	}
+            map.addObject("Block", tmp1, createBlockParams(Vec3(tmp1 + width / 2.0, height / 2.0, 0), Vec2(width, height), 1, "block", idx));
+            tmp1 += width;
+            std::cout << width << " " << height << std::endl;
+        }
+    }
 	map.save(Application::getInstance().getRelativePath(filename));
     
     // Show the scene
