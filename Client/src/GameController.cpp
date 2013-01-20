@@ -333,7 +333,7 @@ void GameController::receiveGraphicElements(Network::UdpPacket* packet) {
             _graphicElements[id] = element;
             _scene->addElement(element);
         }
-        element->setPosition(position);
+        element->setPosition(position, clock);
         element->setRotation(rotation);
         element->setSize(size);
         element->setSprite(dynamic_cast<Graphic::Sprite*>(ObjectManager::getInstance().getObject(spriteId)));
