@@ -348,7 +348,7 @@ void Client::startGame(Network::TcpPacket* packet) {
     Log("UdpPort " << serverUdpPort);
     if (_gameController && _gameController->getGame()->getId() == gameId) {
         _ui->setVisible(false);
-        _gameController->launchGame();
+		_gameController->launchGame(_tcpSocket->getRemoteAddress(), serverUdpPort);
     }
 }
 

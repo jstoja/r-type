@@ -10,10 +10,11 @@
 
 #include "Event/Manager.h"
 #include "ObjectManager.h"
+#include "GameInput.h"
 
 GameController::GameController(Game* game, Graphic::Scene* scene) :
 _game(game), _gameLaunched(false), _scene(scene), _eventListener(NULL),
-_udpSocket(NULL), _udpProxy(NULL) {
+	_udpSocket(NULL), _udpProxy(NULL), _remoteAddress(Network::HostAddress::AnyAddress), _remotePort(0) {
 
   _commands[Network::TcpProxy::GRAPHIC_ELEMENTS] = &GameController::receiveGraphicElements;
   _commands[Network::TcpProxy::PHYSIC_ELEMENTS] = &GameController::receivePhysicElements;
@@ -220,7 +221,9 @@ Sound::Sound* GameController::createSound(Network::TcpPacket& packet) {
 
 #pragma mark Game actions
 
-void GameController::launchGame(void) {
+void GameController::launchGame(Network::HostAddress const& address, uint16 port) {
+	_remoteAddress = address;
+	_remotePort = port;
 	for (std::list<Graphic::Element*>::iterator it = _elements.begin(); it != _elements.end(); ++it) {
 		if (*it) {
 			(*it)->setVisible(true);
@@ -267,6 +270,11 @@ void GameController::update(void) {
     _scene->setViewportPosition(time);
 
     updatePhysicElements();
+    Network::UdpPacket* packet = new Network::UdpPacket();
+	packet->setCode(Network::UdpProxy::PLAYER_DIRECTION);
+	*packet << GameInput::getInstance().getInputDirection();
+	Network::UdpProxy::ToSend toSend(packet, _remoteAddress, _remotePort);
+    _udpProxy->sendPacket(toSend);
 }
 
 void GameController::updatePhysicElements(void) {
