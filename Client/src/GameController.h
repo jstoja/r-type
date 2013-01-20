@@ -51,7 +51,7 @@ public:
 	static Sound::Sound*		createSound(Network::TcpPacket& packet);
     
     // Game actions
-    void launchGame(void);
+    void launchGame(Network::HostAddress const& adress, uint16 port);
     void clearGame(void);
     void update(void);
     void updatePhysicElements(void);
@@ -97,6 +97,9 @@ private:
     std::map<uint32, std::pair<PhysicElement, float32> >	_physicElements;
     
     std::map<uint32, Graphic::Element*> _graphicElements;
+
+	Network::HostAddress	_remoteAddress;
+	uint16					_remotePort;
 };
 
 #endif /* defined(__R_Type__GameController__) */

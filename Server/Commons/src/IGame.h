@@ -26,7 +26,8 @@ public:
 
 	virtual void				addGraphicElement(IGraphicElement* element) = 0;
 	virtual IGraphicElement*	createGraphicElement() const = 0;
-	virtual ITexture*			createTexture(std::string const& filename, std::string const& pluginName) = 0;
+	virtual ITexture*			createTexture(std::string const& filename,
+                                              std::string const& pluginName="") = 0;
 	virtual ISprite*			createSprite(ITexture *texture) = 0;
 	virtual ISprite*			getLevelSprite(std::string const& name) = 0;
 

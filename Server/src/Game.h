@@ -70,7 +70,7 @@ public:
 
     virtual void                addGraphicElement(IGraphicElement* element);
     virtual IGraphicElement*    createGraphicElement() const;
-	virtual ITexture*			createTexture(std::string const& filename, std::string const& pluginName);
+	virtual ITexture*			createTexture(std::string const& filename, std::string const& pluginName="");
 	virtual ISprite*			createSprite(ITexture *texture);
 	virtual ISprite*			getLevelSprite(std::string const& name);
 
@@ -96,6 +96,7 @@ public:
     typedef void (Game::* commandPointer)(Network::UdpPacket*);
 
 private:
+    void                        _updatePlayers(void);
     void                        _udpHandler(void);
     void                        _sendTime(Player* player);
     void                        _sendGraphicElements(Player* player);
@@ -124,7 +125,10 @@ private:
     Network::Proxy<Network::UdpPacket>*         _proxy;
     Network::UdpSocket*                         _udpSocket;
 
-    std::map<int, commandPointer>         _commands;
+    std::map<int, commandPointer>               _commands;
+    
+    ISprite*                                    _playerSprite;
+    std::map<Player*,GraphicElement*>           _playersGraphicElements;
 
 #ifdef OS_MAC
 	static const int					_updateThreadNumber = 7;

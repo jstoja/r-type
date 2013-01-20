@@ -37,6 +37,9 @@ _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waitin
 
     _udpSocket = new Network::UdpSocket();
     _proxy = new Network::Proxy<Network::UdpPacket>(_udpSocket, this);
+    
+    _playerSprite = createSprite(createTexture("player.png"));
+    _playerSprite->addFrame(Vec2(65.0/330.0, 0), Vec2(65.0*2/330.0, 34.0/170.0));
 }
 
 Game::~Game() {
@@ -139,6 +142,8 @@ void	Game::update() {
 		if (_viewport->isInViewport((*it)->getXStart()))
 			_updatePool->addTask(*it, &GameObject::update, NULL);
 
+    _updatePlayers();
+    
     locker.unlock();
 	_udpHandler();
     locker.relock();
@@ -159,6 +164,15 @@ void     Game::join(Player* player) {
     if (canJoin(player)) {
         Threading::MutexLocker locker(_attributesMutex);
         _players.push_back(player);
+        // Create player graphic element
+        GraphicElement* element = new GraphicElement();
+        element->setPosition(Vec2(16.0/2, 9.0/2));
+        element->setSize(Vec2(0.8125, 0.425));
+        element->setType(IGraphicElement::Dynamic);
+        _playersGraphicElements[player] = element;
+        element->setSprite(_playerSprite);
+        element->setSpriteFrameIndex(0);
+        _graphicScene.addElement(element);
     }
 }
 
@@ -207,6 +221,10 @@ bool     Game::quit(Player* player) {
     Threading::MutexLocker locker(_attributesMutex);
     _players.erase(std::remove(_players.begin(), _players.end(), player), _players.end());
 
+    _graphicScene.removeElement(_playersGraphicElements[player]);
+    delete _playersGraphicElements[player];
+    _playersGraphicElements.erase(player);
+
     bool isReferee = (_referee == player);
 
     if (isReferee) {
@@ -226,9 +244,14 @@ IGraphicElement*    Game::createGraphicElement() const {
 
 ITexture*	Game::createTexture(std::string const& filename, std::string const& pluginName) {
     Threading::MutexLocker locker(_attributesMutex);
-	Texture *res = new Texture("Plugins" + Application::getInstance().getDirectorySeparator() +
-			pluginName + Application::getInstance().getDirectorySeparator() + filename);
-
+	Texture *res;
+    if (!pluginName.empty()) {
+        res = new Texture("Plugins" + Application::getInstance().getDirectorySeparator()
+                          + pluginName + Application::getInstance().getDirectorySeparator()
+                          + filename);
+    } else {
+        res = new Texture(filename);
+    }
 	_gameTextures.push_back(res);
 	return res;
 }
@@ -378,6 +401,20 @@ void    Game::_sendTime(Player* player) {
     _proxy->sendPacket(toSend);
 }
 
+void    Game::_updatePlayers(void) {
+    for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
+         it != end; ++it) {
+        // Update players
+        (*it)->update(_clock.getEllapsedTime());
+        
+        // And their graphic elements
+        Vec3 pos = Vec3(_viewport->getPosition(), 0,
+                        _playersGraphicElements[*it]->getPosition().z);
+        pos = pos + Vec3((*it)->getPosition(), 0);
+        _playersGraphicElements[*it]->setPosition(pos);
+    }
+}
+
 void    Game::_udpHandler(void) {
     Threading::MutexLocker locker(_attributesMutex);
 
@@ -410,17 +447,17 @@ uint64      Game::getEllapsedTime() const {
 #pragma mark Protocol udp calls
 
 void Game::updatePlayerDirection(Network::UdpPacket* packet) {
-  Threading::MutexLocker locker(_attributesMutex);
+    Threading::MutexLocker locker(_attributesMutex);
 
-  Vec2 speed;
-  *packet >> speed;
-  for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
-       it != end; ++it) {
-    if ((*it)->getPort() == packet->getPort() &&
-	(*it)->getAddress() == packet->getAddress()) {
-      (*it)->updateSpeed(speed);
+    Vec2 speed;
+    *packet >> speed;
+    for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
+         it != end; ++it) {
+        if ((*it)->getPort() == packet->getPort() &&
+            (*it)->getAddress() == packet->getAddress()) {
+            (*it)->updateSpeed(speed);
+        }
     }
-  }
 }
 
 void Game::playerShoot(Network::UdpPacket*) {

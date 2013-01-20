@@ -7,6 +7,7 @@
 // Started on  dim. janv. 13 23:17:20 2013 Samuel Olivier
 //
 
+#include <algorithm>
 #include "GraphicScene.h"
 
 GraphicScene::GraphicScene() {
@@ -19,6 +20,11 @@ GraphicScene::~GraphicScene() {
 void	GraphicScene::addElement(GraphicElement *element) {
     Threading::MutexLocker locker(_graphicElementsMutex);
 	_graphicElements.push_back(element);
+}
+
+void	GraphicScene::removeElement(GraphicElement *element) {
+    Threading::MutexLocker locker(_graphicElementsMutex);
+    _graphicElements.erase(std::remove(_graphicElements.begin(), _graphicElements.end(), element), _graphicElements.end());
 }
 
 void	GraphicScene::sendStaticElements(Network::TcpPacket& packet) {

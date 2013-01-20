@@ -20,6 +20,7 @@
 # include "Threading/Mutex.h"
 # include "Threading/MutexLocker.h"
 # include "IServerDelegate.h"
+# include "GraphicElement.h"
 
 class Player : public Network::IProxyDelegate<Network::TcpPacket>, public Object {
 public:
@@ -49,7 +50,10 @@ public:
     uint16                  getPort(void) const;
     Network::HostAddress    getAddress(void) const;
 
+    void update(uint32 elapsedTime);
     void updateSpeed(const Vec2& speed);
+    
+    Vec2 const&     getPosition(void) const;
 
     typedef void (Player::* commandPointer)(Network::TcpPacket*);
 
@@ -65,18 +69,20 @@ private:
         ePort,
         eLastAttribute
     };
-    std::vector<Threading::Mutex*>        _attributesMutex;
+    
+    std::vector<Threading::Mutex*>          _attributesMutex;
 
-    bool                                  _isReady;
-    std::string                           _name;
-    Network::TcpSocket*                   _socket;
-    Network::Proxy<Network::TcpPacket>    _proxy;
-    IServerDelegate*                      _server;
-    std::map<int, commandPointer>         _commands;
-    bool                                  _isReferee;
-    uint16                                _port;
+    bool                                  	_isReady;
+    std::string                           	_name;
+    Network::TcpSocket*                   	_socket;
+    Network::Proxy<Network::TcpPacket>      _proxy;
+    IServerDelegate*                        _server;
+    std::map<int, commandPointer>         	_commands;
+    bool                                    _isReferee;
+    uint16                                  _port;
 
-    Vec2				  _speed;
+    Vec2                                    _speed;
+    Vec2                                    _position;
 };
 
 Network::APacket&       operator<<(Network::APacket& packet, Player const& player);
