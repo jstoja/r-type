@@ -7,6 +7,7 @@
 // Started on  dim. janv. 13 23:17:20 2013 Samuel Olivier
 //
 
+#include <algorithm>
 #include "GraphicScene.h"
 
 GraphicScene::GraphicScene() {
