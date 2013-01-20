@@ -162,25 +162,26 @@ int	main(int ac, char **av) {
 	map.setName(name);
 	map.setSpeed(0.2);
 	map.addSprite("scenery1", "Images/background.png", framesFull);
-	//map.addSprite("scenery2", "Images/stars-deep.png", framesFull);
-	//map.addSprite("scenery3", "Images/stars-blue.png", framesFull);
-	//map.addSprite("scenery4", "Images/stars-red.png", framesFull);
-	//map.addSprite("scenery5", "Images/planets.png", framesFull);
-	//map.addSprite("block", "Images/block-ship.png", framesBlock);
+	map.addSprite("scenery2", "Images/stars-deep.png", framesFull);
+	map.addSprite("scenery3", "Images/stars-blue.png", framesFull);
+	map.addSprite("scenery4", "Images/stars-red.png", framesFull);
+	map.addSprite("scenery5", "Images/planets.png", framesFull);
+	map.addSprite("block", "Images/block-ship.png", framesBlock);
 	map.addObject("Scenery", 0, createSceneryParams("scenery1", 0.1, 16, 1000, 0.999, 1));
-	//map.addObject("Scenery", 0, createSceneryParams("scenery2", 0.1, 16, 1000, 0.998, 0.2));
-	//map.addObject("Scenery", 0, createSceneryParams("scenery3", 0.1, 16, 1000, 0.997, 1));
-	//map.addObject("Scenery", 0, createSceneryParams("scenery4", 0.1, 16, 1000, 0.996, 1));
-	//map.addObject("Scenery", 0, createSceneryParams("scenery5", 0.1, 16*3, 1000, 0.995, 0.8));
-	//float32 tmp1 = 0;
-	//for (int i = 0; i < 10; ++i) {
-	//	uint32 idx = std::rand() % 5;
-	//	Frame current = getFrame(framesBlock, idx);
-	//	float32 width = (current.p2.x - current.p1.x) * 1.6 / 0.202,
-	//		height = (current.p2.y - current.p1.y) * 0.4 / (1. / 3.);
-	//	map.addObject("Block", tmp1, createBlockParams(Vec3(tmp1 + width / 2, height / 2, 0), Vec2(width, height), 0, "block", idx));
-	//	tmp1 += width;
-	//}
+	map.addObject("Scenery", 0, createSceneryParams("scenery2", 0.1, 16, 1000, 0.998, 0.2));
+	map.addObject("Scenery", 0, createSceneryParams("scenery3", 0.1, 16, 1000, 0.997, 1));
+	map.addObject("Scenery", 0, createSceneryParams("scenery4", 0.1, 16, 1000, 0.996, 1));
+	map.addObject("Scenery", 0, createSceneryParams("scenery5", 0.1, 16*3, 1000, 0.995, 0.8));
+	float32 tmp1 = 0;
+	for (int i = 0; i < 5; ++i) {
+		//uint32 idx = std::rand() % 5;
+		uint32 idx = i;
+		Frame current = getFrame(framesBlock, idx);
+		float32 width = (current.p2.x - current.p1.x) * 1.6 / 0.202,
+			height = (current.p2.y - current.p1.y) * 0.4 / (1. / 3.);
+		map.addObject("Block", tmp1, createBlockParams(Vec3(tmp1 + width / 2, height / 2, 0), Vec2(width, height), 0, "block", idx));
+		tmp1 += width;
+	}
 	map.save(Application::getInstance().getRelativePath(filename));
 	return (0);
 }
