@@ -121,6 +121,28 @@ ByteArray	createSceneryParams(std::string const& sprite, float32 speed, float32 
 	return res;
 }
 
+Frame	createFromPosAndSize(Vec2 const& pos, Vec2 const& size) {
+	return (Frame(pos, pos + size));
+}
+
+Frame	getFrame(float32 y, float32 width, float32 height) {
+	static float32	previousX = 0;
+
+	if (y < 0) {
+		previousX = 0;
+		return (Frame(Vec2(), Vec2()));
+	}
+	float32 now = previousX;
+	previousX += width;
+	return (createFromPosAndSize(Vec2(now, y), Vec2(width, height)));
+}
+
+Frame getFrame(std::list<Frame> & frames, uint32 id) {
+	std::list<Frame>::iterator it = frames.begin();
+	std::advance(it, id);
+	return (*it);
+}
+
 int	main(int ac, char **av) {
 	Application::getInstance().init(ac, av);
 	std::string filename = "../../Server/Resources/Levels/Level_1/Level_1.map";
@@ -128,24 +150,37 @@ int	main(int ac, char **av) {
 
 	if (ac > 1)
 		filename = av[0];
-	std::list<Frame> frames;
-	frames.push_back(Frame(Vec2(0, 0), Vec2(1, 1)));
+	std::list<Frame> framesFull, framesBlock;
+	framesFull.push_back(Frame(Vec2(0, 0), Vec2(1, 1)));
 
+	framesBlock.push_back(getFrame(2./3, 0.194, 1./3));
+	framesBlock.push_back(getFrame(2./3, 0.2, 1./3));
+	framesBlock.push_back(getFrame(2./3, 0.202, 1./3));
+	framesBlock.push_back(getFrame(0, 0.202, 1.));
+	framesBlock.push_back(getFrame(1./3, 0.202, 2./3));
 	Test	map;
 	map.setName(name);
 	map.setSpeed(0.2);
-	map.addSprite("scenery1", "Images/background.png", frames);
-	map.addSprite("scenery2", "Images/stars-deep.png", frames);
-	map.addSprite("scenery3", "Images/stars-blue.png", frames);
-	map.addSprite("scenery4", "Images/stars-red.png", frames);
-	map.addSprite("scenery5", "Images/planets.png", frames);
-	map.addSprite("block", "Images/block.png", frames);
+	map.addSprite("scenery1", "Images/background.png", framesFull);
+	map.addSprite("scenery2", "Images/stars-deep.png", framesFull);
+	map.addSprite("scenery3", "Images/stars-blue.png", framesFull);
+	map.addSprite("scenery4", "Images/stars-red.png", framesFull);
+	map.addSprite("scenery5", "Images/planets.png", framesFull);
+	map.addSprite("block", "Images/block-ship.png", framesBlock);
 	map.addObject("Scenery", 0, createSceneryParams("scenery1", 0.1, 16, 1000, 0.999, 1));
 	map.addObject("Scenery", 0, createSceneryParams("scenery2", 0.1, 16, 1000, 0.998, 0.2));
 	map.addObject("Scenery", 0, createSceneryParams("scenery3", 0.1, 16, 1000, 0.997, 1));
 	map.addObject("Scenery", 0, createSceneryParams("scenery4", 0.1, 16, 1000, 0.996, 1));
 	map.addObject("Scenery", 0, createSceneryParams("scenery5", 0.1, 16*3, 1000, 0.995, 0.8));
-	map.addObject("Block", 0, createBlockParams(Vec3(8, 4.5, 0), Vec2(4, 3), 0, "block", 0));
+	float32 tmp1 = 0;
+	for (int i = 0; i < 10; ++i) {
+		uint32 idx = std::rand() % 5;
+		Frame current = getFrame(framesBlock, idx);
+		float32 width = (current.p2.x - current.p1.x) * 1.6 / 0.202,
+			height = (current.p2.y - current.p1.y) * 0.4 / (1. / 3.);
+		map.addObject("Block", tmp1, createBlockParams(Vec3(tmp1 + width / 2, height / 2, 0), Vec2(width, height), 0, "block", idx));
+		tmp1 += width;
+	}
 	map.save(Application::getInstance().getRelativePath(filename));
 	return (0);
 }
