@@ -48,3 +48,9 @@ void	GraphicScene::sendElements(Network::UdpPacket& packet, Viewport* viewport) 
 			toSend.push_back(*it);
 	packet << toSend;
 }
+
+void    GraphicScene::updateFinished(void) {
+    for (std::list<GraphicElement*>::iterator it = _graphicElements.begin();
+         it != _graphicElements.end(); ++it)
+        (*it)->setChanged(false);
+}

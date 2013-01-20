@@ -18,7 +18,7 @@ namespace Network {
 
   class COMMON_EXPORT_IMPORT_REMOVED UdpPacket : public APacket {
   public:
-    UdpPacket(const HostAddress& hostAddress=HostAddress::AnyAddress, uint16 port=0);
+    UdpPacket();
     virtual ~UdpPacket();
 
     void    read(ASocket*);
@@ -26,6 +26,7 @@ namespace Network {
     bool    isComplete() const;
 
     void    setCode(uint32 code);
+	void	setFrom(const HostAddress& hostAddress=HostAddress::AnyAddress, uint16 port=0);
     uint32  getCode();
     void    setId(uint32 code);
     uint32  getId();
