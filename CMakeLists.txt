@@ -175,10 +175,8 @@ TARGET_LINK_LIBRARIES (
 	Commons
 )
 
-TARGET_LINK_LIBRARIES (Commons m)
-
 IF (UNIX)
-    TARGET_LINK_LIBRARIES (Commons pthread)
+    TARGET_LINK_LIBRARIES (Commons pthread m)
 
     IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         TARGET_LINK_LIBRARIES (Commons dl)

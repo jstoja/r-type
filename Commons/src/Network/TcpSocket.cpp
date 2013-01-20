@@ -168,7 +168,7 @@ void Network::TcpSocket::canRead() {
     {
       Threading::MutexLocker locker(&_bufferMutex);
       unsigned int size = _buffer.getSize();
-      _buffer.resize(size + (_toRead) ? _toRead : readSize);
+      _buffer.resize(size + ((_toRead) ? _toRead : readSize));
       int ret = ::recv(_fd, &(((char*)_buffer)[size]), (_toRead) ? _toRead : readSize, 0);
       if (ret == 0) {
 	this->close();

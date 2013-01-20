@@ -5,7 +5,9 @@
 
 
 #include <vector>
-#include <cmath>
+#ifdef OS_UNIX
+# include <cmath>
+#endif
 #include "Network/CriticalPacket.h"
 
 
@@ -57,7 +59,7 @@ bool    Network::CriticalPacket::needResend(uint64 time) {
 
 uint64    Network::CriticalPacket::getOptimizedValue(void) {
     double average = getAverageTime();
-    int total;
+    double total;
 
     if (_allTimes.size() == 0) {
         return 20;
