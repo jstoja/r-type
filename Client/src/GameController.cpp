@@ -212,6 +212,7 @@ void GameController::launchGame(void) {
 			_scene->addScenery(*it);
 		}
 	}
+    _scene->setViewportPosition(Vec2(0, 0));
     _gameLaunched = true;
 }
 
