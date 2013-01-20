@@ -17,7 +17,7 @@ const float32 UserInterface::_maxViewportX = 1000000000.0;
 
 UserInterface::UserInterface(IUserInterfaceDelegate* delegate) :
 _delegate(delegate), _time(), _sceneries(), _currentMenu(NULL),
-_nextMenu(NULL), _messageLabel(NULL), _mutex(new Threading::Mutex()), _visible(true) {
+	_messageLabel(NULL), _mutex(new Threading::Mutex()), _visible(true), _showLabel(false) {
     // Create the sceneries used in all the user interface
     _createSceneries();
 
@@ -55,6 +55,12 @@ UserInterface::~UserInterface(void) {
 void UserInterface::update(void) {
     Threading::MutexLocker lock(_mutex);
 
+	if (_visible) {
+		if (_currentMenu && _currentMenu->isVisible() && _showLabel)
+			_currentMenu->setVisible(false);
+		else if (_currentMenu && _currentMenu->isVisible() == false && _showLabel == false)
+			_currentMenu->setVisible(true);
+	}
     // Update the background (make it move !)
     float32 xPos = (float32)_time.getEllapsedTime() / 1000;
     if (xPos > _maxViewportX)
@@ -67,16 +73,16 @@ void UserInterface::update(void) {
 
 void UserInterface::presentMessage(std::string const& message) {
     Threading::MutexLocker lock(_mutex);
-    _nextMenu = (Menu::Menu*)-1;
+	_showLabel = true;
     _messageLabel->setText(message);
     _messageLabel->setVisible(true);
 }
 
 void UserInterface::hideMessage(void) {
     Threading::MutexLocker lock(_mutex);
+	_showLabel = false;
     if (_messageLabel->isVisible())
         _messageLabel->setVisible(false);
-	_nextMenu = NULL;
 }
 
 Menu::Menu* UserInterface::getCurrentMenu(void) const {
@@ -126,26 +132,13 @@ void UserInterface::playerReady(void) {
 
 void UserInterface::goToMenu(std::string const& menu) {
     Threading::MutexLocker lock(_mutex);
-    lock.unlock();
-    hideMessage();
-    lock.relock();
     if (_currentMenu)
        _currentMenu->setVisible(false);
 	_currentMenu = _menus[menu];
-    if (_currentMenu && _nextMenu != (Menu::Menu*)-1)
+    if (_currentMenu)
        _currentMenu->setVisible(true);
 	else
 		_currentMenu = NULL;
-    //if (_nextMenu) {
-    // if (_nextMenu != (Menu::Menu*)-1) {
-    //        _currentMenu = _nextMenu;
-    //        _currentMenu->setVisible(true);
-    //    } else {
-    //        _currentMenu = NULL;
-    //    }
-    //    _nextMenu = NULL;
-    //}
-    //_nextMenu = _menus[menu];
 }
 
 void UserInterface::_createSceneries(void) {
