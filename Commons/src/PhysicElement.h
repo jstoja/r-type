@@ -10,13 +10,14 @@
 #ifndef _PHYSIC_ELEMENT_H_
 # define _PHYSIC_ELEMENT_H_
 
+# include <OS.h>
 # include <IPhysicElement.h>
 # include <Object.h>
 # include <Network/UdpPacket.h>
 # include "Threading/Mutex.h"
 # include "Threading/MutexLocker.h"
 
-class PhysicElement : public IPhysicElement, public Object {
+class COMMON_EXPORT_IMPORT PhysicElement : public IPhysicElement, public Object {
 public:
 	PhysicElement();
 	~PhysicElement();
@@ -55,6 +56,6 @@ private:
 	char	_type;
 };
 
-Network::APacket&		operator<<(Network::APacket & packet, PhysicElement & element);
+COMMON_EXPORT_IMPORT Network::APacket&		operator<<(Network::APacket & packet, PhysicElement & element);
 
 #endif

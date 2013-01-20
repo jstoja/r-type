@@ -10,6 +10,7 @@
 # define R_Type_Interpolated_hpp
 
 # include <list>
+# include <OS.h>
 # include "Types.h"
 # include "Clock.h"
 
