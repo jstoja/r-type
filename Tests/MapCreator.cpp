@@ -244,7 +244,7 @@ int	main(int ac, char **av) {
 
     
 	map.setName(name);
-	map.setSpeed(0);
+	map.setSpeed(1);
 	map.addSprite("scenery1", "Images/background.png", framesFull);
 	map.addSprite("scenery2", "Images/stars-deep.png", framesFull);
 	map.addSprite("scenery3", "Images/stars-blue.png", framesFull);

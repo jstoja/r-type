@@ -118,7 +118,6 @@ Rect2            GraphicElement::getRect(void) const {
 }
 
 Network::APacket&		operator<<(Network::APacket& packet, GraphicElement& element) {
-	element.setChanged(false);
 	packet << element.getId() << element.getPosition() << element.getRotation()
 		   << element.getSize() << element.getSprite()->getId() << element.getSpriteFrameIndex()
 		   << (uint8)element.getType();

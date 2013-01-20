@@ -260,7 +260,7 @@ Network::APacket& operator<<(Network::APacket& packet, Player const& player) {
 }
 
 void Player::update(uint32 elapsedTime) {
-    _position = _position + _speed * ((float32)elapsedTime/1000.0);
+    _position = _position + _speed * ((float32)elapsedTime/1000.0) * 4;
 }
 
 void Player::updateSpeed(const Vec2& speed) {
