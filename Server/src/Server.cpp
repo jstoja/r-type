@@ -63,6 +63,7 @@ bool Server::createGame(Game* game, Player* player) {
     }
     if (_games.find(id) == _games.end()) {
         _games[id] = game;
+        game->setReferee(player);
         game->join(player);
         informNewGame(game, player);
         return true;
@@ -122,19 +123,27 @@ void Server::quitServer(Player* player) {
             informGameQuit(player, it->second);
         }
     }
+
     _players.erase(std::remove(_players.begin(), _players.end(), player), _players.end());
     delete player;
 }
 
 void Server::quitGame(Player *player, uint32 gameId) {
+    bool     noPlayer;
     std::map<uint32, Game*>::iterator it = _games.find(gameId);
+
     if (it != _games.end()) {
         // Remove player from game
         Game* game = it->second;
-        game->quit(player);
+        bool stopGame = game->quit(player);
         Log("Player " << player->getName() << " leaved game " << game->getName());
-        
-        informGameQuit(player, game);
+
+        if (game) {
+            Log("Referee logged out. Stopping " << game->getName()) << " (NOT IMPLEMENTED YET)";
+            // game->stop();
+        } else {
+            informGameQuit(player, game);
+        }
     }
 }
 

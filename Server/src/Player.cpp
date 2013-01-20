@@ -14,7 +14,7 @@
 
 Player::Player(Network::TcpSocket* socket, IServerDelegate* server) :
 _attributesMutex() ,_isReady(false), _name(), _socket(socket),
-_proxy(socket, this), _server(server), _commands() {
+_proxy(socket, this), _server(server), _commands(), _isReferee(false) {
 
     _attributesMutex.resize(eLastAttribute);
     for (uint32 i = 0; i < eLastAttribute; ++i) {
@@ -101,7 +101,7 @@ void Player::connection(Network::TcpPacket* packet) {
     tcpPacket->setCode(code);
     *tcpPacket << (uint32)getId();
     Network::Proxy<Network::TcpPacket>::ToSend toSend(tcpPacket, Network::HostAddress::AnyAddress, 0);
-    
+
     Threading::MutexLocker lockerProxy(_attributesMutex[eProxy]);
     _proxy.sendPacket(toSend);
     lockerServer.relock();
@@ -118,7 +118,7 @@ void Player::createGame(Network::TcpPacket* packet) {
     Threading::MutexLocker lockerServer(_attributesMutex[eServer]);
     bool gameCreated = _server->createGame(game, this);
     lockerServer.unlock();
-    
+
     if (gameCreated == false) {
         delete game;
     }
@@ -147,11 +147,11 @@ void Player::joinGame(Network::TcpPacket* packet) {
     uint32 id;
 
     *packet >> id;
-    
+
     Threading::MutexLocker lockerServer(_attributesMutex[eServer]);
     int code = _server->joinGame(id, this);
     lockerServer.unlock();
-    
+
     Network::TcpPacket *tcpPacket = new Network::TcpPacket();
     tcpPacket->setCode(code);
     *tcpPacket << id;
@@ -160,10 +160,10 @@ void Player::joinGame(Network::TcpPacket* packet) {
     Threading::MutexLocker lockerProxy(_attributesMutex[eProxy]);
     _proxy.sendPacket(toSend);
     lockerProxy.unlock();
-    
+
     if (code == Network::TcpProxy::GameJoinSuccess) {
         lockerServer.relock();
-        _server->sendResources(id, this);        
+        _server->sendResources(id, this);
         _server->sendGameInfo(id, this);
         lockerServer.unlock();
     }
@@ -209,11 +209,11 @@ void Player::readyToStart(Network::TcpPacket* packet) {
     lockePort.unlock();
 
     Log("Port: " << port);
-    
+
     Threading::MutexLocker lockerReady(_attributesMutex[eIsReady]);
     _isReady = true;
     lockerReady.unlock();
-    
+
     Threading::MutexLocker lockerServer(_attributesMutex[eServer]);
     _server->playerReady(gameId, this);
     lockerReady.relock();
@@ -227,7 +227,7 @@ void Player::quitGame(Network::TcpPacket* packet) {
     Threading::MutexLocker lockerReady(_attributesMutex[eIsReady]);
     _isReady = false;
     lockerReady.unlock();
-    
+
     Threading::MutexLocker lockerServer(_attributesMutex[eServer]);
     _server->quitGame(this, gameId);
     lockerReady.relock();
