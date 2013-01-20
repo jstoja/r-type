@@ -168,6 +168,8 @@ void     Game::join(Player* player) {
     if (canJoin(player)) {
         Threading::MutexLocker locker(_attributesMutex);
         _players.push_back(player);
+		if (_players.size() == 1)
+	        setReferee(player);
         // Create player graphic and physic element
         GraphicElement* element = new GraphicElement();
         element->setPosition(Vec2(16.0/2, 9.0/2));

@@ -65,7 +65,6 @@ bool Server::createGame(Game* game, Player* player) {
     }
     if (_games.find(id) == _games.end()) {
         _games[id] = game;
-        game->setReferee(player);
         game->join(player);
         informNewGame(game, player);
         return true;
