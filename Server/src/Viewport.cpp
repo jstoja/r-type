@@ -23,9 +23,8 @@ Viewport::~Viewport() {
 }
 
 void	Viewport::setPosition(float32 x) {
-    _attributesMutex[eX]->lock();
+    Threading::MutexLocker  locker(_attributesMutex[eX]);
 	_x = x;
-    _attributesMutex[eX]->unlock();
 }
 
 float32	Viewport::getPosition() const {
@@ -34,9 +33,8 @@ float32	Viewport::getPosition() const {
 }
 
 void	Viewport::setWidth(float32 width) {
-    _attributesMutex[eWidth]->lock();
+    Threading::MutexLocker  locker(_attributesMutex[eWidth]);
 	_width = width;
-    _attributesMutex[eWidth]->unlock();
 }
 
 float32	Viewport::getWidth() const {
@@ -45,9 +43,8 @@ float32	Viewport::getWidth() const {
 }
 
 void	Viewport::setSpeed(float32 speed) {
-    _attributesMutex[eSpeed]->lock();
+    Threading::MutexLocker  locker(_attributesMutex[eSpeed]);
 	_speed = speed;
-    _attributesMutex[eSpeed]->unlock();
 }
 
 float32	Viewport::getSpeed() const {
@@ -58,23 +55,20 @@ float32	Viewport::getSpeed() const {
 bool	Viewport::isInViewport(float32 x) const {
     Threading::MutexLocker locker(_attributesMutex[eX]);
     Threading::MutexLocker locker1(_attributesMutex[eWidth]);
-    Threading::MutexLocker locker2(_attributesMutex[eSpeed]);
+    //Threading::MutexLocker locker2(_attributesMutex[eSpeed]);
 	return (x >= _x && x < _x + _width);
 }
 
 bool	Viewport::isInViewport(Rect2 const& object) const {
     Threading::MutexLocker locker(_attributesMutex[eX]);
     Threading::MutexLocker locker1(_attributesMutex[eWidth]);
-    Threading::MutexLocker locker2(_attributesMutex[eSpeed]);
 	return ((object.pos.x >= _x && object.pos.x < _x + _width) ||
 		(object.pos.x + object.size.x >= _x && object.pos.x + object.size.x < _x + _width) ||
 		(object.pos.x < _x && object.pos.x + object.size.x >= _x + _width));
 }
 
 void	Viewport::update(Clock& clock) {
-    _attributesMutex[eX]->lock();
-    _attributesMutex[eSpeed]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eX]);
+    Threading::MutexLocker locker1(_attributesMutex[eSpeed]);
 	_x += (float32)clock.getEllapsedTime() / 1000 * _speed;
-    _attributesMutex[eX]->unlock();
-    _attributesMutex[eSpeed]->unlock();
 }

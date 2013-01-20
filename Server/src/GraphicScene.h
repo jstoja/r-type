@@ -29,7 +29,7 @@ public:
 	void	sendElements(Network::UdpPacket& packet, Viewport* viewport);
 
 private:
-    Threading::Mutex            _graphicElementsMutex;
+    Threading::Mutex            *_graphicElementsMutex;
 	std::list<GraphicElement*>	_graphicElements;
 };
 

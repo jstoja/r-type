@@ -59,6 +59,19 @@ public:
     uint16  getUdpSocketPort(void) const;
     Game*   getGame(void) const;
 
+    // Network calls
+    void	receiveGraphicElements(Network::UdpPacket*);
+    void	receivePhysicElements(Network::UdpPacket*);
+    void	playSound(Network::UdpPacket*);
+    void	stopSound(Network::UdpPacket*);
+    void	updateTime(Network::UdpPacket*);
+    void	updateLife(Network::UdpPacket*);
+    void	updateScore(Network::UdpPacket*);
+    void	gameFinished(Network::UdpPacket*);
+
+
+    typedef void (GameController::* commandPointer)(Network::UdpPacket*);
+
 private:
     Game*                               _game;
     bool                                _gameLaunched;
@@ -73,8 +86,11 @@ private:
 	std::list<Graphic::Element*>		_elements;
 	std::list<Graphic::Scenery*>		_sceneries;
 	std::list<Sound::Sound*>			_sounds;
-    
+	
     Interpolated<Vec2>                  _viewportPosition;
+    std::map<int, commandPointer>       _commands;
+    
+    std::map<uint32, Graphic::Element*> _graphicElements;
 };
 
 #endif /* defined(__R_Type__GameController__) */

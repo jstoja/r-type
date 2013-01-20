@@ -43,21 +43,17 @@ int32	Sound::getRepeat() const {
 }
 
 void	Sound::play() {
-    _attributesMutex[eIsPlaying]->lock();
-    _attributesMutex[eChanged]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eIsPlaying]);
+    Threading::MutexLocker locker1(_attributesMutex[eChanged]);
 	_isPlaying = true;
 	_changed = true;
-    _attributesMutex[eIsPlaying]->unlock();
-    _attributesMutex[eChanged]->unlock();
 }
 
 void	Sound::stop() {
-    _attributesMutex[eIsPlaying]->lock();
-    _attributesMutex[eChanged]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eIsPlaying]);
+    Threading::MutexLocker locker1(_attributesMutex[eChanged]);
 	_isPlaying = false;
 	_changed = true;
-    _attributesMutex[eIsPlaying]->unlock();
-    _attributesMutex[eChanged]->unlock();
 }
 
 bool    Sound::isPlaying() const {
@@ -71,9 +67,8 @@ bool	Sound::hasChanged() const {
 }
 
 void	Sound::setChanged(bool val) {
-    _attributesMutex[eChanged]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eChanged]);
 	_changed = val;
-    _attributesMutex[eChanged]->unlock();
 }
 
 Network::APacket&		operator<<(Network::APacket& packet, Sound const& sound) {

@@ -55,11 +55,12 @@ private:
 
     enum    _mutexVariable {
         eIsReady = 0,
+        eName,
         eSocket,
         eProxy,
-        eUdpProxy,
         eServer,
         eCommands,
+        ePort,
         eLastAttribute
     };
     std::vector<Threading::Mutex*>        _attributesMutex;

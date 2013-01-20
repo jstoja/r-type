@@ -9,12 +9,22 @@
 #include "GameController.h"
 
 #include "Event/Manager.h"
+#include "PhysicElement.h"
 #include "ObjectManager.h"
 
 GameController::GameController(Game* game, Graphic::Scene* scene) :
 _game(game), _gameLaunched(false), _scene(scene), _eventListener(NULL),
 _udpSocket(NULL), _udpProxy(NULL) {
-    
+
+  _commands[Network::TcpProxy::GRAPHIC_ELEMENTS] = &GameController::receiveGraphicElements;
+  _commands[Network::TcpProxy::PHYSIC_ELEMENTS] = &GameController::receivePhysicElements;
+  _commands[Network::TcpProxy::PLAY_SOUND] = &GameController::playSound;
+  _commands[Network::TcpProxy::STOP_SOUND] = &GameController::stopSound;
+  _commands[Network::TcpProxy::TIME] = &GameController::updateTime;
+  _commands[Network::TcpProxy::UPDATE_LIFE] = &GameController::updateLife;
+  _commands[Network::TcpProxy::UPDATE_SCORE] = &GameController::updateScore;
+  _commands[Network::TcpProxy::GAME_FINISHED] = &GameController::gameFinished;
+
     // Create the event listener to get user input
     _eventListener = new Event::Listener(Event::KeyPressed | Event::KeyReleased, this);
     Event::Manager::getInstance().addEventListener(_eventListener);
@@ -22,8 +32,7 @@ _udpSocket(NULL), _udpProxy(NULL) {
     _udpSocket = new Network::UdpSocket();
     _udpSocket->bind();
     _udpPort = _udpSocket->getLocalPort();
-    _udpProxy = new Network::UdpProxy(_udpSocket, this);
-    
+    _udpProxy = new Network::UdpProxy(_udpSocket, this);    
 }
 
 GameController::~GameController(void) {
@@ -45,12 +54,16 @@ void GameController::processEvent(Event::Event const& event) {
 
 void GameController::packetReceived(Network::UdpPacket* packet) {
     uint32 code;
-    
-    *packet >> code;
+
+    *packet >> code;    
+    std::map<int, commandPointer>::iterator it = _commands.find(code);
+    if (it != _commands.end())
+      (this->*(it->second))(packet);
+    else
+      Log("Received unknown command 0x" << std::setfill('0') << std::setw(8) << std::hex << code);
+    delete packet;
+
     //Log("UDP Packet received 0x" << std::setfill('0') << std::setw(8) << std::hex << code);
-    float32 time = 0, clock = 0;
-    *packet >> time >> clock;
-    _viewportPosition.setValue(Vec2(time, 0), clock);
 }
 
 void GameController::packetSent(Network::UdpPacket const* packet) {
@@ -267,4 +280,69 @@ uint16 GameController::getUdpSocketPort(void) const {
 
 Game* GameController::getGame(void) const {
     return _game;
+}
+
+#pragma mark Protocol commands
+
+void GameController::receiveGraphicElements(Network::UdpPacket* packet) {
+    float32 clock = 0;
+    uint32 nbElements = 0;
+    
+    *packet >> clock >> nbElements;
+    for (uint32 i = 0; i < nbElements; ++i) {
+        uint32 id, rotation, spriteId;
+        Vec3 position, size;
+        uint8 currentFrame, type;
+        Graphic::Element* element;
+        
+        *packet >> id >> position >> rotation >> size >> spriteId >> currentFrame >> type;
+        std::map<uint32, Graphic::Element*>::iterator it = _graphicElements.find(id);
+        if (it != _graphicElements.end()) {
+            element = it->second;
+        } else {
+            element = new Graphic::Element(id);
+            _graphicElements[id] = element;
+            _scene->addElement(element);
+        }
+        element->setPosition(position);
+        element->setRotation(rotation);
+        element->setSize(size);
+        element->setSprite(dynamic_cast<Graphic::Sprite*>(ObjectManager::getInstance().getObject(spriteId)));
+        element->setCurrentFrame(currentFrame);
+        element->setType((Graphic::Element::Type)type);
+    }
+}
+
+void GameController::receivePhysicElements(Network::UdpPacket* packet) {
+  float32 clock;
+  std::list<PhysicElement> physicElements;
+
+  *packet >> clock;
+}
+
+void GameController::playSound(Network::UdpPacket* packet) {
+
+}
+
+void GameController::stopSound(Network::UdpPacket* packet) {
+
+}
+
+void GameController::updateTime(Network::UdpPacket* packet) {
+    float32 clock, time;
+    *packet >> clock >> time;
+    Log(time);
+    _viewportPosition.setValue(Vec2(time, 0), clock);
+}
+
+void GameController::updateLife(Network::UdpPacket* packet) {
+
+}
+
+void GameController::updateScore(Network::UdpPacket* packet) {
+
+}
+
+void GameController::gameFinished(Network::UdpPacket* packet) {
+
 }

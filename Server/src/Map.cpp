@@ -32,9 +32,9 @@ bool	Map::load(std::string const& mapName) {
 	std::ifstream	file(mapName.c_str(), std::ifstream::binary);
     
 	if (file.is_open() == false) {
-        _attributesMutex[eError]->lock();
+        Threading::MutexLocker  locker(_attributesMutex[eError]);
 		_error = "Cannot open " + mapName;
-        _attributesMutex[eError]->unlock();
+        locker.unlock();
 		return false;
 	}
 	if (!_getFilename(mapName) || !_checkMagic(file) || !_getName(file) || !_getSpeed(file) || !_loadSprites(file) || !_loadObject(file)) {
@@ -75,20 +75,20 @@ std::string const&				Map::getFilename() const {
 }
 
 float32							Map::getSpeed() const {
+    Threading::MutexLocker  locker(_attributesMutex[eInitialSpeed]);
 	return (_initialSpeed);
 }
 
 bool	Map::_getFilename(std::string const& filePath) {
-    _attributesMutex[eApplication]->lock();
+    Threading::MutexLocker  lockerApplication(_attributesMutex[eApplication]);
 	size_t idx = filePath.find_last_of('/');
 	if (idx != std::string::npos)
 		++idx;
-    _attributesMutex[eApplication]->unlock();
+    lockerApplication.unlock();
     
-    _attributesMutex[eFilename]->lock();
+    Threading::MutexLocker  lockerFilename(_attributesMutex[eFilename]);
 	_filename = filePath.substr(idx);
 	_filename = _filename.substr(0, _filename.find_last_of(".lvl"));
-    _attributesMutex[eFilename]->unlock();
 	return (true);
 }
 
@@ -97,6 +97,7 @@ bool	Map::_checkMagic(std::ifstream& file) {
 
 	file.read((char*)&nbr, sizeof(nbr));
 	if (nbr != MapMagic) {
+        Threading::MutexLocker  locker(_attributesMutex[eError]);
 		_error = _filename + " is not a RType Map";
 		file.close();
 		return false;
@@ -105,6 +106,7 @@ bool	Map::_checkMagic(std::ifstream& file) {
 }
 
 bool	Map::_getSpeed(std::ifstream& file) {
+    Threading::MutexLocker  locker(_attributesMutex[eInitialSpeed]);
 	file.read((char*)&_initialSpeed, sizeof(_initialSpeed));
 	return (true);
 }
@@ -116,9 +118,8 @@ bool	Map::_getName(std::ifstream& file) {
 	file.read((char*)&size, sizeof(size));
 	data = new char[size];
 	file.read(data, size);
-    _attributesMutex[eName]->lock();
+    Threading::MutexLocker  locker(_attributesMutex[eName]);
 	_name.assign(data, size);
-    _attributesMutex[eName]->unlock();
 	delete []data;
 	return (true);
 }
@@ -127,11 +128,12 @@ bool	Map::_loadSprites(std::ifstream& file) {
 	uint32	nbr;
 
 	file.read((char*)&nbr, sizeof(nbr));
-    Threading::MutexLocker locker(_attributesMutex[eApplication]);
-    Threading::MutexLocker locker1(_attributesMutex[eTextures]);
-    Threading::MutexLocker locker2(_attributesMutex[eSprites]);
-    Threading::MutexLocker locker3(_attributesMutex[eFilename]);
+    Threading::MutexLocker lockerApplication(_attributesMutex[eApplication]);
+    Threading::MutexLocker lockerTexture(_attributesMutex[eTextures]);
+    Threading::MutexLocker lockerSprite(_attributesMutex[eSprites]);
+    Threading::MutexLocker lockerFilename(_attributesMutex[eFilename]);
 
+    lockerApplication.unlock();
 	for (; nbr > 0 && file.good(); --nbr) {
 		std::string	spriteName, imageName;
 		uint32	size;
@@ -147,12 +149,15 @@ bool	Map::_loadSprites(std::ifstream& file) {
 		file.read(data, size);
 		imageName.assign(data, size);
 		delete []data;
+        
 		Texture*	texture = _textures[imageName];
 		if (texture == NULL) {
+            lockerApplication.relock();
 			texture = new Texture(std::string("Levels") +
 			App.getDirectorySeparator() + std::string(_filename) +
 			App.getDirectorySeparator() + std::string(imageName));
 			_textures[imageName] = texture;
+            lockerApplication.unlock();
 		}
 		if (_sprites[spriteName] != NULL) {
 			_error = "Multiple Definition of Sprite " + spriteName;
@@ -182,7 +187,7 @@ bool	Map::_loadFrames(std::ifstream& file, Sprite *sprite) {
 bool	Map::_loadObject(std::ifstream& file) {
 	uint32	nbr;
 
-    _attributesMutex[eObjects]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eObjects]);
 	file.read((char*)&nbr, sizeof(nbr));
 	for (; nbr > 0 && file.good(); --nbr) {
 		Object obj;
@@ -202,6 +207,5 @@ bool	Map::_loadObject(std::ifstream& file) {
 		delete []data;
 		_objects.push_back(obj);
 	}
-    _attributesMutex[eObjects]->unlock();
 	return (true);
 }

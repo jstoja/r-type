@@ -94,29 +94,7 @@ private:
     void                        _sendPhysicElements(void);
     void                        _sendTime(void);
 
-    enum    _mutexVariable {
-        ePlayers = 0,
-        eNbSlots,
-        eName,
-        eCurrentLevel,
-        eObjects,
-        eGameTextures,
-        eLevelSprites,
-        eGameSprites,
-        eGameSceneries,
-        eGameSounds,
-        eGraphicScene,
-        ePhysicScene,
-        eUpdatePool,
-        eState,
-        eClock,
-        eGameClock,
-        eViewport,
-        eApplication,
-        eLastAttribute
-    };
-    std::vector<Threading::Mutex*>	            _attributesMutex;
-
+    Threading::Mutex*                           _attributesMutex;
 	std::vector<Player*>                        _players;
 	uint32                                      _nbSlots;
 	std::string                                 _name;

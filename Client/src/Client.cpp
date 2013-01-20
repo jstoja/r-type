@@ -27,10 +27,10 @@ _gameController(NULL) {
     _commands[Network::TcpProxy::InformationsGameListResponse] = &Client::receiveGameList;
     _commands[Network::TcpProxy::GameCreatedSuccess] = &Client::gameCreatedResponse;
     _commands[Network::TcpProxy::GameJoinSuccess] = &Client::gameJoinResponse;
-	_commands[Network::TcpProxy::GameResources] = &Client::receiveResources;
-	_commands[Network::TcpProxy::GamePlayerList] = &Client::receivePlayerList;
-	_commands[Network::TcpProxy::GameNewPlayer] = &Client::receiveNewPlayer;
-	_commands[Network::TcpProxy::GamePlayerReady] = &Client::receivePlayerReady;
+    _commands[Network::TcpProxy::GameResources] = &Client::receiveResources;
+    _commands[Network::TcpProxy::GamePlayerList] = &Client::receivePlayerList;
+    _commands[Network::TcpProxy::GameNewPlayer] = &Client::receiveNewPlayer;
+    _commands[Network::TcpProxy::GamePlayerReady] = &Client::receivePlayerReady;
     _commands[Network::TcpProxy::GameStart] = &Client::startGame;
     Graphic::Renderer::getInstance().init();
     Graphic::Renderer::getInstance().setScene(&_scene);

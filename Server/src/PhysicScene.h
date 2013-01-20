@@ -17,6 +17,7 @@
 
 # include "PhysicElement.h"
 # include "Threading/Mutex.h"
+# include "Threading/MutexLocker.h"
 # include "Viewport.h"
 
 class PhysicScene {
@@ -29,7 +30,7 @@ public:
 	void	sendElements(Network::UdpPacket& packet, Viewport* viewport);
 
 private:
-    Threading::Mutex            _physicElementsMutex;
+    Threading::Mutex            *_physicElementsMutex;
 	std::list<PhysicElement*>	_physicElements;
 };
 

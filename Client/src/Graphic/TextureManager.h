@@ -18,7 +18,7 @@ namespace Graphic {
     
     class TextureManager : public Singleton<TextureManager> {
         
-        friend Singleton<TextureManager>;
+        friend class Singleton<TextureManager>;
         
     public:
         

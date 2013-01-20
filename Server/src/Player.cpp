@@ -44,30 +44,33 @@ void Player::packetReceived(Network::TcpPacket* packet) {
     uint32 code, size;
 
     *packet >> code >> size;
-    _attributesMutex[eCommands]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eCommands]);
     std::map<int, commandPointer>::iterator it = _commands.find(code & 0xFFFFFF00);
     if (it != _commands.end())
         (this->*(it->second))(packet);
     else {
         Log("Received unknown command 0x" << std::setfill('0') << std::setw(8) << std::hex << code);
     }
-    _attributesMutex[eCommands]->unlock();
     delete packet;
 }
 
 bool Player::isReady(void) const {
+    Threading::MutexLocker locker(_attributesMutex[eIsReady]);
     return _isReady;
 }
 
 std::string const& Player::getName(void) const {
+    Threading::MutexLocker locker(_attributesMutex[eName]);
     return _name;
 }
 
 uint16              Player::getPort(void) const {
+    Threading::MutexLocker locker(_attributesMutex[ePort]);
     return _port;
 }
 
 Network::HostAddress Player::getAddress(void) const {
+    Threading::MutexLocker locker(_attributesMutex[eSocket]);
     return _socket->getRemoteAddress();
 }
 
@@ -76,6 +79,7 @@ void Player::packetSent(Network::TcpPacket const* packet) {
 }
 
 void Player::connectionClosed(Network::Proxy<Network::TcpPacket>*) {
+    //Threading::MutexLocker locker(_attributesMutex[eServer]);
     _server->quitServer(this);
 }
 
@@ -85,35 +89,36 @@ void Player::connection(Network::TcpPacket* packet) {
     Log("Connection with login " << name << ", id: " << getId());
 
     uint32 code = Network::TcpProxy::AuthenficitationConnectionSuccess;
-
+    Threading::MutexLocker lockerServer(_attributesMutex[eServer]);
     if (_server->canAddPlayer(name)) {
+        Threading::MutexLocker lockerName(_attributesMutex[eName]);
         _name = name;
     } else {
         code = Network::TcpProxy::AuthenficitationConnectionIncorrectLogin;
     }
-
+    lockerServer.unlock();
     Network::TcpPacket *tcpPacket = new Network::TcpPacket();
     tcpPacket->setCode(code);
     *tcpPacket << (uint32)getId();
     Network::Proxy<Network::TcpPacket>::ToSend toSend(tcpPacket, Network::HostAddress::AnyAddress, 0);
-    _attributesMutex[eProxy]->lock();
+    
+    Threading::MutexLocker lockerProxy(_attributesMutex[eProxy]);
     _proxy.sendPacket(toSend);
-    _attributesMutex[eProxy]->unlock();
+    lockerServer.relock();
 }
 
 void  Player::sendPacket(Network::Proxy<Network::TcpPacket>::ToSend const& toSend) {
-    _attributesMutex[eProxy]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eProxy]);
     _proxy.sendPacket(toSend);
-    _attributesMutex[eProxy]->unlock();
 }
 
 void Player::createGame(Network::TcpPacket* packet) {
     Game *game = new Game(packet);
 
-    _attributesMutex[eServer]->lock();
+    Threading::MutexLocker lockerServer(_attributesMutex[eServer]);
     bool gameCreated = _server->createGame(game, this);
-    _attributesMutex[eServer]->unlock();
-
+    lockerServer.unlock();
+    
     if (gameCreated == false) {
         delete game;
     }
@@ -124,53 +129,61 @@ void Player::createGame(Network::TcpPacket* packet) {
     if (gameCreated)
         *tcpPacket << *game;
     Network::Proxy<Network::TcpPacket>::ToSend toSend(tcpPacket, Network::HostAddress::AnyAddress, 0);
-    _attributesMutex[eProxy]->lock();
+    Threading::MutexLocker lockerProxy(_attributesMutex[eProxy]);
     _proxy.sendPacket(toSend);
-    _attributesMutex[eProxy]->unlock();
-
+    lockerProxy.unlock();
     // Send game infos
     if (gameCreated) {
+        lockerServer.relock();
         _server->sendResources(game->getId(), this);
         _server->sendGameInfo(game->getId(), this);
+        lockerServer.unlock();
     }
+    lockerServer.relock();
+    lockerProxy.relock();
 }
 
 void Player::joinGame(Network::TcpPacket* packet) {
     uint32 id;
 
     *packet >> id;
-    _attributesMutex[eServer]->lock();
+    
+    Threading::MutexLocker lockerServer(_attributesMutex[eServer]);
     int code = _server->joinGame(id, this);
-    _attributesMutex[eServer]->unlock();
-
+    lockerServer.unlock();
+    
     Network::TcpPacket *tcpPacket = new Network::TcpPacket();
     tcpPacket->setCode(code);
     *tcpPacket << id;
     Network::Proxy<Network::TcpPacket>::ToSend toSend(tcpPacket, Network::HostAddress::AnyAddress, 0);
 
-    _attributesMutex[eProxy]->lock();
+    Threading::MutexLocker lockerProxy(_attributesMutex[eProxy]);
     _proxy.sendPacket(toSend);
-    _attributesMutex[eProxy]->unlock();
-
+    lockerProxy.unlock();
+    
     if (code == Network::TcpProxy::GameJoinSuccess) {
-        _server->sendResources(id, this);
+        lockerServer.relock();
+        _server->sendResources(id, this);        
         _server->sendGameInfo(id, this);
+        lockerServer.unlock();
     }
+    lockerServer.relock();
+    lockerProxy.relock();
 }
 
 void Player::serverInfos(Network::TcpPacket* packet) {
-    _attributesMutex[eServer]->lock();
+    Threading::MutexLocker lockerServer(_attributesMutex[eServer]);
     std::string name = _server->getName();
-    _attributesMutex[eServer]->unlock();
+    lockerServer.unlock();
 
     Network::TcpPacket *tcpPacket = new Network::TcpPacket();
     tcpPacket->setCode(Network::TcpProxy::InformationsGameGeneralResponse);
     *tcpPacket << name;
     Network::Proxy<Network::TcpPacket>::ToSend toSend(tcpPacket, Network::HostAddress::AnyAddress, 0);
 
-    _attributesMutex[eProxy]->lock();
+    Threading::MutexLocker lockerProxy(_attributesMutex[eProxy]);
     _proxy.sendPacket(toSend);
-    _attributesMutex[eProxy]->unlock();
+    lockerServer.relock();
 }
 
 void Player::listGame(Network::TcpPacket* packet) {
@@ -181,9 +194,8 @@ void Player::playerList(Network::TcpPacket* packet) {
     uint32 gameId;
 
     *packet >> gameId;
-    _attributesMutex[eServer]->lock();
+    Threading::MutexLocker lockerServer(_attributesMutex[eServer]);
     _server->listPlayers(gameId, this);
-    _attributesMutex[eServer]->unlock();
 }
 
 void Player::readyToStart(Network::TcpPacket* packet) {
@@ -192,32 +204,39 @@ void Player::readyToStart(Network::TcpPacket* packet) {
 
     *packet >> gameId;
     *packet >> port;
+    Threading::MutexLocker lockePort(_attributesMutex[ePort]);
     _port = port;
+    lockePort.unlock();
 
     Log("Port: " << port);
-
-    _attributesMutex[eIsReady]->lock();
+    
+    Threading::MutexLocker lockerReady(_attributesMutex[eIsReady]);
     _isReady = true;
-    _attributesMutex[eIsReady]->unlock();
-
-    _attributesMutex[eServer]->lock();
+    lockerReady.unlock();
+    
+    Threading::MutexLocker lockerServer(_attributesMutex[eServer]);
     _server->playerReady(gameId, this);
-    _attributesMutex[eServer]->unlock();
+    lockerReady.relock();
+    lockePort.relock();
 }
 
 void Player::quitGame(Network::TcpPacket* packet) {
     uint32 gameId;
 
     *packet >> gameId;
+    Threading::MutexLocker lockerReady(_attributesMutex[eIsReady]);
     _isReady = false;
+    lockerReady.unlock();
+    
+    Threading::MutexLocker lockerServer(_attributesMutex[eServer]);
     _server->quitGame(this, gameId);
+    lockerReady.relock();
 }
 
 void Player::sendGamesList(void) {
-    _attributesMutex[eServer]->lock();
+    Threading::MutexLocker lockerServer(_attributesMutex[eServer]);
     std::map<uint32, Game*> const& games = _server->getGames();
-    _attributesMutex[eServer]->unlock();
-
+    lockerServer.unlock();
     std::list<Game*> newGamesList;
     for (std::map<uint32, Game*>::const_iterator it = games.begin(), end = games.end();
          it != end; ++it) {
@@ -229,9 +248,9 @@ void Player::sendGamesList(void) {
     *tcpPacket << newGamesList;
     Network::Proxy<Network::TcpPacket>::ToSend toSend(tcpPacket, Network::HostAddress::AnyAddress, 0);
 
-    _attributesMutex[eProxy]->lock();
+    Threading::MutexLocker lockerProxy(_attributesMutex[eProxy]);
     _proxy.sendPacket(toSend);
-    _attributesMutex[eProxy]->unlock();
+    lockerServer.relock();
 }
 
 Network::APacket& operator<<(Network::APacket& packet, Player const& player) {

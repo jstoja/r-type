@@ -25,21 +25,19 @@ GraphicElement::~GraphicElement() {
 }
 
 void	GraphicElement::setPosition(Vec3 const& pos) {
-    _attributesMutex[ePosition]->lock();
+    Threading::MutexLocker locker(_attributesMutex[ePosition]);
 	if (pos != _pos) {
 		_pos = pos;
 		setChanged(true);
 	}
-    _attributesMutex[ePosition]->unlock();
 }
 
 void	GraphicElement::move(Vec3 const& move) {
-    _attributesMutex[ePosition]->lock();
+    Threading::MutexLocker locker(_attributesMutex[ePosition]);
 	if (move != Vec3(0, 0, 0)) {
 		_pos = _pos + move;
 		setChanged(true);
 	}
-    _attributesMutex[ePosition]->unlock();
 }
 
 Vec3 const& GraphicElement::getPosition() const {
@@ -48,12 +46,11 @@ Vec3 const& GraphicElement::getPosition() const {
 }
 
 void	GraphicElement::setSize(Vec2 const& size) {
-    _attributesMutex[eSize]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eSize]);
 	if (size != _size) {
 		_size = size;
 		setChanged(true);
 	}
-    _attributesMutex[eSize]->unlock();
 }
 
 Vec2 const&	GraphicElement::getSize() const {
@@ -62,12 +59,11 @@ Vec2 const&	GraphicElement::getSize() const {
 }
 
 void	GraphicElement::setRotation(float32 rotation) {
-    _attributesMutex[eRotation]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eRotation]);
 	if (_rotation != rotation) {
 		_rotation = rotation;
 		setChanged(true);
 	}
-    _attributesMutex[eRotation]->unlock();
 }
 
 float32	GraphicElement::getRotation() const {
@@ -81,15 +77,13 @@ bool	GraphicElement::hasChanged() const {
 }
 
 void	GraphicElement::setChanged(bool changed) {
-    _attributesMutex[eHasChanged]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eHasChanged]);
 	_hasChanged = changed;
-    _attributesMutex[eHasChanged]->unlock();
 }
 
 void	GraphicElement::setSprite(ISprite *sprite) {
-    _attributesMutex[eSprite]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eSprite]);
 	_sprite = dynamic_cast<Sprite *>(sprite);
-    _attributesMutex[eSprite]->unlock();
 }
 
 Sprite	*GraphicElement::getSprite() const {
@@ -98,20 +92,18 @@ Sprite	*GraphicElement::getSprite() const {
 }
 
 void	GraphicElement::setSpriteFrameIndex(char idx) {
-    _attributesMutex[eSpriteIndex]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eSpriteIndex]);
 	_spriteIndex = idx;
-    _attributesMutex[eSpriteIndex]->unlock();
 }
 
-char	GraphicElement::getSpriteFrameIndex() const {
+uint8	GraphicElement::getSpriteFrameIndex() const {
     Threading::MutexLocker locker(_attributesMutex[eSpriteIndex]);
 	return (_spriteIndex);
 }
 
 void	GraphicElement::setType(Type c) {
-    _attributesMutex[eType]->lock();
+    Threading::MutexLocker locker(_attributesMutex[eType]);
 	_type = c;
-    _attributesMutex[eType]->unlock();
 }
 
 IGraphicElement::Type	GraphicElement::getType() const {
@@ -120,6 +112,8 @@ IGraphicElement::Type	GraphicElement::getType() const {
 }
 
 Rect2            GraphicElement::getRect(void) const {
+    Threading::MutexLocker locker(_attributesMutex[ePosition]);
+    Threading::MutexLocker locker1(_attributesMutex[eSize]);
     return Rect2(Vec2(_pos) - _size / 2, _size);
 }
 
@@ -127,6 +121,6 @@ Network::APacket&		operator<<(Network::APacket& packet, GraphicElement& element)
 	element.setChanged(false);
 	packet << element.getId() << element.getPosition() << element.getRotation()
 		   << element.getSize() << element.getSprite()->getId() << element.getSpriteFrameIndex()
-		   << (char)element.getType();
+		   << (uint8)element.getType();
 	return (packet);
 }
