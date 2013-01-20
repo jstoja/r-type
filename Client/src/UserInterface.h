@@ -44,6 +44,7 @@ public:
 	void	setGameList(std::list<Game*> const& list);
 	void	setCurrentGame(Game* game);
     void	setVisible(bool visible);
+    void	setResourceProgress(float32 progress);
     
     // IMenuDelegate implementation
     virtual void welcomeCompleted(void);
@@ -68,10 +69,10 @@ private:
     std::vector<Graphic::Scenery*>      _sceneries;
 	std::map<std::string, Menu::Menu*>  _menus;
     Menu::Menu*                         _currentMenu;
-    Menu::Menu*                         _nextMenu;
     Widget::Label*                      _messageLabel;
     Threading::Mutex*                   _mutex;
 	bool								_visible;
+	bool								_showLabel;
 };
 
 #endif /* defined(__R_Type__UserInterface__) */

@@ -17,8 +17,8 @@
 #include "GameObject.h"
 
 GameObject::GameObject(std::string const& name) : _pluginName(name), _plugin(NULL) {
-	_loadPlugin();
     _pluginMutex = new Threading::Mutex();
+	_loadPlugin();
 }
 
 

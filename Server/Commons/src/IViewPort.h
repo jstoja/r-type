@@ -1,5 +1,5 @@
 //
-// IViewPort.h for R-Type in /home/olivie_a/R-Type
+// IViewport.h for R-Type in /home/olivie_a/R-Type
 //
 // Made by Samuel Olivier
 // Login   <olivie_a@epitech.net>
@@ -13,9 +13,9 @@
 # include <Types.h>
 # include <Rect2.h>
 
-class IViewPort {
+class IViewport {
 public:
-	virtual ~IViewPort() {}
+	virtual ~IViewport() {}
 
 	virtual void	setPosition(float32 x) = 0;
 	virtual float32	getPosition() const = 0;

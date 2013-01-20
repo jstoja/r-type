@@ -107,7 +107,6 @@ void  Network::UdpSocket::canWrite() {
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = _writeAddress.toIPv4Address();
     addr.sin_port = htons(_writePort);
-      Log("SEND TO " << _writePort << " " << _writeAddress.getString());
     int ret = ::sendto(_fd, &(((char const*)(*_writeBuffer))[_writePosition]), size, 0, (struct sockaddr*)&addr, sizeof(addr));
     if (ret == -1)
       size = 0;

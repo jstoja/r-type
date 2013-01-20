@@ -59,7 +59,7 @@ private:
     std::vector<Player*>    _players;
     std::map<uint32, Game*> _games;
 
-	static const uint32		_sendFramerate = 40;
+	static const uint32		_sendFramerate = 30;
 };
 
 #endif

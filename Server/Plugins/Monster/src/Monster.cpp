@@ -75,14 +75,12 @@ bool	Monster::init(IGame* game, ByteArray const& params, float32 xStart) {
 void	Monster::update() {
     Vec3 newPosition = _graphicElement->getPosition();
     
-    newPosition.x += _speed*_game->getEllapsedTime()/1000;
+    newPosition.x += _speed * (float)_game->getEllapsedTime()/1000;
     
     _graphicElement->setPosition(newPosition);
     _physicElement->setPosition(newPosition);
     
-    if (_game->getViewPort()->isInViewport(_graphicElement->getRect())) {
-        _xStart = -1;
-    }
+	_xStart = (_game->getViewport()->isInViewport(_graphicElement->getRect())) ? -1 : (_game->getViewport()->getPosition() + _game->getViewport()->getWidth() / 2);
 }
 
 float32	Monster::getXStart() const {

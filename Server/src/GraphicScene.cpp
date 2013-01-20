@@ -32,7 +32,7 @@ void	GraphicScene::sendStaticElements(Network::TcpPacket& packet) {
 	packet << toSend;
 }
 
-void	GraphicScene::sendElements(Network::UdpPacket& packet, ViewPort* viewport) {
+void	GraphicScene::sendElements(Network::UdpPacket& packet, Viewport* viewport) {
 	std::list<GraphicElement*>	toSend;
 
     Threading::MutexLocker locker(_graphicElementsMutex);

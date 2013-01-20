@@ -130,7 +130,7 @@ void Network::TcpSocket::read(ByteArray& biteArray, bool all, uint32 start) {
     _bufferToReadMutex.unlock();
     _bufferMutex.unlock();
     if (_delegate)
-        _delegate->dataReceived(this, _buffer, biteArray.getSize());
+        _delegate->dataReceived(this, biteArray, biteArray.getSize());
     return;
   }
   _toRead = 0;
@@ -154,7 +154,6 @@ void Network::TcpSocket::canRead() {
   if (_listening) {
     struct sockaddr_in addr;
     socklen_t len = sizeof(addr);
-
     memset(&addr, 0, sizeof(addr));
     int ret = ::accept(_fd, (struct sockaddr*)&addr, &len);
     if (ret != -1 && _delegate) {

@@ -30,7 +30,7 @@
 # include "Sound.h"
 # include "Scenery.h"
 # include "Map.h"
-# include "ViewPort.h"
+# include "Viewport.h"
 
 class Player;
 class GameObject;
@@ -80,7 +80,7 @@ public:
 
 	virtual IScenery*			addScenery();
 
-	virtual IViewPort*			getViewPort() const;
+	virtual IViewport*			getViewport() const;
 
 	void						_loadMap(std::string const& fileName);
     void                        sendResources(Network::TcpPacket &packet);
@@ -111,7 +111,7 @@ private:
         eState,
         eClock,
         eGameClock,
-        eViewPort,
+        eViewport,
         eProxy,
         eUdpSocket,
         eApplication,
@@ -135,7 +135,7 @@ private:
     State                                       _state;
 	Clock							            _clock;
 	Clock							            _gameClock;
-	ViewPort*						            _viewPort;
+	Viewport*						            _viewport;
     Network::Proxy<Network::UdpPacket>*         _proxy;
     Network::UdpSocket*                         _udpSocket;
 

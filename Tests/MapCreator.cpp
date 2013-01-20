@@ -123,20 +123,28 @@ ByteArray	createSceneryParams(std::string const& sprite, float32 speed, float32 
 
 int	main(int ac, char **av) {
 	Application::getInstance().init(ac, av);
-	std::string filename = "level.map";
+	std::string filename = "../../Server/Resources/Levels/Level_1/Level_1.map";
 	std::string	name = "The Map";
 
 	if (ac > 1)
 		filename = av[0];
 	std::list<Frame> frames;
-	frames.push_back(Frame(Vec2(0, 0), Vec2(500, 500)));
+	frames.push_back(Frame(Vec2(0, 0), Vec2(1, 1)));
 
 	Test	map;
 	map.setName(name);
 	map.setSpeed(0.2);
-	map.addSprite("scenery1", "Images/Scenery1.png", frames);
+	map.addSprite("scenery1", "Images/background.png", frames);
+	map.addSprite("scenery2", "Images/stars-deep.png", frames);
+	map.addSprite("scenery3", "Images/stars-blue.png", frames);
+	map.addSprite("scenery4", "Images/stars-red.png", frames);
+	map.addSprite("scenery5", "Images/planets.png", frames);
 	map.addSprite("block", "Images/block.png", frames);
-	map.addObject("Scenery", 0, createSceneryParams("scenery1", 0.1, 16, 1000, 0.9, 1));
+	map.addObject("Scenery", 0, createSceneryParams("scenery1", 0.1, 16, 1000, 0.999, 1));
+	map.addObject("Scenery", 0, createSceneryParams("scenery2", 0.1, 16, 1000, 0.998, 0.2));
+	map.addObject("Scenery", 0, createSceneryParams("scenery3", 0.1, 16, 1000, 0.997, 1));
+	map.addObject("Scenery", 0, createSceneryParams("scenery4", 0.1, 16, 1000, 0.996, 1));
+	map.addObject("Scenery", 0, createSceneryParams("scenery5", 0.1, 16*3, 1000, 0.995, 0.8));
 	map.addObject("Block", 0, createBlockParams(Vec3(8, 4.5, 0), Vec2(4, 3), 0, "block", 0));
 	map.save(Application::getInstance().getRelativePath(filename));
 	return (0);

@@ -18,7 +18,7 @@ class ISprite;
 class IPhysicElement;
 class ISound;
 class IScenery;
-class IViewPort;
+class IViewport;
 
 class IGame {
 public:
@@ -37,7 +37,7 @@ public:
 	virtual ISound*				loadSound(std::string const& name) = 0;
 
 	virtual IScenery*			addScenery() = 0;
-	virtual IViewPort*			getViewPort() const = 0;
+	virtual IViewport*			getViewport() const = 0;
     
     virtual uint64              getEllapsedTime() const = 0;
 };
