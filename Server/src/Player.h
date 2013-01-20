@@ -44,9 +44,10 @@ public:
 
     void  sendGamesList(void);
 
-    bool                isReady(void) const;
-    std::string const&  getName(void) const;
-    uint16              getPort(void) const;
+    bool                    isReady(void) const;
+    std::string const&      getName(void) const;
+    uint16                  getPort(void) const;
+    Network::HostAddress    getAddress(void) const;
 
     typedef void (Player::* commandPointer)(Network::TcpPacket*);
 
@@ -65,7 +66,7 @@ private:
 
     bool                                  _isReady;
     std::string                           _name;
-    Network::ASocket*                     _socket;
+    Network::TcpSocket*                   _socket;
     Network::Proxy<Network::TcpPacket>    _proxy;
     IServerDelegate*                      _server;
     std::map<int, commandPointer>         _commands;

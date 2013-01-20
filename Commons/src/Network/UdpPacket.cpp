@@ -11,8 +11,7 @@
 #include "UUIDGenerator.h"
 #include "UdpPacket.h"
 
-Network::UdpPacket::UdpPacket() {
-    setId((uint32)-1);
+Network::UdpPacket::UdpPacket() : APacket() {
 }
 
 Network::UdpPacket::~UdpPacket() {
@@ -36,10 +35,9 @@ bool Network::UdpPacket::isComplete() const {
 }
 
 void Network::UdpPacket::setId(uint32 code) {
-  if (_data.getSize() < 16)
-    _data.resize(16);
+  if (_data.getSize() < 8)
+    _data.resize(8);
   *((int*)(&((char*)_data)[5])) = code;
-  *((int*)(&((char*)_data)[9])) = _size;
 }
 
 void Network::UdpPacket::generateId(void) {
@@ -53,10 +51,9 @@ uint32 Network::UdpPacket::getId() {
 }
 
 void Network::UdpPacket::setCode(uint32 code) {
-  if (_data.getSize() < 8)
-    _data.resize(8);
+  if (_data.getSize() < 4)
+    _data.resize(4);
   *((int*)(&((char*)_data)[0])) = code;
-  *((int*)(&((char*)_data)[4])) = _size;
 }
 
 uint32 Network::UdpPacket::getCode() {

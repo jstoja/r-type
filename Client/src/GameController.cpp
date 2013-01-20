@@ -21,6 +21,7 @@ _udpSocket(NULL), _udpProxy(NULL) {
     
     _udpSocket = new Network::UdpSocket();
     _udpSocket->bind();
+    _udpPort = _udpSocket->getLocalPort();
     _udpProxy = new Network::UdpProxy(_udpSocket, this);
     
 }
@@ -43,7 +44,10 @@ void GameController::processEvent(Event::Event const& event) {
 #pragma mark UDP proxy delegate methods
 
 void GameController::packetReceived(Network::UdpPacket* packet) {
+    uint32 code, id, size;
     
+    *packet >> code >> id >> size;
+    Log("UDP Packet received 0x" << std::setfill('0') << std::setw(8) << std::hex << code);
 }
 
 void GameController::packetSent(Network::UdpPacket const* packet) {
@@ -243,7 +247,6 @@ void GameController::clearGame(void) {
 }
 
 void GameController::update(void) {
-    
 }
 
 #pragma mark Getters
@@ -252,8 +255,8 @@ bool GameController::gameLaunched(void) const {
     return _gameLaunched;
 }
 
-uint8 GameController::getUdpSocketPort(void) const {
-    return _udpSocket->getLocalPort();
+uint16 GameController::getUdpSocketPort(void) const {
+    return _udpPort;
 }
 
 Game* GameController::getGame(void) const {
