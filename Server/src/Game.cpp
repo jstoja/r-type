@@ -304,6 +304,15 @@ IScenery*		Game::addScenery() {
 	return (res);
 }
 
+void        Game::createObject(std::string const &objectName, ByteArray const& params, float32 xStart) {
+    GameObject	*obj = new GameObject(it->name);
+    if (obj->init(this, it->params, it->xStart) == false)
+        throw new Exception("Cannot init plugin: " + it->name);
+
+    Threading::MutexLocker locker(_attributesMutex);
+    _objects.push_back(obj);
+}
+
 void		Game::_loadMap(std::string const& fileName) {
     // Using MutexLockers to avoid duplication of unlocks in each throwing cases
     Threading::MutexLocker locker(_attributesMutex);

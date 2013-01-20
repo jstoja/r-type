@@ -84,6 +84,9 @@ public:
 
 	virtual IViewport*			getViewport() const;
 
+    virtual void createObject(std::string const &objectName, ByteArray const& params, float32 xStart);
+
+    
 	void						_loadMap(std::string const& fileName);
     void                        sendResources(Network::TcpPacket &packet);
 
