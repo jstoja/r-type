@@ -9,6 +9,7 @@
 #include "GameController.h"
 
 #include "Event/Manager.h"
+#include "PhysicElement.h"
 #include "ObjectManager.h"
 
 GameController::GameController(Game* game, Graphic::Scene* scene) :
@@ -288,7 +289,10 @@ void GameController::receiveGraphicElements(Network::UdpPacket* packet) {
 }
 
 void GameController::receivePhysicElements(Network::UdpPacket* packet) {
+  float32 clock;
+  std::list<PhysicElement> physicElements;
 
+  *packet >> clock;
 }
 
 void GameController::playSound(Network::UdpPacket* packet) {
