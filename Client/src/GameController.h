@@ -22,6 +22,7 @@
 # include "Graphic/Element.h"
 # include "Graphic/Scenery.h"
 # include "Sound/Sound.h"
+# include "Interpolated.hpp"
 
 class GameController : public Event::IListenerDelegate, public Network::IProxyDelegate<Network::UdpPacket> {
 
@@ -72,6 +73,8 @@ private:
 	std::list<Graphic::Element*>		_elements;
 	std::list<Graphic::Scenery*>		_sceneries;
 	std::list<Sound::Sound*>			_sounds;
+    
+    Interpolated<Vec2>                  _viewportPosition;
 };
 
 #endif /* defined(__R_Type__GameController__) */

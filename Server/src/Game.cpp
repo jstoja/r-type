@@ -56,7 +56,7 @@ void Game::packetReceived(Network::UdpPacket* packet) {
 }
 
 void Game::packetSent(Network::UdpPacket const* packet) {
-    Log("UDP Packet sent !!");
+    //Log("UDP Packet sent !!");
     delete packet;
 }
 
@@ -145,6 +145,7 @@ void	Game::update() {
 			_updatePool->addTask(*it, &GameObject::update, NULL);
 	_udpHandler();
     
+    _clock.reset();
     _attributesMutex[eViewport]->unlock();
     _attributesMutex[eClock]->unlock();
     _attributesMutex[eObjects]->unlock();
@@ -432,7 +433,7 @@ void    Game::_udpHandler(void) {
         Player* player = *it;
         Network::UdpPacket* packet = new Network::UdpPacket();
         packet->setCode(Network::UdpProxy::TIME);
-        *packet << (float32)_viewport->getPosition();
+        *packet << (float32)_viewport->getPosition() << (float32)_gameClock.getEllapsedTime();
         Network::UdpProxy::ToSend toSend(packet, player->getAddress(), player->getPort());
         _proxy->sendPacket(toSend);
     }

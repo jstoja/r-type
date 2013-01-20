@@ -47,10 +47,10 @@ void GameController::packetReceived(Network::UdpPacket* packet) {
     uint32 code;
     
     *packet >> code;
-    Log("UDP Packet received 0x" << std::setfill('0') << std::setw(8) << std::hex << code);
-    float32 time = 0;
-    *packet >> time;
-    _scene->setViewportPosition(Vec2(time, 0));
+    //Log("UDP Packet received 0x" << std::setfill('0') << std::setw(8) << std::hex << code);
+    float32 time = 0, clock = 0;
+    *packet >> time >> clock;
+    _viewportPosition.setValue(Vec2(time, 0), clock);
 }
 
 void GameController::packetSent(Network::UdpPacket const* packet) {
@@ -250,6 +250,9 @@ void GameController::clearGame(void) {
 }
 
 void GameController::update(void) {
+    Vec2 time = _viewportPosition.getValue();
+    //Log(time);
+    _scene->setViewportPosition(time);
 }
 
 #pragma mark Getters
