@@ -38,7 +38,21 @@ public:
 	virtual void	setType(Type c);
 	virtual Type	getType() const;
 
+	static bool collision(PhysicElement& elem1, PhysicElement& elem2);
+
 private:
+	struct Box {
+	  Box(float32 posX, float32 posY, float32 w, float32 h, float32 angle);
+	  void rotate(Box& other);
+	  void update();
+	  float32 posX;
+	  float32 posY;
+	  float32 w;
+	  float32 h;
+	  float32 angle;
+	  Box* box;
+	};
+
     enum    _mutexVariable {
         ePosition = 0,
         eSize,

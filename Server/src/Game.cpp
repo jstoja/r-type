@@ -22,7 +22,7 @@ Game::Game(Network::TcpPacket* packet) :
 _attributesMutex(), _players(), _nbSlots(0), _name(), _currentLevel(),
 _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waiting) {
     _attributesMutex = new Threading::Mutex();
-	_loadMap(App.getResourcesPath() + std::string("Levels/Level_1/Level_1.map"));
+    _loadMap(App.getResourcesPath() + std::string("Levels/Level_1/Level_1.map"));
 
     if (packet) {
         *packet >> _name;
@@ -274,20 +274,20 @@ void		Game::_loadMap(std::string const& fileName) {
 		_gameSprites.push_back(it->second);
 
     for (std::list<Map::Object>::const_iterator it = objects.begin(); it != objects.end(); ++it) {
-		try {
-			GameObject	*obj = new GameObject(it->name);
+    		try {
+    			GameObject	*obj = new GameObject(it->name);
 
             locker.unlock();
-			if (obj->init(this, it->params, it->xStart) == false)
-				throw new Exception("Cannot init plugin: " + it->name);
+    			if (obj->init(this, it->params, it->xStart) == false)
+    				throw new Exception("Cannot init plugin: " + it->name);
             locker.relock();
-			_objects.push_back(obj);
-		} catch (Exception *e) {
-			throw e;
-		} catch (...) {
-			throw new Exception("Cannot load plugin: " + it->name);
-		}
-	}
+    			_objects.push_back(obj);
+    		} catch (Exception *e) {
+    			throw e;
+    		} catch (...) {
+    			throw new Exception("Cannot load plugin: " + it->name);
+    		}
+    	}
 }
 
 void	Game::sendResources(Network::TcpPacket &packet) {

@@ -48,15 +48,15 @@ float32	GameObject::getXStart() const {
 }
 
 void	GameObject::_loadPlugin() {
-	Library	*lib = LibraryFactory::getInstance().load(Application::getInstance().getRelativePath(Server::getPluginDirectory()), _pluginName);
+  Library	*lib = LibraryFactory::getInstance().load(Application::getInstance().getRelativePath(Server::getPluginDirectory()), _pluginName);
 
-    Threading::MutexLocker locker(_pluginMutex);
-	if (lib == NULL)
-		throw new Exception("Plugin " + _pluginName + " can't  be loaded");
-	IPlugin::CreatorPrototype	creator = (IPlugin::CreatorPrototype)lib->resolve("newPlugin");
-	if (creator == NULL)
-		throw new Exception("The plugin " + _pluginName + " is not valid");
-	_plugin = creator(_pluginName);
-	if (_plugin == NULL)
-		throw new Exception("The plugin " + _pluginName + " is not valid");
+  Threading::MutexLocker locker(_pluginMutex);
+    	if (lib == NULL)
+    		throw new Exception("Plugin " + _pluginName + " can't  be loaded");
+    	IPlugin::CreatorPrototype	creator = (IPlugin::CreatorPrototype)lib->resolve("newPlugin");
+    	if (creator == NULL)
+    		throw new Exception("The plugin " + _pluginName + " is not valid");
+    	_plugin = creator(_pluginName);
+    	if (_plugin == NULL)
+    		throw new Exception("The plugin " + _pluginName + " is not valid");
 }

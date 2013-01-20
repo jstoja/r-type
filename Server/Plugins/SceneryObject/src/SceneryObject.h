@@ -17,10 +17,10 @@
 class IGraphicElement;
 class IPhysicElement;
 
-class Scenery: public IPlugin {
+class SceneryObject: public IPlugin {
 public:
-    Scenery(std::string const& pluginName);
-    virtual ~Scenery();
+    SceneryObject(std::string const& pluginName);
+    virtual ~SceneryObject();
     
     virtual bool                init(IGame* game, ByteArray const& params, float32 xStart);
 	virtual void                update();

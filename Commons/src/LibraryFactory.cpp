@@ -17,11 +17,12 @@ template <> LibraryFactory* Singleton<LibraryFactory>::_instance = new LibraryFa
 
 
 LibraryFactory::LibraryFactory() {
-    _libraries = new std::map<std::string, Library*>;
+  _libraries = new std::map<std::string, Library*>();
 }
 
 LibraryFactory::~LibraryFactory() {
 	clear();
+	delete _libraries;
 }
 
 Library* LibraryFactory::load(std::string const& dir, std::string const& name) {
