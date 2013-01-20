@@ -408,7 +408,8 @@ void    Game::_updatePlayers(void) {
         (*it)->update(_clock.getEllapsedTime());
         
         // And their graphic elements
-        Vec3 pos = Vec3(_viewport->getPosition(), 0, 0);
+        Vec3 pos = Vec3(_viewport->getPosition(), 0,
+                        _playersGraphicElements[*it]->getPosition().z);
         pos = pos + Vec3((*it)->getPosition(), 0);
         _playersGraphicElements[*it]->setPosition(pos);
     }
