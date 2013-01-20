@@ -4,6 +4,7 @@ template <>
 void Network::Proxy<Network::UdpPacket>::readFinished(ASocket*, ByteArray&, const HostAddress& hostAddress, uint16 port) {
     _packet->update();
     if (_packet->isComplete()) {
+		_packet->setFrom(hostAddress, port);
         if (_delegate) {
             _delegate->packetReceived(_packet);
 
@@ -17,7 +18,7 @@ void Network::Proxy<Network::UdpPacket>::readFinished(ASocket*, ByteArray&, cons
 //               _criticalPackets.erase(it);
 //           }
        }
-	_packet = new Network::UdpPacket(hostAddress, port);
+	_packet = new Network::UdpPacket();
        _packet->read(_socket);
    }
    else

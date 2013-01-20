@@ -20,7 +20,8 @@
 class COMMON_EXPORT_IMPORT PhysicElement : public IPhysicElement, public Object {
 public:
 	PhysicElement();
-	~PhysicElement();
+    PhysicElement(PhysicElement const& other);
+	virtual ~PhysicElement();
 
 	virtual void	setPosition(Vec2 const& pos);
 	virtual void	move(Vec2 const& pos);
@@ -72,6 +73,6 @@ private:
 	char	_type;
 };
 
-COMMON_EXPORT_IMPORT Network::APacket&		operator<<(Network::APacket & packet, PhysicElement & element);
+COMMON_EXPORT_IMPORT Network::APacket& operator<<(Network::APacket & packet, PhysicElement & element);
 
 #endif

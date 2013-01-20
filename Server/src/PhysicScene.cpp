@@ -42,3 +42,9 @@ void	PhysicScene::sendElements(Network::UdpPacket& packet, Viewport* viewport) {
 			toSend.push_back(*it);
 	packet << toSend;
 }
+
+void    PhysicScene::updateFinished(void) {
+    for (std::list<PhysicElement*>::iterator it = _physicElements.begin();
+         it != _physicElements.end(); ++it)
+        (*it)->setChanged(false);
+}

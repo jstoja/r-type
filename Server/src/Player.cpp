@@ -14,7 +14,8 @@
 
 Player::Player(Network::TcpSocket* socket, IServerDelegate* server) :
 _attributesMutex() ,_isReady(false), _name(), _socket(socket),
-_proxy(socket, this), _server(server), _commands(), _speed(0, 0), _isReferee(false) {
+_proxy(socket, this), _server(server), _commands(), _isReferee(false),
+_speed(0, 0), _position(16.0/2, 9.0/2) {
 
     _attributesMutex.resize(eLastAttribute);
     for (uint32 i = 0; i < eLastAttribute; ++i) {
@@ -31,7 +32,6 @@ _proxy(socket, this), _server(server), _commands(), _speed(0, 0), _isReferee(fal
     _commands[Network::TcpProxy::PlayerReady] = &Player::readyToStart;
     _commands[Network::TcpProxy::PlayerList] = &Player::playerList;
     _commands[Network::TcpProxy::GameQuit] = &Player::quitGame;
-    
 }
 
 Player::~Player() {
@@ -259,7 +259,15 @@ Network::APacket& operator<<(Network::APacket& packet, Player const& player) {
     return packet;
 }
 
+void Player::update(uint32 elapsedTime) {
+    _position = _position + _speed * ((float32)elapsedTime/1000.0) * 4;
+}
+
 void Player::updateSpeed(const Vec2& speed) {
   _speed = speed;
   _speed.normalize();
+}
+
+Vec2 const& Player::getPosition(void) const {
+    return _position;
 }

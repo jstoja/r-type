@@ -62,6 +62,8 @@ float32 Vec2::norm(void) const {
 
 void    Vec2::normalize(void) {
     float32 n = norm();
+	if (n == 0)
+		return ;
     x /= n;
     y /= n;
 }

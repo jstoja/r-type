@@ -9,6 +9,7 @@
 
 #include "APacket.h"
 #include "Debug.h"
+#include "PhysicElement.h"
 
 Network::APacket::APacket() : _data(), _size(0), _curser(0) {
 
@@ -159,6 +160,19 @@ Network::APacket& Network::APacket::operator>>(ByteArray& data) {
 	read(tmp, size);
 	data.bufcopy(tmp, size);
 	return *this;
+}
+
+Network::APacket& Network::APacket::operator>>(PhysicElement& element) {
+    uint32 id;
+    Vec2 pos, size;
+    float32 rotation;
+    
+    *this >> id >> pos >> rotation >> size;
+    element.setId(id);
+    element.setPosition(pos);
+    element.setSize(size);
+    element.setRotation(rotation);
+    return *this;
 }
 
 void	Network::APacket::write(void const* data, uint32 size) {

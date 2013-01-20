@@ -25,8 +25,10 @@ public:
 	~GraphicScene();
 
 	void	addElement(GraphicElement *element);
+    void	removeElement(GraphicElement *element);
 	void	sendStaticElements(Network::TcpPacket& packet);
 	void	sendElements(Network::UdpPacket& packet, Viewport* viewport);
+    void    updateFinished(void);
 
 private:
     Threading::Mutex            *_graphicElementsMutex;

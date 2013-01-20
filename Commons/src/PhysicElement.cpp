@@ -19,6 +19,15 @@ PhysicElement::PhysicElement() : _rotation(0), _hasChanged(true) {
     }
 }
 
+PhysicElement::PhysicElement(PhysicElement const& other) :
+_attributesMutex(), _pos(other._pos), _size(other._size),
+_rotation(other._rotation), _hasChanged(true), _type(other._type) {
+    _attributesMutex.resize(other._attributesMutex.size());
+    for (uint32 i = 0; i < _attributesMutex.size(); ++i) {
+        _attributesMutex[i] = new Threading::Mutex();
+    }
+}
+
 PhysicElement::~PhysicElement() {
     for (uint32 i = 0; i < eLastAttribute; ++i) {
         delete _attributesMutex[i];
@@ -93,7 +102,6 @@ IPhysicElement::Type	PhysicElement::getType() const {
 }
 
 Network::APacket&		operator<<(Network::APacket& packet, PhysicElement& element) {
-	element.setChanged(false);
 	packet << element.getId() << element.getPosition() << element.getRotation() << element.getSize();
 	return (packet);
 }

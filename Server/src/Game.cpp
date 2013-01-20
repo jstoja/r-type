@@ -37,6 +37,9 @@ _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waitin
 
     _udpSocket = new Network::UdpSocket();
     _proxy = new Network::Proxy<Network::UdpPacket>(_udpSocket, this);
+
+    _playerSprite = createSprite(createTexture("player.png"));
+    _playerSprite->addFrame(Vec2(65.0/330.0, 0), Vec2(65.0*2/330.0, 34.0/170.0));
 }
 
 Game::~Game() {
@@ -139,9 +142,15 @@ void	Game::update() {
 		if (_viewport->isInViewport((*it)->getXStart()))
 			_updatePool->addTask(*it, &GameObject::update, NULL);
 
+    _updatePlayers();
+
     locker.unlock();
 	_udpHandler();
     locker.relock();
+
+    _graphicScene.updateFinished();
+    _physicScene.updateFinished();
+
     _clock.reset();
 }
 
@@ -159,6 +168,19 @@ void     Game::join(Player* player) {
     if (canJoin(player)) {
         Threading::MutexLocker locker(_attributesMutex);
         _players.push_back(player);
+        // Create player graphic and physic element
+        GraphicElement* element = new GraphicElement();
+        element->setPosition(Vec2(16.0/2, 9.0/2));
+        element->setSize(Vec2(0.8125, 0.425));
+        element->setType(IGraphicElement::Dynamic);
+        _playersGraphicElements[player] = element;
+        element->setSprite(_playerSprite);
+        element->setSpriteFrameIndex(0);
+        _graphicScene.addElement(element);
+        PhysicElement* physic = new PhysicElement();
+        physic->setPosition(Vec2(16.0/2, 9.0/2));
+        physic->setSize(Vec2(0.8125, 0.425));
+        _physicScene.addElement(physic);
     }
 }
 
@@ -207,6 +229,10 @@ bool     Game::quit(Player* player) {
     Threading::MutexLocker locker(_attributesMutex);
     _players.erase(std::remove(_players.begin(), _players.end(), player), _players.end());
 
+    _graphicScene.removeElement(_playersGraphicElements[player]);
+    delete _playersGraphicElements[player];
+    _playersGraphicElements.erase(player);
+
     return (_referee == player);
 }
 
@@ -227,9 +253,14 @@ IGraphicElement*    Game::createGraphicElement() const {
 
 ITexture*	Game::createTexture(std::string const& filename, std::string const& pluginName) {
     Threading::MutexLocker locker(_attributesMutex);
-	Texture *res = new Texture("Plugins" + Application::getInstance().getDirectorySeparator() +
-			pluginName + Application::getInstance().getDirectorySeparator() + filename);
-
+	Texture *res;
+    if (!pluginName.empty()) {
+        res = new Texture("Plugins" + Application::getInstance().getDirectorySeparator()
+                          + pluginName + Application::getInstance().getDirectorySeparator()
+                          + filename);
+    } else {
+        res = new Texture(filename);
+    }
 	_gameTextures.push_back(res);
 	return res;
 }
@@ -280,6 +311,15 @@ IScenery*		Game::addScenery() {
     Threading::MutexLocker locker(_attributesMutex);
 	_gameSceneries.push_back(res);
 	return (res);
+}
+
+void        Game::createObject(std::string const &objectName, ByteArray const& params, float32 xStart) {
+    GameObject	*obj = new GameObject(objectName);
+    if (obj->init(this, params, xStart) == false)
+        throw new Exception("Cannot init plugin: " + objectName);
+
+    Threading::MutexLocker locker(_attributesMutex);
+    _objects.push_back(obj);
 }
 
 void		Game::_loadMap(std::string const& fileName) {
@@ -364,6 +404,7 @@ void    Game::_sendGraphicElements(Player* player) {
 void    Game::_sendPhysicElements(Player* player) {
     Network::UdpPacket *packet = new Network::UdpPacket();
     packet->setCode(Network::Proxy<Network::UdpPacket>::PHYSIC_ELEMENTS);
+
     *packet << (float32)_gameClock.getEllapsedTime();
     _physicScene.sendElements(*packet, _viewport);
 
@@ -379,6 +420,20 @@ void    Game::_sendTime(Player* player) {
     _proxy->sendPacket(toSend);
 }
 
+void    Game::_updatePlayers(void) {
+    for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
+         it != end; ++it) {
+        // Update players
+        (*it)->update(_clock.getEllapsedTime());
+
+        // And their graphic elements
+        Vec3 pos = Vec3(_viewport->getPosition(), 0,
+                        _playersGraphicElements[*it]->getPosition().z);
+        pos = pos + Vec3((*it)->getPosition(), 0);
+        _playersGraphicElements[*it]->setPosition(pos);
+    }
+}
+
 void    Game::_udpHandler(void) {
     Threading::MutexLocker locker(_attributesMutex);
 
@@ -387,9 +442,9 @@ void    Game::_udpHandler(void) {
          it != end; ++it) {
         this->_sendTime(*it);
         this->_sendGraphicElements(*it);
+        this->_sendPhysicElements(*it);
     }
 
-//    this->_sendPhysicElements();
 //    this->_sendSound();
 }
 
@@ -412,17 +467,17 @@ uint64      Game::getEllapsedTime() const {
 
 
 void Game::updatePlayerDirection(Network::UdpPacket* packet) {
-  Threading::MutexLocker locker(_attributesMutex);
+    Threading::MutexLocker locker(_attributesMutex);
 
-  Vec2 speed;
-  *packet >> speed;
-  for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
-       it != end; ++it) {
-    if ((*it)->getPort() == packet->getPort() &&
-	(*it)->getAddress() == packet->getAddress()) {
-      (*it)->updateSpeed(speed);
+    Vec2 speed;
+    *packet >> speed;
+    for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
+         it != end; ++it) {
+        if ((*it)->getPort() == packet->getPort() &&
+            (*it)->getAddress() == packet->getAddress()) {
+            (*it)->updateSpeed(speed);
+        }
     }
-  }
 }
 
 void Game::playerShoot(Network::UdpPacket*) {

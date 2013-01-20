@@ -45,7 +45,7 @@ public:
 	virtual void	setType(Type c);
 	virtual Type	getType() const;
 
-    virtual Rect2            getRect(void) const;
+    virtual Rect2   getRect(void) const;
     
 private:
     enum    _mutexVariable {

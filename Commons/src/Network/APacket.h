@@ -23,6 +23,8 @@
 # include "HostAddress.h"
 # include "Debug.h"
 
+class PhysicElement;
+
 namespace Network {
 
   class COMMON_EXPORT_IMPORT APacket {
@@ -114,6 +116,7 @@ namespace Network {
     APacket&		operator>>(Rect2&);
     APacket&		operator>>(Resource&);
     APacket&		operator>>(ByteArray&);
+    APacket&		operator>>(PhysicElement&);
 
   protected:
 	void	write(void const* data, uint32 size);

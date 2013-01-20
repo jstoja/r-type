@@ -28,6 +28,7 @@ public:
 	void	addElement(PhysicElement *element);
 	void	sendStaticElements(Network::TcpPacket& packet);
 	void	sendElements(Network::UdpPacket& packet, Viewport* viewport);
+    void    updateFinished(void);
 
 private:
     Threading::Mutex            *_physicElementsMutex;

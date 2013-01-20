@@ -11,9 +11,9 @@
 #include "UUIDGenerator.h"
 #include "UdpPacket.h"
 
-Network::UdpPacket::UdpPacket(const HostAddress& hostAddress, uint16 port) : 
-  APacket(), _hostAddress(hostAddress) {
-  _port = port;
+Network::UdpPacket::UdpPacket() : 
+APacket(), _hostAddress(Network::HostAddress::AnyAddress) {
+  _port = 0;
 }
 
 Network::UdpPacket::~UdpPacket() {
@@ -75,4 +75,9 @@ Network::HostAddress Network::UdpPacket::getAddress() const {
 
 uint16      Network::UdpPacket::getPort() const {
   return _port;
+}
+
+void Network::UdpPacket::setFrom(const HostAddress& hostAddress, uint16 port) {
+	_hostAddress = hostAddress;
+	_port = port;
 }

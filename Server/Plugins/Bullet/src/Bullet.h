@@ -31,7 +31,7 @@ private:
     IGame*				_game;
     float32             _xStart;
 
-    Vec3                _direction;
+    Vec2                _direction;
     float32             _speed;
     
     IGraphicElement*    _graphicElement;

@@ -10,10 +10,11 @@
 
 #include "Event/Manager.h"
 #include "ObjectManager.h"
+#include "GameInput.h"
 
 GameController::GameController(Game* game, Graphic::Scene* scene) :
 _game(game), _gameLaunched(false), _scene(scene), _eventListener(NULL),
-_udpSocket(NULL), _udpProxy(NULL) {
+	_udpSocket(NULL), _udpProxy(NULL), _remoteAddress(Network::HostAddress::AnyAddress), _remotePort(0) {
 
   _commands[Network::TcpProxy::GRAPHIC_ELEMENTS] = &GameController::receiveGraphicElements;
   _commands[Network::TcpProxy::PHYSIC_ELEMENTS] = &GameController::receivePhysicElements;
@@ -220,7 +221,9 @@ Sound::Sound* GameController::createSound(Network::TcpPacket& packet) {
 
 #pragma mark Game actions
 
-void GameController::launchGame(void) {
+void GameController::launchGame(Network::HostAddress const& address, uint16 port) {
+	_remoteAddress = address;
+	_remotePort = port;
 	for (std::list<Graphic::Element*>::iterator it = _elements.begin(); it != _elements.end(); ++it) {
 		if (*it) {
 			(*it)->setVisible(true);
@@ -267,6 +270,11 @@ void GameController::update(void) {
     _scene->setViewportPosition(time);
 
     updatePhysicElements();
+    Network::UdpPacket* packet = new Network::UdpPacket();
+	packet->setCode(Network::UdpProxy::PLAYER_DIRECTION);
+	*packet << GameInput::getInstance().getInputDirection();
+	Network::UdpProxy::ToSend toSend(packet, _remoteAddress, _remotePort);
+    _udpProxy->sendPacket(toSend);
 }
 
 void GameController::updatePhysicElements(void) {
@@ -311,7 +319,8 @@ void GameController::receiveGraphicElements(Network::UdpPacket* packet) {
     *packet >> clock >> nbElements;
     for (uint32 i = 0; i < nbElements; ++i) {
         uint32 id, rotation, spriteId;
-        Vec3 position, size;
+        Vec3 position;
+        Vec2 size;
         uint8 currentFrame, type;
         Graphic::Element* element;
         
@@ -324,7 +333,7 @@ void GameController::receiveGraphicElements(Network::UdpPacket* packet) {
             _graphicElements[id] = element;
             _scene->addElement(element);
         }
-        element->setPosition(position);
+        element->setPosition(position, clock);
         element->setRotation(rotation);
         element->setSize(size);
         element->setSprite(dynamic_cast<Graphic::Sprite*>(ObjectManager::getInstance().getObject(spriteId)));
@@ -334,20 +343,20 @@ void GameController::receiveGraphicElements(Network::UdpPacket* packet) {
 }
 
 void GameController::receivePhysicElements(Network::UdpPacket* packet) {
-  float32 clock;
-  std::list<PhysicElement> physicElements;
+    float32 clock;
+    std::list<PhysicElement> physicElements;
 
-  *packet >> clock;
-  *packet >> physicElements;
-  _physicElementsMutex.lock();
-  std::list<PhysicElement>::iterator it;
-  for (it = physicElements.begin(); it != physicElements.end(); ++it) {
-    if (_physicElements[(*it).getId()].second < clock) {
-      _physicElements[(*it).getId()].second = clock;
-      _physicElements[(*it).getId()].first = (*it);
+    *packet >> clock;
+    *packet >> physicElements;
+    _physicElementsMutex.lock();
+    std::list<PhysicElement>::iterator it;
+    for (it = physicElements.begin(); it != physicElements.end(); ++it) {
+        if (_physicElements[(*it).getId()].second < clock) {
+            _physicElements[(*it).getId()].second = clock;
+            _physicElements[(*it).getId()].first = (*it);
+        }
     }
-  }
-  _physicElementsMutex.unlock();
+    _physicElementsMutex.unlock();
 }
 
 void GameController::playSound(Network::UdpPacket* packet) {
