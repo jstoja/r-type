@@ -198,7 +198,6 @@ void Client::packetReceived(Network::TcpPacket* packet) {
 }
 
 void Client::packetSent(Network::TcpPacket const* packet) {
-    Log("Packet sent");
 }
 
 void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* proxy) {
@@ -211,7 +210,6 @@ void Client::packetInProgress(uint32 code, float32 progress) {
 	if (code == Network::TcpProxy::GameResources) {
 		_ui->setResourceProgress(progress);
 	}
-	Log(code);
 }
 
 #pragma mark Protocol commands
