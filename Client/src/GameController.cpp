@@ -254,3 +254,7 @@ bool GameController::gameLaunched(void) const {
 uint8 GameController::getUdpSocketPort(void) const {
     return _udpSocket->getLocalPort();
 }
+
+Game* GameController::getGame(void) const {
+    return _game;
+}
