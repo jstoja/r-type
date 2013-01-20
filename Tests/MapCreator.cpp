@@ -123,13 +123,13 @@ ByteArray	createSceneryParams(std::string const& sprite, float32 speed, float32 
 
 int	main(int ac, char **av) {
 	Application::getInstance().init(ac, av);
-	std::string filename = "level.map";
+	std::string filename = "../../Server/Resources/Levels/Level_1/Level_1.map";
 	std::string	name = "The Map";
 
 	if (ac > 1)
 		filename = av[0];
 	std::list<Frame> frames;
-	frames.push_back(Frame(Vec2(0, 0), Vec2(500, 500)));
+	frames.push_back(Frame(Vec2(0, 0), Vec2(1, 1)));
 
 	Test	map;
 	map.setName(name);

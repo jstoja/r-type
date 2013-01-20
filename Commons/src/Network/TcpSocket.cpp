@@ -154,7 +154,6 @@ void Network::TcpSocket::canRead() {
   if (_listening) {
     struct sockaddr_in addr;
     socklen_t len = sizeof(addr);
-
     memset(&addr, 0, sizeof(addr));
     int ret = ::accept(_fd, (struct sockaddr*)&addr, &len);
     if (ret != -1 && _delegate) {

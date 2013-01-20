@@ -16,7 +16,7 @@ Player::Player(Network::ASocket* socket, IServerDelegate* server) :
 _attributesMutex() ,_isReady(false), _name(), _socket(socket),
 _proxy(socket, this), _server(server), _commands() {
     
-    _attributesMutex.reserve(eLastAttribute);
+    _attributesMutex.resize(eLastAttribute);
     for (uint32 i = 0; i < eLastAttribute; ++i) {
         _attributesMutex[i] = new Threading::Mutex();
     }
