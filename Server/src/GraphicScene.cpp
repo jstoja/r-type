@@ -21,6 +21,11 @@ void	GraphicScene::addElement(GraphicElement *element) {
 	_graphicElements.push_back(element);
 }
 
+void	GraphicScene::removeElement(GraphicElement *element) {
+    Threading::MutexLocker locker(_graphicElementsMutex);
+    _graphicElements.erase(std::remove(_graphicElements.begin(), _graphicElements.end(), element), _graphicElements.end());
+}
+
 void	GraphicScene::sendStaticElements(Network::TcpPacket& packet) {
 	std::list<GraphicElement*>	toSend;
 
