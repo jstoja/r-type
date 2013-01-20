@@ -306,9 +306,7 @@ void	Game::sendResources(Network::TcpPacket &packet) {
 	packet << _gameSceneries << _gameSounds;
 }
 
-void    Game::_sendSound(void) {
-    Threading::MutexLocker locker(_attributesMutex);
-
+void    Game::_sendSound(Player* player) {
     for (std::list<Sound*>::const_iterator it = _gameSounds.begin(); it != _gameSounds.end(); ++it) {
         if ((*it)->hasChanged()) {
             Network::UdpPacket *udpPacket = new Network::UdpPacket();
@@ -322,57 +320,51 @@ void    Game::_sendSound(void) {
             Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
             _proxy->sendPacket(toSend);
             (*it)->setChanged(false);
-            delete udpPacket;
         }
     }
 }
 
-void    Game::_sendGraphicElements(void) {
-    Network::UdpPacket *udpPacket = new Network::UdpPacket();
-    udpPacket->setCode(Network::Proxy<Network::UdpPacket>::GRAPHIC_ELEMENTS);
+void    Game::_sendGraphicElements(Player* player) {
+    Network::UdpPacket *packet = new Network::UdpPacket();
+    packet->setCode(Network::Proxy<Network::UdpPacket>::GRAPHIC_ELEMENTS);
     
-    Threading::MutexLocker locker(_attributesMutex);
-    _graphicScene.sendElements(*udpPacket, _viewport);
+    *packet << (float32)_gameClock.getEllapsedTime();
+    _graphicScene.sendElements(*packet, _viewport);
 
-    Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
+    Network::UdpProxy::ToSend toSend(packet, player->getAddress(), player->getPort());
     _proxy->sendPacket(toSend);
-    
-    delete udpPacket;
 }
 
-void    Game::_sendPhysicElements(void) {
-    Network::UdpPacket *udpPacket = new Network::UdpPacket();
-    udpPacket->setCode(Network::Proxy<Network::UdpPacket>::PHYSIC_ELEMENTS);
-    Threading::MutexLocker locker(_attributesMutex);
-    _physicScene.sendElements(*udpPacket, _viewport);
+void    Game::_sendPhysicElements(Player* player) {
+    Network::UdpPacket *packet = new Network::UdpPacket();
+    packet->setCode(Network::Proxy<Network::UdpPacket>::PHYSIC_ELEMENTS);
+    *packet << (float32)_gameClock.getEllapsedTime();
+    _physicScene.sendElements(*packet, _viewport);
     
-    Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
+    Network::UdpProxy::ToSend toSend(packet, player->getAddress(), player->getPort());
     _proxy->sendPacket(toSend);
-    
-    delete udpPacket;
 }
 
-void    Game::_sendTime(void) {
-    Threading::MutexLocker locker(_attributesMutex);
-    
-    for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
-         it != end; ++it) {
-        Player* player = *it;
-        Network::UdpPacket* packet = new Network::UdpPacket();
-        packet->setCode(Network::UdpProxy::TIME);
-        *packet << (float32)_gameClock.getEllapsedTime() << (float32)_viewport->getPosition();
-        Log(_viewport->getPosition());
-        Network::UdpProxy::ToSend toSend(packet, player->getAddress(), player->getPort());
-        _proxy->sendPacket(toSend);
-    }
+void    Game::_sendTime(Player* player) {
+    Network::UdpPacket* packet = new Network::UdpPacket();
+    packet->setCode(Network::UdpProxy::TIME);
+    *packet << (float32)_gameClock.getEllapsedTime() << (float32)_viewport->getPosition();
+    Network::UdpProxy::ToSend toSend(packet, player->getAddress(), player->getPort());
+    _proxy->sendPacket(toSend);
 }
 
 void    Game::_udpHandler(void) {
-	this->_sendTime();
-    this->_sendGraphicElements();
-    return ;
-    this->_sendPhysicElements();
-    this->_sendSound();
+    Threading::MutexLocker locker(_attributesMutex);
+    
+    // Send all infos to all players
+    for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
+         it != end; ++it) {
+        this->_sendTime(*it);
+        this->_sendGraphicElements(*it);
+    }
+    
+//    this->_sendPhysicElements();
+//    this->_sendSound();
 }
 
 Network::APacket&       operator<<(Network::APacket& packet, Game const& game) {

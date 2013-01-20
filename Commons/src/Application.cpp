@@ -37,7 +37,6 @@ void Application::init(int32 ac, char **av) {
 }
 
 #ifndef OS_IOS
-
 void	Application::_initBinaryPath() {
 # if defined OS_WINDOWS
     *_binaryPath = _argv[0];

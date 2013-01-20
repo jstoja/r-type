@@ -89,10 +89,10 @@ public:
 
 private:
     void                        _udpHandler(void);
-    void                        _sendSound(void);
-    void                        _sendGraphicElements(void);
-    void                        _sendPhysicElements(void);
-    void                        _sendTime(void);
+    void                        _sendTime(Player* player);
+    void                        _sendGraphicElements(Player* player);
+    void                        _sendPhysicElements(Player* player);
+    void                        _sendSound(Player* player);
 
     Threading::Mutex*                           _attributesMutex;
 	std::vector<Player*>                        _players;
