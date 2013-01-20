@@ -41,11 +41,12 @@ public:
     void  joinGame(Network::TcpPacket*);
     void  readyToStart(Network::TcpPacket* packet);
     void  quitGame(Network::TcpPacket* packet);
-    
+
     void  sendGamesList(void);
 
     bool                isReady(void) const;
     std::string const&  getName(void) const;
+    uint16              getPort(void) const;
 
     typedef void (Player::* commandPointer)(Network::TcpPacket*);
 
@@ -68,6 +69,7 @@ private:
     Network::Proxy<Network::TcpPacket>    _proxy;
     IServerDelegate*                      _server;
     std::map<int, commandPointer>         _commands;
+    uint16                                _port;
 };
 
 Network::APacket&       operator<<(Network::APacket& packet, Player const& player);
