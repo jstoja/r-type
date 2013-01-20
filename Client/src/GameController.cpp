@@ -278,22 +278,22 @@ void GameController::update(void) {
 }
 
 void GameController::updatePhysicElements(void) {
-  _physicElementsMutex.lock();
-  std::map<uint32, std::pair<PhysicElement, float32> >::iterator it;
-  // DELETE OUT OF VIEWPORT ELEMENTS
-  for (it = _physicElements.begin(); it != _physicElements.end(); ++it) {
-    
-  }
+    _physicElementsMutex.lock();
+    std::map<uint32, std::pair<PhysicElement, float32> >::iterator it;
+    // DELETE OUT OF VIEWPORT ELEMENTS
+    for (it = _physicElements.begin(); it != _physicElements.end(); ++it) {
 
-  for (it = _physicElements.begin(); it != _physicElements.end(); ++it) {
-    std::map<uint32, std::pair<PhysicElement, float32> >::iterator it2;
-    for (it2 = _physicElements.begin(); it2 != _physicElements.end(); ++it2) {
-      if (it != it2 && PhysicElement::collision((*it).second.first, (*it2).second.first)) {
-	std::cout << "Collision !!! " << (*it).second.first.getId() << " " << (*it2).second.first.getId() << std::endl;
-      }
     }
-  }
-  _physicElementsMutex.unlock();  
+
+    for (it = _physicElements.begin(); it != _physicElements.end(); ++it) {
+        std::map<uint32, std::pair<PhysicElement, float32> >::iterator it2;
+        for (it2 = _physicElements.begin(); it2 != _physicElements.end(); ++it2) {
+            if (it != it2 && PhysicElement::collision((*it).second.first, (*it2).second.first)) {
+                //std::cout << "Collision !!! " << (*it).second.first.getId() << " " << (*it2).second.first.getId() << std::endl;
+            }
+        }
+    }
+    _physicElementsMutex.unlock();  
 }
 
 #pragma mark Getters
@@ -336,7 +336,9 @@ void GameController::receiveGraphicElements(Network::UdpPacket* packet) {
         element->setPosition(position, clock);
         element->setRotation(rotation);
         element->setSize(size);
-        element->setSprite(dynamic_cast<Graphic::Sprite*>(ObjectManager::getInstance().getObject(spriteId)));
+        if (element->getSprite() == NULL) {
+            element->setSprite(dynamic_cast<Graphic::Sprite*>(ObjectManager::getInstance().getObject(spriteId)));
+        }
         element->setCurrentFrame(currentFrame);
         element->setType((Graphic::Element::Type)type);
     }
@@ -350,12 +352,12 @@ void GameController::receivePhysicElements(Network::UdpPacket* packet) {
     *packet >> physicElements;
     _physicElementsMutex.lock();
     std::list<PhysicElement>::iterator it;
-    for (it = physicElements.begin(); it != physicElements.end(); ++it) {
-        if (_physicElements[(*it).getId()].second < clock) {
-            _physicElements[(*it).getId()].second = clock;
-            _physicElements[(*it).getId()].first = (*it);
-        }
-    }
+//    for (it = physicElements.begin(); it != physicElements.end(); ++it) {
+//        if (_physicElements[(*it).getId()].second < clock) {
+//            _physicElements[(*it).getId()].second = clock;
+//            _physicElements[(*it).getId()].first = (*it);
+//        }
+//    }
     _physicElementsMutex.unlock();
 }
 

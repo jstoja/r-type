@@ -181,6 +181,7 @@ void     Game::join(Player* player) {
         physic->setPosition(Vec2(16.0/2, 9.0/2));
         physic->setSize(Vec2(0.8125, 0.425));
         _physicScene.addElement(physic);
+        _playersPhysicElements[player] = physic;
     }
 }
 
@@ -431,6 +432,7 @@ void    Game::_updatePlayers(void) {
                         _playersGraphicElements[*it]->getPosition().z);
         pos = pos + Vec3((*it)->getPosition(), 0);
         _playersGraphicElements[*it]->setPosition(pos);
+        _playersPhysicElements[*it]->setPosition(Vec2(pos));
     }
 }
 

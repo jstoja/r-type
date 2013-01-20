@@ -33,5 +33,5 @@ void	ObjectManager::removeObject(Object *obj) {
 }
 
 Object*	ObjectManager::getObject(uint32 id) {
-	return (_objects->at(id));
+	return ((*_objects)[id]);
 }

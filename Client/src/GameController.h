@@ -93,7 +93,7 @@ private:
 
     std::map<int, commandPointer>       _commands;
 
-    Threading::Mutex						_physicElementsMutex;
+    Threading::Mutex                                        _physicElementsMutex;
     std::map<uint32, std::pair<PhysicElement, float32> >	_physicElements;
     
     std::map<uint32, Graphic::Element*> _graphicElements;
