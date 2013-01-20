@@ -80,7 +80,7 @@ void Network::UdpSocket::close() {
 }
 
 void  Network::UdpSocket::canRead() {
-  struct sockaddr_in	addr;
+ struct sockaddr_in	addr;
   socklen_t		size = sizeof(addr);
   
   memset(&addr, 0, sizeof(addr));

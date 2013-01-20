@@ -417,8 +417,19 @@ uint64      Game::getEllapsedTime() const {
 
 #pragma mark Protocol udp calls
 
-void Game::updatePlayerDirection(Network::UdpPacket*) {
 
+void Game::updatePlayerDirection(Network::UdpPacket* packet) {
+  Threading::MutexLocker locker(_attributesMutex);
+
+  Vec2 speed;
+  *packet >> speed;
+  for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
+       it != end; ++it) {
+    if ((*it)->getPort() == packet->getPort() &&
+	(*it)->getAddress() == packet->getAddress()) {
+      (*it)->updateSpeed(speed);
+    }
+  }
 }
 
 void Game::playerShoot(Network::UdpPacket*) {

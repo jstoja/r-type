@@ -49,6 +49,8 @@ public:
     uint16                  getPort(void) const;
     Network::HostAddress    getAddress(void) const;
 
+    void updateSpeed(const Vec2& speed);
+
     typedef void (Player::* commandPointer)(Network::TcpPacket*);
 
 private:

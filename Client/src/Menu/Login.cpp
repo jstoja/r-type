@@ -105,6 +105,7 @@ void Menu::Login::buttonReleased(Widget::Button* instance) {
 }
 
 void Menu::Login::setVisible(bool visible) {
+	Menu::setVisible(visible);    
 	_logoWidget->setVisible(visible);
     _ipLabel->setVisible(visible);
     _ipField->setVisible(visible);
@@ -113,5 +114,4 @@ void Menu::Login::setVisible(bool visible) {
     _usernameLabel->setVisible(visible);
     _usernameField->setVisible(visible);
     _connectionButton->setVisible(visible);
-	Menu::setVisible(visible);
 }

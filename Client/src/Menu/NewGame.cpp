@@ -114,6 +114,7 @@ void Menu::NewGame::buttonReleased(Widget::Button* instance) {
 }
 
 void Menu::NewGame::setVisible(bool visible) {
+	Menu::setVisible(visible);    
     _serverNameLabel->setVisible(visible);
     _newGameLabel->setVisible(visible);
     _newGameButton->setVisible(visible);
@@ -123,7 +124,6 @@ void Menu::NewGame::setVisible(bool visible) {
 	_previousMenu->setVisible(visible);
 	for (unsigned int i = 0; i < _playersSelect.size(); ++i)
 		_playersSelect[i]->setVisible(visible);
-	Menu::setVisible(visible);
 }
 
 void Menu::NewGame::setServerName(std::string const& serverName) {

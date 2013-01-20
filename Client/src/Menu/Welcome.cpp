@@ -46,6 +46,6 @@ void Menu::Welcome::buttonReleased(Widget::Button* instance) {
 }
 
 void Menu::Welcome::setVisible(bool visible) {
+	Menu::setVisible(visible);    
 	_button.setVisible(visible);
-	Menu::setVisible(visible);
 }

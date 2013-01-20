@@ -87,7 +87,7 @@ namespace Network {
 		for (uint32 i = 0; i < size; ++i) {
 		  T* element = new T;
 		  *this >> *element;
-		  elements.push_front(element);
+		  elements.push_back(element);
 		}
 	}
 
@@ -99,7 +99,7 @@ namespace Network {
 		for (uint32 i = 0; i < size; ++i) {
 		  T element;
 		  *this >> element;
-		  elements.push_front(element);
+		  elements.push_back(element);
 		}
 		return *this;
 	}
