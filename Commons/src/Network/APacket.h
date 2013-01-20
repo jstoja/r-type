@@ -28,7 +28,7 @@ namespace Network {
   class COMMON_EXPORT_IMPORT APacket {
   public:
     APacket();
-    ~APacket();
+    virtual ~APacket();
 
     virtual ByteArray&          getData();
     virtual const ByteArray&	getData() const;

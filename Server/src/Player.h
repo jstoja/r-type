@@ -23,7 +23,7 @@
 
 class Player : public Network::IProxyDelegate<Network::TcpPacket>, public Object {
 public:
-    Player(Network::ASocket*, IServerDelegate* server);
+    Player(Network::TcpSocket*, IServerDelegate* server);
     virtual ~Player();
 
     void	packetReceived(Network::TcpPacket*);
@@ -41,11 +41,13 @@ public:
     void  joinGame(Network::TcpPacket*);
     void  readyToStart(Network::TcpPacket* packet);
     void  quitGame(Network::TcpPacket* packet);
-    
+
     void  sendGamesList(void);
 
-    bool                isReady(void) const;
-    std::string const&  getName(void) const;
+    bool                    isReady(void) const;
+    std::string const&      getName(void) const;
+    uint16                  getPort(void) const;
+    Network::HostAddress    getAddress(void) const;
 
     typedef void (Player::* commandPointer)(Network::TcpPacket*);
 
@@ -58,16 +60,18 @@ private:
         eProxy,
         eServer,
         eCommands,
+        ePort,
         eLastAttribute
     };
     std::vector<Threading::Mutex*>        _attributesMutex;
 
     bool                                  _isReady;
     std::string                           _name;
-    Network::ASocket*                     _socket;
+    Network::TcpSocket*                   _socket;
     Network::Proxy<Network::TcpPacket>    _proxy;
     IServerDelegate*                      _server;
     std::map<int, commandPointer>         _commands;
+    uint16                                _port;
 };
 
 Network::APacket&       operator<<(Network::APacket& packet, Player const& player);

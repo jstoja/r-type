@@ -33,7 +33,7 @@ _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waitin
     }
 	_viewPort = new ViewPort(0.1);
 
-    Network::UdpSocket *_udpSocket = new Network::UdpSocket();
+    _udpSocket = new Network::UdpSocket();
     _proxy = new Network::Proxy<Network::UdpPacket>(_udpSocket, this);
 }
 
@@ -55,6 +55,7 @@ void Game::packetReceived(Network::UdpPacket* packet) {
 }
 
 void Game::packetSent(Network::UdpPacket const* packet) {
+    Log("UDP Packet sent !!");
     delete packet;
 }
 
@@ -94,11 +95,14 @@ void                    Game::setNbSlots(uint32 slots) {
 
 void     Game::start(void) {
     Threading::MutexLocker lockerPlayer(_attributesMutex[ePlayers]);
+    Threading::MutexLocker lockerUdpSocket(_attributesMutex[eUdpSocket]);
+    _udpSocket->bind();
+    lockerUdpSocket.unlock();
     // Inform players that the game starts !
     for (int i=0; i < _players.size(); i++) {
         Network::TcpPacket *packet = new Network::TcpPacket();
         packet->setCode(Network::TcpProxy::GameStart);
-        *packet << getId();
+        *packet << getId() << _udpSocket->getLocalPort();
         Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
         _players[i]->sendPacket(toSend);
     }
@@ -128,7 +132,9 @@ void     Game::start(void) {
 }
 
 void	Game::update() {
+    Threading::MutexLocker lockerProxy(_attributesMutex[eProxy]);
     _proxy->checkCriticalPackets();
+    lockerProxy.unlock();
 
     Threading::MutexLocker lockerViewport(_attributesMutex[eViewPort]);
     Threading::MutexLocker lockerObjects(_attributesMutex[eObjects]);
@@ -141,6 +147,17 @@ void	Game::update() {
 		if (_viewPort->isInViewport((*it)->getXStart()))
 			_updatePool->addTask(*it, &GameObject::update, NULL);
 	//_udpHandler();
+    for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
+         it != end; ++it) {
+        Player* player = *it;
+        Network::UdpPacket* packet = new Network::UdpPacket();
+        packet->setCode(Network::UdpProxy::TIME);
+        *packet << (float32)Clock::getCurrentTime();
+        Network::UdpProxy::ToSend toSend(packet, player->getAddress(), player->getPort());
+        lockerProxy.relock();
+        _proxy->sendPacket(toSend);
+        lockerProxy.unlock();
+    }
 }
 
 bool    Game::hasPlayer(Player* player) const {

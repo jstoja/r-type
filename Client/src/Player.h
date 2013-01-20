@@ -3,7 +3,7 @@
 //
 // Made by Samuel Olivier
 // Login   <olivie_a@epitech.net>
-// 
+//
 // Started on  ven. janv. 18 10:53:20 2013 Samuel Olivier
 //
 
@@ -18,7 +18,7 @@ public:
 	Player(uint32 id);
 
 	void				setName(std::string const& name);
-	std::string const&	getName() const;
+    std::string const&  getName() const;
 
 	void	setNbPlayer(uint32 nbPlayer);
 	uint32	getNbPlayer() const;

@@ -113,6 +113,7 @@ private:
         eGameClock,
         eViewPort,
         eProxy,
+        eUdpSocket,
         eApplication,
         eLastAttribute
     };
@@ -136,6 +137,7 @@ private:
 	Clock							            _gameClock;
 	ViewPort*						            _viewPort;
     Network::Proxy<Network::UdpPacket>*         _proxy;
+    Network::UdpSocket*                         _udpSocket;
 
 #ifdef OS_MAC
 	static const int					_updateThreadNumber = 7;

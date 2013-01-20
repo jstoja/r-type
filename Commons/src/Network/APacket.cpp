@@ -10,7 +10,7 @@
 #include "APacket.h"
 #include "Debug.h"
 
-Network::APacket::APacket() : _data(0), _size(0), _curser(0) {
+Network::APacket::APacket() : _data(), _size(0), _curser(0) {
 
 }
 

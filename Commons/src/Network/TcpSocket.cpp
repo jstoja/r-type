@@ -168,7 +168,7 @@ void Network::TcpSocket::canRead() {
     {
       Threading::MutexLocker locker(&_bufferMutex);
       unsigned int size = _buffer.getSize();
-      _buffer.resize(size + (_toRead) ? _toRead : readSize);
+      _buffer.resize(size + ((_toRead) ? _toRead : readSize));
       int ret = ::recv(_fd, &(((char*)_buffer)[size]), (_toRead) ? _toRead : readSize, 0);
       if (ret == 0) {
 	this->close();
@@ -218,4 +218,14 @@ uint16 Network::TcpSocket::getLocalPort() const {
 
   getsockname(_fd, (struct sockaddr*)&addr, &size);
   return ntohs(addr.sin_port);
+}
+
+Network::HostAddress Network::TcpSocket::getRemoteAddress() const {
+    if (_fd == -1)
+        return 0;
+    struct sockaddr_in    addr;
+    socklen_t             size = sizeof(addr);
+    
+    getpeername(_fd, (struct sockaddr*)&addr, &size);
+    return Network::HostAddress(inet_ntoa(addr.sin_addr));
 }

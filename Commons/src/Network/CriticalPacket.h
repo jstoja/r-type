@@ -14,7 +14,7 @@
 # include "Clock.h"
 
 namespace Network {
-    class CriticalPacket {
+    class COMMON_EXPORT_IMPORT CriticalPacket {
     public:
         CriticalPacket(Network::UdpPacket *packet);
         ~CriticalPacket();

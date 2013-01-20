@@ -45,6 +45,7 @@
                     <connections>
                         <outlet property="joystickBackground" destination="eby-lo-qQg" id="DKN-xH-e24"/>
                         <outlet property="joystickButton" destination="AQL-nG-2ck" id="INb-gl-UhE"/>
+                        <outlet property="shootButton" destination="XMx-aW-Tzw" id="kHy-9B-crD"/>
                         <segue destination="l0d-PP-gOh" kind="modal" identifier="TextInputController" id="6uH-LK-l6R"/>
                     </connections>
                 </viewController>

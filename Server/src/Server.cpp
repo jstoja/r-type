@@ -41,7 +41,7 @@ Server::~Server() {
     delete *it;
 }
 
-void Server::newConnection(Network::ASocket* socket) {
+void Server::newConnection(Network::TcpSocket* socket) {
     _players.push_back(new Player(socket, this));
 }
 

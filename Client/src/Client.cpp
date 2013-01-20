@@ -152,6 +152,7 @@ void Client::playerReady() {
 	if (_currentGame && _gameController) {
 		Network::TcpPacket* packet = new Network::TcpPacket();
 		packet->setCode(Network::TcpProxy::PlayerReady);
+        Log("LOCAL PORT" << (uint16)_gameController->getUdpSocketPort());
         *packet << _currentGame->getId() << (uint16)_gameController->getUdpSocketPort();
         _proxy->sendPacket(packet);
 		_currentGame->setPlayerReady(_userId, true);
@@ -208,7 +209,7 @@ void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* proxy) {
 }
 
 void Client::packetInProgress(uint32 code, float32 progress) {
-	Log(code << progress);
+	Log("Packet in progress " << code << " " << progress);
 }
 
 #pragma mark Protocol commands
@@ -343,8 +344,14 @@ void Client::receivePlayerReady(Network::TcpPacket* packet) {
 }
 
 void Client::startGame(Network::TcpPacket* packet) {
-	_ui->setVisible(false);
-	_gameController->launchGame();
+    uint32 gameId = 0;
+    uint16 serverUdpPort = 0;
+    *packet >> gameId >> serverUdpPort;
+    Log("UdpPort " << serverUdpPort);
+    if (_gameController && _gameController->getGame()->getId() == gameId) {
+        _ui->setVisible(false);
+        _gameController->launchGame();
+    }
 }
 
 #pragma mark Socket delegate

@@ -3,10 +3,13 @@
 // 01-19-13
 //
 
-
 #include <vector>
-#include <cmath>
+#include "OS.h"
 #include "Network/CriticalPacket.h"
+
+#ifdef OS_UNIX
+# include <cmath>
+#endif
 
 
 std::list<int>      Network::CriticalPacket::_allTimes = std::list<int>();
@@ -57,7 +60,7 @@ bool    Network::CriticalPacket::needResend(uint64 time) {
 
 uint64    Network::CriticalPacket::getOptimizedValue(void) {
     double average = getAverageTime();
-    int total;
+    double total;
 
     if (_allTimes.size() == 0) {
         return 20;

@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include "OS.h"
+#include "Debug.h"
 #ifdef OS_WINDOWS
 # include <winsock2.h>
 # define usleep(x) Sleep((x) / 1000)

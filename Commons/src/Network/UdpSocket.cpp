@@ -10,6 +10,7 @@
 #include "UdpSocket.h"
 #include "NetworkManager.h"
 #include "OS.h"
+#include "Debug.h"
 #ifdef OS_WINDOWS
 typedef int socklen_t;
 #else
@@ -19,6 +20,8 @@ typedef int socklen_t;
 Network::UdpSocket::UdpSocket() : _readBuffer(NULL), _readMutex(),
 				  _writeBuffer(NULL), _writeAddress(HostAddress::AnyAddress) {
   _fd = socket(AF_INET, SOCK_DGRAM, 0);
+    if (_fd == -1)
+        Log("Failed to create UdpSocket");
 }
 
 Network::UdpSocket::UdpSocket(int fd) : _fd(fd), _readBuffer(NULL), _readMutex(),
@@ -53,6 +56,7 @@ void Network::UdpSocket::read(ByteArray& biteArray, bool all, uint32) {
 
   _reading = true;
   _readBuffer = &biteArray;
+  _readBuffer->resize(readSize);
   (void)all;
 }
 
@@ -103,6 +107,7 @@ void  Network::UdpSocket::canWrite() {
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = _writeAddress.toIPv4Address();
     addr.sin_port = htons(_writePort);
+      Log("SEND TO " << _writePort << " " << _writeAddress.getString());
     int ret = ::sendto(_fd, &(((char const*)(*_writeBuffer))[_writePosition]), size, 0, (struct sockaddr*)&addr, sizeof(addr));
     if (ret == -1)
       size = 0;
@@ -112,13 +117,12 @@ void  Network::UdpSocket::canWrite() {
     if (_delegate)
       _delegate->dataSent(this, *_writeBuffer, _writePosition);
     if (_writePosition == _writeBuffer->getSize()) {
-      _writeMutex.unlock();
-      if (_delegate)
-        _delegate->writeFinished(this, *_writeBuffer);
-      _writeMutex.lock();
       _writing = false;
-      _writeBuffer = NULL;
       _writePosition = 0;
+        _writeMutex.unlock();
+        if (_delegate)
+            _delegate->writeFinished(this, *_writeBuffer);
+        _writeMutex.lock();        
     }
   }
   _writeMutex.unlock();

@@ -120,21 +120,12 @@ namespace Network {
 
         void newConnection(ASocket*) {}
 
+
         void readFinished(ASocket*, ByteArray&, const HostAddress&, uint16) {
             _packet->update();
             if (_packet->isComplete()) {
                 if (_delegate) {
                     _delegate->packetReceived(_packet);
-
-//                    uint32 code, id, size;
-//                    *_packet >> code >> id >> size;
-//
-//                    std::map<uint32, Network::CriticalPacket*>::iterator it = _criticalPackets.find(id);
-//
-//                    if (it != _criticalPackets.end()) {
-//                        delete _criticalPackets[id];
-//                        _criticalPackets.erase(it);
-//                    }
                 }
                 _packet = new T();
                 _packet->read(_socket);
@@ -201,8 +192,14 @@ namespace Network {
         std::map<uint32, Network::CriticalPacket*>   _criticalPackets;
     };
 
+
     typedef Network::Proxy<TcpPacket> TcpProxy;
     typedef Network::Proxy<UdpPacket> UdpProxy;
+
+    template<> void Proxy<Network::UdpPacket>::readFinished(ASocket*, ByteArray&, const HostAddress&, uint16);
 }
+
+
+
 
 #endif

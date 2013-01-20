@@ -25,8 +25,7 @@ static CGPoint defaultJoystickPosition;
     [super viewDidLoad];
     
     defaultJoystickPosition = self.joystickBackground.center;
-    
-    [self enableGameInput];
+    [self disableGameInput];
 
     try {
         iOSMainViewController::getInstance().setViewController(self);
@@ -37,7 +36,7 @@ static CGPoint defaultJoystickPosition;
     }
 }
 
--(void)openTextInput {    
+-(void)openTextInput { 
     [self performSegueWithIdentifier:@"TextInputController" sender:self];
 }
 
