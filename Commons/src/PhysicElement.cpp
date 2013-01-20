@@ -139,6 +139,7 @@ bool PhysicElement::Box::simpleCollision(Box& box1, Box& box2)
   double offsetY1 = box1.posY - box1.h/2.;
   double offsetX2 = box2.posX - box2.w/2.;
   double offsetY2 = box2.posY - box2.h/2.;
+    
   return !(offsetX1 > offsetX2 + box2.w
 	   || offsetY1 > offsetY2 + box2.h
 	   || offsetX2 > offsetX1 + box1.w
@@ -146,8 +147,10 @@ bool PhysicElement::Box::simpleCollision(Box& box1, Box& box2)
 }
 
 bool PhysicElement::collision(PhysicElement& elem1, PhysicElement& elem2) {
-  Box box1(elem1._pos.x, elem1._pos.y, elem1._size.x, elem1._size.y, elem1._rotation);
-  Box box2(elem2._pos.x, elem2._pos.y, elem2._size.x, elem2._size.y, elem2._rotation);
+  Box box1(elem1._pos.x, elem1._pos.y, elem1._size.x - 0.01, elem1._size.y - 0.01, elem1._rotation);
+  Box box2(elem2._pos.x, elem2._pos.y, elem2._size.x - 0.01, elem2._size.y - 0.01, elem2._rotation);
+    
+    return Box::simpleCollision(box1, box2);
 
   box2.rotate(box1);
 
