@@ -208,7 +208,7 @@ void Client::connectionClosed(Network::Proxy<Network::TcpPacket>* proxy) {
 }
 
 void Client::packetInProgress(uint32 code, float32 progress) {
-	Log(code << progress);
+	Log("Packet in progress " << code << " " << progress);
 }
 
 #pragma mark Protocol commands
