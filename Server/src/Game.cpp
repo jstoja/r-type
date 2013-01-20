@@ -40,6 +40,9 @@ _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waitin
 
     _playerSprite = createSprite(createTexture("player.png"));
     _playerSprite->addFrame(Vec2(65.0/330.0, 0), Vec2(65.0*2/330.0, 34.0/170.0));
+    _playerSprite->addFrame(Vec2(65.0/330.0, 34.0/170.0), Vec2(65.0*2/330.0, 34.0*2/170.0));
+    _playerSprite->addFrame(Vec2(65.0/330.0, 34.0*2/170.0), Vec2(65.0*2/330.0, 34.0*3/170.0));
+    _playerSprite->addFrame(Vec2(65.0/330.0, 34.0*3/170.0), Vec2(65.0*2/330.0, 34.0*4/170.0));
 }
 
 Game::~Game() {
@@ -177,7 +180,7 @@ void     Game::join(Player* player) {
         element->setType(IGraphicElement::Dynamic);
         _playersGraphicElements[player] = element;
         element->setSprite(_playerSprite);
-        element->setSpriteFrameIndex(0);
+        element->setSpriteFrameIndex(player->getId() % 4);
         _graphicScene.addElement(element);
         PhysicElement* physic = new PhysicElement();
         physic->setPosition(Vec2(16.0/2, 9.0/2));
