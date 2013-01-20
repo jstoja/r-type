@@ -94,13 +94,6 @@ Menu::Menu* UserInterface::getCurrentMenu(void) const {
     return _currentMenu;
 }
 
-void UserInterface::processEvent(Event::Event const &event) {
-    Threading::MutexLocker lock(_mutex);
-    if (event.type & Event::Close) {
-        exit(EXIT_SUCCESS);
-    }
-}
-
 void UserInterface::welcomeCompleted(void) {
     // Present login menu
     goToMenu("Login");
