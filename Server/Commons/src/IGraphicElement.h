@@ -43,7 +43,7 @@ public:
 	virtual void	setSprite(ISprite *sprite) = 0;
 
 	virtual void	setSpriteFrameIndex(char idx) = 0;
-	virtual char	getSpriteFrameIndex() const = 0;
+	virtual uint8	getSpriteFrameIndex() const = 0;
 
 	virtual void	setType(Type c) = 0;
 	virtual Type	getType() const = 0;

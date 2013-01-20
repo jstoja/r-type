@@ -96,7 +96,7 @@ void	GraphicElement::setSpriteFrameIndex(char idx) {
 	_spriteIndex = idx;
 }
 
-char	GraphicElement::getSpriteFrameIndex() const {
+uint8	GraphicElement::getSpriteFrameIndex() const {
     Threading::MutexLocker locker(_attributesMutex[eSpriteIndex]);
 	return (_spriteIndex);
 }
@@ -121,6 +121,6 @@ Network::APacket&		operator<<(Network::APacket& packet, GraphicElement& element)
 	element.setChanged(false);
 	packet << element.getId() << element.getPosition() << element.getRotation()
 		   << element.getSize() << element.getSprite()->getId() << element.getSpriteFrameIndex()
-		   << (char)element.getType();
+		   << (uint8)element.getType();
 	return (packet);
 }

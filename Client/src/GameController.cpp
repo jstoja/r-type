@@ -305,7 +305,32 @@ Game* GameController::getGame(void) const {
 #pragma mark Protocol commands
 
 void GameController::receiveGraphicElements(Network::UdpPacket* packet) {
-  
+    float32 clock = 0;
+    uint32 nbElements = 0;
+    
+    *packet >> clock >> nbElements;
+    for (uint32 i = 0; i < nbElements; ++i) {
+        uint32 id, rotation, spriteId;
+        Vec3 position, size;
+        uint8 currentFrame, type;
+        Graphic::Element* element;
+        
+        *packet >> id >> position >> rotation >> size >> spriteId >> currentFrame >> type;
+        std::map<uint32, Graphic::Element*>::iterator it = _graphicElements.find(id);
+        if (it != _graphicElements.end()) {
+            element = it->second;
+        } else {
+            element = new Graphic::Element(id);
+            _graphicElements[id] = element;
+            _scene->addElement(element);
+        }
+        element->setPosition(position);
+        element->setRotation(rotation);
+        element->setSize(size);
+        element->setSprite(dynamic_cast<Graphic::Sprite*>(ObjectManager::getInstance().getObject(spriteId)));
+        element->setCurrentFrame(currentFrame);
+        element->setType((Graphic::Element::Type)type);
+    }
 }
 
 void GameController::receivePhysicElements(Network::UdpPacket* packet) {
@@ -334,9 +359,10 @@ void GameController::stopSound(Network::UdpPacket* packet) {
 }
 
 void GameController::updateTime(Network::UdpPacket* packet) {
-  float32 time = 0, clock = 0;
-  *packet >> time >> clock;
-  _viewportPosition.setValue(Vec2(time, 0), clock);
+    float32 clock, time;
+    *packet >> clock >> time;
+    Log(time);
+    _viewportPosition.setValue(Vec2(time, 0), clock);
 }
 
 void GameController::updateLife(Network::UdpPacket* packet) {

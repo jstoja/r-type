@@ -95,6 +95,8 @@ private:
 
     Threading::Mutex						_physicElementsMutex;
     std::map<uint32, std::pair<PhysicElement, float32> >	_physicElements;
+    
+    std::map<uint32, Graphic::Element*> _graphicElements;
 };
 
 #endif /* defined(__R_Type__GameController__) */

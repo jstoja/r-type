@@ -26,7 +26,7 @@ Server::Server() {
     Game* game = new Game();
     game->setName("Game one");
     _games[game->getId()] = game;
-    game->setNbSlots(4);
+    game->setNbSlots(1);
     game = new Game();
     game->setName("Game two");
     _games[game->getId()] = game;

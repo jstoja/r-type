@@ -7,6 +7,7 @@
 // Started on  lun. janv. 14 00:30:06 2013 Samuel Olivier
 //
 
+#include <cmath>
 #include "PhysicElement.h"
 #include "Sprite.h"
 
@@ -101,7 +102,27 @@ PhysicElement::Box::Box(float32 posX, float32 posY, float32 w, float32 h, float3
   posX(posX), posY(posY), w(w), h(h), angle(angle) {
 }
 
+void PhysicElement::Box::rotate(Box& other) {
+  double cosA = cos(-other.angle * 0.0174532925);
+  double sinA = sin(-other.angle * 0.0174532925);
+  double oXDif = posX - other.posX;
+  double oYDif = posY - other.posY;
+  double oXDif2 = oXDif * cosA - oYDif * sinA;
+  double oYDif2 = oXDif * sinA + oYDif * cosA;
+  posX = other.posX + oXDif2;
+  posY = other.posY + oYDif2;
+  angle -= other.angle;
+  //UpdateOutLineRect_private();
+}
+
+void PhysicElement::Box::update() {
+  
+}
+
 bool PhysicElement::collision(PhysicElement& elem1, PhysicElement& elem2) {
+  Box box1(elem1._pos.x, elem1._pos.y, elem1._size.x, elem1._size.y, elem1._rotation);
+  Box box2(elem2._pos.x, elem2._pos.y, elem2._size.x, elem2._size.y, elem2._rotation);
+
   
   return false;
 }
