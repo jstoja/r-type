@@ -132,6 +132,7 @@ private:
     
     ISprite*                                    _playerSprite;
     std::map<Player*,GraphicElement*>           _playersGraphicElements;
+    std::map<Player*,PhysicElement*>            _playersPhysicElements;
 
 #ifdef OS_MAC
 	static const int					_updateThreadNumber = 7;

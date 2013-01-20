@@ -93,7 +93,6 @@ IPhysicElement::Type	PhysicElement::getType() const {
 }
 
 Network::APacket&		operator<<(Network::APacket& packet, PhysicElement& element) {
-	element.setChanged(false);
 	packet << element.getId() << element.getPosition() << element.getRotation() << element.getSize();
 	return (packet);
 }

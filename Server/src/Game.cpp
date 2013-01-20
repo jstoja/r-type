@@ -146,8 +146,10 @@ void	Game::update() {
     
     locker.unlock();
 	_udpHandler();
-    _graphicScene.updateFinished();
     locker.relock();
+    
+    _graphicScene.updateFinished();
+    _physicScene.updateFinished();
     
     _clock.reset();
 }
@@ -166,7 +168,7 @@ void     Game::join(Player* player) {
     if (canJoin(player)) {
         Threading::MutexLocker locker(_attributesMutex);
         _players.push_back(player);
-        // Create player graphic element
+        // Create player graphic and physic element
         GraphicElement* element = new GraphicElement();
         element->setPosition(Vec2(16.0/2, 9.0/2));
         element->setSize(Vec2(0.8125, 0.425));
@@ -175,6 +177,10 @@ void     Game::join(Player* player) {
         element->setSprite(_playerSprite);
         element->setSpriteFrameIndex(0);
         _graphicScene.addElement(element);
+        PhysicElement* physic = new PhysicElement();
+        physic->setPosition(Vec2(16.0/2, 9.0/2));
+        physic->setSize(Vec2(0.8125, 0.425));
+        _physicScene.addElement(physic);
     }
 }
 
@@ -397,6 +403,7 @@ void    Game::_sendGraphicElements(Player* player) {
 void    Game::_sendPhysicElements(Player* player) {
     Network::UdpPacket *packet = new Network::UdpPacket();
     packet->setCode(Network::Proxy<Network::UdpPacket>::PHYSIC_ELEMENTS);
+    
     *packet << (float32)_gameClock.getEllapsedTime();
     _physicScene.sendElements(*packet, _viewport);
 
@@ -434,9 +441,9 @@ void    Game::_udpHandler(void) {
          it != end; ++it) {
         this->_sendTime(*it);
         this->_sendGraphicElements(*it);
+        //this->_sendPhysicElements(*it);
     }
 
-//    this->_sendPhysicElements();
 //    this->_sendSound();
 }
 
