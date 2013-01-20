@@ -45,6 +45,8 @@ public:
 
     std::string const&      getName(void) const;
     void                    setName(std::string const& name);
+    Player const*           getReferee(void) const;
+    void                    setReferee(Player*);
     State					getState(void) const;
     uint32                  getNbPlayers(void) const;
     uint32                  getNbSlots(void) const;
@@ -55,7 +57,7 @@ public:
     void	join(Player* player);
     bool    hasPlayer(Player* player) const;
     bool	canJoin(Player* player=NULL) const;
-    void	quit(Player* player);
+    bool    quit(Player* player);
     void    playerReady(Player* player);
     void	sendInfo(Player* player);
     void	start(void);
@@ -84,7 +86,7 @@ public:
 
 	void						_loadMap(std::string const& fileName);
     void                        sendResources(Network::TcpPacket &packet);
-    
+
     virtual uint64              getEllapsedTime() const;
 
     void updatePlayerDirection(Network::UdpPacket*);
@@ -115,6 +117,7 @@ private:
 	PhysicScene						            _physicScene;
 	Threading::ThreadPool*			            _updatePool;
     State                                       _state;
+    Player*                                     _referee;
 	Clock							            _clock;
 	Clock							            _gameClock;
 	Viewport*						            _viewport;

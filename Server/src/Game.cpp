@@ -20,7 +20,7 @@
 
 Game::Game(Network::TcpPacket* packet) :
 _attributesMutex(), _players(), _nbSlots(0), _name(), _currentLevel(),
-_updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waiting) {
+_updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waiting), _referee(NULL) {
 
   _commands[Network::UdpProxy::PLAYER_DIRECTION] = &Game::updatePlayerDirection;
   _commands[Network::UdpProxy::PLAYER_SHOOT] = &Game::playerShoot;
@@ -76,6 +76,15 @@ std::string const&     Game::getName(void) const {
 void Game::setName(std::string const& name) {
     Threading::MutexLocker locker(_attributesMutex);
     _name = name;
+}
+
+
+Player const*           Game::getReferee(void) const {
+    return _referee;
+}
+
+void                    Game::setReferee(Player* referee) {
+    _referee = referee;
 }
 
 Game::State     Game::getState(void) const {
@@ -176,12 +185,12 @@ void     Game::playerReady(Player* player) {
 
 void    Game::sendPlayerList(Player* player) {
     std::list<Player*> playerList;
-    
+
     Threading::MutexLocker locker(_attributesMutex);
     for (int i = 0; i < _players.size(); ++i) {
         playerList.push_back(_players[i]);
     }
-    
+
     Network::TcpPacket *packet = new Network::TcpPacket();
 
     packet->setCode(0x01020600);
@@ -194,9 +203,16 @@ void     Game::sendInfo(Player* player) {
     sendPlayerList(player);
 }
 
-void     Game::quit(Player* player) {
+bool     Game::quit(Player* player) {
     Threading::MutexLocker locker(_attributesMutex);
     _players.erase(std::remove(_players.begin(), _players.end(), player), _players.end());
+
+    bool isReferee = (_referee == player);
+
+    if (isReferee) {
+        _referee = NULL;
+    }
+    return (isReferee);
 }
 
 void    Game::addGraphicElement(IGraphicElement* element) {
@@ -212,7 +228,7 @@ ITexture*	Game::createTexture(std::string const& filename, std::string const& pl
     Threading::MutexLocker locker(_attributesMutex);
 	Texture *res = new Texture("Plugins" + Application::getInstance().getDirectorySeparator() +
 			pluginName + Application::getInstance().getDirectorySeparator() + filename);
-    
+
 	_gameTextures.push_back(res);
 	return res;
 }
@@ -243,7 +259,7 @@ ISound*			Game::loadSound(std::string const& name, std::string const& pluginName
     Threading::MutexLocker locker(_attributesMutex);
 	Sound *res= new Sound("Plugins" + Application::getInstance().getDirectorySeparator() +
 			pluginName + Application::getInstance().getDirectorySeparator() + name);
-    
+
 	_gameSounds.push_back(res);
 	return res;
 }
@@ -336,7 +352,7 @@ void    Game::_sendSound(Player* player) {
 void    Game::_sendGraphicElements(Player* player) {
     Network::UdpPacket *packet = new Network::UdpPacket();
     packet->setCode(Network::Proxy<Network::UdpPacket>::GRAPHIC_ELEMENTS);
-    
+
     *packet << (float32)_gameClock.getEllapsedTime();
     _graphicScene.sendElements(*packet, _viewport);
 
@@ -349,7 +365,7 @@ void    Game::_sendPhysicElements(Player* player) {
     packet->setCode(Network::Proxy<Network::UdpPacket>::PHYSIC_ELEMENTS);
     *packet << (float32)_gameClock.getEllapsedTime();
     _physicScene.sendElements(*packet, _viewport);
-    
+
     Network::UdpProxy::ToSend toSend(packet, player->getAddress(), player->getPort());
     _proxy->sendPacket(toSend);
 }
@@ -364,14 +380,14 @@ void    Game::_sendTime(Player* player) {
 
 void    Game::_udpHandler(void) {
     Threading::MutexLocker locker(_attributesMutex);
-    
+
     // Send all infos to all players
     for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
          it != end; ++it) {
         this->_sendTime(*it);
         this->_sendGraphicElements(*it);
     }
-    
+
 //    this->_sendPhysicElements();
 //    this->_sendSound();
 }

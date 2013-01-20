@@ -71,6 +71,7 @@ private:
     Network::Proxy<Network::TcpPacket>    _proxy;
     IServerDelegate*                      _server;
     std::map<int, commandPointer>         _commands;
+    bool                                  _isReferee;
     uint16                                _port;
 
     Vec2				  _speed;

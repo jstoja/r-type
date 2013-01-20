@@ -165,21 +165,25 @@ void Network::TcpSocket::canRead() {
   }
   else if (_reading) {
     {
-      Threading::MutexLocker locker(&_bufferMutex);
+        _bufferMutex.lock();
       unsigned int size = _buffer.getSize();
       _buffer.resize(size + ((_toRead) ? _toRead : readSize));
       int ret = ::recv(_fd, &(((char*)_buffer)[size]), (_toRead) ? _toRead : readSize, 0);
+        _bufferMutex.unlock();
       if (ret == 0) {
 	this->close();
 	return;
       }
+        _bufferMutex.lock();
       if (ret == -1)
 	_buffer.resize(size);
       else
 	_buffer.resize(size + ret);
-    }
+        _bufferMutex.unlock();
+    }      
     if (_bufferToRead)
       this->read(*_bufferToRead, _readAll, _readStart);
+      
   }
 }
 
