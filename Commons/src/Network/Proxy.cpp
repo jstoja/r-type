@@ -1,7 +1,7 @@
 #include "Proxy.hpp"
 
 template <>
-void Network::Proxy<Network::UdpPacket>::readFinished(ASocket*, ByteArray&, const HostAddress&, uint16) {
+void Network::Proxy<Network::UdpPacket>::readFinished(ASocket*, ByteArray&, const HostAddress& hostAddress, uint16 port) {
     _packet->update();
     if (_packet->isComplete()) {
         if (_delegate) {
@@ -17,7 +17,7 @@ void Network::Proxy<Network::UdpPacket>::readFinished(ASocket*, ByteArray&, cons
 //               _criticalPackets.erase(it);
 //           }
        }
-       _packet = new Network::UdpPacket();
+	_packet = new Network::UdpPacket(hostAddress, port);
        _packet->read(_socket);
    }
    else

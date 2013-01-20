@@ -99,30 +99,57 @@ Network::APacket&		operator<<(Network::APacket& packet, PhysicElement& element) 
 }
 
 PhysicElement::Box::Box(float32 posX, float32 posY, float32 w, float32 h, float32 angle) :
-  posX(posX), posY(posY), w(w), h(h), angle(angle) {
+  posX(posX), posY(posY), w(w), h(h), angle(angle), out(NULL) {
 }
 
 void PhysicElement::Box::rotate(Box& other) {
-  double cosA = cos(-other.angle * 0.0174532925);
-  double sinA = sin(-other.angle * 0.0174532925);
-  double oXDif = posX - other.posX;
-  double oYDif = posY - other.posY;
-  double oXDif2 = oXDif * cosA - oYDif * sinA;
-  double oYDif2 = oXDif * sinA + oYDif * cosA;
+  float32 cosA = cos(-other.angle);
+  float32 sinA = sin(-other.angle);
+  float32 oXDif = posX - other.posX;
+  float32 oYDif = posY - other.posY;
+  float32 oXDif2 = oXDif * cosA - oYDif * sinA;
+  float32 oYDif2 = oXDif * sinA + oYDif * cosA;
   posX = other.posX + oXDif2;
   posY = other.posY + oYDif2;
   angle -= other.angle;
-  //UpdateOutLineRect_private();
+  update();
 }
 
 void PhysicElement::Box::update() {
-  
+  float32 absCosA = std::abs(cos(angle));
+  float32 absSinA = std::abs(sin(angle));
+  float32 ow = w * absCosA + h *absSinA;
+  float32 oh = w * absSinA + h *absCosA;
+  float32 oX = posX;
+  float32 oY = posY;
+  out = new Box(ow, oh, oX, oY, 0);
+}
+
+bool PhysicElement::Box::simpleCollision(Box& box1, Box& box2)
+{
+  double offsetX1 = box1.posX - box1.w/2.;
+  double offsetY1 = box1.posY - box1.h/2.;
+  double offsetX2 = box2.posX - box2.w/2.;
+  double offsetY2 = box2.posY - box2.h/2.;
+  return !(offsetX1 > offsetX2 + box2.w
+	   || offsetY1 > offsetY2 + box2.h
+	   || offsetX2 > offsetX1 + box1.w
+	   || offsetY2 > offsetY1 + box1.h);
 }
 
 bool PhysicElement::collision(PhysicElement& elem1, PhysicElement& elem2) {
   Box box1(elem1._pos.x, elem1._pos.y, elem1._size.x, elem1._size.y, elem1._rotation);
   Box box2(elem2._pos.x, elem2._pos.y, elem2._size.x, elem2._size.y, elem2._rotation);
 
+  box2.rotate(box1);
+
+  if(!Box::simpleCollision(box1,*box2.out))
+    return false;
   
-  return false;
+  Box box3(elem2._pos.x, elem2._pos.y, elem2._size.x, elem2._size.y, elem2._rotation);
+  box1.rotate(box3);
+  if(!Box::simpleCollision(*box1.out,box3))
+    return false;
+
+  return true;
 }

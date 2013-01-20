@@ -72,6 +72,8 @@ private:
     IServerDelegate*                      _server;
     std::map<int, commandPointer>         _commands;
     uint16                                _port;
+
+    Vec2				  _speed;
 };
 
 Network::APacket&       operator<<(Network::APacket& packet, Player const& player);
