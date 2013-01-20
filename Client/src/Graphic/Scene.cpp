@@ -11,7 +11,7 @@
 #include "Threading/MutexLocker.h"
 
 Graphic::Scene::Scene(void) :
-_backgrounds(), _sceneries(), _elements(NULL),
+_backgrounds(), _sceneries(), _elements(),
 _worldMatrix(), _viewport(16.0, 9.0), _viewportPosition(0, 0),
 _mutex(new Threading::Mutex()) {
     _initWorldMatrix();

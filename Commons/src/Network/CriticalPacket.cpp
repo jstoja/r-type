@@ -60,7 +60,7 @@ bool    Network::CriticalPacket::needResend(uint64 time) {
 
 uint64    Network::CriticalPacket::getOptimizedValue(void) {
     double average = getAverageTime();
-    double total;
+    double total = 0;
 
     if (_allTimes.size() == 0) {
         return 20;
