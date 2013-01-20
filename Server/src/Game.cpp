@@ -112,7 +112,6 @@ void     Game::start(void) {
 }
 
 void	Game::update() {
-    
     Threading::MutexLocker locker(_attributesMutex);
     _proxy->checkCriticalPackets();
 
@@ -121,8 +120,10 @@ void	Game::update() {
 		it != _objects.end(); ++it)
 		if (_viewport->isInViewport((*it)->getXStart()))
 			_updatePool->addTask(*it, &GameObject::update, NULL);
-    
+
+    locker.unlock();
 	_udpHandler();
+    locker.relock();
     _clock.reset();
 }
 
@@ -359,8 +360,8 @@ void    Game::_sendTime(void) {
         Player* player = *it;
         Network::UdpPacket* packet = new Network::UdpPacket();
         packet->setCode(Network::UdpProxy::TIME);
-        *packet << (float32)_viewport->getPosition() << (float32)_gameClock.getEllapsedTime();
-        
+        *packet << (float32)_gameClock.getEllapsedTime() << (float32)_viewport->getPosition();
+        Log(_viewport->getPosition());
         Network::UdpProxy::ToSend toSend(packet, player->getAddress(), player->getPort());
         _proxy->sendPacket(toSend);
     }

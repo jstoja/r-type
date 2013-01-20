@@ -329,9 +329,10 @@ void GameController::stopSound(Network::UdpPacket* packet) {
 }
 
 void GameController::updateTime(Network::UdpPacket* packet) {
-  float32 time = 0, clock = 0;
-  *packet >> time >> clock;
-  _viewportPosition.setValue(Vec2(time, 0), clock);
+    float32 clock, time;
+    *packet >> clock >> time;
+    Log(time);
+    _viewportPosition.setValue(Vec2(time, 0), clock);
 }
 
 void GameController::updateLife(Network::UdpPacket* packet) {
