@@ -198,7 +198,7 @@ public:
         
         Event::Manager::getInstance().addEventListener(new Event::Listener(Event::Close, this));
         
-        Clock::Clock clock;
+        Clock clock;
         
         while (!_close) {
             scene.setViewportPosition(Vec2((float32)clock.getEllapsedTime()/1000, 0));
