@@ -20,6 +20,7 @@
 class COMMON_EXPORT_IMPORT PhysicElement : public IPhysicElement, public Object {
 public:
 	PhysicElement();
+    PhysicElement(PhysicElement const& other);
 	virtual ~PhysicElement();
 
 	virtual void	setPosition(Vec2 const& pos);

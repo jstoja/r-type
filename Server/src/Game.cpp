@@ -441,7 +441,7 @@ void    Game::_udpHandler(void) {
          it != end; ++it) {
         this->_sendTime(*it);
         this->_sendGraphicElements(*it);
-        //this->_sendPhysicElements(*it);
+        this->_sendPhysicElements(*it);
     }
 
 //    this->_sendSound();

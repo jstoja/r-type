@@ -343,20 +343,20 @@ void GameController::receiveGraphicElements(Network::UdpPacket* packet) {
 }
 
 void GameController::receivePhysicElements(Network::UdpPacket* packet) {
-  float32 clock;
-  std::list<PhysicElement> physicElements;
+    float32 clock;
+    std::list<PhysicElement> physicElements;
 
-  *packet >> clock;
-  *packet >> physicElements;
-  _physicElementsMutex.lock();
-  std::list<PhysicElement>::iterator it;
-  for (it = physicElements.begin(); it != physicElements.end(); ++it) {
-    if (_physicElements[(*it).getId()].second < clock) {
-      _physicElements[(*it).getId()].second = clock;
-      _physicElements[(*it).getId()].first = (*it);
+    *packet >> clock;
+    *packet >> physicElements;
+    _physicElementsMutex.lock();
+    std::list<PhysicElement>::iterator it;
+    for (it = physicElements.begin(); it != physicElements.end(); ++it) {
+        if (_physicElements[(*it).getId()].second < clock) {
+            _physicElements[(*it).getId()].second = clock;
+            _physicElements[(*it).getId()].first = (*it);
+        }
     }
-  }
-  _physicElementsMutex.unlock();
+    _physicElementsMutex.unlock();
 }
 
 void GameController::playSound(Network::UdpPacket* packet) {
