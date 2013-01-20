@@ -9,19 +9,19 @@
 
 #include <sstream>
 
-#include "Scenery.h"
+#include "SceneryObject.h"
 #include "Debug.h"
 #include "ISprite.h"
 
-Scenery::Scenery(std::string const& pluginName)
+SceneryObject::SceneryObject(std::string const& pluginName)
     : _game(NULL), _name(pluginName), _scenery(NULL) {
-    
+
 }
 
-Scenery::~Scenery() {
+SceneryObject::~SceneryObject() {
 }
 
-bool                Scenery::init(IGame* game, ByteArray const& params, float32 xStart) {
+bool                SceneryObject::init(IGame* game, ByteArray const& params, float32 xStart) {
  	if ((_game = game) == NULL)
 		return false;
     _scenery = _game->addScenery();
@@ -68,23 +68,23 @@ bool                Scenery::init(IGame* game, ByteArray const& params, float32 
     return (true);
 }
 
-void                Scenery::update() {
+void                SceneryObject::update() {
 }
 
-float32             Scenery::getXStart() const {
+float32             SceneryObject::getXStart() const {
     return (-1);
 }
 
-std::string const&	Scenery::getName() const {
+std::string const&	SceneryObject::getName() const {
     return (_name);
 }
 
 RTYPE_PLUGIN_CREATE {
-	return (new Scenery(name));
+	return (new SceneryObject(name));
 }
 
 //
-// Scenery.cpp for R-Type in /home/bordel_/R-Type
+// SceneryObject.cpp for R-Type in /home/bordel_/R-Type
 //
 // Made by Julien Bordellier
 // Login   <bordel@epitech.net>
@@ -94,22 +94,22 @@ RTYPE_PLUGIN_CREATE {
 //
 //#include <sstream>
 //
-//#include "Scenery.h"
+//#include "SceneryObject.h"
 //#include "Debug.h"
 //#include "ISprite.h"
 //
-//Scenery::Scenery(std::string const& pluginName)
+//SceneryObject::SceneryObject(std::string const& pluginName)
 //    : _game(NULL), _name(pluginName), _scenery(NULL) {
 //    
 //}
 //
-//Scenery::~Scenery() {
+//SceneryObject::~SceneryObject() {
 //}
 //
-//bool                Scenery::init(IGame* game, ByteArray const& params, float32 xStart) {
+//bool                SceneryObject::init(IGame* game, ByteArray const& params, float32 xStart) {
 // 	if ((_game = game) == NULL)
 //		return false;
-//    _scenery = _game->addScenery();
+//    _scenery = _game->addSceneryObject();
 //    
 //    if (_scenery == NULL) {
 //        return false;
@@ -147,17 +147,17 @@ RTYPE_PLUGIN_CREATE {
 //    return (true);
 //}
 //
-//void                Scenery::update() {
+//void                SceneryObject::update() {
 //}
 //
-//float32             Scenery::getXStart() const {
+//float32             SceneryObject::getXStart() const {
 //    return (-1);
 //}
 //
-//std::string const&	Scenery::getName() const {
+//std::string const&	SceneryObject::getName() const {
 //    return (_name);
 //}
 //
 //RTYPE_PLUGIN_CREATE {
-//	return (new Scenery(name));
+//	return (new SceneryObject(name));
 //}

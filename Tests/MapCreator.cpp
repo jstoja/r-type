@@ -166,12 +166,13 @@ int	main(int ac, char **av) {
 	//map.addSprite("scenery3", "Images/stars-blue.png", framesFull);
 	//map.addSprite("scenery4", "Images/stars-red.png", framesFull);
 	//map.addSprite("scenery5", "Images/planets.png", framesFull);
-	//map.addSprite("block", "Images/block-ship.png", framesBlock);
-	map.addObject("Scenery", 0, createSceneryParams("scenery1", 0.1, 16, 1000, 0.999, 1));
+	map.addSprite("block", "Images/block-ship.png", framesFull);
+	map.addObject("SceneryObject", 0, createSceneryParams("scenery1", 0.1, 16, 1000, 0.999, 1));
 	//map.addObject("Scenery", 0, createSceneryParams("scenery2", 0.1, 16, 1000, 0.998, 0.2));
 	//map.addObject("Scenery", 0, createSceneryParams("scenery3", 0.1, 16, 1000, 0.997, 1));
 	//map.addObject("Scenery", 0, createSceneryParams("scenery4", 0.1, 16, 1000, 0.996, 1));
 	//map.addObject("Scenery", 0, createSceneryParams("scenery5", 0.1, 16*3, 1000, 0.995, 0.8));
+	map.addObject("Block", 0, createBlockParams(Vec3(8, 4.5, 0), Vec2(4, 2), 0, "block", 0));
 	//float32 tmp1 = 0;
 	//for (int i = 0; i < 10; ++i) {
 	//	uint32 idx = std::rand() % 5;
