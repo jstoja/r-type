@@ -20,6 +20,7 @@ _udpSocket(NULL), _udpProxy(NULL) {
     Event::Manager::getInstance().addEventListener(_eventListener);
     
     _udpSocket = new Network::UdpSocket();
+    _udpSocket->bind();
     _udpProxy = new Network::UdpProxy(_udpSocket, this);
     
 }
@@ -253,4 +254,8 @@ bool GameController::gameLaunched(void) const {
 
 uint8 GameController::getUdpSocketPort(void) const {
     return _udpSocket->getLocalPort();
+}
+
+Game* GameController::getGame(void) const {
+    return _game;
 }

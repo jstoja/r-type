@@ -343,8 +343,14 @@ void Client::receivePlayerReady(Network::TcpPacket* packet) {
 }
 
 void Client::startGame(Network::TcpPacket* packet) {
-	_ui->setVisible(false);
-	_gameController->launchGame();
+    uint32 gameId = 0;
+    uint16 serverUdpPort = 0;
+    *packet >> gameId >> serverUdpPort;
+    Log("UdpPort " << serverUdpPort);
+    if (_gameController && _gameController->getGame()->getId() == gameId) {
+        _ui->setVisible(false);
+        _gameController->launchGame();
+    }
 }
 
 #pragma mark Socket delegate

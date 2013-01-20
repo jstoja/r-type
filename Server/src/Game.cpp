@@ -33,7 +33,7 @@ _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waitin
     }
 	_viewPort = new ViewPort(0.1);
 
-    Network::UdpSocket *_udpSocket = new Network::UdpSocket();
+    _udpSocket = new Network::UdpSocket();
     _proxy = new Network::Proxy<Network::UdpPacket>(_udpSocket, this);
 }
 
@@ -95,11 +95,12 @@ void                    Game::setNbSlots(uint32 slots) {
 
 void     Game::start(void) {
     _attributesMutex[ePlayers]->lock();
+    _udpSocket->bind();
     // Inform players that the game starts !
     for (int i=0; i < _players.size(); i++) {
         Network::TcpPacket *packet = new Network::TcpPacket();
         packet->setCode(Network::TcpProxy::GameStart);
-        *packet << getId();
+        *packet << getId() << _udpSocket->getLocalPort();
         Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
         _players[i]->sendPacket(toSend);
     }

@@ -39,6 +39,7 @@ public:
   void		write(ByteArray const&, const HostAddress& hostAddress = HostAddress::AnyAddress, uint16 port = 0);
   void		close();
   uint16       	getLocalPort() const;
+  HostAddress   getRemoteAddress() const;
 
   void	canRead();
   void	canWrite();

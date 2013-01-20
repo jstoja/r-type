@@ -16,7 +16,7 @@ namespace Network {
 
   class COMMON_EXPORT_IMPORT ITcpServerDelegate {
   public:
-    virtual void newConnection(ASocket*) = 0;
+    virtual void newConnection(TcpSocket*) = 0;
   };
 
 }

@@ -47,6 +47,7 @@ namespace Network {
     void	canRead();
     void	canWrite();
     uint16	getLocalPort() const;
+      
 
   private:
     int				_fd;

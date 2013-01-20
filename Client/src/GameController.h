@@ -56,6 +56,7 @@ public:
     // Getters
     bool    gameLaunched(void) const;
     uint8   getUdpSocketPort(void) const;
+    Game*   getGame(void) const;
 
 private:
     Game*                               _game;
