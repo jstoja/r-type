@@ -20,6 +20,7 @@ _udpSocket(NULL), _udpProxy(NULL) {
     Event::Manager::getInstance().addEventListener(_eventListener);
     
     _udpSocket = new Network::UdpSocket();
+    _udpSocket->bind();
     _udpProxy = new Network::UdpProxy(_udpSocket, this);
     
 }

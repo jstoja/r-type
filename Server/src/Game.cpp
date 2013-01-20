@@ -33,7 +33,7 @@ _updatePool(new Threading::ThreadPool(_updateThreadNumber)), _state(Game::Waitin
     }
 	_viewPort = new ViewPort(0.1);
 
-    Network::UdpSocket *_udpSocket = new Network::UdpSocket();
+    _udpSocket = new Network::UdpSocket();
     _proxy = new Network::Proxy<Network::UdpPacket>(_udpSocket, this);
 }
 

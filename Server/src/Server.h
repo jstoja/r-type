@@ -25,7 +25,7 @@ public:
     ~Server();
 
     int             run();
-    void            newConnection(Network::ASocket*);
+    void            newConnection(Network::TcpSocket*);
 
     virtual std::string                     getName(void) const;
     virtual std::map<uint32, Game*> const&  getGames(void) const;

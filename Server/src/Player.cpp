@@ -12,7 +12,7 @@
 #include "Player.h"
 #include "Debug.h"
 
-Player::Player(Network::ASocket* socket, IServerDelegate* server) :
+Player::Player(Network::TcpSocket* socket, IServerDelegate* server) :
 _attributesMutex() ,_isReady(false), _name(), _socket(socket),
 _proxy(socket, this), _server(server), _commands() {
 
@@ -21,7 +21,7 @@ _proxy(socket, this), _server(server), _commands() {
         _attributesMutex[i] = new Threading::Mutex();
     }
 
-    Log("New Player");
+    Log("New Player " << socket->getRemoteAddress().getString());
 
     _commands[Network::TcpProxy::AuthenficitationConnection] = &Player::connection;
     _commands[Network::TcpProxy::InformationsGeneral] = &Player::serverInfos;

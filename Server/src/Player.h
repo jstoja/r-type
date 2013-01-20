@@ -23,7 +23,7 @@
 
 class Player : public Network::IProxyDelegate<Network::TcpPacket>, public Object {
 public:
-    Player(Network::ASocket*, IServerDelegate* server);
+    Player(Network::TcpSocket*, IServerDelegate* server);
     virtual ~Player();
 
     void	packetReceived(Network::TcpPacket*);

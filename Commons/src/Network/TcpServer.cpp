@@ -39,5 +39,5 @@ void Network::TcpServer::setDelegate(ITcpServerDelegate* delegate) {
 
 void Network::TcpServer::newConnection(Network::ASocket* socket) {
   if (_delegate)
-    _delegate->newConnection(socket);
+    _delegate->newConnection(dynamic_cast<Network::TcpSocket*>(socket));
 }
