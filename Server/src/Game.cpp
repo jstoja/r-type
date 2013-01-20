@@ -144,7 +144,6 @@ void	Game::update() {
 }
 
 bool    Game::hasPlayer(Player* player) const {
-    Threading::MutexLocker lockerViewport(_attributesMutex[ePlayers]);
     return std::find(_players.begin(), _players.end(), player) != _players.end();
 }
 
