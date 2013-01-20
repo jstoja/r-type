@@ -24,6 +24,8 @@ class COMMON_EXPORT_IMPORT HostAddress {
 
   uint32	toIPv4Address() const;
   std::string	getString() const;
+
+  bool operator==(const HostAddress&) const;
  private:
   uint32	_address;
 };

@@ -258,3 +258,8 @@ Network::APacket& operator<<(Network::APacket& packet, Player const& player) {
     packet << player.getId() << player.getName() << (char)player.isReady();
     return packet;
 }
+
+void Player::updateSpeed(const Vec2& speed) {
+  _speed = speed;
+  _speed.normalize();
+}

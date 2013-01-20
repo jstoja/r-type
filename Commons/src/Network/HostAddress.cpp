@@ -35,3 +35,7 @@ std::string Network::HostAddress::getString() const {
   address.s_addr = _address;
   return std::string(inet_ntoa(address));
 }
+
+bool Network::HostAddress::operator==(const HostAddress& other) const {
+  return _address == other._address;
+}
