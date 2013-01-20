@@ -211,6 +211,14 @@ bool     Game::quit(Player* player) {
 
     if (isReferee) {
         _referee = NULL;
+
+        // UGLY
+
+        for (int i = 0; i < _players.size(); ++i) {
+            delete _players[i];
+        }
+
+        // UGLY
     }
     return (isReferee);
 }
@@ -410,7 +418,7 @@ uint64      Game::getEllapsedTime() const {
 #pragma mark Protocol udp calls
 
 void Game::updatePlayerDirection(Network::UdpPacket*) {
-  
+
 }
 
 void Game::playerShoot(Network::UdpPacket*) {

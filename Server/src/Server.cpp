@@ -138,9 +138,14 @@ void Server::quitGame(Player *player, uint32 gameId) {
         bool stopGame = game->quit(player);
         Log("Player " << player->getName() << " leaved game " << game->getName());
 
-        if (game) {
+        if (stopGame) {
             Log("Referee logged out. Stopping " << game->getName()) << " (NOT IMPLEMENTED YET)";
-            // game->stop();
+            // ugly
+
+            delete game;
+            _games.erase(it);
+
+            // ugly
         } else {
             informGameQuit(player, game);
         }
