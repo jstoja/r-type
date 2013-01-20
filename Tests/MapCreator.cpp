@@ -15,6 +15,24 @@
 #include <Map.h>
 #include <Types.h>
 #include <Frame.h>
+#include "Graphic/Renderer.h"
+#include "Graphic/TextureManager.h"
+#include "Event/Manager.h"
+#include "Event/IListenerDelegate.h"
+#include "Clock.h"
+
+
+// Copy frame class, defined in Server
+Frame::Frame(Vec2 const& p1, Vec2 const& p2)
+: p1(p1), p2(p2) {
+}
+
+Network::APacket&		operator<<(Network::APacket & packet, Frame const& element) {
+	return packet << element.p1 << element.p2;
+}
+
+// Global scene
+Graphic::Scene scene;
 
 template<class T>
 void	writeData(std::ofstream& file, T data) {
@@ -36,6 +54,12 @@ public:
 		add.textureName = textureName;
 		add.frames = frames;
 		_sprites.push_back(add);
+        Graphic::Sprite* sprite = new Graphic::Sprite();
+        sprite->setTexture(new Graphic::Texture(textureName));
+        for (std::list<Frame>::const_iterator it = frames.begin(), end = frames.end(); it != end; ++it) {
+            sprite->addFrame(Graphic::Sprite::Frame(it->p1, it->p2));
+        }
+        _graphicSprites[spriteName] = sprite;
 	}
 
 	void	addObject(std::string const& name, float32 xStart, ByteArray const& params) {
@@ -81,6 +105,8 @@ public:
 	void	setSpeed(float32 speed) {
 		_speed = speed;
 	}
+    
+    std::map<std::string, Graphic::Sprite*> _graphicSprites;
 
 private:
 	struct MapSprite {
@@ -94,9 +120,20 @@ private:
 	float32					_speed;
 };
 
+// Global map
+Test map;
+
 ByteArray	createBlockParams(Vec3 const& pos, Vec2 const& size, float32 rotation, std::string const& sprite, char frameIndex) {
 	ByteArray	res;
 	uint32		tmpSize = sprite.size();
+    
+    Graphic::Element* element = new Graphic::Element();
+    element->setPosition(pos);
+    element->setSize(size);
+    element->setRotation(rotation);
+    element->setSprite(map._graphicSprites[sprite]);
+    element->setCurrentFrame(frameIndex);
+    scene.addElement(element);
 
 	res.append((char*)&pos, sizeof(pos));
 	res.append((char*)&size, sizeof(size));
@@ -110,6 +147,15 @@ ByteArray	createBlockParams(Vec3 const& pos, Vec2 const& size, float32 rotation,
 ByteArray	createSceneryParams(std::string const& sprite, float32 speed, float32 width, float32 xEnd, float32 depth, float32 opacity) {
 	ByteArray	res;
 	uint32		tmpSize = sprite.size();
+    
+    Graphic::Scenery* scenery = new Graphic::Scenery();
+    scenery->setTexture(map._graphicSprites[sprite]->getTexture());
+    scenery->setSpeed(speed);
+    scenery->setWidth(width);
+    scenery->setRange(Vec2(0, xEnd));
+    scenery->setDepth(depth);
+    scenery->setOpacity(opacity);
+    scene.addScenery(scenery);
 
 	res.append((char*)&tmpSize, sizeof(tmpSize));
 	res.append(sprite.c_str(), tmpSize);
@@ -143,8 +189,38 @@ Frame getFrame(std::list<Frame> & frames, uint32 id) {
 	return (*it);
 }
 
+class Loop : public Event::IListenerDelegate {
+public:
+    
+    bool _close;
+    
+    Loop() : _close(false) {
+        
+        Event::Manager::getInstance().addEventListener(new Event::Listener(Event::Close, this));
+        
+        Clock::Clock clock;
+        
+        while (!_close) {
+            scene.setViewportPosition(Vec2((float32)clock.getEllapsedTime()/1000, 0));
+            Event::Manager::getInstance().processEvents();
+            Graphic::Renderer::getInstance().render();
+            Clock::sleep(33);
+        }
+        
+    }
+    
+    void processEvent(Event::Event const& event) {
+        if (event.type & Event::Close) {
+            _close = true;
+        }
+    }
+    
+    ~Loop() {}
+};
+
 int	main(int ac, char **av) {
 	Application::getInstance().init(ac, av);
+    Application::getInstance().setRelativeResourcesPath("../../Server/Resources/Levels/Level_1/");
 	std::string filename = "../../Server/Resources/Levels/Level_1/Level_1.map";
 	std::string	name = "The Map";
 
@@ -158,30 +234,37 @@ int	main(int ac, char **av) {
 	framesBlock.push_back(getFrame(2./3, 0.202, 1./3));
 	framesBlock.push_back(getFrame(0, 0.202, 1.));
 	framesBlock.push_back(getFrame(1./3, 0.202, 2./3));
-	Test	map;
+
 	map.setName(name);
-	map.setSpeed(0.2);
+	map.setSpeed(1);
 	map.addSprite("scenery1", "Images/background.png", framesFull);
-	//map.addSprite("scenery2", "Images/stars-deep.png", framesFull);
-	//map.addSprite("scenery3", "Images/stars-blue.png", framesFull);
-	//map.addSprite("scenery4", "Images/stars-red.png", framesFull);
-	//map.addSprite("scenery5", "Images/planets.png", framesFull);
-	map.addSprite("block", "Images/block-ship.png", framesFull);
-	map.addObject("SceneryObject", 0, createSceneryParams("scenery1", 0.1, 16, 1000, 0.999, 1));
-	//map.addObject("Scenery", 0, createSceneryParams("scenery2", 0.1, 16, 1000, 0.998, 0.2));
-	//map.addObject("Scenery", 0, createSceneryParams("scenery3", 0.1, 16, 1000, 0.997, 1));
-	//map.addObject("Scenery", 0, createSceneryParams("scenery4", 0.1, 16, 1000, 0.996, 1));
-	//map.addObject("Scenery", 0, createSceneryParams("scenery5", 0.1, 16*3, 1000, 0.995, 0.8));
-	map.addObject("Block", 0, createBlockParams(Vec3(8, 4.5, 0), Vec2(4, 2), 0, "block", 0));
-	//float32 tmp1 = 0;
-	//for (int i = 0; i < 10; ++i) {
-	//	uint32 idx = std::rand() % 5;
-	//	Frame current = getFrame(framesBlock, idx);
-	//	float32 width = (current.p2.x - current.p1.x) * 1.6 / 0.202,
-	//		height = (current.p2.y - current.p1.y) * 0.4 / (1. / 3.);
-	//	map.addObject("Block", tmp1, createBlockParams(Vec3(tmp1 + width / 2, height / 2, 0), Vec2(width, height), 0, "block", idx));
-	//	tmp1 += width;
-	//}
+	map.addSprite("scenery2", "Images/stars-deep.png", framesFull);
+	map.addSprite("scenery3", "Images/stars-blue.png", framesFull);
+	map.addSprite("scenery4", "Images/stars-red.png", framesFull);
+	map.addSprite("scenery5", "Images/planets.png", framesFull);
+	map.addSprite("block", "Images/block-ship.png", framesBlock);
+	map.addObject("SceneryObject", 0, createSceneryParams("scenery1", 0, 16, 1000, 0.999, 1));
+	map.addObject("SceneryObject", 0, createSceneryParams("scenery2", 0.2, 16, 1000, 0.998, 0.2));
+	map.addObject("SceneryObject", 0, createSceneryParams("scenery3", 0.8, 16, 1000, 0.997, 1));
+	map.addObject("SceneryObject", 0, createSceneryParams("scenery4", 1.2, 16, 1000, 0.996, 1));
+	map.addObject("SceneryObject", 0, createSceneryParams("scenery5", 0.5, 16*3, 1000, 0.995, 0.8));
+	float32 tmp1 = 0;
+	for (int i = 0; i < 25; ++i) {
+		//uint32 idx = std::rand() % 5;
+		uint32 idx = i;
+		Frame current = getFrame(framesBlock, idx);
+		float32 width = (current.p2.x - current.p1.x) * 1.6 / 0.202,
+			height = (current.p2.y - current.p1.y) * 0.4 / (1. / 3.);
+		map.addObject("Block", tmp1, createBlockParams(Vec3(tmp1 + width / 2, height / 2, 0), Vec2(width, height), 0, "block", idx));
+		tmp1 += width;
+	}
 	map.save(Application::getInstance().getRelativePath(filename));
+    
+    // Show the scene
+    Graphic::Renderer::getInstance().init();
+    Graphic::Renderer::getInstance().setScene(&scene);
+    Graphic::TextureManager::getInstance().update();
+
+    Loop loop;
 	return (0);
 }
