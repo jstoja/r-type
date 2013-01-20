@@ -135,7 +135,9 @@ int	main(int ac, char **av) {
 	map.setName(name);
 	map.setSpeed(0.2);
 	map.addSprite("scenery1", "Images/Scenery1.png", frames);
+	map.addSprite("block", "Images/block.png", frames);
 	map.addObject("Scenery", 0, createSceneryParams("scenery1", 0.1, 16, 1000, 0.9, 1));
+	map.addObject("Block", 0, createBlockParams(Vec3(8, 4.5, 0), Vec2(4, 3), 0, "block", 0));
 	map.save(Application::getInstance().getRelativePath(filename));
 	return (0);
 }
