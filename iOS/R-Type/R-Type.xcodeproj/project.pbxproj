@@ -10,6 +10,8 @@
 		26131E3716AC3DA50065811B /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26131E3316AC3DA50065811B /* Application.cpp */; };
 		26131E3816AC3DA50065811B /* PhysicElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26131E3616AC3DA50065811B /* PhysicElement.cpp */; };
 		26131E3B16AC3E470065811B /* iOSApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 26131E3A16AC3E470065811B /* iOSApplication.mm */; };
+		26131E5216AC96220065811B /* GameInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 26131E5016AC96220065811B /* GameInput.cpp */; };
+		26131E6916AC96810065811B /* iOSGameInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 26131E6816AC96810065811B /* iOSGameInput.mm */; };
 		2613B35A16A358AB00CF84AA /* Client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2613B35816A358AB00CF84AA /* Client.cpp */; };
 		2613B35E16A35A5000CF84AA /* iOSMainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2613B35C16A35A5000CF84AA /* iOSMainViewController.mm */; };
 		2613B46316A36E7500CF84AA /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 2613B44616A36E7500CF84AA /* background.png */; };
@@ -164,6 +166,9 @@
 		26131E3516AC3DA50065811B /* IPhysicElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IPhysicElement.h; path = ../../../Commons/src/IPhysicElement.h; sourceTree = "<group>"; };
 		26131E3616AC3DA50065811B /* PhysicElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PhysicElement.cpp; path = ../../../Commons/src/PhysicElement.cpp; sourceTree = "<group>"; };
 		26131E3A16AC3E470065811B /* iOSApplication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iOSApplication.mm; path = ../../src/iOSApplication.mm; sourceTree = "<group>"; };
+		26131E5016AC96220065811B /* GameInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameInput.cpp; path = ../../../Client/src/GameInput.cpp; sourceTree = "<group>"; };
+		26131E5116AC96220065811B /* GameInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameInput.h; path = ../../../Client/src/GameInput.h; sourceTree = "<group>"; };
+		26131E6816AC96810065811B /* iOSGameInput.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iOSGameInput.mm; path = ../../src/iOSGameInput.mm; sourceTree = "<group>"; };
 		2613B35816A358AB00CF84AA /* Client.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = Client.cpp; path = ../../../Client/src/Client.cpp; sourceTree = "<group>"; };
 		2613B35916A358AB00CF84AA /* Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Client.h; path = ../../../Client/src/Client.h; sourceTree = "<group>"; };
 		2613B35C16A35A5000CF84AA /* iOSMainViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = iOSMainViewController.mm; path = ../../src/iOSMainViewController.mm; sourceTree = "<group>"; };
@@ -432,6 +437,9 @@
 		2613B35B16A358B400CF84AA /* Client */ = {
 			isa = PBXGroup;
 			children = (
+				26131E5016AC96220065811B /* GameInput.cpp */,
+				26131E6816AC96810065811B /* iOSGameInput.mm */,
+				26131E5116AC96220065811B /* GameInput.h */,
 				26A0B46916AB10C900BEA56C /* GameController.cpp */,
 				26A0B46A16AB10C900BEA56C /* GameController.h */,
 				269D620116A9C732006B328F /* Game.cpp */,
@@ -1055,6 +1063,8 @@
 				26131E3716AC3DA50065811B /* Application.cpp in Sources */,
 				26131E3816AC3DA50065811B /* PhysicElement.cpp in Sources */,
 				26131E3B16AC3E470065811B /* iOSApplication.mm in Sources */,
+				26131E5216AC96220065811B /* GameInput.cpp in Sources */,
+				26131E6916AC96810065811B /* iOSGameInput.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

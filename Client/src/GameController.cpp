@@ -222,6 +222,7 @@ Sound::Sound* GameController::createSound(Network::TcpPacket& packet) {
 #pragma mark Game actions
 
 void GameController::launchGame(Network::HostAddress const& address, uint16 port) {
+    GameInput::getInstance().enable();    
 	_remoteAddress = address;
 	_remotePort = port;
 	for (std::list<Graphic::Element*>::iterator it = _elements.begin(); it != _elements.end(); ++it) {

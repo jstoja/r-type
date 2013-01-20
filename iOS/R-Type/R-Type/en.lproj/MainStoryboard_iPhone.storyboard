@@ -60,7 +60,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A2V-ic-S6j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="832" y="221"/>
+            <point key="canvasLocation" x="899" y="187"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="5">
@@ -69,11 +69,33 @@
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3" customClass="GLKView">
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="joystick-button.png" translatesAutoresizingMaskIntoConstraints="NO" id="rQ8-hq-Zv8">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="34" id="fPw-HQ-tMs"/>
+                                    <constraint firstAttribute="height" constant="34" id="rQ2-pC-Z7c"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="joystick-background.png" translatesAutoresizingMaskIntoConstraints="NO" id="5QY-OJ-uSp">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="135" id="IIv-kW-ndQ"/>
+                                    <constraint firstAttribute="width" constant="135" id="k9W-jj-I9Y"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.098039217293262482" green="0.098039217293262482" blue="0.098039217293262482" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="5QY-OJ-uSp" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="K36-aY-G87"/>
+                            <constraint firstItem="rQ8-hq-Zv8" firstAttribute="centerX" secondItem="5QY-OJ-uSp" secondAttribute="centerX" type="default" id="QFg-VP-Gob"/>
+                            <constraint firstItem="5QY-OJ-uSp" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="iZX-W5-IGV"/>
+                            <constraint firstAttribute="bottom" secondItem="rQ8-hq-Zv8" secondAttribute="bottom" constant="70" id="v8I-jm-kng"/>
+                        </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
+                        <outlet property="joystickBackground" destination="5QY-OJ-uSp" id="lkv-TR-hbk"/>
+                        <outlet property="joystickButton" destination="rQ8-hq-Zv8" id="xeG-Ab-prZ"/>
                         <segue destination="wYk-8I-1ek" kind="modal" identifier="TextInputController" id="v38-dA-c4w"/>
                     </connections>
                 </viewController>
@@ -82,6 +104,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="joystick-background.png" width="180" height="180"/>
+        <image name="joystick-button.png" width="46" height="46"/>
         <image name="stars-background.png" width="1280" height="720"/>
     </resources>
     <classes>
@@ -98,6 +122,11 @@
         </class>
         <class className="ViewController" superclassName="GLKViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="joystickBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="joystickButton" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="shootButton" candidateClass="UIButton"/>
+            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

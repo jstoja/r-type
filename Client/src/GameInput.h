@@ -30,9 +30,13 @@ public:
 	virtual ~GameInput();
 
 	Vec2 const&	getInputDirection() const;
+    void        setInputDirection(Vec2 const& value);
 # ifndef OS_IOS
 	virtual void processEvent(Event::Event const& event);
 # endif
+    
+    void enable(void);
+    void disable(void);
 
 private:
 	GameInput();

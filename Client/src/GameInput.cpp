@@ -21,11 +21,10 @@ GameInput::GameInput() {
 	_keys[Event::ArrowLeft] = false;
 	_keys[Event::ArrowRight] = false;
 	_listener = new Event::Listener(Event::KeyPressed | Event::KeyReleased, this);
-	Event::Manager::getInstance().addEventListener(_listener);
 }
 
 GameInput::~GameInput() {
-	Event::Manager::getInstance().removeEventListener(_listener);
+	disable();
 	_listener->deleteLater();
 }
 
@@ -43,12 +42,23 @@ void GameInput::processEvent(Event::Event const& event) {
 		_direction.x = _keys[Event::ArrowLeft] ? -1 : (_keys[Event::ArrowRight] ? 1 : 0);
 		_direction.y = _keys[Event::ArrowUp] ? 1 : (_keys[Event::ArrowDown] ? -1 : 0);
 		_direction.normalize();
-		Log("Direction: [" << _direction.x << " : " << _direction.y << "]");
 	}
+}
+
+void GameInput::enable(void) {
+    Event::Manager::getInstance().addEventListener(_listener);
+}
+
+void GameInput::disable(void) {
+    Event::Manager::getInstance().removeEventListener(_listener);
 }
 
 # endif
 
 Vec2 const&	GameInput::getInputDirection() const {
 	return (_direction);
+}
+
+void GameInput::setInputDirection(Vec2 const& value) {
+    _direction = value;
 }

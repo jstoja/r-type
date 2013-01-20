@@ -14,6 +14,7 @@
 #include "Graphic/Renderer.h"
 #include "Debug.h"
 #include "Widget/TextEdit.h"
+#include "GameInput.h"
 
 static CGPoint defaultJoystickPosition;
 
@@ -68,6 +69,7 @@ static CGPoint defaultJoystickPosition;
             self.joystickButton.center = self.joystickBackground.center;
         }];
         _joystickValue = Vec2(0.0, 0.0);
+        GameInput::getInstance().setInputDirection(_joystickValue * Vec2(1, -1));
     }
 }
 
@@ -78,6 +80,7 @@ static CGPoint defaultJoystickPosition;
         self.joystickBackground.center = [self.joystickTouch locationInView:self.view];
         self.joystickButton.center = [self.joystickTouch locationInView:self.view];
         _joystickValue = Vec2(0.0, 0.0);
+        GameInput::getInstance().setInputDirection(_joystickValue * Vec2(1, -1));
     }
 }
 
@@ -92,7 +95,8 @@ static CGPoint defaultJoystickPosition;
             Vec2 newPos = center + _joystickValue * self.joystickBackground.frame.size.width / 2;
             self.joystickButton.center = CGPointMake(newPos.x, newPos.y);
         } else
-            _joystickValue.normalize();
+            _joystickValue = _joystickValue / (self.joystickBackground.frame.size.width / 2);
+        GameInput::getInstance().setInputDirection(_joystickValue * Vec2(1, -1));
     }
 }
 

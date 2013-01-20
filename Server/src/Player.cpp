@@ -264,8 +264,9 @@ void Player::update(uint32 elapsedTime) {
 }
 
 void Player::updateSpeed(const Vec2& speed) {
-  _speed = speed;
-  _speed.normalize();
+    _speed = speed;
+    if (_speed.norm() > 1)
+        _speed.normalize(); 
 }
 
 Vec2 const& Player::getPosition(void) const {
