@@ -38,14 +38,17 @@ void Graphic::Element::setType(Graphic::Element::Type type) {
     _type = type;
 }
 
-Vec3 const&Graphic::Element::getPosition(void) const {
+Vec3 Graphic::Element::getPosition(void) const {
     Threading::MutexLocker lock(_mutex);
-    return _position;
+    return _position.getValue();
 }
 
-void Graphic::Element::setPosition(Vec3 const& position) {
+void Graphic::Element::setPosition(Vec3 const& position, float32 time) {
     Threading::MutexLocker lock(_mutex);
-    _position = position;
+	if (time == 0)
+		_position.initValue(position, time);
+	else
+	    _position.setValue(position, time);
 }
 
 float32 Graphic::Element::getRotation(void) const {
@@ -103,7 +106,7 @@ Graphic::Matrix4f const& Graphic::Element::getTransformationMatrix(void) {
     if (_updateTransformationMatrix)
         _updateTransformationMatrix = false;
     _transformationMatrix.identity();
-    _transformationMatrix.translate(_position.x, _position.y, _position.z);
+    _transformationMatrix.translate(_position.getValue().x, _position.getValue().y, _position.getValue().z);
     if (_size.x != 0 || _size.y != 0)
         _transformationMatrix.scale(_size.x, _size.y);
     return _transformationMatrix;
@@ -111,7 +114,7 @@ Graphic::Matrix4f const& Graphic::Element::getTransformationMatrix(void) {
 
 Rect2 Graphic::Element::getRect() const {
     Threading::MutexLocker lock(_mutex);
-    return Rect2(Vec2(_position) - _size / 2, _size);
+    return Rect2(Vec2(_position.getValue()) - _size / 2, _size);
 }
 
 void Graphic::Element::setVisible(bool visible) {

@@ -45,7 +45,7 @@ public:
         _clock.reset();
     }
     
-    T getValue(void) {
+    T getValue(void) const {
         return _previousValue + _speed * _clock.getEllapsedTime();
     }
     

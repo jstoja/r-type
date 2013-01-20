@@ -16,6 +16,7 @@
 # include "Rect2.h"
 # include "Matrix.hpp"
 # include "Threading/Mutex.h"
+# include "Interpolated.hpp"
 
 namespace Graphic {
     
@@ -50,13 +51,13 @@ namespace Graphic {
         void        setType(Type type);
         
         //! Return the position of the Element
-        Vec3 const& getPosition(void) const;
+        Vec3 getPosition(void) const;
 
         //! Set the position of the Element
         /*!
          \param position Position vector
          */
-        void        setPosition(Vec3 const& position);
+        void        setPosition(Vec3 const& position, float32 time=0);
         
         //! Return the rotation ratio of the Element
         float32     getRotation(void) const;
@@ -124,7 +125,7 @@ namespace Graphic {
 
     private:
         Type                _type;
-        Vec3                _position;
+        Interpolated<Vec3>  _position;
         float32             _rotation;
         float               _opacity;
         Vec2                _size;
