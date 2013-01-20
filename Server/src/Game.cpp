@@ -95,8 +95,10 @@ void                    Game::setNbSlots(uint32 slots) {
 }
 
 void     Game::start(void) {
-    _attributesMutex[ePlayers]->lock();
+    Threading::MutexLocker lockerPlayer(_attributesMutex[ePlayers]);
+    Threading::MutexLocker lockerUdpSocket(_attributesMutex[eUdpSocket]);
     _udpSocket->bind();
+    lockerUdpSocket.unlock();
     // Inform players that the game starts !
     for (int i=0; i < _players.size(); i++) {
         Network::TcpPacket *packet = new Network::TcpPacket();
@@ -105,51 +107,68 @@ void     Game::start(void) {
         Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
         _players[i]->sendPacket(toSend);
     }
-    _attributesMutex[ePlayers]->unlock();
+    lockerPlayer.unlock();
 
     //state
-    _attributesMutex[eState]->lock();
+    Threading::MutexLocker lockerState(_attributesMutex[eState]);
 	_state = Started;
-    _attributesMutex[eState]->unlock();
+    lockerState.unlock();
 
     //clock
-    _attributesMutex[eClock]->lock();
+    Threading::MutexLocker lockerClock(_attributesMutex[eClock]);
     _clock.reset();
-    _attributesMutex[eClock]->unlock();
+    lockerClock.unlock();
 
     //gameclock
-    _attributesMutex[eGameClock]->lock();
+    Threading::MutexLocker lockerGameClock(_attributesMutex[eGameClock]);
     _gameClock.reset();
-    _attributesMutex[eGameClock]->unlock();
+    lockerGameClock.unlock();
 
     //viewport
-    _attributesMutex[eViewport]->lock();
+    Threading::MutexLocker lockerViewport(_attributesMutex[eViewport]);
+    Threading::MutexLocker lockerCurrentLevel(_attributesMutex[eCurrentLevel]);
 	_viewport->setPosition(0);
 	_viewport->setWidth(16);
 	_viewport->setSpeed(_currentLevel.getSpeed());
-    _attributesMutex[eViewport]->unlock();
+    
+    lockerPlayer.relock();
+    lockerUdpSocket.relock();
+    lockerState.relock();
+    lockerClock.relock();
+    lockerGameClock.relock();
 }
 
 void	Game::update() {
+    Threading::MutexLocker lockerProxy(_attributesMutex[eProxy]);
     _proxy->checkCriticalPackets();
+    lockerProxy.unlock();
 
-    _attributesMutex[eViewport]->lock();
-    _attributesMutex[eClock]->lock();
-    _attributesMutex[eObjects]->lock();
-    _attributesMutex[eUpdatePool]->lock();
+    Threading::MutexLocker lockerViewport(_attributesMutex[eViewport]);
+    Threading::MutexLocker lockerObjects(_attributesMutex[eObjects]);
+    Threading::MutexLocker lockerClock(_attributesMutex[eClock]);
+    Threading::MutexLocker lockerUpdatePool(_attributesMutex[eUpdatePool]);
 
 	_viewport->update(_clock);
+    lockerClock.unlock();
 	for (std::list<GameObject*>::iterator it = _objects.begin();
 		it != _objects.end(); ++it)
 		if (_viewport->isInViewport((*it)->getXStart()))
 			_updatePool->addTask(*it, &GameObject::update, NULL);
+    for (std::vector<Player*>::iterator it = _players.begin(), end = _players.end();
+         it != end; ++it) {
+        Player* player = *it;
+        Network::UdpPacket* packet = new Network::UdpPacket();
+        packet->setCode(Network::UdpProxy::TIME);
+        *packet << (float32)Clock::getCurrentTime();
+        Network::UdpProxy::ToSend toSend(packet, player->getAddress(), player->getPort());
+        lockerProxy.relock();
+        _proxy->sendPacket(toSend);
+        lockerProxy.unlock();
+    }
+    lockerProxy.relock();
 	_udpHandler();
-    
+    lockerClock.relock();
     _clock.reset();
-    _attributesMutex[eViewport]->unlock();
-    _attributesMutex[eClock]->unlock();
-    _attributesMutex[eObjects]->unlock();
-    _attributesMutex[eUpdatePool]->unlock();
 }
 
 bool    Game::hasPlayer(Player* player) const {
@@ -165,9 +184,8 @@ bool    Game::canJoin(Player* player) const {
 
 void     Game::join(Player* player) {
     if (canJoin(player)) {
-        _attributesMutex[ePlayers]->lock();
+        Threading::MutexLocker lockerPlayers(_attributesMutex[ePlayers]);
         _players.push_back(player);
-        _attributesMutex[ePlayers]->unlock();
     }
 }
 
@@ -178,34 +196,36 @@ void     Game::playerReady(Player* player) {
     Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
 
     bool everybodyReady = true;
-    _attributesMutex[ePlayers]->lock();
+    Threading::MutexLocker lockerPlayers(_attributesMutex[ePlayers]);
     for (int i=0; i < _players.size(); i++) {
         if (_players[i] != player) {
             _players[i]->sendPacket(toSend);
         }
         everybodyReady = everybodyReady && _players[i]->isReady();
     }
-    _attributesMutex[ePlayers]->unlock();
-    if (everybodyReady)
+    if (everybodyReady) {
+        lockerPlayers.unlock();
         start();
+        lockerPlayers.relock();
+    }
 }
 
 void    Game::sendPlayerList(Player* player) {
     std::list<Player*> playerList;
-
+    
+    Threading::MutexLocker lockerPlayers(_attributesMutex[ePlayers]);
     for (int i = 0; i < _players.size(); ++i) {
         playerList.push_back(_players[i]);
     }
-
+    lockerPlayers.unlock();
+    
     Network::TcpPacket *packet = new Network::TcpPacket();
-    _attributesMutex[ePlayers]->lock();
 
     packet->setCode(0x01020600);
     *packet << getId() << playerList;
     Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
     player->sendPacket(toSend);
-
-    _attributesMutex[ePlayers]->unlock();
+    lockerPlayers.relock();
 }
 
 void     Game::sendInfo(Player* player) {
@@ -213,15 +233,13 @@ void     Game::sendInfo(Player* player) {
 }
 
 void     Game::quit(Player* player) {
-    _attributesMutex[ePlayers]->lock();
+    Threading::MutexLocker lockerPlayers(_attributesMutex[ePlayers]);
     _players.erase(std::remove(_players.begin(), _players.end(), player), _players.end());
-    _attributesMutex[ePlayers]->unlock();
 }
 
 void    Game::addGraphicElement(IGraphicElement* element) {
-    _attributesMutex[eGraphicScene]->lock();
+    Threading::MutexLocker lockerGraphic(_attributesMutex[eGraphicScene]);
 	_graphicScene.addElement(dynamic_cast<GraphicElement*>(element));
-    _attributesMutex[eGraphicScene]->unlock();
 }
 
 IGraphicElement*    Game::createGraphicElement() const {
@@ -229,22 +247,22 @@ IGraphicElement*    Game::createGraphicElement() const {
 }
 
 ITexture*	Game::createTexture(std::string const& filename, std::string const& pluginName) {
-    _attributesMutex[eApplication]->lock();
+    Threading::MutexLocker lockerApplication(_attributesMutex[eApplication]);
 	Texture *res = new Texture("Plugins" + Application::getInstance().getDirectorySeparator() +
 			pluginName + Application::getInstance().getDirectorySeparator() + filename);
-    _attributesMutex[eApplication]->unlock();
-    _attributesMutex[eGameTextures]->lock();
+    lockerApplication.unlock();
+    
+    Threading::MutexLocker lockerGame(_attributesMutex[eGameTextures]);
 	_gameTextures.push_back(res);
-    _attributesMutex[eGameTextures]->unlock();
+    lockerApplication.relock();
 	return res;
 }
 
 ISprite*	Game::createSprite(ITexture *texture) {
 	Sprite	*res = new Sprite(texture);
 
-    _attributesMutex[eGameSprites]->lock();
+    Threading::MutexLocker lockerGame(_attributesMutex[eGameSprites]);
 	_gameSprites.push_back(res);
-    _attributesMutex[eGameSprites]->unlock();
 	return res;
 }
 
@@ -254,9 +272,8 @@ ISprite*	Game::getLevelSprite(std::string const& name) {
 }
 
 void		Game::addPhysicElement(IPhysicElement* element) {
-    _attributesMutex[ePhysicScene]->lock();
+    Threading::MutexLocker lockerPhysic(_attributesMutex[ePhysicScene]);
 	_physicScene.addElement(dynamic_cast<PhysicElement*>(element));
-    _attributesMutex[ePhysicScene]->unlock();
 }
 
 IPhysicElement*	Game::createPhysicElement() const {
@@ -264,35 +281,34 @@ IPhysicElement*	Game::createPhysicElement() const {
 }
 
 ISound*			Game::loadSound(std::string const& name, std::string const& pluginName) {
-    _attributesMutex[eApplication]->lock();
+    Threading::MutexLocker lockerApplication(_attributesMutex[eApplication]);
 	Sound *res= new Sound("Plugins" + Application::getInstance().getDirectorySeparator() +
 			pluginName + Application::getInstance().getDirectorySeparator() + name);
-    _attributesMutex[eApplication]->unlock();
-
-    _attributesMutex[eGameSounds]->lock();
+    lockerApplication.unlock();
+    
+    Threading::MutexLocker lockerSounds(_attributesMutex[eGameSounds]);
 	_gameSounds.push_back(res);
-    _attributesMutex[eGameSounds]->unlock();
+    lockerApplication.relock();
 	return res;
 }
 
 ISound*			Game::loadSound(std::string const& name) {
-    _attributesMutex[eApplication]->lock();
+    Threading::MutexLocker lockerApplication(_attributesMutex[eApplication]);
 	Sound *res= new Sound("Levels" + Application::getInstance().getDirectorySeparator() +
 		_currentLevel.getFilename() + Application::getInstance().getDirectorySeparator() + name);
-    _attributesMutex[eApplication]->unlock();
+    lockerApplication.unlock();
 
-    _attributesMutex[eGameSounds]->lock();
+    Threading::MutexLocker lockerSounds(_attributesMutex[eGameSounds]);
 	_gameSounds.push_back(res);
-    _attributesMutex[eGameSounds]->unlock();
+    lockerApplication.relock();
 	return res;
 }
 
 IScenery*		Game::addScenery() {
 	Scenery	*res = new Scenery();
 
-    _attributesMutex[eGameSceneries]->lock();
+    Threading::MutexLocker lockerGame(_attributesMutex[eGameSceneries]);
 	_gameSceneries.push_back(res);
-    _attributesMutex[eGameSceneries]->unlock();
 	return (res);
 }
 
@@ -340,35 +356,38 @@ void		Game::_loadMap(std::string const& fileName) {
 }
 
 void	Game::sendResources(Network::TcpPacket &packet) {
-    _attributesMutex[eGameTextures]->lock();
-    _attributesMutex[eGameSounds]->lock();
+    Threading::MutexLocker lockerGameTextures(_attributesMutex[eGameTextures]);
+    Threading::MutexLocker lockerGameSounds(_attributesMutex[eGameSounds]);
+
 	std::list<Resource*>	resources;
 	for (std::list<Texture*>::iterator it = _gameTextures.begin(); it != _gameTextures.end(); ++it)
 		resources.push_back((*it)->getImg());
 	for (std::list<Sound*>::iterator it = _gameSounds.begin(); it != _gameSounds.end(); ++it)
 		resources.push_back((*it)->getSound());
 
-    _attributesMutex[eGameSprites]->lock();
+    Threading::MutexLocker lockerGameSprites(_attributesMutex[eGameSprites]);
 	packet << resources << _gameTextures << _gameSprites;
-    _attributesMutex[eGameSprites]->unlock();
-    _attributesMutex[eGameTextures]->unlock();
+    lockerGameSprites.unlock();
+    lockerGameTextures.unlock();
 
-    _attributesMutex[eGraphicScene]->lock();
-    _attributesMutex[ePhysicScene]->lock();
+    Threading::MutexLocker lockerGraphicScene(_attributesMutex[eGraphicScene]);
+    Threading::MutexLocker lockerPhysicScene(_attributesMutex[ePhysicScene]);
 	_graphicScene.sendStaticElements(packet);
 	//_physicScene.sendStaticElements(packet);
-    _attributesMutex[eGraphicScene]->unlock();
-    _attributesMutex[ePhysicScene]->unlock();
+    lockerGraphicScene.unlock();
+    lockerPhysicScene.unlock();
 
-    _attributesMutex[eGameSceneries]->lock();
+    Threading::MutexLocker lockerGameSceneries(_attributesMutex[eGameSceneries]);
 	packet << _gameSceneries << _gameSounds;
-    _attributesMutex[eGameSceneries]->unlock();
-    _attributesMutex[eGameSounds]->unlock();
-
+    
+    lockerGameTextures.relock();
+    lockerGameSprites.relock();
+    lockerGraphicScene.relock();
+    lockerPhysicScene.relock();
 }
 
 void    Game::_sendSound(void) {
-    _attributesMutex[eGameSounds]->lock();
+    Threading::MutexLocker lockerGameSounds(_attributesMutex[eGameSounds]);
 
     for (std::list<Sound*>::const_iterator it = _gameSounds.begin(); it != _gameSounds.end(); ++it) {
         if ((*it)->hasChanged()) {
@@ -386,43 +405,57 @@ void    Game::_sendSound(void) {
             delete udpPacket;
         }
     }
-    _attributesMutex[eGameSounds]->unlock();
 }
 
 void    Game::_sendGraphicElements(void) {
     Network::UdpPacket *udpPacket = new Network::UdpPacket();
     udpPacket->setCode(Network::Proxy<Network::UdpPacket>::GRAPHIC_ELEMENTS);
-    _attributesMutex[eGraphicScene]->lock();
-    _attributesMutex[eViewport]->lock();
+    Threading::MutexLocker lockerGraphicScene(_attributesMutex[eGraphicScene]);
+    Threading::MutexLocker lockerViewport(_attributesMutex[eViewport]);
     _graphicScene.sendElements(*udpPacket, _viewport);
-    _attributesMutex[eGraphicScene]->unlock();
-    _attributesMutex[eViewport]->unlock();
 
+    lockerGraphicScene.unlock();
+    lockerViewport.unlock();
 
     Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
+    Threading::MutexLocker lockerProxy(_attributesMutex[eProxy]);
     _proxy->sendPacket(toSend);
+    
+    lockerGraphicScene.relock();
+    lockerViewport.relock();
     delete udpPacket;
 }
 
 void    Game::_sendPhysicElements(void) {
     Network::UdpPacket *udpPacket = new Network::UdpPacket();
     udpPacket->setCode(Network::Proxy<Network::UdpPacket>::PHYSIC_ELEMENTS);
-    _attributesMutex[ePhysicScene]->lock();
-    _attributesMutex[eViewport]->lock();
+    Threading::MutexLocker lockerPhysic(_attributesMutex[ePhysicScene]);
+    Threading::MutexLocker lockerViewport(_attributesMutex[eViewport]);
     _physicScene.sendElements(*udpPacket, _viewport);
-    _attributesMutex[ePhysicScene]->unlock();
-    _attributesMutex[eViewport]->unlock();
+    lockerPhysic.unlock();
+    lockerViewport.unlock();
+    
     Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
+    Threading::MutexLocker lockerProxy(_attributesMutex[eProxy]);
     _proxy->sendPacket(toSend);
+    
+    lockerPhysic.relock();
+    lockerViewport.relock();
     delete udpPacket;
 }
 
 void    Game::_sendTime(void) {
     Network::UdpPacket *udpPacket = new Network::UdpPacket();
 	udpPacket->setCode(Network::Proxy<Network::UdpPacket>::TIME);
+    Threading::MutexLocker lockerGameClock(_attributesMutex[eGameClock]);
 	*udpPacket << _gameClock.getEllapsedTime();
+    lockerGameClock.unlock();
+    
     Network::Proxy<Network::UdpPacket>::ToSend toSend(udpPacket, Network::HostAddress::AnyAddress, 0);
+    Threading::MutexLocker lockerProxy(_attributesMutex[eProxy]);
     _proxy->sendPacket(toSend);
+    
+    lockerGameClock.relock();
     delete udpPacket;
 }
 
@@ -456,5 +489,6 @@ IViewport*	Game::getViewport() const {
 }
 
 uint64      Game::getEllapsedTime() const {
+    Threading::MutexLocker lockerProxy(_attributesMutex[eClock]);
     return _clock.getEllapsedTime();
 }

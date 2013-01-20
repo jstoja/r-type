@@ -112,6 +112,8 @@ private:
         eClock,
         eGameClock,
         eViewport,
+        eProxy,
+        eUdpSocket,
         eApplication,
         eLastAttribute
     };

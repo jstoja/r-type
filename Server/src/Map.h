@@ -60,6 +60,7 @@ private:
         eSprites,
         eName,
         eFilename,
+        eInitialSpeed,
         eApplication,
         eLastAttribute
     };

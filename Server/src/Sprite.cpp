@@ -27,9 +27,8 @@ Sprite::~Sprite() {
 }
 
 void	Sprite::setTexture(ITexture *texture) {
-    _attributesMutexTexture->lock();
+    Threading::MutexLocker locker(_attributesMutexTexture);
 	_texture = dynamic_cast<Texture*>(texture);
-    _attributesMutexTexture->unlock();
 }
 
 Texture*	Sprite::_getTexture() const {
@@ -43,9 +42,8 @@ ITexture*	Sprite::getTexture() const {
 }
 
 void	Sprite::addFrame(Vec2 const& p1, Vec2 const& p2) {
-    _attributesMutexFrames->lock();
+    Threading::MutexLocker locker(_attributesMutexFrames);
 	_frames.push_back(Frame(p1, p2));
-    _attributesMutexFrames->unlock();
 }
 
 std::list<Frame> const&	Sprite::getFrames() const {
