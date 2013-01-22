@@ -191,14 +191,14 @@ void     Game::join(Player* player) {
 }
 
 void     Game::playerReady(Player* player) {
-    Network::TcpPacket *packet = new Network::TcpPacket();
-    packet->setCode(Network::TcpProxy::GamePlayerReady);
-    *packet << getId() << (uint32)player->getId();
-    Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
-
     bool everybodyReady = true;
     Threading::MutexLocker locker(_attributesMutex);
     for (int i=0; i < _players.size(); i++) {
+        Network::TcpPacket *packet = new Network::TcpPacket();
+        packet->setCode(Network::TcpProxy::GamePlayerReady);
+        *packet << getId() << (uint32)player->getId();
+        Network::Proxy<Network::TcpPacket>::ToSend toSend(packet, Network::HostAddress::AnyAddress, 0);
+        
         if (_players[i] != player) {
             _players[i]->sendPacket(toSend);
         }
@@ -236,8 +236,10 @@ bool     Game::quit(Player* player) {
     _players.erase(std::remove(_players.begin(), _players.end(), player), _players.end());
 
     _graphicScene.removeElement(_playersGraphicElements[player]);
-    delete _playersGraphicElements[player];
     _playersGraphicElements.erase(player);
+    delete _playersGraphicElements[player];
+    _playersPhysicElements.erase(player);
+    delete _playersPhysicElements[player];
 
     return (_referee == player);
 }
