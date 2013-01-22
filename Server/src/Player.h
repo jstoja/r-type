@@ -69,7 +69,7 @@ private:
         ePort,
         eLastAttribute
     };
-    
+
     std::vector<Threading::Mutex*>          _attributesMutex;
 
     bool                                  	_isReady;

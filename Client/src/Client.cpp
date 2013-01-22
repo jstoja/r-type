@@ -336,6 +336,7 @@ void Client::receivePlayerReady(Network::TcpPacket* packet) {
 		if ((*it)->getId() == id) {
 			*packet >> id;
 			(*it)->setPlayerReady(id, true);
+			_ui->setCurrentGame(*it);
 			return ;
 		}
 }

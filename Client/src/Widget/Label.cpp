@@ -74,6 +74,7 @@ void Widget::Label::update() {
     }
     getElement()->setSize(newSize);
     getElement()->setPosition(newPos);
+    getElement()->setVisible(isVisible());
     setNeedUpdate(false);
 }
 
@@ -82,17 +83,17 @@ std::string const&  Widget::Label::getText() const {
 }
 
 void    Widget::Label::setText(std::string const& text) {
-    _text = text;
-    std::transform(_text.begin(), _text.end(), _text.begin(), ::toupper);
-	setNeedUpdate(true);
+  _text = text;
+  std::transform(_text.begin(), _text.end(), _text.begin(), ::toupper);
+  setNeedUpdate(true);
 }
 
 void Widget::Label::setTextAligment(TextAlignment alignment) {
-    _alignment = alignment;
-	setNeedUpdate(true);
+  _alignment = alignment;
+  setNeedUpdate(true);
 }
 
 void Widget::Label::setColor(Vec3 const& color) {
-    _color = color;
-	setNeedUpdate(true);
+  _color = color;
+  setNeedUpdate(true);
 }
