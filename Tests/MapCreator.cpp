@@ -167,6 +167,21 @@ ByteArray	createSceneryParams(std::string const& sprite, float32 speed, float32 
 	return res;
 }
 
+ByteArray	createMonsterParams(std::string const& sprite, uint8 frameIndex, Vec3 const& pos, Vec2 const& size, float32 rotation, float32 speed) {
+	ByteArray	res;
+	uint32		tmpSize = sprite.size();
+    
+    res.append((char*)&tmpSize, sizeof(tmpSize));
+	res.append(sprite.c_str(), tmpSize);
+    res.append((char*)&frameIndex, sizeof(frameIndex));
+	res.append((char*)&pos, sizeof(pos));
+	res.append((char*)&size, sizeof(size));
+	res.append((char*)&rotation, sizeof(rotation));
+    res.append((char*)&speed, sizeof(speed));
+	return res;
+}
+
+
 Frame	createFromPosAndSize(Vec2 const& pos, Vec2 const& size) {
 	return (Frame(pos, pos + size));
 }
@@ -257,6 +272,7 @@ int	main(int ac, char **av) {
 	map.addObject("SceneryObject", 0, createSceneryParams("scenery3", 0.8, 16, 1000, 0.997, 1));
 	map.addObject("SceneryObject", 0, createSceneryParams("scenery4", 1.2, 16, 1000, 0.996, 1));
 	map.addObject("SceneryObject", 0, createSceneryParams("scenery5", 0.5, 16*3, 1000, 0.995, 0.8));
+    map.addObject("Monster", 0, createMonsterParams("blockUp", 0, Vec3(16.0/2, 9.0/2), Vec2(1, 1), 0, 1));
 
 	float32 tmp1 = 0;
 	float32 tmp2 = 0;

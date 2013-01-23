@@ -9,6 +9,7 @@
 
 #include <sstream>
 #include "Monster.h"
+#include "Debug.h"
 
 Monster::Monster(std::string const& pluginName)
 : _name(pluginName), _game(NULL) {
@@ -76,6 +77,7 @@ bool	Monster::init(IGame* game, ByteArray const& params, float32 xStart) {
 }
 
 void    Monster::_createBullet(Vec3 const& from, float32 xStart, Vec2 const& to, float32 speed) {
+    return ;
     ByteArray bullet;
     
     std::string spriteName("Bullet");
@@ -107,6 +109,8 @@ void	Monster::update() {
     }
 
 	_xStart = (_game->getViewport()->isInViewport(_graphicElement->getRect())) ? -1 : (_game->getViewport()->getPosition() + _game->getViewport()->getWidth() / 2);
+    
+    _graphicElement->setSpriteFrameIndex(rand()%5);
 }
 
 float32	Monster::getXStart() const {
